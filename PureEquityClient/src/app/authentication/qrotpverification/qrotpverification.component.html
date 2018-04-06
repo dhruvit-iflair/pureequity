@@ -1,0 +1,25 @@
+<div class="login-register">
+  <div class="login-register-box">
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="veryform" (ngSubmit)="verifyotp()">
+          <div class="text-center">
+            <img alt="homepage" src="assets/images/logo-icon.png">
+            <h4 class="m-t-0">Login to App</h4>
+          </div>
+          <div fxLayout="row" fxLayoutWrap="wrap">
+            <img src="{{qr.img}}" height="200px" width="200px">
+            <span>{{qr.key}}</span>
+              <mat-form-field>
+                <input matInput type="text" placeholder="OTP" [formControl]="veryform.controls['totp']">
+              </mat-form-field>
+              <small *ngIf="veryform.controls['totp'].hasError('required') && veryform.controls['totp'].touched" class="text-danger support-text">OTP is required.</small>
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20" type="submit">Verify</button>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+  </mat-card>
+</div>
+</div>
