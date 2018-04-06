@@ -17,7 +17,7 @@ const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
 })
 export class RegisterComponent implements OnInit {
 
-  public form: FormGroup;
+  public form: FormGroup;isvalidcapcha;
   public roles: Array<Role> = [];
   constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService, public roleService: RoleService, public toster: ToastrService) {
     this.roleService.getAllRoles();
@@ -47,7 +47,9 @@ export class RegisterComponent implements OnInit {
       this.form.patchValue({username:data});
     })
   }
-
+  resolved(captchaResponse: string) {
+    this.isvalidcapcha=captchaResponse;
+  }
   onSubmit() {
     this.loginService.register(this.form.value).subscribe((response) => {
       this.toster.success(response['message'], 'Success');

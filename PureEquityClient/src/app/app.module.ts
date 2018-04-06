@@ -67,7 +67,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
-    PagesModule,
+    PagesModule
   ],
   providers: [
     {

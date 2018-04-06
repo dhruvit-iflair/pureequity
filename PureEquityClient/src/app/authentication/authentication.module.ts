@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatCardModule, MatInputModule, MatCheckboxModule, MatButtonModule, MatSpinner, MatProgressSpinnerModule } from '@angular/material';
@@ -11,7 +11,8 @@ import { ForgotComponent } from './forgot/forgot.component';
 import { LockscreenComponent } from './lockscreen/lockscreen.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-
+import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { LoginService } from "../shared/services/login.service";
 import { RoleService } from "../shared/services/role.service";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -30,7 +31,9 @@ import { QrotpverificationComponent } from './qrotpverification/qrotpverificatio
     MatProgressSpinnerModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RecaptchaModule.forRoot(),
+    RecaptchaFormsModule
   ],
   declarations: [
     ErrorComponent,
@@ -46,7 +49,8 @@ import { QrotpverificationComponent } from './qrotpverification/qrotpverificatio
       // Services
       LoginService,
       RoleService
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 
 export class AuthenticationModule {}

@@ -13,7 +13,6 @@ import { CustomValidators } from 'ng2-validation';
 export class LoginComponent implements OnInit {
 
   public form: FormGroup;
-
   constructor(private fb: FormBuilder, private router: Router, public loginService: LoginService, private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -22,7 +21,6 @@ export class LoginComponent implements OnInit {
       username: [null, Validators.compose([Validators.required, CustomValidators.email])], password: [null, Validators.compose([Validators.required])]
     });
   }
-
   onSubmit() {
     this.loginService.login(this.form.value).subscribe((response: any) => {
       if (response.user.isVerifyEmail) {

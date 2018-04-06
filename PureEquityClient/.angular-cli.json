@@ -30,6 +30,7 @@
       ],
       "scripts": [
           "../node_modules/jquery/dist/jquery.min.js",
+          "../node_modules/ng-recaptcha/index.js",
           "assets/js/jquery.sparkline.min.js"
           
       ],
