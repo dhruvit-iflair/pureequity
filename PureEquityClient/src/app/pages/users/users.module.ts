@@ -13,6 +13,7 @@ import { PersonalAddressComponent } from './edit-user/user-personal-details/pers
 import { PersonalDetailsComponent } from './edit-user/user-personal-details/personal-details/personal-details.component';
 import { UserDetailsComponent } from './edit-user/user-details/user-details.component';
 import { UserPersonalDetailsComponent } from './edit-user/user-personal-details/user-personal-details.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -25,11 +26,10 @@ import { UserPersonalDetailsComponent } from './edit-user/user-personal-details/
   declarations: [
     UsersComponent, 
     EditUserComponent,
-    FirstcapitalizePipe,
     PersonalAddressComponent,
     PersonalDetailsComponent,
     UserDetailsComponent,
-    UserPersonalDetailsComponent,
+    UserPersonalDetailsComponent
   ],
   entryComponents:[EditUserComponent]
 })

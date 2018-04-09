@@ -31,12 +31,12 @@
       "scripts": [
           "../node_modules/jquery/dist/jquery.min.js",
           "../node_modules/ng-recaptcha/index.js",
-          "assets/js/jquery.sparkline.min.js"
-          
+          "assets/js/jquery.sparkline.min.js"          
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
+        "source": "environments/environment.source.ts",
         "prod": "environments/environment.prod.ts"
       }
     }

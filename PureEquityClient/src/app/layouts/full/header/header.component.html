@@ -67,7 +67,10 @@
 <!-- ============================================================== -->
 <!-- Profile - style you can find in header.scss -->
 <!-- ============================================================== -->
-<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5"> <img src="assets/images/users/1.jpg" alt="user" class="profile-pic"> </button>
+<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5"> 
+    <img src="{{ picPoint }}{{user.image}}" alt="user" class="profile-pic" *ngIf="user.image"> 
+    <img src="assets/images/users/default.png" alt="user" class="profile-pic" *ngIf="!user.image"> 
+</button>
 <mat-menu #profile="matMenu" class="mymegamenu">
     <!-- <button mat-menu-item>
         <mat-icon>settings</mat-icon> Settings </button>

@@ -23,7 +23,7 @@ import { KycComponent } from './kyc/kyc.component';
     FormsModule, ReactiveFormsModule,
     RouterModule.forChild(DashboardsRoutes)
   ],
-  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent ]
+  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent]
 })
 
 export class DashboardsModule {

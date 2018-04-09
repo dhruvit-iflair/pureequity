@@ -1,5 +1,9 @@
 #for front modules
 /PureEquityClient/node_modules/
+/PureEquityClient/package-lock.json
+
 
 #for server modules
 /PureEquityServer/node_modules/
+/PureEquityServer/package-lock.json
+/PureEquityServer/uploads/users/profileImage/
