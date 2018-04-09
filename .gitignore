@@ -1,2 +1,5 @@
+#for front modules
 ./PureEquityClient/node_modules/*
+
+#for server modules
 ./PureEquityServer/node_modules/*

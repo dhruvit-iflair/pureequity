@@ -2,6 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from "ng-chartist/dist/chartist.component";
 declare var require: any;
+declare var $: any;
 
 const data: any = require('./data.json');
 

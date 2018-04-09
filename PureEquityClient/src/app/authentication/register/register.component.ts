@@ -17,12 +17,12 @@ const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
 })
 export class RegisterComponent implements OnInit {
 
-  public form: FormGroup;isvalidcapcha;
+  public form: FormGroup; isvalidcapcha;
   public roles: Array<Role> = [];
   constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService, public roleService: RoleService, public toster: ToastrService) {
     this.roleService.getAllRoles();
   }
-  data={};imgurl;
+  data = {}; imgurl;
   ngOnInit() {
     this.form = this.fb.group({
       email: [null, Validators.compose([Validators.required, CustomValidators.email])],
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
       isVerifyEmail: [false],
       password: password,
       confirmPassword: confirmPassword,
-      isAgreed:[false]
+      isAgreed: [false]
     });
     this.roleService.getRoles().subscribe((role: Role[]) => {
       this.roles = role;
@@ -43,20 +43,22 @@ export class RegisterComponent implements OnInit {
       });
       this.form.patchValue({ role: roleID[0]._id });
     });
-    this.form.controls['email'].valueChanges.subscribe((data)=>{
-      this.form.patchValue({username:data});
+    this.form.controls['email'].valueChanges.subscribe((data) => {
+      this.form.patchValue({ username: data });
     })
   }
   resolved(captchaResponse: string) {
-    this.isvalidcapcha=captchaResponse;
+    this.isvalidcapcha = captchaResponse;
   }
   onSubmit() {
-    this.loginService.register(this.form.value).subscribe((response) => {
-      this.toster.success(response['message'], 'Success');
-      this.router.navigate ( [ '/login' ] );
-    }, (error) => {
-      console.log(error);
-      this.toster.error((error.error['message'])? error.error.message : error.error, 'Error');
-    })
+    if (this.isvalidcapcha) {
+      this.loginService.register(this.form.value).subscribe((response) => {
+        this.toster.success(response['message'], 'Success');
+        this.router.navigate(['/login']);
+      }, (error) => {
+        console.log(error);
+        this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+      })
+    }
   }
 }

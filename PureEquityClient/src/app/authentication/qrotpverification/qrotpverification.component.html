@@ -8,8 +8,8 @@
             <h4 class="m-t-0">Login to App</h4>
           </div>
           <div fxLayout="row" fxLayoutWrap="wrap">
-            <img src="{{qr.img}}" height="200px" width="200px">
-            <span>{{qr.key}}</span>
+            <img src="{{qr.img}}" height="200px" width="200px" style="margin-left: 15%;">
+            <span style="margin-left: 20%;">{{qr.key}}</span>
               <mat-form-field>
                 <input matInput type="text" placeholder="OTP" [formControl]="veryform.controls['totp']">
               </mat-form-field>

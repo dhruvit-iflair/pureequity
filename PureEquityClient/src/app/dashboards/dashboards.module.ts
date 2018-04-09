@@ -7,9 +7,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DashboardsRoutes } from './dashboards.routing';
 import { ChartistModule} from 'ng-chartist';
 import { ChartsModule } from 'ng2-charts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { Dashboard1Component } from './dashboard1/dashboard1.component';
 import { Dashboard2Component } from './dashboard2/dashboard2.component';
+import { KycComponent } from './kyc/kyc.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,10 +20,10 @@ import { Dashboard2Component } from './dashboard2/dashboard2.component';
     FlexLayoutModule,
     ChartistModule, 
     ChartsModule,  
+    FormsModule, ReactiveFormsModule,
     RouterModule.forChild(DashboardsRoutes)
-    
   ],
-  declarations: [ Dashboard1Component, Dashboard2Component ]
+  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent ]
 })
 
 export class DashboardsModule {

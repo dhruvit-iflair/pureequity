@@ -393,4 +393,28 @@ UserCtrl.prototype.verify = function (req, res) {
 
 }
 
+UserCtrl.prototype.image = function (req, res) {
+    console.log(req.files)
+    if (!req.files)
+    return res.status(400).send('No Image was uploaded.');
+ 
+    let image = req.files.image;
+    var ext = image.name.split('.');
+    var tim = Date.now();
+    var imageName = tim + "." + ext[ext.length-1];
+    image.mv('./uploads/users/profileImage/'+imageName, function(err) {
+        if (err){
+            console.log(err)
+            return res.status(500).send(err);    
+        }
+        else{
+            res.status(200).send({image:imageName});  
+        }        
+    });
+}
+
+UserCtrl.prototype.deleteImage = function (req, res) {
+    console.log("Will delete image")
+}
+
 module.exports = new UserCtrl();

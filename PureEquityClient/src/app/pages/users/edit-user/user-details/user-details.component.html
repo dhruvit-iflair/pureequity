@@ -1,0 +1,64 @@
+<div class="row" [formGroup]="detailsFormGroup">
+  <div class="col-md-3" style="width:20%;float:left;padding-left: 10px;padding-top: 20px;">
+    <div class="bg">
+      <img mat-card-avatar src="assets/images/users/default.png" *ngIf="!detailsFormGroup.value.image">
+      <img mat-card-avatar src="{{ picPoint }}{{ detailsFormGroup.value.image }}" *ngIf="detailsFormGroup.value.image">
+      <div class="overlay" onclick="document.getElementById('FileInput').click()">
+        <mat-icon>create</mat-icon>
+      </div>
+    </div>
+    <input type="file" id="FileInput" (change)="editImage($event);" accept="image/*" />
+    <!-- <img mat-card-avatar src="https://source.unsplash.com/random/200x200"> -->
+  </div>
+  <div class="col-md-9" style="width:80%;float:right;padding-left: 15px;">
+    <mat-form-field style="width: 100%">
+      <input matInput type="text" placeholder="First Name" [formControl]="detailsFormGroup.controls['firstName']">
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <small *ngIf="detailsFormGroup.controls['firstName'].hasError('required') && detailsFormGroup.controls['firstName'].touched"
+        class="text-danger support-text">You must include first name.</small>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput type="text" placeholder="Last Name" [formControl]="detailsFormGroup.controls['lastName']">
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <small *ngIf="detailsFormGroup.controls['lastName'].hasError('required') && detailsFormGroup.controls['lastName'].touched"
+        class="text-danger support-text">You must include first name.</small>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Email address" type="email" [formControl]="detailsFormGroup.controls['username']">
+      <mat-icon matSuffix>contact_mail</mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+<div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+  <mat-form-field>
+    <mat-select placeholder="Role" name="role" [formControl]="detailsFormGroup.controls['role']">
+      <mat-option *ngFor="let role of roles" [value]="role._id">
+        {{role.name | firstcapitalize}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>build</mat-icon>
+    <small *ngIf="detailsFormGroup.controls['role'].hasError('required') && detailsFormGroup.controls['role'].touched" class="text-danger support-text">You must include role.</small>
+  </mat-form-field>
+</div>
+<div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+  <label>Mobile Verified: </label>
+  <mat-checkbox [formControl]="detailsFormGroup.controls['isVerifyMobile']"></mat-checkbox>
+  <label>Email Verified: </label>
+  <mat-checkbox [formControl]="detailsFormGroup.controls['isVerifyEmail']"></mat-checkbox>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" [formControl]="detailsFormGroup.controls['created_at']" placeholder="Registered At">
+    <mat-datepicker-toggle matSuffix [for]="created_at"></mat-datepicker-toggle>
+    <mat-datepicker #created_at></mat-datepicker>
+    <small *ngIf="detailsFormGroup.controls['created_at'].hasError('required') && detailsFormGroup.controls['created_at'].touched"
+      class="text-danger support-text">You must include role.</small>
+
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" [formControl]="detailsFormGroup.controls['updated_at']" placeholder="Last Updated At">
+    <mat-datepicker-toggle matSuffix [for]="updated_at"></mat-datepicker-toggle>
+    <mat-datepicker #updated_at></mat-datepicker>
+    <small *ngIf="detailsFormGroup.controls['updated_at'].hasError('required') && detailsFormGroup.controls['updated_at'].touched"
+      class="text-danger support-text">You must include role.</small>
+
+  </mat-form-field>
+</div>

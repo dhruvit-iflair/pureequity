@@ -11,6 +11,11 @@ export const AppRoutes: Routes = [{
     path: '', 
     redirectTo: '/dashboard', 
     pathMatch: 'full' 
+  },
+{
+    path: 'users',
+    canActivate: [AuthGuard],
+    loadChildren: './pages/users/users.module#UsersModule'
   },{
     path: '',
     canActivate:[AuthGuard],

@@ -32,8 +32,8 @@ import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 
 import { AuthGuard } from "./shared/guard/auth.guard";
-import { PagesModule } from './pages/pages.module';
-
+import { DeleteComponent } from './shared/dialogs/delete/delete.component';
+//import { MatStepperModule } from '@angular/material';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -49,6 +49,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppHeaderComponent,
     SpinnerComponent,
     AppBlankComponent,
+    DeleteComponent,
     AppSidebarComponent
   ],
   imports: [
@@ -67,7 +68,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
-    PagesModule
+    //MatStepperModule
   ],
   providers: [
     {
@@ -89,6 +90,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     },
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[DeleteComponent]
 })
 export class AppModule { }

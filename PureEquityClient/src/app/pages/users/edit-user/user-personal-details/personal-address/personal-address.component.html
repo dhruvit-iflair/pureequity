@@ -1,0 +1,32 @@
+<div [formGroup]="address">
+      <mat-form-field>
+        <input matInput placeholder="Apartment" formControlName="apartment" required>
+        <mat-icon matSuffix>home</mat-icon>
+        <small *ngIf="address.controls['apartment'].hasError('required') && address.controls['apartment'].touched"
+        class="text-danger support-text">You must include Apartment.</small>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Street" formControlName="streetAddress" required>
+        <mat-icon matSuffix>place</mat-icon>
+        <small *ngIf="address.controls['streetAddress'].hasError('required') && address.controls['streetAddress'].touched"
+        class="text-danger support-text">You must include Street.</small>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="City" formControlName="city" required>
+        <mat-icon matSuffix>location_city</mat-icon>        
+        <small *ngIf="address.controls['city'].hasError('required') && address.controls['city'].touched"
+        class="text-danger support-text">You must include your City.</small>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Country" formControlName="country" required>
+        <mat-icon matSuffix>flag</mat-icon>                
+        <small *ngIf="address.controls['country'].hasError('required') && address.controls['country'].touched"
+        class="text-danger support-text">You must include your Country.</small>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Zip Code" formControlName="zipcode" required>
+        <mat-icon matSuffix>markunread_mailbox</mat-icon>                        
+        <small *ngIf="address.controls['zipcode'].hasError('required') && address.controls['zipcode'].touched"
+        class="text-danger support-text">You must include Zip Code.</small>
+      </mat-form-field>
+</div>

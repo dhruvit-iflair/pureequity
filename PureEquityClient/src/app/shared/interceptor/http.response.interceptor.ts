@@ -18,7 +18,7 @@ export class ResponseInterceptor implements HttpInterceptor {
         const started = Date.now();
         return next.handle(req).do((event: any) => {
             if (event instanceof HttpResponse) {
-                console.log(event);
+                // console.log(event);
             }
         })
     }

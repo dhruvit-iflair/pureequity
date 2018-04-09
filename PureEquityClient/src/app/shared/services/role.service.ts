@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class RoleService {
     public roles = new Subject<Role[]>();
+    public role = new Subject<Role>();
     constructor(public http:HttpClient, public toster:ToastrService){}
 
     getAllRoles(){
@@ -21,5 +22,16 @@ export class RoleService {
     }
     getRoles():Observable<Role[]>{
         return this.roles.asObservable();
+    }
+    getARole(id:any){
+        this.http.get(environment.api+'/role/'+id).subscribe((response:Role)=>{
+            this.role.next(response);
+        },(error)=>{
+            this.toster.error('Error in getting role please contact your system admin', 'Error');
+            console.log(error);
+        })
+    }
+    getRole():Observable<Role>{
+        return this.role.asObservable();
     }
 }

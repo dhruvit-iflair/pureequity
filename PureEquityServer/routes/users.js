@@ -9,6 +9,8 @@ module.exports = function (router) {
     router.get('/api/users/:id', verify, controller.getById);
     
     router.post('/api/users/verify', controller.verify);
+
+    router.post('/api/users/image', controller.image);
     
     router.put('/api/users/:id', verify, controller.put);
     

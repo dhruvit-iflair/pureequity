@@ -49,8 +49,10 @@ export class QrotpverificationComponent implements OnInit {
       if(x.verificationstatus=='success'){
         this.router.navigate(['/dashboard']);
       }
-      else{
-        this.toastr.error('Invalid OTP', 'Error');
+    },(err)=>{
+      var x=err.json();
+      if(x.verificationstatus!='success'){
+      this.toastr.error('Invalid OTP', 'Error');
       }
     });
     

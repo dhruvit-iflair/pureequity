@@ -2,7 +2,6 @@ import { User } from "./user.interface";
 
 export interface User_Profile {
     _id             : String,
-    name            : String,
     personal  : {
         firstName    :String,
         middleName   :String,
