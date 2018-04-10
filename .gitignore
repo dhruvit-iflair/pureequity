@@ -1,5 +1,6 @@
 #for front modules
 /PureEquityClient/node_modules/
+/PureEquityClient/PureEquity/
 /PureEquityClient/package-lock.json
 
 

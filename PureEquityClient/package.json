@@ -6,6 +6,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "prod": "ng build --prod --base-href=/PureEquity/",
+    "server": "ng build --prod --base-href=/PureEquity/ && mv -R ./PureEquity /opt/lammp/htdocs",
+    "dev": "ng build --prod --base-href=/PureEquity/ -env=dev && mv -R ./PureEquity /opt/lammp/htdocs",
+    "source": "ng build --prod --base-href=/PureEquity/ -env=source && mv -R ./PureEquity /opt/lammp/htdocs",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
