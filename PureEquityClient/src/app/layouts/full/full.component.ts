@@ -1,4 +1,3 @@
-import * as $ from 'jquery';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef, Component, NgZone, OnDestroy, ViewChild, HostListener, Directive, AfterViewInit } from '@angular/core';
@@ -7,6 +6,9 @@ import { AppHeaderComponent } from './header/header.component';
 import { AppSidebarComponent } from './sidebar/sidebar.component';
 
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar'; 
+
+declare var $: any;
+
 /** @title Responsive sidenav */
 @Component({
   selector: 'app-full-layout',

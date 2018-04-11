@@ -30,7 +30,7 @@
           "../node_modules/ngx-toastr/toastr.css"
       ],
       "scripts": [
-          "../node_modules/jquery/dist/jquery.min.js",
+          "assets/js/jquery-2.2.4.min.js",
           "../node_modules/ng-recaptcha/index.js",
           "assets/js/jquery.sparkline.min.js"          
       ],

@@ -3,6 +3,7 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from "ng-chartist/dist/chartist.component";
+declare var $: any;
 declare var require: any;
 
 const data: any = require('./data.json');
