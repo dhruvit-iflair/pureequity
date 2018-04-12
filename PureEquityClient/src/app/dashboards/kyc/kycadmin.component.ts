@@ -20,7 +20,7 @@ export class KycAdminComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isLinear = true;
-  uploadedimgs = [];
+  uploadedimgs = [];istrn=[];
   user; isEligible = false;
   isApproved = true; uid;
   countries = require('./countries.json');

@@ -19,7 +19,7 @@ export class KycComponent implements OnInit {
   userDocPoint = environment.userDocPoint;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  isLinear = true;
+  isLinear = true;istrn=[];
   uploadedimgs = [];
   user; isEligible = false;
   isApproved = true; uid;
