@@ -11,11 +11,11 @@ import { DeleteComponent } from '../../shared/dialogs/delete/delete.component';
 declare var require: any;
 
 @Component({
-  selector: 'app-kyc',
+  selector: 'app-kycadm',
   templateUrl: './kyc.component.html',
   styleUrls: ['./kyc.component.css']
 })
-export class KycComponent implements OnInit {
+export class KycAdminComponent implements OnInit {
   userDocPoint = environment.userDocPoint;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -25,7 +25,7 @@ export class KycComponent implements OnInit {
   isApproved = true; uid;
   countries = require('./countries.json');
   idType = ['Passport', 'Driving License', 'Identity Card', 'Adhar Card'];
-  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private router: Router, private http: Http, private toastr: ToastrService) { }
+  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private acRoute: ActivatedRoute, private router: Router, private http: Http, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('token'));
@@ -43,27 +43,27 @@ export class KycComponent implements OnInit {
     this.getInitialData();
   }
   getInitialData() {
-    var usrdata = JSON.parse(localStorage.getItem('token'));
-    this.http.get(environment.api + '/userdocs/byuid/' + usrdata.user._id)
-      .subscribe((res) => {
-        var gotcha = res.json();
-        this.uid = gotcha[0]._id;
-        //if (gotcha[0].isApproved == false) {
+    this.acRoute.params.subscribe((params) => {
+      this.http.get(environment.api + '/userdocs/byuid/' + params.id)
+        .subscribe((res) => {
+          var gotcha = res.json();
+          this.user=gotcha[0].user;
+          this.uid = gotcha[0]._id;
           this.isApproved = gotcha[0].isApproved;
-        //}
-        this.isEligible = true;
-        this.firstFormGroup.patchValue({
-          country: gotcha[0].issueCountry,
-          idtype: gotcha[0].idType,
-          cardnumber: gotcha[0].idNumber,
-          issuedate: gotcha[0].issueDate,
-          taxnumber: gotcha[0].trn
+          this.isEligible = true;
+          this.firstFormGroup.patchValue({
+            country: gotcha[0].issueCountry,
+            idtype: gotcha[0].idType,
+            cardnumber: gotcha[0].idNumber,
+            issuedate: gotcha[0].issueDate,
+            taxnumber: gotcha[0].trn
+          });
+          this.uploadedimgs = gotcha[0].scandoc;
+          this.secondFormGroup.patchValue({ scandoc: this.uploadedimgs });
+        }, (ers) => {
+          console.log('Error while fetching data:' + ers);
         });
-        this.uploadedimgs = gotcha[0].scandoc;
-        this.secondFormGroup.patchValue({ scandoc: this.uploadedimgs });
-      }, (ers) => {
-        console.log('Error while fetching data:' + ers);
-      });
+    });
   }
   uploadDoc(event) {
     let file = event.target.files;
@@ -82,7 +82,7 @@ export class KycComponent implements OnInit {
 
   finalsubmittion() {
     var obj = {
-      user: this.user.user._id,
+      user: this.user._id,
       idType: this.firstFormGroup.value.idtype,
       idNumber: this.firstFormGroup.value.cardnumber,
       scandoc: this.uploadedimgs,
@@ -101,7 +101,7 @@ export class KycComponent implements OnInit {
             .subscribe((resp: any) => {
               var x = resp.json();
               this.toastr.success('KYC Filled Successfully', 'Success');
-              this.router.navigate(['/dashboard']);
+              this.router.navigate(['/kycadmin']);
             }, (er) => {
               this.toastr.error('Internal Server Error.', 'Error');
             });
@@ -111,7 +111,7 @@ export class KycComponent implements OnInit {
             .subscribe((resp: any) => {
               var x = resp.json();
               this.toastr.success('KYC Updated Successfully', 'Success');
-              this.router.navigate(['/dashboard']);
+              this.router.navigate(['/kycadmin']);
             }, (er) => {
               this.toastr.error('Internal Server Error.', 'Error');
             });

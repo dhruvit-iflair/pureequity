@@ -1,47 +1,90 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
   <!-- Card column -->
   <div fxFlex.gt-sm="100%" fxFlex="100">
-      <mat-card>
-          <mat-card-content>
-              <mat-card-title>Stepper</mat-card-title>
-              <mat-card-subtitle>Check the <code class=""><a href="https://material.angular.io/components/stepper/overview">Official Component</a></code></mat-card-subtitle>
-              
-              <mat-horizontal-stepper [linear]="isLinear">
-                <mat-step [stepControl]="firstFormGroup">
-                  <form [formGroup]="firstFormGroup">
-                    <ng-template matStepLabel>Fill out your name</ng-template>
-                    <mat-form-field>
-                      <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-                    </mat-form-field>
-                    <div>
-                      <button mat-raised-button color="warn" matStepperNext>Next</button>
+    <mat-card>
+      <mat-card-content *ngIf="!isApproved">
+        <mat-card-title>Kyc Details</mat-card-title>
+        <mat-card-subtitle>
+            Your KYC Detail is in Process of Verification.
+        </mat-card-subtitle>
+      </mat-card-content>
+
+      <mat-card-content>
+        <mat-card-title>Kyc Details</mat-card-title>
+        <mat-horizontal-stepper [linear]="isLinear">
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>Fill out your details</ng-template>
+              <mat-form-field>
+                <mat-select placeholder="Select Country" name="country" formControlName="country">
+                  <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select placeholder="Select ID Type" name="idtype" formControlName="idtype">
+                  <mat-option *ngFor="let x of idType" [value]="x">{{x}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="Card Number" formControlName="cardnumber" required>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input formControlName="issuedate" matInput [matDatepicker]="issuedate" placeholder="ID Issue Date" disabled>
+                <mat-datepicker-toggle matSuffix [for]="issuedate"></mat-datepicker-toggle>
+                <mat-datepicker #issuedate disabled="false"></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="!istrn">
+                <input matInput placeholder="Tax Reference Number" formControlName="taxnumber">
+              </mat-form-field>
+              <label>I don't have TRN: </label>
+              <mat-checkbox formControlName="istrn" [(ngModel)]="istrn"></mat-checkbox>
+              <div>
+                <button mat-raised-button color="warn" matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+              <ng-template matStepLabel>Upload your Documents</ng-template>
+              <div class="mat-form-field">
+                <div class="col-md-12" style="width:20%;float:left;padding-left: 10px;padding-top: 20px;">
+                  Upload Your Selected ID:
+                  <div class="bg">
+                    <div class="overlay" onclick="document.getElementById('FileInput').click()">
+                      <mat-icon class="manualCss">add_circle</mat-icon>
                     </div>
-                  </form>
-                </mat-step>
-                <mat-step [stepControl]="secondFormGroup">
-                  <form [formGroup]="secondFormGroup">
-                    <ng-template matStepLabel>Fill out your address</ng-template>
-                    <mat-form-field>
-                      <input matInput placeholder="Address" formControlName="secondCtrl" required>
-                    </mat-form-field>
-                    <div>
-                      <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-                      <button mat-raised-button color="warn" matStepperNext>Next</button>
-                    </div>
-                  </form>
-                </mat-step>
-                <mat-step>
-                  <ng-template matStepLabel>Done</ng-template>
-                  You are now done.
-                  <div>
-                    <button mat-raised-button color="accent" matStepperPrevious>Back</button>
                   </div>
-                </mat-step>
-              </mat-horizontal-stepper>
-          
-          </mat-card-content>
-           
-      </mat-card>    
+                  <input type="file" id="FileInput" multiple (change)="uploadDoc($event);" accept="image/*" />
+                </div>
+              </div>
+              <div class="mat-form-field">
+                <div *ngFor="let z of uploadedimgs" style="text-align:center;">
+                  <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ userDocPoint }}{{ z }}" *ngIf="z">
+                </div>
+              </div>
+              <div>
+                <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+                <button mat-raised-button color="warn" [disabled]="!isEligible" (click)="finalsubmittion()">Save & Submit</button>
+                <!-- <button mat-raised-button color="warn" matStepperNext>Next</button> -->
+              </div>
+            </form>
+          </mat-step>
+          <!-- <mat-step>
+              <ng-template matStepLabel>Done</ng-template>
+              You are now done. You can submit your data.
+              <div>
+                <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+                <button mat-raised-button color="warn" (click)="finalsubmittion()">Save & Submit</button>
+              </div>
+          </mat-step> -->
+        </mat-horizontal-stepper>
+
+      </mat-card-content>
+
+    </mat-card>
   </div>
 </div>
-

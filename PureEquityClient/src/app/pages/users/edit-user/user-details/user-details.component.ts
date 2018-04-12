@@ -32,7 +32,6 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit() {
   }
   editImage(event) {
-    console.log("imaghe")
     this.userService.imageUpload(event).subscribe((response) => {
       this.detailsFormGroup.patchValue(response);
     }, (error) => {

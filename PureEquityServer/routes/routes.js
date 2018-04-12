@@ -24,6 +24,7 @@ router.get('/logout', function (req, res) {
 require('./users')(router);
 require('./role')(router);
 require('./user_profile')(router);
+require('./user_documents')(router);
 require('./reset_password')(router);
 
 

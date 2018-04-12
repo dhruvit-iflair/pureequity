@@ -1,0 +1,11 @@
+md-calendar {
+    width: 300px;
+  }
+  #FileInput {
+    display:none;
+}
+.manualCss{
+    color: dodgerblue;
+    font-size:64px;
+    cursor: pointer;
+}

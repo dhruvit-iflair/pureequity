@@ -3,6 +3,8 @@ import { Routes } from '@angular/router';
 import { Dashboard1Component } from './dashboard1/dashboard1.component';
 import { Dashboard2Component } from './dashboard2/dashboard2.component';
 import { KycComponent } from './kyc/kyc.component';
+import { KycadminComponent } from './kycadmin/kycadmin.component';
+import { KycAdminComponent } from './kyc/kycadmin.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -15,6 +17,14 @@ export const DashboardsRoutes: Routes = [
     ,{
       path: 'kyc', 
       component: KycComponent
+    },
+    {
+      path: 'kyc/:id', 
+      component: KycAdminComponent
+    },
+    {
+      path: 'kycadmin', 
+      component: KycadminComponent
     }
   ]
   }

@@ -43,7 +43,7 @@ const ADMINMENUITEMS = [
     icon: 'av_timer',
   },
   {
-    state: 'kyc',
+    state: 'kycadmin',
     name: 'KYC',
     type: 'link',
     icon: 'perm_contact_calendar',

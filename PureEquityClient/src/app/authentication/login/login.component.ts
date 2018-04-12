@@ -24,9 +24,6 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.loginService.login(this.form.value).subscribe((response: any) => {
       if (response.user.isVerifyEmail) {
-        // this.qr.img=response.data.twofactor.dataURL;
-        // this.qr.key=response.data.twofactor.tempSecret;
-        // this.isqrenable=true;
         var responsedata=response;
         responsedata.user.pwd=this.form.value.password;
           localStorage.setItem('token',JSON.stringify(responsedata));
