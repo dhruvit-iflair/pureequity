@@ -17,6 +17,7 @@ import { environment } from '../../../../../environments/environment';
 export class UserDetailsComponent implements OnInit {
   @Input() detailsFormGroup : FormGroup;
   roles: Role[];
+  picker:any;
   picPoint = environment.picPoint + '/users/profileImage/';
   // public dialogRef: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
   constructor( public roleService: RoleService, public userService: UsersService, public toster: ToastrService) {

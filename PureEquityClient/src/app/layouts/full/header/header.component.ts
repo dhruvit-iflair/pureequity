@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { Router } from '@angular/router';
+import { User } from '../../../shared/interfaces/user.interface';
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class AppHeaderComponent {
     public config: PerfectScrollbarConfigInterface = {};
+    user:User;
+    public picPoint = environment.picPoint + '/users/profileImage/';  
+    
     // This is for Notifications
     notifications: Object[] = [{
       round: 'round-danger',
@@ -61,7 +66,10 @@ export class AppHeaderComponent {
       subject: 'Just see the my admin!',
       time: '9:00 AM'
     }];
-    constructor(private router:Router){}
+    constructor(private router:Router){
+      var u = JSON.parse(localStorage.getItem('token'));
+      this.user = u.user
+    }
     
     logout(){
       localStorage.clear();

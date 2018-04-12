@@ -4,7 +4,8 @@ import {
     HttpRequest,
     HttpHandler,
     HttpEvent,
-    HttpInterceptor
+    HttpInterceptor,
+    HttpErrorResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -13,13 +14,30 @@ import { Router } from '@angular/router';
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
 
-    constructor(public router:Router) { }
+    constructor(public router: Router) { }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const started = Date.now();
         return next.handle(req).do((event: any) => {
-            if (event instanceof HttpResponse) {
-                // console.log(event);
+            if (event instanceof HttpErrorResponse) {
+                console.log(event.status);
             }
-        })
+            // if (event instanceof HttpErrorResponse) {
+            //     console.log(event.status);
+            //     console.log(event.error);
+            //     if (event.error.auth == false){
+            //         localStorage.clear();
+            //         this.router.navigate(['/login']);
+            //     }
+            // }
+        }, (err: any) => {
+            if (err instanceof HttpErrorResponse) {
+                if (err.status === 401) {
+                    if (err.error.auth == false) {
+                        localStorage.clear();
+                        this.router.navigate(['/login']);
+                    }
+                }
+            }
+        });
     }
 }

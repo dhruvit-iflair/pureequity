@@ -17,7 +17,7 @@ export class UsersService {
     this.http.get(environment.api + '/users').subscribe((res: User[]) => {
       this.users.next(res);
     }, (error) => {
-      console.log(error);
+      // console.log(error);
       this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
     });
   }

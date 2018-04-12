@@ -79,25 +79,25 @@ export class Dashboard1Component implements AfterViewInit{
     };
      ngAfterViewInit(){
     //Sparkline chart
-    var sparklineLogin = function () {
-        // spark count
-        (<any>$('.spark-count')).sparkline([4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9], {
-            type: 'bar'
-            , width: '100%'
-            , height: '70'
-            , barWidth: '2'
-            , resize: true
-            , barSpacing: '6'
-            , barColor: 'rgba(255, 255, 255, 0.3)'
-        });
+    // var sparklineLogin = function () {
+    //     // spark count
+    //     $('.spark-count').sparkline([4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9], {
+    //         type: 'bar'
+    //         , width: '100%'
+    //         , height: '70'
+    //         , barWidth: '2'
+    //         , resize: true
+    //         , barSpacing: '6'
+    //         , barColor: 'rgba(255, 255, 255, 0.3)'
+    //     });
         
-    }
+    // }
     var sparkResize;
-    (<any>$(window)).resize(function(e) {
-            clearTimeout(sparkResize);
-            sparkResize = setTimeout(sparklineLogin, 500);
-        });
-    sparklineLogin();
+    // $(window).resize(function(e) {
+    //         clearTimeout(sparkResize);
+    //         sparkResize = setTimeout(sparklineLogin, 500);
+    //     });
+    // sparklineLogin();
      }
     // Timeline 
     mytimelines: any[] = [{
