@@ -47,6 +47,12 @@ const ADMINMENUITEMS = [
     name: 'KYC',
     type: 'link',
     icon: 'perm_contact_calendar',
+  },
+  {
+    state: 'bank',
+    name: 'Bank',
+    type: 'link',
+    icon: 'no_encryption',
   }
 ];
 const USERMENUITEMS = [
@@ -61,6 +67,12 @@ const USERMENUITEMS = [
     name: 'KYC',
     type: 'link',
     icon: 'perm_contact_calendar',
+  },
+  {
+    state: 'bank',
+    name: 'Bank',
+    type: 'link',
+    icon: 'no_encryption',
   }
 ];
 

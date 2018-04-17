@@ -14,6 +14,7 @@ import { Dashboard2Component } from './dashboard2/dashboard2.component';
 import { KycComponent } from './kyc/kyc.component';
 import { KycadminComponent } from './kycadmin/kycadmin.component';
 import { KycAdminComponent } from './kyc/kycadmin.component';
+import { BankdetailsComponent } from './bankdetails/bankdetails.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { KycAdminComponent } from './kyc/kycadmin.component';
     FormsModule, ReactiveFormsModule,
     RouterModule.forChild(DashboardsRoutes)
   ],
-  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent ]
+  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent ]
 })
 
 export class DashboardsModule {

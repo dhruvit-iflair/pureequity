@@ -42,7 +42,7 @@ export class KycadminComponent implements OnInit {
   }
   delete(row){
     let dialogRef = this.dialog.open(DeleteComponent,{
-      data: { title: 'Wanna Remove?', content: 'Are you sure?' },
+      data: { title: 'Want to Remove?', content: 'Are you sure?' },
     });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {

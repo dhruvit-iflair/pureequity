@@ -5,6 +5,7 @@ import { Dashboard2Component } from './dashboard2/dashboard2.component';
 import { KycComponent } from './kyc/kyc.component';
 import { KycadminComponent } from './kycadmin/kycadmin.component';
 import { KycAdminComponent } from './kyc/kycadmin.component';
+import { BankdetailsComponent } from './bankdetails/bankdetails.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -25,6 +26,10 @@ export const DashboardsRoutes: Routes = [
     {
       path: 'kycadmin', 
       component: KycadminComponent
+    },
+    {
+      path:'bank',
+      component:BankdetailsComponent
     }
   ]
   }

@@ -1,0 +1,175 @@
+<!-- <div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Bank Details</mat-card-title>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> -->
+<mat-card>
+  <mat-card-content>
+    <mat-card-title>Bank Details</mat-card-title>
+    <mat-grid-list cols="2" rowHeight="1:1">
+      <mat-grid-tile>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Bank detail</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="bankdetails">
+              <mat-form-field>
+                <input matInput placeholder="Account Number" formControlName="acnumber" required>
+              </mat-form-field>
+              <mat-form-field style="max-width: 73.33%;">
+                <input matInput placeholder="Bank IFSC" formControlName="ifscnumber" required>
+              </mat-form-field>
+              <button mat-raised-button color="accent" (click)="checkifsc()">Check IFSC</button>
+              <mat-form-field>
+                <mat-select placeholder="Account Type" name="actype" formControlName="actype">
+                  <mat-option *ngFor="let x of actype" [value]="x">{{x}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Your Name" formControlName="name" required>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-select placeholder="Bank Document" name="bankdoctype" formControlName="bankdoctype">
+                  <mat-option *ngFor="let y of bankdoctype" [value]="y">{{y}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-checkbox formControlName="isagreed" [(ngModel)]="isagreed">Agree Terms & conditions</mat-checkbox>
+              <div style="text-align: center;margin-top:5%;">
+                <button mat-raised-button (click)="uploaddocs()" color="accent">Upload</button>
+                <button mat-raised-button color="warn">Cancel</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Saved Bank Details</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="savedbankdetails">
+              <mat-form-field>
+                <input matInput placeholder="Bank Name" formControlName="bankname" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Bank A/c Number" formControlName="acnumber" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Bank IFSC Code" formControlName="ifscnumber" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input type="number" matInput placeholder="Enter Amount" formControlName="amount" required>
+              </mat-form-field>
+              <div style="text-align: center;margin-top:5%;">
+                <button mat-raised-button (click)="uploaddocs()" color="accent">Pay with Bank Transfer</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Enter Credit Card Information</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="ccinfo">
+              <mat-form-field>
+                <input matInput placeholder="Name on Credit Card" formControlName="ccname" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Creadit Card Number" formControlName="ccnumber" required>
+              </mat-form-field>
+              <!--style="max-width: 73.33%;" <button mat-raised-button color="accent" (click)="checkifsc()">Check IFSC</button> -->
+              <mat-form-field style="max-width: 15%;">
+                <mat-select placeholder="Month" name="expmonth" formControlName="expmonth">
+                  <mat-option *ngFor="let x of expmonth" [value]="x">{{x}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="max-width: 20%;">
+                <mat-select placeholder="Year" name="expyear" formControlName="expyear">
+                  <mat-option *ngFor="let xy of expyear" [value]="xy">{{xy}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="max-width: 60%;">
+                <input matInput placeholder="Enter CVV" formControlName="cvvnumber" required>
+              </mat-form-field>
+              <div style="text-align: center;margin-top:5%;">
+                <button mat-raised-button (click)="uploaddocs()" color="accent">Upload</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Saved Credit Card Detail</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="sccdetails">
+              <mat-form-field>
+                <input matInput placeholder="Creadit Card Number" formControlName="ccnumber" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Enter CVV" formControlName="cvvnumber" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input type="number" matInput placeholder="Enter Amount" formControlName="amount" required>
+              </mat-form-field>
+              <div style="text-align: center;margin-top:5%;">
+                <button mat-raised-button (click)="uploaddocs()" color="accent">Pay with Card</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Enter PayPal Detail</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="ppdetails">
+              <mat-form-field>
+                <input matInput type="email" placeholder="Paypal Registered Email" formControlName="email" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="password" placeholder="Paypal Password" formControlName="pwd" required>
+              </mat-form-field>
+              <div style="text-align: center;margin-top:5%;">
+                <button mat-raised-button (click)="uploaddocs()" color="accent">Attach Account</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card style="width: 100%;">
+          <mat-card-header>
+            <mat-card-title>Saved Paypal Account</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="sppdetails">
+              <mat-form-field>
+                <input matInput type="email" placeholder="Paypal Email" formControlName="semail" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input type="number" matInput placeholder="Enter Amount" formControlName="amount" required>
+              </mat-form-field>
+              <div style="text-align: center;margin-top:5%;">
+                <button mat-raised-button (click)="uploaddocs()" color="accent">Pay with Paypal</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
