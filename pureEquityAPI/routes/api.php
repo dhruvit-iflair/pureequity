@@ -17,8 +17,11 @@ Route::get('test',function(){ ini_set('max_execution_time', 300);
 	return 1; });
 Route::group(['prefix' => 'v1'], function() {
 
-	// Verify user email address after registration
 	Route::get('coins/{coin?}','BitstampController@coins');
+
+	Route::get('trades/{coin?}','BitstampController@trades');
+
+	Route::get('orderBook/{coin?}','BitstampController@orderBook');
 
 }); // End of prefix v1.0 group
 
