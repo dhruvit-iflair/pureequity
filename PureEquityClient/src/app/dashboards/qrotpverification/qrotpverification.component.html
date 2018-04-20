@@ -1,0 +1,28 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <!-- Card column -->
+  <div fxFlex.gt-sm="45%" fxFlex="50">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Enable/Disable 2FA Security</mat-card-title>
+        <form [formGroup]="veryform" (ngSubmit)="verifyotp()">
+          <div fxLayout="row" fxLayoutWrap="wrap">
+            <img src="{{qr.img}}" height="200px" width="200px" style="margin-left: 15%;">
+          </div>
+          <div fxLayout="row" fxLayoutWrap="wrap">
+            <span style="margin-left: 16%;">{{qr.key}}</span>
+            <mat-form-field>
+              <input matInput type="text" placeholder="2FA Code" [formControl]="veryform.controls['totp']">
+            </mat-form-field>
+            <small *ngIf="veryform.controls['totp'].hasError('required') && veryform.controls['totp'].touched" class="text-danger support-text">OTP is required.</small>
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="submit">
+                Ok, I have scanned the QR Code and saved the secret key.
+                Activate 2FA for my account now!
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

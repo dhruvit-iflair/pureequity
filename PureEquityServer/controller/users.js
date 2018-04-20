@@ -186,11 +186,12 @@ UserCtrl.prototype.login = function (req, res) {
             var token = jwt.sign({ _id: req.user._id }, config.secret, {
                 expiresIn: 86400 // expires in 24 hours
             });
-            if (req.user.is2FAEnabled === true) {
+            if (req.user.is2FAEnabled === true && !req.user.token.twofactor.tempSecret && !req.user.token.twofactor.dataURL && !req.user.token.twofactor.otpURL) {
 
                 var secretoptions = {
                     issuer: 'Google',
-                    name: token,
+                    //label:req.user.username,
+                    name: req.user.username,
                     length: 10
                 }
                 const secret = speakeasy.generateSecret(secretoptions);
@@ -220,7 +221,10 @@ UserCtrl.prototype.login = function (req, res) {
                 });
             }
             else {
-                res.status(200).send({ auth: true, token: token, user: req.user });
+                var objfactor={};
+                objfactor.twofactor = req.user.token.twofactor;
+                res.status(200).send({ auth: true,data: objfactor, token: token, user: req.user });
+                //res.status(200).send({ auth: true, token: token, user: req.user });
             }
             //res.status(200).send({ auth: true, token: token, user: req.user });
         } else {

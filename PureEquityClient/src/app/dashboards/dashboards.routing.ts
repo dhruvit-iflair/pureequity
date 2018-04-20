@@ -6,6 +6,7 @@ import { KycComponent } from './kyc/kyc.component';
 import { KycadminComponent } from './kycadmin/kycadmin.component';
 import { KycAdminComponent } from './kyc/kycadmin.component';
 import { BankdetailsComponent } from './bankdetails/bankdetails.component';
+import { QrotpverificationComponent } from './qrotpverification/qrotpverification.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -30,6 +31,10 @@ export const DashboardsRoutes: Routes = [
     {
       path:'bank',
       component:BankdetailsComponent
+    },
+    {
+      path:'security',
+      component:QrotpverificationComponent
     }
   ]
   }

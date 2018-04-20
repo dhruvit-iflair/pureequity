@@ -9,3 +9,6 @@ md-calendar {
     font-size:64px;
     cursor: pointer;
 }
+.mat-warn{
+    background-color: #555682;
+}

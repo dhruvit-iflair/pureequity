@@ -15,6 +15,7 @@ import { KycComponent } from './kyc/kyc.component';
 import { KycadminComponent } from './kycadmin/kycadmin.component';
 import { KycAdminComponent } from './kyc/kycadmin.component';
 import { BankdetailsComponent } from './bankdetails/bankdetails.component';
+import { QrotpverificationComponent } from './qrotpverification/qrotpverification.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { BankdetailsComponent } from './bankdetails/bankdetails.component';
     FormsModule, ReactiveFormsModule,
     RouterModule.forChild(DashboardsRoutes)
   ],
-  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent ]
+  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent, QrotpverificationComponent ]
 })
 
 export class DashboardsModule {

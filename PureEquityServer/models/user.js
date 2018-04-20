@@ -16,7 +16,7 @@ var User = new Schema({
     confirmationCode: String,
     isVerifyMobile: { type: Boolean, default: false },
     isVerifyEmail: { type: Boolean, default: false },
-    is2FAEnabled: { type: Boolean, default: true },
+    is2FAEnabled: { type: Boolean, default: false },
     token: { type: Schema.Types.Mixed, default: '' },
     tokentime: String,
     created_at: { type: Date, default: Date.now },

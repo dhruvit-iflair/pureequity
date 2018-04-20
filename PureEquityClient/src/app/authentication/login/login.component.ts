@@ -28,12 +28,12 @@ export class LoginComponent implements OnInit {
         responsedata.user.pwd=this.form.value.password;
           localStorage.setItem('token',JSON.stringify(responsedata));
           this.toastr.success('Welcome!!', 'Success');
-          if(responsedata.data){
-            this.router.navigate ( [ '/verification' ] );
-          }
-          else{
+          // if(responsedata.data){
+          //   this.router.navigate ( [ '/verification' ] );
+          // }
+          // else{
             this.router.navigate ( [ '/dashboard' ] );
-          }
+          //}
       }
       else{
         this.toastr.warning('Email not verified ! Please Verify your Email', 'Warning');  

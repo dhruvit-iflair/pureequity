@@ -53,6 +53,12 @@ const ADMINMENUITEMS = [
     name: 'Bank',
     type: 'link',
     icon: 'no_encryption',
+  },
+  {
+    state: 'security',
+    name: 'Security',
+    type: 'link',
+    icon: 'no_encryption',
   }
 ];
 const USERMENUITEMS = [
@@ -71,6 +77,12 @@ const USERMENUITEMS = [
   {
     state: 'bank',
     name: 'Bank',
+    type: 'link',
+    icon: 'no_encryption',
+  },
+  {
+    state: 'security',
+    name: 'Security',
     type: 'link',
     icon: 'no_encryption',
   }

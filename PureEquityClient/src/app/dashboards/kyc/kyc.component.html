@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
   <!-- Card column -->
-  <div fxFlex.gt-sm="100%" fxFlex="100">
+  <div fxFlex.gt-sm="60%" fxFlex="60">
     <mat-card>
       <mat-card-content *ngIf="!isApproved">
         <mat-card-title>Kyc Details</mat-card-title>
@@ -42,7 +42,7 @@
               </mat-form-field>
               <label>I don't have TRN: </label>
               <mat-checkbox formControlName="istrn" [(ngModel)]="istrn"></mat-checkbox>
-              <div>
+              <div style="margin-top: 20px;">
                 <button mat-raised-button color="warn" matStepperNext>Next</button>
               </div>
             </form>
@@ -66,7 +66,7 @@
                   <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ userDocPoint }}{{ z }}" *ngIf="z">
                 </div>
               </div>
-              <div>
+              <div style="margin-top: 20px;">
                 <button mat-raised-button color="accent" matStepperPrevious>Back</button>
                 <button mat-raised-button color="warn" [disabled]="!isEligible" (click)="finalsubmittion()">Save & Submit</button>
                 <!-- <button mat-raised-button color="warn" matStepperNext>Next</button> -->

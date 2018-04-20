@@ -22,21 +22,26 @@ export class QrotpverificationComponent implements OnInit {
     });
     var tokendata = JSON.parse(localStorage.getItem('token'));
     if (tokendata) {
-      var obj = { username: tokendata.user.username, password: tokendata.user.pwd };
-      this.loginService.login(obj).subscribe((response: any) => {
-        if (response.user.isVerifyEmail) {
-          this.qr.img = response.data.twofactor.dataURL;
-          this.qr.key = response.data.twofactor.tempSecret;
-          this.isqrenable = true;
-        }
-        else {
-          this.toastr.warning('Email not verified ! Please Verify your Email', 'Warning');
-        }
-      }, (error) => {
-        this.toastr.error('Username/Password is incorrect', 'Error');
-        console.log(error);
-      });
+      this.qr.img = tokendata.data.twofactor.dataURL;
+      this.qr.key = tokendata.data.twofactor.tempSecret;
+      this.isqrenable = true;
     }
+    // if (tokendata) {
+    //   var obj = { username: tokendata.user.username, password: tokendata.user.pwd };
+    //   this.loginService.login(obj).subscribe((response: any) => {
+    //     if (response.user.isVerifyEmail) {
+    //       this.qr.img = response.data.twofactor.dataURL;
+    //       this.qr.key = response.data.twofactor.tempSecret;
+    //       this.isqrenable = true;
+    //     }
+    //     else {
+    //       this.toastr.warning('Email not verified ! Please Verify your Email', 'Warning');
+    //     }
+    //   }, (error) => {
+    //     this.toastr.error('Username/Password is incorrect', 'Error');
+    //     console.log(error);
+    //   });
+    // }
    }
   verifyotp(){
     var uobj={
