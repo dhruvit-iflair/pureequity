@@ -25,16 +25,23 @@ export class QrotpverificationComponent implements OnInit {
     //   this.qr.key = tokendata.data.twofactor.tempSecret;
     //   this.isqrenable = true;
     // }
-    var obj = { username: tokendata.user.username };
-    this.http.post(environment.api + '/security/setup', obj)
-      .subscribe((resp: any) => {
-        var x = resp.json();
-        this.qr.img = x.data.twofactor.dataURL;
-        this.qr.key = x.data.twofactor.tempSecret;
-        this.isqrenable = true;
-      }, (err) => {
-        var x = err.json();
-      });
+    if(!tokendata.user.is2FAEnabled){
+      var obj = { username: tokendata.user.username };
+      this.http.post(environment.api + '/security/setup', obj)
+        .subscribe((resp: any) => {
+          var x = resp.json();
+          this.qr.img = x.data.twofactor.dataURL;
+          this.qr.key = x.data.twofactor.tempSecret;
+          this.isqrenable = true;
+        }, (err) => {
+          var x = err.json();
+          console.log(x);
+        });
+    }
+    else{
+      this.qr.key = tokendata.data.twofactor.tempSecret;
+      this.isqrenable=false;
+    }
   }
   verifyotp() {
     var uobj = {
