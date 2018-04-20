@@ -3,6 +3,7 @@ var mongoose = require("mongoose"),
     express = require('express'),
     passport = require('passport'),
     User = require('../models/user'),
+    Role = require('../models/role'),
     Reset_Password = require('../models/reset_password'),
     config = require('../config/config'),
     jwt = require('jsonwebtoken'),
@@ -223,7 +224,15 @@ UserCtrl.prototype.login = function (req, res) {
             else {
                 var objfactor={};
                 objfactor.twofactor = req.user.token.twofactor;
-                res.status(200).send({ auth: true,data: objfactor, token: token, user: req.user });
+                Role.findById(req.user.role, function (err, doc) { 
+                    if(doc) {
+                        req.user.role = doc
+                        res.status(200).send({ auth: true,data: objfactor, token: token, user: req.user });
+                    }
+                    else {
+                        res.status(500).send({ auth: false, message: 'Something went wrong !!' });
+                    } 
+                });
                 //res.status(200).send({ auth: true, token: token, user: req.user });
             }
             //res.status(200).send({ auth: true, token: token, user: req.user });

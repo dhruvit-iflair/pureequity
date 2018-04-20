@@ -98,7 +98,7 @@ export class MenuItems {
       this.role = role;
     })
     if (data && data.user.role && !this.role) {
-      this.roleService.getARole(data.user.role);
+      this.roleService.getARole(data.user.role._id);
     }
   }
 

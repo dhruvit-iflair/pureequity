@@ -33,7 +33,7 @@ export class DashboardService {
     this.http.get(environment.tradingApi + '/coins').subscribe((res:any)=>{
       this.coins.next(res.payload.data);
     }, (error)=>{
-      this.toster.error('Something went wrong, please try again later', 'Error');
+//      this.toster.error('Something went wrong, please try again later', 'Error');
       console.log(error);
     })
   }
@@ -50,7 +50,7 @@ export class DashboardService {
           this.tra.next(this.tradeData);              
         }
       }, (error)=>{
-        this.toster.error('Something went wrong, please try again later', 'Error');
+        //this.toster.error('Something went wrong, please try again later', 'Error');
         console.log(error);
       }) 
     }    

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { LoginService } from '../../shared/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { CustomValidators } from 'ng2-validation';
+import { GlobalService } from '../../shared/services/global.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { CustomValidators } from 'ng2-validation';
 export class LoginComponent implements OnInit {
 
   public form: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router, public loginService: LoginService, private toastr: ToastrService) { }
+  constructor(private fb: FormBuilder, private router: Router, public loginService: LoginService, private toastr: ToastrService, private globalService:GlobalService) { }
 
   ngOnInit() {
     //this.qr={img:'',key:''};
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
         responsedata.user.pwd=this.form.value.password;
           localStorage.setItem('token',JSON.stringify(responsedata));
           this.toastr.success('Welcome!!', 'Success');
+          this.globalService.collectCommonData(responsedata);
           // if(responsedata.data){
           //   this.router.navigate ( [ '/verification' ] );
           // }
