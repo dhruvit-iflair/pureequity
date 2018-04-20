@@ -1,9 +1,9 @@
 <div [formGroup]="personalDetailsFormGroup">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6" fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50" style="width: 50%; float: left; ">
       <app-personal-details [personal]="personalDetailsFormGroup.controls.personal"></app-personal-details>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50" style="width: 50%; float: left; ">
       <app-personal-address [address]="personalDetailsFormGroup.controls.address"></app-personal-address>
       <mat-form-field>
           <input matInput [matDatepicker]="pcreatedat" [formControl]="personalDetailsFormGroup.controls['created_at']" placeholder="Registered At">

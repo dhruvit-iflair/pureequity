@@ -7,6 +7,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ResponseInterceptor } from "./shared/interceptor/http.response.interceptor";
 import { TokenInterceptor } from "./shared/interceptor/http.request.interceptor";
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppRoutes } from './app.routing';
@@ -21,10 +22,11 @@ import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 
-import { 
-    PerfectScrollbarModule, 
-    PERFECT_SCROLLBAR_CONFIG, 
-    PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {
+  PerfectScrollbarModule,
+  PERFECT_SCROLLBAR_CONFIG,
+  PerfectScrollbarConfigInterface
+} from 'ngx-perfect-scrollbar';
 import { ToastrModule } from 'ngx-toastr';
 
 import { SharedModule } from './shared/shared.module';
@@ -67,6 +69,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    NgxChartsModule,
     //MatStepperModule
   ],
   providers: [
@@ -82,7 +85,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    },{
+    }, {
       provide: HTTP_INTERCEPTORS,
       useClass: ResponseInterceptor,
       multi: true
@@ -90,6 +93,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
   ],
   bootstrap: [AppComponent],
-  entryComponents:[DeleteComponent]
+  entryComponents: [DeleteComponent]
 })
 export class AppModule { }

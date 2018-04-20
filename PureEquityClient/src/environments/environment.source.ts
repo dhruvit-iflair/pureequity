@@ -5,6 +5,7 @@ export const environment = {
     login: 'http://192.168.1.37:6008/login',
     register: 'http://192.168.1.37:6008/register',
     picPoint: 'http://192.168.1.37:6008/uploads',
-    userDocPoint: 'http://192.168.1.37:6008/uploads/users/documents/'
+    userDocPoint: 'http://192.168.1.37:6008/uploads/users/documents/',
+    tradingApi: 'http://192.168.1.132/exchange-platform/pureEquityAPI/v1'
   };
   

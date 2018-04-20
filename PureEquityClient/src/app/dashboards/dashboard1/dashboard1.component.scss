@@ -3,3 +3,32 @@
     width:280px;
     margin: 0 auto;
 }
+.padding-10 {
+    padding: 10px;
+    text-align: center;
+}
+.padding-10 {
+    width: 92px;
+    float: left;
+    text-align: center;
+}
+.padding-10 {
+    margin-left: 5px;
+    background: lightgray;
+    margin-right: 5px;
+    border-radius: 50px;
+    margin-top: 10px;
+    color: #777777;
+}
+.padding-10.active{
+    background: #555383;
+    color: white;
+}
+tbody.inactive {
+    display: none;
+}
+.padding-3.non-active.ng-star-inserted {
+    position: relative;
+    float: right;
+    padding: 10px;
+}

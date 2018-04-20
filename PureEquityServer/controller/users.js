@@ -143,7 +143,7 @@ UserCtrl.prototype.register = function (req, res) {
             var mailOptions = {
                 from: 'no-replay@PureEquity.com',
                 to: user.username,
-                subject: 'Welcome to Prure Equity',
+                subject: 'Welcome to Pure Equity',
                 text: 'You are receiving this because you (or someone else) have requested registration for your account.\n\n' +
                     'Please click on the following link, or paste this into your browser to verify your email account:\n\n' +
                     'http://' + config.redirectionHost + '/verify?token=' + token + ' \n\n'
