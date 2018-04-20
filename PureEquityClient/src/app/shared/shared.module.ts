@@ -5,6 +5,8 @@ import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } 
 import { RoleService } from './services/role.service';
 import { UsersService } from "./services/users.service";
 import { FirstcapitalizePipe } from './pipes/firstCapitalize.pipe';
+import { DashboardService } from './services/dashboard.service';
+import { GlobalService } from './services/global.service';
 @NgModule({
   declarations: [
     AccordionAnchorDirective,
@@ -17,7 +19,7 @@ import { FirstcapitalizePipe } from './pipes/firstCapitalize.pipe';
     AccordionLinkDirective,
     AccordionDirective,
    ],
-  providers: [ MenuItems, RoleService, UsersService],
+  providers: [ MenuItems, RoleService, UsersService, DashboardService, GlobalService],
 
 })
 export class SharedModule { }

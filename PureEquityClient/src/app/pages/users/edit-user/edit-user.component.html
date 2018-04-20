@@ -1,59 +1,16 @@
-<!-- <div class="bg-card">
-  <mat-card>
-    <mat-card-content>
-      <mat-card-title>{{user.firstName | firstcapitalize}} {{ user.lastName | firstcapitalize}}</mat-card-title>
-      <mat-horizontal-stepper [linear]="true">
-        <mat-step [stepControl]="detailsFormGroup">
-          <form [formGroup]="detailsFormGroup">
-            <ng-template matStepLabel>{{user.firstName | firstcapitalize}} Detail's</ng-template>
-            <app-user-details [detailsFormGroup]="detailsFormGroup"></app-user-details>
-            <div>
-              <button mat-raised-button color="warn" matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="personalDetailsFormGroup">
-          <form [formGroup]="personalDetailsFormGroup">
-            <ng-template matStepLabel>Personal Details </ng-template>
-            <app-user-personal-details [personalDetailsFormGroup]="personalDetailsFormGroup"></app-user-personal-details>
-          </form>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Done</ng-template>
-          You are now done.
-          <div>
-            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-          </div>
-        </mat-step>
-      </mat-horizontal-stepper>
-    </mat-card-content>
-  </mat-card>
-</div> -->
-
 <div fxLayout="row" fxLayoutWrap="wrap">
-  <div fxFlex.gt-lg="50" fxFlex.gt-md="60" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
-      <mat-card-content>
+      <mat-card-content style="height: 835px;">
         <mat-card-title>Edit User</mat-card-title>
         <form [formGroup]="detailsFormGroup">
           <app-user-details [detailsFormGroup]="detailsFormGroup"></app-user-details>
           <app-user-personal-details [personalDetailsFormGroup]="detailsFormGroup.controls.user_profile"></app-user-personal-details>
+          <br>
+          <div class="row text-center" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width: 100%; float: left; ">
+              <button mat-raised-button color="red">Back</button>
+              <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="save();">Save</button>
+          </div>
         </form>
       </mat-card-content>
     </mat-card>
-   </div>
-   <!-- <div fxFlex.gt-lg="50" fxFlex.gt-md="60" fxFlex.gt-xs="100" fxFlex="100">
-      <mat-card>
-          <mat-card-content>
-            <mat-card-title>Personal and Addres Details</mat-card-title>
-            <form [formGroup]="personalDetailsFormGroup">
-              <app-user-personal-details [personalDetailsFormGroup]="personalDetailsFormGroup"></app-user-personal-details>
-            </form>
-          </mat-card-content>
-        </mat-card>
-    </div> -->
-</div>
-<div class="row text-center">
-    <button mat-raised-button color="red">Back</button>
-    <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="save();">Save</button>
-</div>
+  </div>
