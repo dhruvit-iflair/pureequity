@@ -10,52 +10,52 @@ import { Trades } from "../interfaces/trades.interface";
 @Injectable()
 export class DashboardService {
   public coins = new Subject<Coins>();
-  public tra = new Subject<Trades>();
-  public tradeData: any  = {
-    btcusd : Array,
-    btceur : Array,
-    eurusd : Array,
-    xrpusd : Array,
-    xrpeur : Array,
-    xrpbtc : Array,
-    ltcusd : Array,
-    ltceur : Array,
-    ltcbtc : Array,
-    ethusd : Array,
-    etheur : Array,
-    ethbtc : Array,
-    bchusd : Array,
-    bcheur : Array,
-    bchbtc : Array
-  };
-  constructor(public http:HttpClient, public toster:ToastrService) { }
-  fetchCoins(){
-    this.http.get(environment.tradingApi + '/coins').subscribe((res:any)=>{
-      this.coins.next(res.payload.data);
-    }, (error)=>{
-//      this.toster.error('Something went wrong, please try again later', 'Error');
-      console.log(error);
-    })
+  public tra = new Subject<any>();
+  public isActive = [];
+  public tradeList: any[] = [
+    { name: 'BTC / USD', isActive: true, value: 'btcusd', data: [] },
+    { name: 'BTC / EUR', isActive: false, value: 'btceur', data: [] },
+    { name: 'EUR / USD', isActive: false, value: 'eurusd', data: [] },
+    { name: 'XRP / USD', isActive: false, value: 'xrpusd', data: [] },
+    { name: 'XRP / EUR', isActive: false, value: 'xrpeur', data: [] },
+    { name: 'XRP / BTC', isActive: false, value: 'xrpbtc', data: [] },
+    { name: 'LTC / USD', isActive: false, value: 'ltcusd', data: [] },
+    { name: 'LTC / EUR', isActive: false, value: 'ltceur', data: [] },
+    { name: 'LTC / BTC', isActive: false, value: 'ltcbtc', data: [] },
+    { name: 'ETH / USD', isActive: false, value: 'ethusd', data: [] },
+    { name: 'ETH / EUR', isActive: false, value: 'etheur', data: [] },
+    { name: 'ETH / BTC', isActive: false, value: 'ethbtc', data: [] },
+    { name: 'BCH / USD', isActive: false, value: 'bchusd', data: [] },
+    { name: 'BCH / EUR', isActive: false, value: 'bcheur', data: [] },
+    { name: 'BCH / BTC', isActive: false, value: 'bchbtc', data: [] }
+  ];
+  constructor(public http: HttpClient, public toster: ToastrService) {
+    if (localStorage.getItem('tradeList')) {
+      this.tradeList = JSON.parse(localStorage.getItem('tradeList'));
+    }
   }
-  getCoins():Observable<Coins>{
-    return this.coins.asObservable();
+  trades() {
+    for (let i = 0; i < this.tradeList.length; i++) {
+      if (!this.isActive[i]) {
+        this.isActive[i] = true;
+        const key = this.tradeList[i];
+        this.http.get(environment.tradingApi + '/trades/' + key.value).subscribe((res: any) => {
+          if (res.payload && res.payload.data) {
+            this.tradeList[i].data = res.payload.data;
+            localStorage.setItem('tradeList', JSON.stringify(this.tradeList));
+            this.tra.next(this.tradeList);
+          }
+          if (this.isActive[i]) {
+            this.isActive[i] = false;
+          }
+        }, (error) => {
+          //this.toster.error('Something went wrong, please try again later', 'Error');
+          console.log(error);
+        })
+      }
+    }
   }
-  trades(){
-    var value = ['btcusd', 'btceur', 'eurusd', 'xrpusd', 'xrpeur', 'xrpbtc', 'ltcusd', 'ltceur', 'ltcbtc', 'ethusd', 'etheur', 'ethbtc', 'bchusd', 'bcheur', 'bchbtc'];
-    for (let i = 0; i < value.length; i++) {
-      const key = value[i];
-      this.http.get(environment.tradingApi + '/trades/'+ key).subscribe((res:any)=>{
-        if (res.payload && res.payload.data) {
-          this.tradeData[key] = res.payload.data;
-          this.tra.next(this.tradeData);              
-        }
-      }, (error)=>{
-        //this.toster.error('Something went wrong, please try again later', 'Error');
-        console.log(error);
-      }) 
-    }    
-  }
-  tradeValue():Observable<Trades>{
+  tradeValue(): Observable<Trades> {
     return this.tra.asObservable();
   }
 }

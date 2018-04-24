@@ -7,6 +7,7 @@ import { KycadminComponent } from './kycadmin/kycadmin.component';
 import { KycAdminComponent } from './kyc/kycadmin.component';
 import { BankdetailsComponent } from './bankdetails/bankdetails.component';
 import { QrotpverificationComponent } from './qrotpverification/qrotpverification.component';
+import { ChangePasswordComponent } from '../pages/change-password/change-password.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -34,7 +35,13 @@ export const DashboardsRoutes: Routes = [
     },
     {
       path:'security',
-      component:QrotpverificationComponent
+      component:QrotpverificationComponent,
+      // children:[
+      //   {
+      //     path:'change-password',
+      //     component:ChangePasswordComponent
+      //   }
+      // ]
     }
   ]
   }

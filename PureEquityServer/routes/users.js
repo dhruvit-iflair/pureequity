@@ -12,6 +12,8 @@ module.exports = function (router) {
 
     router.post('/api/users/image', controller.image);
     
+    router.put('/api/change_password/:id', verify, controller.change_password);
+
     router.put('/api/users/:id', verify, controller.put);
     
     router.delete('/api/users/:id', verify, controller.delete);

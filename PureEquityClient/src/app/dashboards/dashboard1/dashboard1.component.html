@@ -53,38 +53,26 @@
                 <!-- <mat-card-subtitle>{{trade | json}}</mat-card-subtitle> -->
                 <div class="table-25">
                     <table
-                        *ngIf="coins"
                         style="width: 100%; text-align: center; padding: 15px 0 0 0; margin-bottom: 0;">
                         <thead>
                             <tr>
                                 <th>Amount</th>
                                 <th>Price</th>
-                                <th>UTC Time</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody
                             *ngFor="let list of tradeList; let i = index"
                             class="{{(list.isActive)? 'acitve' : 'inactive'}}">
-                            <tr *ngFor="let t of trade[list.value]; let ix = index">
+                            <tr *ngFor="let t of list.data">
                                 <td *ngIf="list.isActive && t.amount"> {{t.amount}}</td>
                                 <td *ngIf="list.isActive && t.price"> {{t.price}}</td>
-                                <td *ngIf="list.isActive && t.date"> {{t.date | date:'short'}}</td>
-                                <!-- <td *ngIf="list.isActive"> {{trade[list.value][0].price}}</td> -->
-                                <!-- <td *ngIf="list.isActive"> {{trade[list.value][0].date}}</td> -->
-                                <!-- <td >{{list.name}}</td> -->
+                                <td *ngIf="list.isActive && t.date"> {{t.date * 1000 | date:'short'}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </mat-card-content>
-            <!-- <hr> -->
-            <!-- <mat-card-content> <ul class="list-inline text-center"> <li> <h6
-            class="text-muted text-success m-0"> <i class="fa fa-circle font-10 m-r-10
-            "></i>Mobile</h6> </li> <li> <h6 class="text-muted text-info m-0"> <i class="fa
-            fa-circle font-10 m-r-10"></i>Desktop</h6> </li> <li> <h6 class="text-muted
-            text-purple m-0"> <i class="fa fa-circle font-10 m-r-10"></i>Tablet</h6> </li>
-            </ul> </mat-card-content> -->
-
         </mat-card>
     </div>
 </div>

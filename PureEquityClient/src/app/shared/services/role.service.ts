@@ -25,7 +25,7 @@ export class RoleService {
     }
     getARole(id:any){
         this.http.get(environment.api+'/role/'+id).subscribe((response:Role)=>{
-            debugger;
+            // debugger;
             this.role.next(response);
         },(error)=>{
             this.toster.error('Error in getting role please contact your system admin', 'Error');
