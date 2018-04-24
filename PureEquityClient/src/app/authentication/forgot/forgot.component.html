@@ -3,7 +3,7 @@
       <mat-card>
         <mat-card-content>
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="text-center"><img alt="homepage" src="assets/images/logo-icon.png"><h4 class="m-t-0">Recover Password</h4></div>  
+            <div class="text-center"><img alt="homepage" src="assets/logo.png"><h4 class="m-t-0">Recover Password</h4></div>  
             <p class="text-center font-14">Enter your email and we'll send you the password reset link.</p>
             
             <div  fxLayout="column"  fxLayoutAlign="space-around">
@@ -14,7 +14,7 @@
                 <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="text-danger support-text">You must include an email address.</small>
                 <small *ngIf="form.controls['email'].errors?.email && form.controls['email'].touched" class="text-danger support-text">You must include a valid email address.</small>
               </div>
-              <button mat-raised-button color="primary" type="submit"  class="btn-block btn-lg m-t-20"  [disabled]="!form.valid">Submit</button>
+              <button mat-raised-button color="primary" type="submit"  class="btn-block btn-lg m-t-20 m-b-20"  [disabled]="!form.valid">Submit</button>
             </div>
             <div class="text-center" fxLayout="column"  fxLayoutAlign="space-around" >
               <span>Remembered your password?

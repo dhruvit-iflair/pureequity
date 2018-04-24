@@ -58,7 +58,7 @@ const ADMINMENUITEMS = [
     state: 'security',
     name: 'Security',
     type: 'link',
-    icon: 'no_encryption',
+    icon: 'fingerprint',
   }
 ];
 const USERMENUITEMS = [
@@ -84,7 +84,7 @@ const USERMENUITEMS = [
     state: 'security',
     name: 'Security',
     type: 'link',
-    icon: 'no_encryption',
+    icon: 'fingerprint',
   }
 ];
 

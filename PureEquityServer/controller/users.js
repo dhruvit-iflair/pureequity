@@ -86,6 +86,19 @@ UserCtrl.prototype.put = function (req, res, next) {
 
 }
 
+UserCtrl.prototype.patcher = function (req, res, next) {
+    var updateObject = req.body;
+    User.update({ _id: req.params.id }, { $set: updateObject }, function (er, dtt) {
+        if (er) {
+            console.log('error occured..' + er);
+            res.status(500).send({ message: er.message });
+        }
+        else {
+            res.status(200).send(dtt).end();
+            //res.json(dtt);
+        }
+    });
+}
 
 UserCtrl.prototype.delete = function (req, res, next) {
 

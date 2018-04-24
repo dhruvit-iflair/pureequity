@@ -12,3 +12,17 @@ md-calendar {
 .mat-warn{
     background-color: #555682;
 }
+.successsymbol{
+    color: green;
+    position: absolute;
+    font-size: 35px;
+    margin-top: -9px;
+    margin-left: 5px;
+}
+.crosssymbol{
+    color: red;
+    position: relative;
+    font-size: 35px;
+    top: -130px;
+    left: -20px;
+}

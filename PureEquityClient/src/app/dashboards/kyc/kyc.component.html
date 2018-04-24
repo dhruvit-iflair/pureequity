@@ -3,14 +3,17 @@
   <div fxFlex.gt-sm="60%" fxFlex="60">
     <mat-card>
       <mat-card-content *ngIf="!isApproved">
-        <mat-card-title>Kyc Details</mat-card-title>
-        <mat-card-subtitle>
-            Your KYC Detail is in Process of Verification.
+        <mat-card-title>KYC</mat-card-title>
+        <mat-card-subtitle style="color:#555682;">
+          Your KYC Detail is in Process of Verification.
         </mat-card-subtitle>
       </mat-card-content>
 
       <mat-card-content>
-        <mat-card-title>Kyc Details</mat-card-title>
+        <mat-card-title *ngIf="!isApproved">Kyc Details</mat-card-title>
+        <mat-card-title *ngIf="isApproved">Kyc Details
+          <mat-icon class="mat-icon material-icons successsymbol" role="img">verified_user</mat-icon>
+        </mat-card-title>
         <mat-horizontal-stepper [linear]="isLinear">
           <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="firstFormGroup">
@@ -62,8 +65,9 @@
                 </div>
               </div>
               <div class="mat-form-field">
-                <div *ngFor="let z of uploadedimgs" style="text-align:center;">
+                <div *ngFor="let z of uploadedimgs;let i=index;" style="text-align:center;">
                   <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ userDocPoint }}{{ z }}" *ngIf="z">
+                  <mat-icon *ngIf="i>0" class="mat-icon material-icons crosssymbol" (click)="removeDoc(z);">clear</mat-icon>
                 </div>
               </div>
               <div style="margin-top: 20px;">

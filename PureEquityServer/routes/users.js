@@ -11,6 +11,8 @@ module.exports = function (router) {
     router.post('/api/users/verify', controller.verify);
 
     router.post('/api/users/image', controller.image);
+
+    router.patch('/api/users/:id',controller.patcher);
     
     router.put('/api/users/:id', verify, controller.put);
     

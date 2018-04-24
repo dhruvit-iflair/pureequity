@@ -79,6 +79,20 @@ export class KycComponent implements OnInit {
         });
     }
   }
+  removeDoc(imgnm){
+    let up={img:imgnm,user:this.user.user._id};
+    this.http.post(environment.api + "/userdocs/rmimage", up)
+    .subscribe((res) => {
+      var data = res.json();
+      if(data=="File Removed Successfully."){
+        this.toastr.warning(data);
+        this.getInitialData();
+      }
+      else{
+        this.toastr.error(data);
+      }
+    });
+  }
 
   finalsubmittion() {
     var obj = {

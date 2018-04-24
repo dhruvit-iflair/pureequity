@@ -15,6 +15,8 @@ module.exports = function (router) {
     router.get('/api/userdocs/byuid/:id', controller.getByUid);
 
     router.post('/api/userdocs/image', controller.image);
+
+    router.post('/api/userdocs/rmimage', controller.rmimg);
     
     router.put('/api/userdocs/:id', controller.put);
     
