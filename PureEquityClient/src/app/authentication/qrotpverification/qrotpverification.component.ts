@@ -8,11 +8,11 @@ import { Http } from "@angular/http";
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-qrotpverification',
+  selector: 'app-qrotpverificationx',
   templateUrl: './qrotpverification.component.html',
   styleUrls: ['./qrotpverification.component.css']
 })
-export class QrotpverificationComponent implements OnInit {
+export class QrotpverificationComponentx implements OnInit {
   public veryform: FormGroup;
   constructor(private fb: FormBuilder, private http:Http , private router: Router, public loginService: LoginService, private toastr: ToastrService) { }
   qr = { img: '', key: '' }; isqrenable = false;
@@ -22,26 +22,8 @@ export class QrotpverificationComponent implements OnInit {
     });
     var tokendata = JSON.parse(localStorage.getItem('token'));
     if (tokendata) {
-      this.qr.img = tokendata.data.twofactor.dataURL;
       this.qr.key = tokendata.data.twofactor.tempSecret;
-      this.isqrenable = true;
     }
-    // if (tokendata) {
-    //   var obj = { username: tokendata.user.username, password: tokendata.user.pwd };
-    //   this.loginService.login(obj).subscribe((response: any) => {
-    //     if (response.user.isVerifyEmail) {
-    //       this.qr.img = response.data.twofactor.dataURL;
-    //       this.qr.key = response.data.twofactor.tempSecret;
-    //       this.isqrenable = true;
-    //     }
-    //     else {
-    //       this.toastr.warning('Email not verified ! Please Verify your Email', 'Warning');
-    //     }
-    //   }, (error) => {
-    //     this.toastr.error('Username/Password is incorrect', 'Error');
-    //     console.log(error);
-    //   });
-    // }
    }
   verifyotp(){
     var uobj={

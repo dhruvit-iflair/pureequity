@@ -6,10 +6,11 @@
         <!-- <button mat-raised-button class='mat-top-right' color="primary">
           <mat-icon>add</mat-icon>
         </button> -->
-        <div class="bg-light p-10 p-r-20 p-l-20">
-          <mat-form-field>
+        <div class="bg-light p-10 p-r-20 p-l-20 searchfilter">
+          <mat-form-field id="searchfilter">
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
           </mat-form-field>
+          <mat-icon matSuffix (click)="expandfilter()">search</mat-icon>
         </div>
         <div class="table-rasponsive">
           <mat-table [dataSource]="dataSource" matSort>

@@ -14,6 +14,8 @@ module.exports = function (router) {
 
     router.patch('/api/users/:id',controller.patcher);
     
+    router.put('/api/change_password/:id', verify, controller.change_password);
+
     router.put('/api/users/:id', verify, controller.put);
     
     router.delete('/api/users/:id', verify, controller.delete);

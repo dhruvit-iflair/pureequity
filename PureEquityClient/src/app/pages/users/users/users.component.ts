@@ -37,6 +37,9 @@ export class UsersComponent {
   view(_id){
     console.log(_id);
   }
+  expandfilter(){
+    document.getElementById('searchfilter').setAttribute('style', 'width: 100%;');
+  }
   edit(user:User){
     // let dialogRef = this.dialog.open(EditUserComponent,{
     //   data: user,

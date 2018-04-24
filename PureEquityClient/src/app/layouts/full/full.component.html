@@ -1,3 +1,17 @@
+<style>
+    .responsivelogo{
+    display: none;
+}
+
+@media(max-width:640px){
+    .responsivelogo{
+        display: block;
+    }
+    .originallogo{
+        display: none;
+    }
+}
+</style>
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
@@ -16,7 +30,8 @@
                     <!-- Dark Logo icon -->
                     <img src="assets/logo.png" alt="homepage" class="dark-logo">
                     <!-- Light Logo icon -->
-                    <img src="assets/logo.png" alt="homepage" class="light-logo">
+                    <img src="assets/logo.png" alt="homepage" class="light-logo originallogo">
+                    <img src="assets/images/logo-02.png" alt="homepage" class="light-logo responsivelogo">
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->

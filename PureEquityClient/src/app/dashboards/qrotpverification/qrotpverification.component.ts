@@ -94,10 +94,12 @@ export class QrotpverificationComponent implements OnInit {
       if (x.nModified == 1 && aEnabled==false) {
         this.toastr.success('Two Factor Authentification Disabled From Now Onwards.', 'Success');
         this.isqrenable = true;
+        this.router.navigate(['/login']);
       }
       if (x.nModified == 1 && aEnabled==true) {
         this.toastr.success('Two Factor Authentification Enabled From Now Onwards.', 'Success');
         this.isqrenable = false;
+        this.router.navigate(['/login']);
       }
     }, (err) => {
       var x = err.json();

@@ -30,12 +30,12 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token',JSON.stringify(responsedata));
           this.toastr.success('Welcome!!', 'Success');
           this.globalService.collectCommonData(responsedata);
-          // if(responsedata.data){
-          //   this.router.navigate ( [ '/verification' ] );
-          // }
-          // else{
+           if(responsedata.data.twofactor.dataURL && responsedata.user.is2FAEnabled){
+             this.router.navigate ( [ '/verification' ] );
+           }
+           else{
             this.router.navigate ( [ '/dashboard' ] );
-          //}
+          }
       }
       else{
         this.toastr.warning('Email not verified ! Please Verify your Email', 'Warning');  

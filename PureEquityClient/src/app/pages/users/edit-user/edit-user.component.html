@@ -7,7 +7,7 @@
           <app-user-personal-details [personalDetailsFormGroup]="detailsFormGroup.controls.user_profile"></app-user-personal-details>
           <br>
           <div class="row text-center" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width: 100%; float: left; ">
-              <button mat-raised-button color="red">Back</button>
+              <button mat-raised-button color="red" [routerLink]="[ '/users' ]">Back</button>
               <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="save();">Save</button>
           </div>
         </form>

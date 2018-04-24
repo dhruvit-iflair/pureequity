@@ -17,7 +17,7 @@ import { LoginService } from "../shared/services/login.service";
 import { RoleService } from "../shared/services/role.service";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { VerifyComponent } from './verify/verify.component';
-import { QrotpverificationComponent } from './qrotpverification/qrotpverification.component';
+import { QrotpverificationComponentx } from './qrotpverification/qrotpverification.component';
 
 @NgModule({
   imports: [ 
@@ -43,7 +43,7 @@ import { QrotpverificationComponent } from './qrotpverification/qrotpverificatio
     RegisterComponent,
     ResetPasswordComponent,
     VerifyComponent,
-    QrotpverificationComponent
+    QrotpverificationComponentx
   ],
   providers:[
       // Services

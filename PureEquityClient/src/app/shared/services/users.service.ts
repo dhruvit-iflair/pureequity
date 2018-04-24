@@ -64,4 +64,7 @@ export class UsersService {
     if(data._id) return this.http.put(environment.api + '/user_profile/' +data._id, data)
     return this.http.post(environment.api + '/user_profile', data)    
   }
+  changePassword(data:any) {
+    if(data._id) return this.http.put(environment.api + '/change_password/' +data._id, data)
+  }
 }

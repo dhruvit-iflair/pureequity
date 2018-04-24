@@ -13,12 +13,12 @@
     <!-- ============================================================== -->
     <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class=""> {{ user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) }} {{ user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1) }} <i class="ti-angle-down font-12 m-l-5"></i></a></div>
     <mat-menu #sdprofile="matMenu" class="mymegamenu">
-        <button mat-menu-item>
-            <mat-icon>settings</mat-icon> Settings </button>
-        <button mat-menu-item>
+        <!-- <button mat-menu-item>
+            <mat-icon>settings</mat-icon> Settings </button> -->
+        <button mat-menu-item (click)="goToProfile();">
             <mat-icon>account_box</mat-icon> Profile </button>
-        <button mat-menu-item>
-            <mat-icon>notifications_off</mat-icon> Disable notifications </button>
+        <!-- <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon> Disable notifications </button> -->
         <button mat-menu-item (click)="logout()">
             <mat-icon>exit_to_app</mat-icon> Logout </button>
     </mat-menu>

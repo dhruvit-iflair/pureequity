@@ -4,12 +4,10 @@
       <mat-card-content>
         <form [formGroup]="veryform" (ngSubmit)="verifyotp()">
           <div class="text-center">
-            <img alt="homepage" src="assets/images/logo-icon.png">
+            <img alt="homepage" src="assets/logo.png">
             <h4 class="m-t-0">Login to App</h4>
           </div>
           <div fxLayout="row" fxLayoutWrap="wrap">
-            <img src="{{qr.img}}" height="200px" width="200px" style="margin-left: 15%;">
-            <span style="margin-left: 20%;">{{qr.key}}</span>
               <mat-form-field>
                 <input matInput type="text" placeholder="OTP" [formControl]="veryform.controls['totp']">
               </mat-form-field>

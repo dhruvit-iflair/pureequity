@@ -18,6 +18,8 @@ import { KycAdminComponent } from './kyc/kycadmin.component';
 import { BankdetailsComponent } from './bankdetails/bankdetails.component';
 import { QrotpverificationComponent } from './qrotpverification/qrotpverification.component';
 import { DashboardService } from '../shared/services/dashboard.service';
+import { ChangePasswordComponent } from "../pages/change-password/change-password.component";
+import { LoginService } from '../shared/services/login.service';
 
 @NgModule({
   imports: [
@@ -30,9 +32,10 @@ import { DashboardService } from '../shared/services/dashboard.service';
     RouterModule.forChild(DashboardsRoutes),
     NgxChartsModule,
   ],
-  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent,QrotpverificationComponent ],
+  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent,QrotpverificationComponent, ChangePasswordComponent],
   providers:[
-    DashboardService
+    DashboardService,
+    LoginService
   ]
 
 })

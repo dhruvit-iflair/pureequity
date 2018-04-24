@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { VerifyComponent } from './verify/verify.component';
-import { QrotpverificationComponent } from './qrotpverification/qrotpverification.component';
+import { QrotpverificationComponentx } from './qrotpverification/qrotpverification.component';
 
 export const AuthenticationRoutes: Routes = [
   {
@@ -35,7 +35,7 @@ export const AuthenticationRoutes: Routes = [
       component: RegisterComponent
     }, {
       path: 'verification',
-      component: QrotpverificationComponent
+      component: QrotpverificationComponentx
     }]
   }
 ];

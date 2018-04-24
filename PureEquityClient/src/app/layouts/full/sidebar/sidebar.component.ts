@@ -37,4 +37,7 @@ export class AppSidebarComponent {
     localStorage.clear();
     this.router.navigate(['/login']);
   };
+  goToProfile(){
+    this.router.navigate(['/users/edit/'+ this.user._id])
+  }
 }

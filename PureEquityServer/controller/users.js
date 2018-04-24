@@ -235,16 +235,16 @@ UserCtrl.prototype.login = function (req, res) {
                 });
             }
             else {
-                var objfactor={};
+                var objfactor = {};
                 objfactor.twofactor = req.user.token.twofactor;
-                Role.findById(req.user.role, function (err, doc) { 
-                    if(doc) {
+                Role.findById(req.user.role, function (err, doc) {
+                    if (doc) {
                         req.user.role = doc
-                        res.status(200).send({ auth: true,data: objfactor, token: token, user: req.user });
+                        res.status(200).send({ auth: true, data: objfactor, token: token, user: req.user });
                     }
                     else {
                         res.status(500).send({ auth: false, message: 'Something went wrong !!' });
-                    } 
+                    }
                 });
                 //res.status(200).send({ auth: true, token: token, user: req.user });
             }
@@ -422,25 +422,46 @@ UserCtrl.prototype.verify = function (req, res) {
 UserCtrl.prototype.image = function (req, res) {
     console.log(req.files)
     if (!req.files)
-    return res.status(400).send('No Image was uploaded.');
- 
+        return res.status(400).send('No Image was uploaded.');
+
     let image = req.files.image;
     var ext = image.name.split('.');
     var tim = Date.now();
-    var imageName = tim + "." + ext[ext.length-1];
-    image.mv('./uploads/users/profileImage/'+imageName, function(err) {
-        if (err){
+    var imageName = tim + "." + ext[ext.length - 1];
+    image.mv('./uploads/users/profileImage/' + imageName, function (err) {
+        if (err) {
             console.log(err)
-            return res.status(500).send(err);    
+            return res.status(500).send(err);
         }
-        else{
-            res.status(200).send({image:imageName});  
-        }        
+        else {
+            res.status(200).send({ image: imageName });
+        }
     });
 }
 
 UserCtrl.prototype.deleteImage = function (req, res) {
     console.log("Will delete image")
+}
+UserCtrl.prototype.change_password = function (req, res) {
+
+    User.findByUsername(req.body.username).then(function (getUser) {
+        var new_password = req.body.password;
+        if (getUser) {
+            getUser.setPassword(new_password, function () {
+                getUser.save(function (er, dt) {
+                    if (er) {
+                        console.log('error occured..' + er);
+                    }
+                    res.status(200).send({ message: "Password Changed Successfully !!" }).end()            
+                });
+            });
+        }
+        else {
+            res.status(404).send({auth:false, message: 'This User does not exist!'});
+        }
+    }, function (errpt) {
+        console.log(errpt);
+    });
 }
 
 module.exports = new UserCtrl();
