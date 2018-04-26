@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class UsersComponent {
   displayedColumns = ['username', 'firstName', 'lastName', 'action']
   dataSource: MatTableDataSource<User>;
-  public i :Number = 0;
+  public i :Number = 0;x=false;
   public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -38,7 +38,14 @@ export class UsersComponent {
     console.log(_id);
   }
   expandfilter(){
-    document.getElementById('searchfilter').setAttribute('style', 'width: 100%;');
+    if(!this.x){
+      document.getElementById('searchfilter').setAttribute('style', 'width: 35%;');
+      this.x=true;
+    }
+    else{
+      this.x=false;
+      document.getElementById('searchfilter').setAttribute('style', 'width: 0%;');
+    }
   }
   edit(user:User){
     // let dialogRef = this.dialog.open(EditUserComponent,{

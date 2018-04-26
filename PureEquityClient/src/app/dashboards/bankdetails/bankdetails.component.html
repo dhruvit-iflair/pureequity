@@ -8,7 +8,7 @@
   </div>
 </div> -->
 <mat-card>
-  <mat-card-content>
+ <mat-card-content class="contentchanger">
     <mat-card-title>Bank Details</mat-card-title>
     <mat-grid-list cols="2" rowHeight="1:1">
       <mat-grid-tile>
@@ -16,7 +16,7 @@
           <mat-card-header>
             <mat-card-title>Bank detail</mat-card-title>
           </mat-card-header>
-          <mat-card-content>
+         <mat-card-content class="contentchanger">
             <form [formGroup]="bankdetails">
               <mat-form-field>
                 <input matInput placeholder="Account Number" formControlName="acnumber" required>
@@ -48,11 +48,11 @@
         </mat-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <mat-card>
+        <mat-card id="customeCss">
           <mat-card-header>
             <mat-card-title>Saved Bank Details</mat-card-title>
           </mat-card-header>
-          <mat-card-content>
+         <mat-card-content class="contentchanger">
             <form [formGroup]="savedbankdetails">
               <mat-form-field>
                 <input matInput placeholder="Bank Name" formControlName="bankname" required>
@@ -78,7 +78,7 @@
           <mat-card-header>
             <mat-card-title>Enter Credit Card Information</mat-card-title>
           </mat-card-header>
-          <mat-card-content>
+         <mat-card-content class="contentchanger">
             <form [formGroup]="ccinfo">
               <mat-form-field>
                 <input matInput placeholder="Name on Credit Card" formControlName="ccname" required>
@@ -112,7 +112,7 @@
           <mat-card-header>
             <mat-card-title>Saved Credit Card Detail</mat-card-title>
           </mat-card-header>
-          <mat-card-content>
+         <mat-card-content class="contentchanger">
             <form [formGroup]="sccdetails">
               <mat-form-field>
                 <input matInput placeholder="Creadit Card Number" formControlName="ccnumber" required>
@@ -135,7 +135,7 @@
           <mat-card-header>
             <mat-card-title>Enter PayPal Detail</mat-card-title>
           </mat-card-header>
-          <mat-card-content>
+         <mat-card-content class="contentchanger">
             <form [formGroup]="ppdetails">
               <mat-form-field>
                 <input matInput type="email" placeholder="Paypal Registered Email" formControlName="email" required>
@@ -155,7 +155,7 @@
           <mat-card-header>
             <mat-card-title>Saved Paypal Account</mat-card-title>
           </mat-card-header>
-          <mat-card-content>
+         <mat-card-content class="contentchanger">
             <form [formGroup]="sppdetails">
               <mat-form-field>
                 <input matInput type="email" placeholder="Paypal Email" formControlName="semail" required>

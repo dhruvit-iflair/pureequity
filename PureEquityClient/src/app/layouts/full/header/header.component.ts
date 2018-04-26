@@ -70,7 +70,9 @@ export class AppHeaderComponent {
       var u = JSON.parse(localStorage.getItem('token'));
       this.user = u.user
     }
-    
+    goToProfile(){
+      this.router.navigate(['/users/edit/'+ this.user._id])
+    }
     logout(){
       localStorage.clear();
       this.router.navigate(['/login']);

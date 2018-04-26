@@ -7,6 +7,8 @@ import { UsersService } from "./services/users.service";
 import { FirstcapitalizePipe } from './pipes/firstCapitalize.pipe';
 import { DashboardService } from './services/dashboard.service';
 import { GlobalService } from './services/global.service';
+import { TopnavbService } from './topnavb/topnavb.service';
+
 @NgModule({
   declarations: [
     AccordionAnchorDirective,
@@ -19,7 +21,7 @@ import { GlobalService } from './services/global.service';
     AccordionLinkDirective,
     AccordionDirective,
    ],
-  providers: [ MenuItems, RoleService, UsersService, DashboardService, GlobalService],
+  providers: [ MenuItems, RoleService, UsersService, DashboardService, GlobalService,TopnavbService],
 
 })
 export class SharedModule { }

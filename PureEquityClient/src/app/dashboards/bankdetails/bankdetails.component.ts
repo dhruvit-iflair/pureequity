@@ -60,6 +60,13 @@ export class BankdetailsComponent implements OnInit {
       semail: ['', Validators.required,Validators.email],
       amount:['', Validators.required]
     });
+    var tokendata=JSON.parse(localStorage.getItem('token'));
+    if(tokendata.user.role.name!='admin'){
+      document.getElementById('customeCss').setAttribute('style', 'top: -7%;');
+    }
+    else{
+      document.getElementById('customeCss').setAttribute('style', 'top: -9%;');
+    }
     //this.getInitialData();
   }
 

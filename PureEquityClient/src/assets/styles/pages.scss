@@ -25,7 +25,50 @@ File: scss
   left: 0;
   right: 0;
 } 
+//for navbar logo responsive
+.responsivelogo{
+    display: none;
+}
 
+@media(max-width:640px){
+    .responsivelogo{
+        display: block;
+    }
+    .originallogo{
+        display: none;
+    }
+}
+//for navbar logo responsive
+
+//for manual nav bar css
+
+#mNav .mat-nav-list.selected{
+        background: #555682;
+        border-radius: 4px;
+        color: #ffffff;
+    }
+    #mNav .mat-list-item.selected > .mat-list-item-content > a{
+        background: #555682;
+        border-radius: 4px;
+        color: #ffffff;
+    }
+    #mNav .mat-nav-list .mat-list-item:hover{
+        border-radius: 4px;
+    }
+    #mNav .mat-list-item:hover {
+        background: none;
+    }
+    #mNav .mat-list-item .mat-list-item-content:hover > a {
+        color: #e2dab7;
+    }
+    #mNav .mat-list-item a {
+        color: #99abb4;
+        font-size: 16px;
+    }
+    .mat-nav-list.selected .mat-list-item-content > a {
+        color: #ffffff !important;
+    }
+//for manual nav bar css
 .mat-drawer-container{
     background: $bodycolor;
     

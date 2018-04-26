@@ -4,8 +4,8 @@ import { ChangeDetectorRef, Component, NgZone, OnDestroy, ViewChild, HostListene
 import { MenuItems } from '../../shared/menu-items/menu-items';
 import { AppHeaderComponent } from './header/header.component';
 import { AppSidebarComponent } from './sidebar/sidebar.component';
-
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar'; 
+import { TopnavbService } from '../../shared/topnavb/topnavb.service';
 
 declare var $: any;
 
@@ -29,11 +29,21 @@ export class FullComponent implements OnDestroy, AfterViewInit {
       
   public config: PerfectScrollbarConfigInterface = {};
   private _mobileQueryListener: () => void;
-  
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public menuItems: MenuItems) {
+  public navItems;isAdmin;
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public menuItems: MenuItems,private topnav:TopnavbService) {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.navItems=this.topnav;
+  }
+  ngOnInit(){
+    var tokendata=JSON.parse(localStorage.getItem('token'));
+    if(tokendata.user.role.name!='admin'){
+      this.isAdmin=false;
+    }
+    else{
+      this.isAdmin=true;
+    }
   }
 
   ngOnDestroy(): void {
