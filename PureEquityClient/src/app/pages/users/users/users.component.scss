@@ -13,3 +13,17 @@
     height: 90px;
     position: relative;
 }
+.flexC{
+    display: flex;
+    overflow: scroll;
+}
+.flexC>mat-card{
+    max-width: 33%;
+    min-width: 33%;
+}
+.profiler{
+    height: 66px;
+    width: 66px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}

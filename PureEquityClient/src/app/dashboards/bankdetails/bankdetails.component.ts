@@ -11,6 +11,7 @@ import { card, flip } from '../../shared/animations/animations';
 import { BankdetailsService } from '../../shared/services/bankdetails.service';
 import { Bank } from '../../shared/interfaces/user.interface';
 
+//declare let paypal: any;
 @Component({
   selector: 'app-bankdetails',
   templateUrl: './bankdetails.component.html',

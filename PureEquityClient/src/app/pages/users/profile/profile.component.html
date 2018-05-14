@@ -1,0 +1,23 @@
+  <mat-card>
+    <mat-card-content style="height:fit-content;">
+      <mat-card-title>Edit Profile</mat-card-title>
+      <form [formGroup]="detailsFormGroup">
+        <mat-tab-group>
+          <mat-tab label="Basic">
+            <div style="margin-top: 4%;">
+              <app-user-details [detailsFormGroup]="detailsFormGroup"></app-user-details>
+            </div>
+          </mat-tab>
+          <mat-tab label="Personal">
+            <div style="margin-top: 4%;">
+              <app-user-personal-details [personalDetailsFormGroup]="detailsFormGroup.controls.user_profile"></app-user-personal-details>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </form>
+    </mat-card-content>
+  </mat-card>
+<div class="row text-center">
+  <button mat-raised-button color="red" (click)="cancel()">Back</button>
+  <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="updateUserDetails();">Save</button>
+</div>

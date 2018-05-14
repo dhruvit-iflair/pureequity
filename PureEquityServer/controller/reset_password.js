@@ -6,6 +6,16 @@ var mongoose = require("mongoose"),
     async = require('async'),
     nodemailer = require('nodemailer'),
     crypto = require('crypto');
+var mailer = require('../models/mailer');
+var smtpTransport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: config.ImapEmailer,
+        pass: config.ImapSect
+    }
+});
 
 Reset_PasswordCtrl.prototype.generate = function (req, res, next) {
     async.waterfall([
@@ -32,79 +42,86 @@ Reset_PasswordCtrl.prototype.generate = function (req, res, next) {
             });
         },
         function (token, user, done) {
-            var smtpTrans = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
-                auth: {
-                    user: config.ImapEmailer,
-                    pass: config.ImapSect
+            mailer.find({title:'Reset Password'})
+            .exec(function(er,docker){
+                if(er){
+                    res.status(400).send({message:er});
                 }
-            });
-            var mailOptions = {
-                from: 'no-replay@PureEquity.com',
-                to: user.username,
-                subject: 'Password Reset',
-                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                    'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +
-                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-            };
-            smtpTrans.sendMail(mailOptions, function (err) {
-                console.log("Email sent to :: " + user.username);
-                Reset_Password.find({ user: user._id, isUsed: false }).exec(function (err, re) {
-                    if (err) {
-                        res.status(500).send({ message: err.message });
-                    }
-                    else if (re.length && re[0]._id) {
-                        var data = {
-                            token: token,
-                            tokentime: Date.now() + 3600000,
-                            user: user._id
+                else{
+                    if (docker[0]) {
+                        var founder=docker[0].content.search("[(resetLink)]");
+                        if(founder>-1){
+                            var x=docker[0].content.split("[(resetLink)]");
+                            docker[0].content=x[0]+'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +x[1];
                         }
-                        Reset_Password.findByIdAndUpdate(re[0]._id, data, function (err, reset) {
-                            if (err) {
-                                res.status(500).send({ message: err.message });
-                            }
-                            else if (reset && reset._id) {
-                                res.status(200).send({ message: "Please Check you email's Inbox" }).end();
-                            }
-                            else if (!reset) {
-                                res.status(404).send({ message: "No Token generated !!" }).end();
-                            }
-                            else {
-                                res.status(500).send({ message: "Error in resetting password this user !!" }).end();
-                            }
+                        var mailOptions = {
+                            from: 'no-replay@PureEquity.com',
+                            to: user.username,
+                            subject: docker[0].subject,
+                            text:docker[0].content
+                            // text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                            //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                            //     'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +
+                            //     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                        };
+                        smtpTransport.sendMail(mailOptions, function (err) {
+                            console.log("Email sent to :: " + user.username);
+                            Reset_Password.find({ user: user._id, isUsed: false }).exec(function (err, re) {
+                                if (err) {
+                                    res.status(500).send({ message: err.message });
+                                }
+                                else if (re.length && re[0]._id) {
+                                    var data = {
+                                        token: token,
+                                        tokentime: Date.now() + 3600000,
+                                        user: user._id
+                                    }
+                                    Reset_Password.findByIdAndUpdate(re[0]._id, data, function (err, reset) {
+                                        if (err) {
+                                            res.status(500).send({ message: err.message });
+                                        }
+                                        else if (reset && reset._id) {
+                                            res.status(200).send({ message: "Please Check you email's Inbox" }).end();
+                                        }
+                                        else if (!reset) {
+                                            res.status(404).send({ message: "No Token generated !!" }).end();
+                                        }
+                                        else {
+                                            res.status(500).send({ message: "Error in resetting password this user !!" }).end();
+                                        }
+                                    });
+                                }
+                                else if (!re.length) {
+                                    var data = {
+                                        token: token,
+                                        tokentime: Date.now() + 3600000,
+                                        user: user._id
+                                    }
+                                    var reset_password = new Reset_Password(data);
+        
+                                    reset_password.save(function (err, reset) {
+                                        if (err) {
+                                            res.status(500).send({ message: err.message });
+                                        }
+                                        else if (reset && reset._id) {
+                                            res.status(200).send({ message: "Please Check you email's Inbox" }).end();
+                                        }
+                                        else if (!reset) {
+                                            res.status(404).send({ message: "No Token generated !!" }).end();
+                                        }
+                                        else {
+                                            res.status(500).send({ message: "Error in generating token for this user !!" }).end();
+                                        }
+                                    });
+                                }
+                                else {
+                                    res.status(500).send({ message: "Error in getting token this user !!" }).end();
+                                }
+        
+                            })
                         });
                     }
-                    else if (!re.length) {
-                        var data = {
-                            token: token,
-                            tokentime: Date.now() + 3600000,
-                            user: user._id
-                        }
-                        var reset_password = new Reset_Password(data);
-
-                        reset_password.save(function (err, reset) {
-                            if (err) {
-                                res.status(500).send({ message: err.message });
-                            }
-                            else if (reset && reset._id) {
-                                res.status(200).send({ message: "Please Check you email's Inbox" }).end();
-                            }
-                            else if (!reset) {
-                                res.status(404).send({ message: "No Token generated !!" }).end();
-                            }
-                            else {
-                                res.status(500).send({ message: "Error in generating token for this user !!" }).end();
-                            }
-                        });
-                    }
-                    else {
-                        res.status(500).send({ message: "Error in getting token this user !!" }).end();
-                    }
-
-                })
+                }
             });
         }
     ], function (err) {
@@ -177,25 +194,32 @@ Reset_PasswordCtrl.prototype.verify = function (req, res, next) {
             });
         },
         function (reset, user, done) {
-            var smtpTransport = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
-                auth: {
-                    user: config.ImapEmailer,
-                    pass: config.ImapSect
+            mailer.find({title:'Inform Reset Password'})
+            .exec(function(er,docker){
+                if(er){
+                    res.status(400).send({message:er});
                 }
-            });
-            var mailOptions = {
-                from: 'passwordreset@demo.com',
-                to: user.username,
-                subject: 'Your password has been changed',
-                text: 'Hello,\n\n' +
-                    'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
-            };
-            smtpTransport.sendMail(mailOptions, function (err) {
-                res.status(200).send({ message: "Password Reset Successfully!! Login with new Password" }).end()
-                done(err);
+                else{
+                    if (docker[0]) {
+                        var founder=docker[0].content.search("[(user)]");
+                        if(founder>-1){
+                            var x=docker[0].content.split("[(user)]");
+                            docker[0].content=x[0]+user.username +x[1];
+                        }
+                        var mailOptions = {
+                            from: 'no-replay@PureEquity.com',
+                            to: user.username,
+                            subject: docker[0].subject,
+                            text:docker[0].content
+                            // text: 'Hello,\n\n' +
+                            //     'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
+                        };
+                        smtpTransport.sendMail(mailOptions, function (err) {
+                            res.status(200).send({ message: "Password Reset Successfully!! Login with new Password" }).end()
+                            done(err);
+                        });
+                    }
+                }
             });
         }
     ], function (err) {

@@ -1,16 +1,25 @@
-<div fxLayout="row" fxLayoutWrap="wrap">
-    <mat-card>
-      <mat-card-content style="height: 835px;">
-        <mat-card-title>Edit User</mat-card-title>
-        <form [formGroup]="detailsFormGroup">
-          <app-user-details [detailsFormGroup]="detailsFormGroup"></app-user-details>
-          <app-user-personal-details [personalDetailsFormGroup]="detailsFormGroup.controls.user_profile"></app-user-personal-details>
-          <br>
-          <div class="row text-center" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width: 100%; float: left; ">
-              <button mat-raised-button color="red" [routerLink]="[ '/users' ]">Back</button>
-              <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="save();">Save</button>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
+<div>
+  <mat-card>
+    <mat-card-content style="height:fit-content;">
+      <mat-card-title>Edit User</mat-card-title>
+      <form [formGroup]="detailsFormGroup">
+        <mat-tab-group>
+          <mat-tab label="Basic">
+            <div style="margin-top: 4%;">
+              <app-user-details [detailsFormGroup]="detailsFormGroup"></app-user-details>
+            </div>
+          </mat-tab>
+          <mat-tab label="Personal">
+            <div style="margin-top: 4%;">
+              <app-user-personal-details [personalDetailsFormGroup]="detailsFormGroup.controls.user_profile"></app-user-personal-details>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="row text-center">
+  <button mat-raised-button color="red" (click)="cancel()">Back</button>
+  <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="save();">Save</button>
+</div>

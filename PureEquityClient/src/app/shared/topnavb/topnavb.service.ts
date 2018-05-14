@@ -3,7 +3,7 @@ const navItems=[
   {
     state: 'dashboard',
     title: 'Dashboard',
-    icon: 'av_timer'
+    icon: 'dashboard'
   },
   {
     state: 'kyc',
@@ -14,6 +14,11 @@ const navItems=[
     state: 'bank',
     title: 'Bank',
     icon: 'no_encryption'
+  },
+  {
+    state: 'buysell',
+    title: 'Buy/Sell',
+    icon: 'import_export'
   },
   {
     state: 'security',

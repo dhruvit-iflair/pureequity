@@ -1,12 +1,12 @@
 <div [formGroup]="address">
       <mat-form-field>
-        <input matInput placeholder="Apartment" formControlName="apartment" required>
+        <input matInput placeholder="Address 1" formControlName="apartment" required>
         <mat-icon matSuffix>home</mat-icon>
         <small *ngIf="address.controls['apartment'].hasError('required') && address.controls['apartment'].touched"
         class="text-danger support-text">You must include Apartment.</small>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Street" formControlName="streetAddress" required>
+        <input matInput placeholder="Address 2" formControlName="streetAddress" required>
         <mat-icon matSuffix>place</mat-icon>
         <small *ngIf="address.controls['streetAddress'].hasError('required') && address.controls['streetAddress'].touched"
         class="text-danger support-text">You must include Street.</small>

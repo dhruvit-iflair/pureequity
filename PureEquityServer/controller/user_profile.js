@@ -47,6 +47,28 @@ User_ProfileCtrl.prototype.getById = function (req, res, next) {
 
 }
 
+User_ProfileCtrl.prototype.getByUid = function (req, res, next) {
+
+    User_Profile.find({createdBy:req.params.id})
+        .populate("createdBy")
+        .populate("updatedBy")
+        .exec(function (err, doc) {
+            if (err) {
+                res.status(500).send({ message: err.message });
+            }
+            else if (doc[0] && doc[0]._id) {
+                res.status(200).send(doc).end();
+            }
+            else if (!doc[0]) {
+                res.status(404).send({ message: "No User Profile Found !!" }).end();
+            }
+            else {
+                res.status(500).send({ message: "Error in getting this User Profile!!" }).end();
+            }
+        });
+
+}
+
 User_ProfileCtrl.prototype.post = function (req, res, next) {
     var user_profile = new User_Profile(req.body);
         user_profile.save(function (err, doc) {

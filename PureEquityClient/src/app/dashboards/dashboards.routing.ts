@@ -8,6 +8,11 @@ import { KycAdminComponent } from './kyc/kycadmin.component';
 import { BankdetailsComponent } from './bankdetails/bankdetails.component';
 import { QrotpverificationComponent } from './qrotpverification/qrotpverification.component';
 import { ChangePasswordComponent } from '../pages/change-password/change-password.component';
+import { MailerComponent } from './mailer/mailer.component';
+import { MaillistComponent } from './mailer/maillist/maillist.component';
+import { RolesComponent } from './roles/roles.component';
+import { RoleComponent } from './roles/role/role.component';
+import { BuysellComponent } from './buysell/buysell.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -32,6 +37,34 @@ export const DashboardsRoutes: Routes = [
     {
       path:'bank',
       component:BankdetailsComponent
+    },
+    {
+      path:'mails',
+      component:MaillistComponent
+    },
+    {
+      path:'mail',
+      component:MailerComponent
+    },
+    {
+      path:'mail/:id',
+      component:MailerComponent
+    },
+    {
+      path:'roles',
+      component:RolesComponent
+    },
+    {
+      path:'role',
+      component:RoleComponent
+    },
+    {
+      path:'role/:id',
+      component:RoleComponent
+    },
+    {
+      path:'buysell',
+      component:BuysellComponent
     },
     {
       path:'security',

@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token',JSON.stringify(responsedata));
           this.toastr.success('Welcome!!', 'Success');
           this.globalService.collectCommonData(responsedata);
-           if(responsedata.data.twofactor.dataURL && responsedata.user.is2FAEnabled){
+           if(responsedata.user.is2FAEnabled){
              this.router.navigate ( [ '/verification' ] );
            }
            else{

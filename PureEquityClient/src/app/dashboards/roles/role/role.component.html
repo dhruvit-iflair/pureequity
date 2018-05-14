@@ -1,0 +1,27 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <!-- Card column -->
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Role Management</mat-card-title>
+        <form [formGroup]="rolerFormGroup">
+          <mat-form-field>
+            <input matInput type="text" placeholder="Name" [formControl]="rolerFormGroup.controls['name']">
+          </mat-form-field>
+          <small *ngIf="rolerFormGroup.controls['name'].hasError('required') && rolerFormGroup.controls['name'].touched" class="text-danger support-text">Rolename is required.</small>
+          <mat-form-field>
+           <mat-select placeholder="Select Status" [formControl]="rolerFormGroup.controls['status']">
+              <mat-option value="Active">Active</mat-option>
+              <mat-option value="Inactive">Inactive</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <small *ngIf="rolerFormGroup.controls['status'].hasError('required') && rolerFormGroup.controls['status'].touched" class="text-danger support-text">Status is required.</small>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="row text-center" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width: 100%; float: left; ">
+    <button mat-raised-button color="red" [routerLink]="[ '/roles' ]">Back</button>
+    <button mat-raised-button color="primary" [disabled]="!rolerFormGroup.valid" (click)="store();">Save</button>
+  </div>
+</div>

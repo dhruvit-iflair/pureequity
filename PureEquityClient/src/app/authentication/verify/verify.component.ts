@@ -28,7 +28,7 @@ export class VerifyComponent implements OnInit {
           this.router.navigate(['/login']);
         })
       } else {
-        this.toster.error("Something webt wrong please try again later", 'Error!!');        
+        this.toster.error("Something went wrong please try again later", 'Error!!');        
         this.router.navigate(['/login']);        
       }
     })

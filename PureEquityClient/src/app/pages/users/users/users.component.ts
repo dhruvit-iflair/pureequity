@@ -48,16 +48,19 @@ export class UsersComponent {
     }
   }
   edit(user:User){
-    // let dialogRef = this.dialog.open(EditUserComponent,{
-    //   data: user,
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //     if (result) {
-    //       console.log(result);
-    //     }
-    // });
     this.userService.getAUsers(user._id);
-    this.router.navigate(['/users/edit',user._id])
+     let dialogRef = this.dialog.open(EditUserComponent,{
+       data: user,
+       height:'600px'
+     });
+    dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+        }
+    });
+    
+    //this.router.navigate(['/users/edit',user._id]);
+
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace

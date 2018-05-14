@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { Router } from '@angular/router';
 import { User } from '../../../shared/interfaces/user.interface';
+import { EditUserComponent } from '../../../pages/users/edit-user/edit-user.component';
+import { MatDialog} from '@angular/material';
 import { environment } from '../../../../environments/environment';
+import { UsersService } from '../../../shared/services/users.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -66,12 +69,16 @@ export class AppHeaderComponent {
       subject: 'Just see the my admin!',
       time: '9:00 AM'
     }];
-    constructor(private router:Router){
+    constructor(private router:Router,public dialog: MatDialog,private userService: UsersService){
       var u = JSON.parse(localStorage.getItem('token'));
       this.user = u.user
     }
     goToProfile(){
-      this.router.navigate(['/users/edit/'+ this.user._id])
+      // let dialogRef = this.dialog.open(EditUserComponent,{
+      //   data: this.user,
+      //   height:'600px'
+      // });
+      this.router.navigate(['/users/'+ this.user._id]);
     }
     logout(){
       localStorage.clear();

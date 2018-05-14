@@ -34,7 +34,7 @@ const ADMINMENUITEMS = [
     state: 'dashboard',
     name: 'Dashboard',
     type: 'link',
-    icon: 'av_timer',
+    icon: 'dashboard',
   },
   {
     state: 'users',
@@ -48,17 +48,29 @@ const ADMINMENUITEMS = [
     type: 'link',
     icon: 'perm_contact_calendar',
   },
-  {
-    state: 'bank',
-    name: 'Bank',
-    type: 'link',
-    icon: 'no_encryption',
-  },
+  // {
+  //   state: 'bank',
+  //   name: 'Bank',
+  //   type: 'link',
+  //   icon: 'no_encryption',
+  // },
   {
     state: 'security',
     name: 'Security',
     type: 'link',
     icon: 'fingerprint',
+  },
+  {
+    state: 'mails',
+    name: 'Mail Management',
+    type: 'link',
+    icon: 'widgets',
+  },
+  {
+    state: 'roles',
+    name: 'Role Management',
+    type: 'link',
+    icon: 'extension',
   }
 ];
 const USERMENUITEMS = [
@@ -66,7 +78,7 @@ const USERMENUITEMS = [
     state: 'dashboard',
     name: 'Dashboard',
     type: 'link',
-    icon: 'av_timer',
+    icon: 'dashboard',
   },
   {
     state: 'kyc',
@@ -74,12 +86,12 @@ const USERMENUITEMS = [
     type: 'link',
     icon: 'perm_contact_calendar',
   },
-  {
-    state: 'bank',
-    name: 'Bank',
-    type: 'link',
-    icon: 'no_encryption',
-  },
+  // {
+  //   state: 'bank',
+  //   name: 'Bank',
+  //   type: 'link',
+  //   icon: 'no_encryption',
+  // },
   {
     state: 'security',
     name: 'Security',
