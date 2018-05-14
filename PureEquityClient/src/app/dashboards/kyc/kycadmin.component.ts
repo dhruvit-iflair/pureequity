@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { trigger, transition, style, animate, query, stagger, animateChild, keyframes } from "@angular/animations";
+
 import { Http } from "@angular/http";
 import { DateAdapter, MatDialog } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -13,18 +15,29 @@ declare var require: any;
 @Component({
   selector: 'app-kycadm',
   templateUrl: './kyc.component.html',
-  styleUrls: ['./kyc.component.css']
+  styleUrls: ['./kyc.component.css'],
+  animations: [
+    trigger('card', [
+      transition(':enter', [
+        style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
+        animate('0.7s cubic-bezier(.8, -0.6, 0.26, 1.6)',
+          style({ transform: 'scale(1)', opacity: 1 }))  // final
+      ])
+    ])
+  ]
 })
 export class KycAdminComponent implements OnInit {
   userDocPoint = environment.userDocPoint;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  dispalayFormGroup: FormGroup;
   isLinear = true;
   uploadedimgs = [];istrn=[];
   user; isEligible = false;
   isApproved = true; uid;
   countries = require('./countries.json');
-  idType = ['Passport', 'Driving License', 'Identity Card', 'Adhar Card'];
+  isEdit = false;
+  idType = ['Passport', 'Driving License', 'Identity Card'];
   constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private acRoute: ActivatedRoute, private router: Router, private http: Http, private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -37,6 +50,15 @@ export class KycAdminComponent implements OnInit {
       taxnumber: [''],
       istrn: []
     });
+    this.dispalayFormGroup = this._formBuilder.group({
+      country: [{ value: '', disabled: true }, Validators.required],
+      idtype: [{ value: '', disabled: true }, Validators.required],
+      cardnumber: [{ value: '', disabled: true }, Validators.required],
+      issuedate: [{ value: '', disabled: true }, Validators.required],
+      taxnumber: [{ value: '', disabled: true }, Validators.required],
+      istrn: []
+    });
+    this.isEdit = true;
     this.secondFormGroup = this._formBuilder.group({
       scandoc: [null, Validators.required]
     });
@@ -52,6 +74,13 @@ export class KycAdminComponent implements OnInit {
           this.isApproved = gotcha[0].isApproved;
           this.isEligible = true;
           this.firstFormGroup.patchValue({
+            country: gotcha[0].issueCountry,
+            idtype: gotcha[0].idType,
+            cardnumber: gotcha[0].idNumber,
+            issuedate: gotcha[0].issueDate,
+            taxnumber: gotcha[0].trn
+          });
+          this.dispalayFormGroup.patchValue({
             country: gotcha[0].issueCountry,
             idtype: gotcha[0].idType,
             cardnumber: gotcha[0].idNumber,
@@ -133,5 +162,12 @@ export class KycAdminComponent implements OnInit {
       }
     });
   }
-
+  toggle_edit(){
+    if(this.uid){
+      this.isEdit = !this.isEdit
+    }
+    else {
+      this.isEdit = false
+    }
+  }
 }

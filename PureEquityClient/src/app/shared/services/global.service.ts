@@ -31,7 +31,7 @@ export class GlobalService {
     this.userService.getAllUsers();
   }
   collectUserData(data:any){
-    console.log("Will collect");
+    // console.log("Will collect");
   }
   roleStatus():Observable<any>{
     return this.currentRole.asObservable();

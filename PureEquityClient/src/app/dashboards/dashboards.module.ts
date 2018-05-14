@@ -9,6 +9,7 @@ import { ChartistModule} from 'ng-chartist';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FileUploadModule } from 'ng2-file-upload/ng2-file-upload';
 
 import { Dashboard1Component } from './dashboard1/dashboard1.component';
 import { Dashboard2Component } from './dashboard2/dashboard2.component';
@@ -31,6 +32,7 @@ import { LoginService } from '../shared/services/login.service';
     FormsModule, ReactiveFormsModule,
     RouterModule.forChild(DashboardsRoutes),
     NgxChartsModule,
+    FileUploadModule,
   ],
   declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent,QrotpverificationComponent, ChangePasswordComponent],
   providers:[

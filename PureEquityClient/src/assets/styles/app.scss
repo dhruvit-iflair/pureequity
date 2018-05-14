@@ -581,7 +581,8 @@ html body {
 Background Colors
 *******************/
 
-.bg-primary {
+.bg-primary,
+button.mat-fab.mat-primary {
     background-color: $primary !important;
 }
 
@@ -1014,3 +1015,39 @@ list inline
         
     }
 }
+button.srh-btn.mat-icon-button {
+    right: 60px;
+    position: absolute;
+}
+.mat-step-header .mat-step-icon {
+    background-color: #555682;
+    color: white;
+}
+button.mat-mini-fab.mat-primary.half-header,
+button.mat-fab.mat-primary.half-header {
+    position: relative;
+    top: 5px;
+}
+mat-card-header.bg-primary.text-white.mat-card-header.ng-star-inserted {
+    height: 50px;
+}
+
+
+div.scrollmenu {
+    // background-color: #333;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    width: 165px;
+    text-decoration: none;
+}
+
+// div.scrollmenu a:hover {
+//     background-color: #777;
+// }

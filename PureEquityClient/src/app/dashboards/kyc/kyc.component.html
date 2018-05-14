@@ -1,94 +1,167 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
-  <!-- Card column -->
-  <div fxFlex.gt-sm="60%" fxFlex="60">
-    <mat-card>
-      <mat-card-content *ngIf="!isApproved">
-        <mat-card-title>KYC</mat-card-title>
-        <mat-card-subtitle style="color:#555682;">
-          Your KYC Detail is in Process of Verification.
-        </mat-card-subtitle>
-      </mat-card-content>
+    <!-- Card column -->
+    <div fxFlex.gt-sm="50%" fxFlex="50">
+        <mat-card>
+            <mat-card-header class="bg-primary text-white" *ngIf="!isApproved">
+                <mat-card-title-group>
+                    <mat-card-title fxLayout="row">
+                        Kyc Details
+                    </mat-card-title>
+                </mat-card-title-group>
+                <div fxFlex="fxFlex"></div>
+                <!-- <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();" *ngIf="!isEdit && uid">
+                    <mat-icon class="mat-icon material-icons" role="img">save</mat-icon>
+                </button> -->
 
-      <mat-card-content>
-        <mat-card-title *ngIf="!isApproved">Kyc Details</mat-card-title>
-        <mat-card-title *ngIf="isApproved">Kyc Details
-          <mat-icon class="mat-icon material-icons successsymbol" role="img">verified_user</mat-icon>
-        </mat-card-title>
-        <mat-horizontal-stepper [linear]="isLinear">
-          <mat-step [stepControl]="firstFormGroup">
-            <form [formGroup]="firstFormGroup">
-              <ng-template matStepLabel>Fill out your details</ng-template>
-              <mat-form-field>
-                <mat-select placeholder="Select Country" name="country" formControlName="country">
-                  <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+                <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();" *ngIf="isEdit && uid">
+                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
+                </button>
+            </mat-card-header>
+            <mat-card-header class="bg-primary text-white" *ngIf="isApproved">
+                <mat-card-title-group>
+                    <mat-card-title fxLayout="row">
+                        Kyc Details
+                    </mat-card-title>
+                </mat-card-title-group>
+                <div fxFlex="fxFlex"></div>
+                <!-- <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();" *ngIf="isEdit && uid">
+                    <mat-icon class="mat-icon material-icons" role="img">save</mat-icon>
+                </button> -->
 
-              <mat-form-field>
-                <mat-select placeholder="Select ID Type" name="idtype" formControlName="idtype">
-                  <mat-option *ngFor="let x of idType" [value]="x">{{x}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+                <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();" *ngIf="!isEdit && uid">
+                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
+                </button>
+            </mat-card-header>
 
-              <mat-form-field>
-                <input matInput placeholder="Card Number" formControlName="cardnumber" required>
-              </mat-form-field>
+            <mat-card-content *ngIf="!isEdit" @card>
+                <mat-horizontal-stepper [linear]="isLinear">
+                    <mat-step [stepControl]="firstFormGroup">
+                        <form [formGroup]="firstFormGroup">
+                            <ng-template matStepLabel>Fill out your details</ng-template>
+                            <mat-form-field>
+                                <mat-select placeholder="Select Country" name="country" formControlName="country">
+                                    <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
 
-              <mat-form-field>
-                <input formControlName="issuedate" matInput [matDatepicker]="issuedate" placeholder="ID Issue Date" disabled>
-                <mat-datepicker-toggle matSuffix [for]="issuedate"></mat-datepicker-toggle>
-                <mat-datepicker #issuedate disabled="false"></mat-datepicker>
-              </mat-form-field>
+                            <mat-form-field>
+                                <mat-select placeholder="Select ID Type" name="idtype" formControlName="idtype">
+                                    <mat-option *ngFor="let x of idType" [value]="x">{{x}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
 
-              <mat-form-field *ngIf="!istrn">
-                <input matInput placeholder="Tax Reference Number" formControlName="taxnumber">
-              </mat-form-field>
-              <label>I don't have TRN: </label>
-              <mat-checkbox formControlName="istrn" [(ngModel)]="istrn"></mat-checkbox>
-              <div style="margin-top: 20px;">
-                <button mat-raised-button color="warn" matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-              <ng-template matStepLabel>Upload your Documents</ng-template>
-              <div class="mat-form-field">
-                <div class="col-md-12" style="width:20%;float:left;padding-left: 10px;padding-top: 20px;">
-                  Upload Your Selected ID:
-                  <div class="bg">
-                    <div class="overlay" onclick="document.getElementById('FileInput').click()">
-                      <mat-icon class="manualCss">add_circle</mat-icon>
+                            <mat-form-field>
+                                <input matInput placeholder="Card Number" formControlName="cardnumber" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input formControlName="issuedate" matInput [matDatepicker]="issuedate" placeholder="ID Issue Date" disabled>
+                                <mat-datepicker-toggle matSuffix [for]="issuedate"></mat-datepicker-toggle>
+                                <mat-datepicker #issuedate disabled="false"></mat-datepicker>
+                            </mat-form-field>
+                            <!--  -->
+
+                            <mat-form-field *ngIf="!istrn">
+                                <input matInput placeholder="Tax Reference Number" formControlName="taxnumber">
+                            </mat-form-field>
+                            <label>I don't have TRN: </label>
+                            <mat-checkbox formControlName="istrn" [(ngModel)]="istrn"></mat-checkbox>
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup">
+                        <form [formGroup]="secondFormGroup">
+                            <ng-template matStepLabel>Upload your Documents</ng-template>
+                            <div class="mat-form-field">
+                                <div class="col-md-12" style="width:100%;float:left;padding-left: 10px;padding-top: 20px;">
+                                    Upload Your Selected ID's Photo:
+                                    <div class="bg">
+                                        <div class="overlay" onclick="document.getElementById('FileInput').click()">
+                                            <mat-icon class="manualCss">add_circle</mat-icon>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="FileInput" multiple (change)="uploadDoc($event);" accept="image/*" />
+                                </div>
+                            </div>
+                            <div class="mat-form-field">
+                                <div *ngFor="let z of uploadedimgs;let i=index;" style="text-align:center;">
+                                    <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ userDocPoint }}{{ z }}" *ngIf="z">
+                                    <mat-icon *ngIf="i>0" class="mat-icon material-icons crosssymbol" (click)="removeDoc(z);">clear</mat-icon>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+                                <button mat-raised-button color="warn" [disabled]="!isEligible" (click)="finalsubmittion()">Save & Submit</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                </mat-horizontal-stepper>
+
+            </mat-card-content>
+
+            <mat-card-content *ngIf="isEdit && uid" @card>
+                <form [formGroup]="dispalayFormGroup">
+                    <mat-form-field>
+                        <mat-select placeholder="Select Country" name="country" formControlName="country">
+                            <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-select placeholder="Select ID Type" name="idtype" formControlName="idtype">
+                            <mat-option *ngFor="let x of idType" [value]="x">{{x}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput placeholder="Card Number" formControlName="cardnumber" required>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input formControlName="issuedate" matInput [matDatepicker]="issuedate" placeholder="ID Issue Date" disabled>
+                        <mat-datepicker-toggle matSuffix [for]="issuedate"></mat-datepicker-toggle>
+                        <mat-datepicker #issuedate disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="!istrn">
+                        <input matInput placeholder="Tax Reference Number" formControlName="taxnumber">
+                    </mat-form-field>
+
+                </form>
+                <div fxLayout="row" fxLayoutWrap="wrap" class="scrollmenu">
+                    <div  class="scrollmenu">
+                             <a *ngFor="let z of uploadedimgs;let i=index;">
+                                 <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ userDocPoint }}{{ z }}" *ngIf="z">
+                             </a>
                     </div>
-                  </div>
-                  <input type="file" id="FileInput" multiple (change)="uploadDoc($event);" accept="image/*" />
                 </div>
-              </div>
-              <div class="mat-form-field">
-                <div *ngFor="let z of uploadedimgs;let i=index;" style="text-align:center;">
-                  <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ userDocPoint }}{{ z }}" *ngIf="z">
-                  <mat-icon *ngIf="i>0" class="mat-icon material-icons crosssymbol" (click)="removeDoc(z);">clear</mat-icon>
-                </div>
-              </div>
-              <div style="margin-top: 20px;">
-                <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-                <button mat-raised-button color="warn" [disabled]="!isEligible" (click)="finalsubmittion()">Save & Submit</button>
-                <!-- <button mat-raised-button color="warn" matStepperNext>Next</button> -->
-              </div>
-            </form>
-          </mat-step>
-          <!-- <mat-step>
-              <ng-template matStepLabel>Done</ng-template>
-              You are now done. You can submit your data.
-              <div>
-                <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-                <button mat-raised-button color="warn" (click)="finalsubmittion()">Save & Submit</button>
-              </div>
-          </mat-step> -->
-        </mat-horizontal-stepper>
+            </mat-card-content>
 
-      </mat-card-content>
-
-    </mat-card>
-  </div>
+        </mat-card>
+    </div>
+    <div fxFlex.gt-sm="50%" fxFlex="50">
+        <mat-card>
+            <mat-card-header class="bg-primary text-white">
+                <mat-card-title>What is KYC?</mat-card-title>
+                <!-- <mat-card-subtitle>What is Lorem Ipsum?</mat-card-subtitle> -->
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                    text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
+                    specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                    containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
+                    including versions of Lorem Ipsum. It is a long established fact that a reader will be distracted by
+                    the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it
+                    has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here',
+                    making it look like readable English. Many desktop publishing packages and web page editors now use Lorem
+                    Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in
+                    their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose
+                    (injected humour and the like).
+                </p>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>

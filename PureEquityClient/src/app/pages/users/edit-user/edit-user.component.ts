@@ -67,10 +67,10 @@ export class EditUserComponent implements OnInit {
       updated_at: [{ value: null, disabled: true }],
     });
     this.detailsFormGroup.valueChanges.subscribe((res) => {
-      console.log(res);
+      // console.log(res);
     })
     this.userService.getUser().subscribe((user) => {
-      console.log(user);
+      // console.log(user);
       this.user = user;
       this.detailsFormGroup.patchValue(this.user);
       this.detailsFormGroup.patchValue({ role: this.user.role._id });

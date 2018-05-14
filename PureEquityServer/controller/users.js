@@ -420,7 +420,7 @@ UserCtrl.prototype.verify = function (req, res) {
 }
 
 UserCtrl.prototype.image = function (req, res) {
-    console.log(req.files)
+    // console.log(req.files)
     if (!req.files)
         return res.status(400).send('No Image was uploaded.');
 
@@ -440,7 +440,7 @@ UserCtrl.prototype.image = function (req, res) {
 }
 
 UserCtrl.prototype.deleteImage = function (req, res) {
-    console.log("Will delete image")
+    // console.log("Will delete image")
 }
 UserCtrl.prototype.change_password = function (req, res) {
 

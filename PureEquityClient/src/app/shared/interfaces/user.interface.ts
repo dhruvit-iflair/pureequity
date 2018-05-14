@@ -18,3 +18,14 @@ export interface User {
     createdBy       : User,
     updatedBy       : User
 }
+export interface Bank {
+    _id?: String,
+    bankdetails : {},
+    ccinfo : {},
+    ppdetails : {},
+    created_at: any,
+    updated_at: any,
+    createdBy: any,
+    updatedBy: any,
+    user: String
+}

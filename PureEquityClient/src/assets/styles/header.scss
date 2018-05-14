@@ -39,13 +39,20 @@ mat-toolbar{
     }
     
     .app-search{
+        // display: none;
+        // width: 30%;
+        // top: 10px;
+        // left: 21%;
+        // // width: 100%;
+        // // top: 0px;
+        // // left: 0px;
+        // z-index: 1;
+        // position: absolute;
         display: none;
         width: 30%;
-        top: 10px;
-        left: 21%;
-        // width: 100%;
-        // top: 0px;
-        // left: 0px;
+        top: 12px;
+        /* left: 20%; */
+        right: 100px;
         z-index: 1;
         position: absolute;
         .form-control{

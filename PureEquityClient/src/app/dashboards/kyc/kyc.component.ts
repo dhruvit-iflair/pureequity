@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, state } from '@angular/core';
 import { Http } from "@angular/http";
 import { DateAdapter, MatDialog } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -7,24 +7,30 @@ import { environment } from "../../../environments/environment"
 import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { DeleteComponent } from '../../shared/dialogs/delete/delete.component';
+import { card } from '../../shared/animations/animations';
 
 declare var require: any;
 
 @Component({
   selector: 'app-kyc',
   templateUrl: './kyc.component.html',
-  styleUrls: ['./kyc.component.css']
+  styleUrls: ['./kyc.component.css'],
+  animations: [
+    card
+  ]
 })
 export class KycComponent implements OnInit {
   userDocPoint = environment.userDocPoint;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  isLinear = true;istrn=[];
+  dispalayFormGroup: FormGroup;
+  isLinear = true; istrn = [];
   uploadedimgs = [];
   user; isEligible = false;
   isApproved = true; uid;
+  isEdit = false;
   countries = require('./countries.json');
-  idType = ['Passport', 'Driving License', 'Identity Card', 'Adhar Card'];
+  idType = ['Passport', 'Driving License', 'Identity Card'];
   constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private router: Router, private http: Http, private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -37,9 +43,19 @@ export class KycComponent implements OnInit {
       taxnumber: [''],
       istrn: []
     });
+    this.dispalayFormGroup = this._formBuilder.group({
+      country: [{ value: '', disabled: true }, Validators.required],
+      idtype: [{ value: '', disabled: true }, Validators.required],
+      cardnumber: [{ value: '', disabled: true }, Validators.required],
+      issuedate: [{ value: '', disabled: true }, Validators.required],
+      taxnumber: [{ value: '', disabled: true }, Validators.required],
+      istrn: []
+    });
     this.secondFormGroup = this._formBuilder.group({
       scandoc: [null, Validators.required]
     });
+    this.isEdit = true;
+    
     this.getInitialData();
   }
   getInitialData() {
@@ -48,11 +64,19 @@ export class KycComponent implements OnInit {
       .subscribe((res) => {
         var gotcha = res.json();
         this.uid = gotcha[0]._id;
+        // (!this.isEdit)? this.isEdit = true: null;
         //if (gotcha[0].isApproved == false) {
-          this.isApproved = gotcha[0].isApproved;
+        this.isApproved = gotcha[0].isApproved;
         //}
         this.isEligible = true;
         this.firstFormGroup.patchValue({
+          country: gotcha[0].issueCountry,
+          idtype: gotcha[0].idType,
+          cardnumber: gotcha[0].idNumber,
+          issuedate: gotcha[0].issueDate,
+          taxnumber: gotcha[0].trn
+        });
+        this.dispalayFormGroup.patchValue({
           country: gotcha[0].issueCountry,
           idtype: gotcha[0].idType,
           cardnumber: gotcha[0].idNumber,
@@ -79,19 +103,19 @@ export class KycComponent implements OnInit {
         });
     }
   }
-  removeDoc(imgnm){
-    let up={img:imgnm,user:this.user.user._id};
+  removeDoc(imgnm) {
+    let up = { img: imgnm, user: this.user.user._id };
     this.http.post(environment.api + "/userdocs/rmimage", up)
-    .subscribe((res) => {
-      var data = res.json();
-      if(data=="File Removed Successfully."){
-        this.toastr.warning(data);
-        this.getInitialData();
-      }
-      else{
-        this.toastr.error(data);
-      }
-    });
+      .subscribe((res) => {
+        var data = res.json();
+        if (data == "File Removed Successfully.") {
+          this.toastr.warning(data);
+          this.getInitialData();
+        }
+        else {
+          this.toastr.error(data);
+        }
+      });
   }
 
   finalsubmittion() {
@@ -133,5 +157,12 @@ export class KycComponent implements OnInit {
       }
     });
   }
-
+  toggle_edit(){
+    if(this.uid){
+      this.isEdit = !this.isEdit
+    }
+    else {
+      this.isEdit = false
+    }
+  }
 }

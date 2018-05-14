@@ -30,12 +30,12 @@ export class UsersComponent {
     this.userService.getAllUsers();
   }
   pageEvent(event){
-    console.log(event)
+    // console.log(event)
     event = this.page;
     this.i = event.pageIndex * event.pageSize;
   };
   view(_id){
-    console.log(_id);
+    // console.log(_id);
   }
   expandfilter(){
     if(!this.x){

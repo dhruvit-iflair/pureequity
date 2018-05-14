@@ -32,6 +32,8 @@ export class DashboardService {
   constructor(public http: HttpClient, public toster: ToastrService) {
     if (localStorage.getItem('tradeList')) {
       this.tradeList = JSON.parse(localStorage.getItem('tradeList'));
+      this.tradeList[this.tradeList.findIndex(t=>t.isActive==true)].isActive = false;
+      this.tradeList[this.tradeList.findIndex(t=>t.name == 'BTC / USD')].isActive = true;
     }
   }
   trades() {
@@ -42,7 +44,7 @@ export class DashboardService {
         this.http.get(environment.tradingApi + '/trades/' + key.value).subscribe((res: any) => {
           if (res.payload && res.payload.data) {
             this.tradeList[i].data = res.payload.data;
-            localStorage.setItem('tradeList', JSON.stringify(this.tradeList));
+            // localStorage.setItem('tradeList', JSON.stringify(this.tradeList));
             this.tra.next(this.tradeList);
           }
           if (this.isActive[i]) {

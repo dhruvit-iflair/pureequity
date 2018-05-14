@@ -47,13 +47,17 @@
     <!-- Column-->
     <div fxFlex.gt-lg="25" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
+                <mat-card-header class="bg-primary text-white">
+                        <mat-card-title>Latest Transaction </mat-card-title>
+                        <mat-card-subtitle>{{tradeCoin}}</mat-card-subtitle>
+                    </mat-card-header>
             <mat-card-content>
-                <mat-card-title>{{tradeCoin}}
-                </mat-card-title>
+                <!-- <mat-card-title>{{tradeCoin}} -->
+                <!-- </mat-card-title> -->
                 <!-- <mat-card-subtitle>{{trade | json}}</mat-card-subtitle> -->
                 <div class="table-25">
                     <table
-                        style="width: 100%; text-align: center; padding: 15px 0 0 0; margin-bottom: 0;">
+                        style="width: 100%; text-align: center; padding: 0 0 0 0; margin-bottom: 0;">
                         <thead>
                             <tr>
                                 <th>Amount</th>
@@ -67,7 +71,7 @@
                             <tr *ngFor="let t of list.data">
                                 <td *ngIf="list.isActive && t.amount"> {{t.amount}}</td>
                                 <td *ngIf="list.isActive && t.price"> {{t.price}}</td>
-                                <td *ngIf="list.isActive && t.date"> {{t.date * 1000 | date:'short'}}</td>
+                                <td *ngIf="list.isActive && t.date"> {{t.date * 1000 | date:'h:mm:ss a'}}</td>
                             </tr>
                         </tbody>
                     </table>

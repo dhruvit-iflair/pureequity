@@ -8,20 +8,22 @@ import { FirstcapitalizePipe } from './pipes/firstCapitalize.pipe';
 import { DashboardService } from './services/dashboard.service';
 import { GlobalService } from './services/global.service';
 import { TopnavbService } from './topnavb/topnavb.service';
-
+import { FileDropDirective } from "./directives/filedrops.directive";
+import { BankdetailsService } from './services/bankdetails.service';
 @NgModule({
   declarations: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,
-    FirstcapitalizePipe
+    FirstcapitalizePipe,
+    FileDropDirective
   ],
   exports: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,
    ],
-  providers: [ MenuItems, RoleService, UsersService, DashboardService, GlobalService,TopnavbService],
+  providers: [ MenuItems, RoleService, UsersService, DashboardService, GlobalService,TopnavbService, BankdetailsService],
 
 })
 export class SharedModule { }

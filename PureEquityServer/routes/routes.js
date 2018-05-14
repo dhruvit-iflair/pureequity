@@ -27,6 +27,7 @@ require('./security')(router);
 require('./user_profile')(router);
 require('./user_documents')(router);
 require('./reset_password')(router);
+require('./bankdetails')(router);
 
 
 //All of the Schema Collected here

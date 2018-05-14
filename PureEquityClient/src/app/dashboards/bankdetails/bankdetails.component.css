@@ -7,7 +7,11 @@
   .mat-warn{
     background-color: #555682;
 }
-.contentchanger{
+/* .contentchanger{
   border: solid black 1px;
     border-radius: 5px;
+} */
+
+mat-card-header.bg-primary.text-white.mat-card-header {
+  height: 50px;
 }
