@@ -22,15 +22,18 @@ export class EditUserComponent implements OnInit {
   roles: Role[];
   picPoint = environment.picPoint + '/users/profileImage/';
   click: Boolean = false;
-  user: User;
-  // public dialogRef: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
-  constructor(private _formBuilder: FormBuilder, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router) {
+  //user: User;
+   
+  constructor(private _formBuilder: FormBuilder, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router, public dialogRef: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public user: User) {
     this.roleService.getAllRoles();
-    this.act.params.subscribe((params) => {
-      (params['id']) ? null : this.router.navigate(['/users']); this.userService.getAUsers(params.id)
-    })
+    //  this.act.params.subscribe((params) => {
+    //    if(params.id)
+    //    this.userService.getAUsers(params.id)
+    //  });
   }
-
+  cancel(){
+    this.dialogRef.close();
+  }
   ngOnInit() {
     this.detailsFormGroup = this._formBuilder.group({
       _id: ['', Validators.required],
@@ -41,7 +44,6 @@ export class EditUserComponent implements OnInit {
       image: ['', Validators.required],
       user_profile: this._formBuilder.group({
         personal: this._formBuilder.group({
-          firstName: ['', Validators.required],
           middleName: ['', Validators.required],
           placeOfBirth: ['', Validators.required],
           gender: ['', Validators.required],
@@ -67,10 +69,10 @@ export class EditUserComponent implements OnInit {
       updated_at: [{ value: null, disabled: true }],
     });
     this.detailsFormGroup.valueChanges.subscribe((res) => {
-      console.log(res);
+      //console.log(res);
     })
     this.userService.getUser().subscribe((user) => {
-      console.log(user);
+      //console.log(user);
       this.user = user;
       this.detailsFormGroup.patchValue(this.user);
       this.detailsFormGroup.patchValue({ role: this.user.role._id });
@@ -90,6 +92,7 @@ export class EditUserComponent implements OnInit {
       this.toster.success('User Details has been updated', 'Success');
       this.userService.getAllUsers();
       this.click = true;
+      this.cancel();
       this.router.navigate(['/users']);
     }, (error) => {
       console.log(error);

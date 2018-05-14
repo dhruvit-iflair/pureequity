@@ -1,0 +1,15 @@
+.customizedCss{
+    position: absolute;
+    left: 46%;
+    top: 10%;
+    background: #555682;
+    color:#ffffff;
+}
+.enabledcard{
+    background: #555682;
+    color:#ffffff;
+}
+.disabledcard{
+    background: #ffffff;
+    color:#555682;
+}

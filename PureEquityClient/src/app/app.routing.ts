@@ -7,47 +7,22 @@ import { AuthGuard } from './shared/guard/auth.guard';
 export const AppRoutes: Routes = [{
   path: '',
   component: FullComponent,
-  children: [{ 
-    path: '', 
-    redirectTo: '/dashboard', 
-    pathMatch: 'full' 
+  children: [{
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
   },
-{
+  {
     path: 'users',
     canActivate: [AuthGuard],
     loadChildren: './pages/users/users.module#UsersModule'
-  },{
+  }, {
     path: '',
-    canActivate:[AuthGuard],
-    loadChildren: './dashboards/dashboards.module#DashboardsModule'  
+    canActivate: [AuthGuard],
+    loadChildren: './dashboards/dashboards.module#DashboardsModule'
   },
-  //  {
-  //   path: 'material',
-  //   loadChildren: './material-component/material.module#MaterialComponentsModule'
-  // }, {
-  //   path: 'apps',
-  //   loadChildren: './apps/apps.module#AppsModule'
-  // }, {
-  //   path: 'forms',
-  //   loadChildren: './forms/forms.module#FormModule'
-  // }, {
-  //   path: 'tables',
-  //   loadChildren: './tables/tables.module#TablesModule'
-  // }, {
-  //   path: 'datatables',
-  //   loadChildren: './datatables/datatables.module#DataTablesModule'
-  // }, {
-  //   path: 'pages',
-  //   loadChildren: './pages/pages.module#PagesModule'
-  // },{
-  //   path: 'widgets',
-  //   loadChildren: './widgets/widgets.module#WidgetsModule'
-  // }, {
-  //   path: 'charts',
-  //   loadChildren: './charts/chartslib.module#ChartslibModule'
-  // }
   ]
-},{
+}, {
   path: '',
   component: AppBlankComponent,
   children: [{
@@ -56,5 +31,5 @@ export const AppRoutes: Routes = [{
   }]
 }, {
   path: '**',
-  redirectTo: 'authentication/404' 
+  redirectTo: 'authentication/404'
 }];

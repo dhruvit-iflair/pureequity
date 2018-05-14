@@ -20,7 +20,6 @@ export class ResetPasswordComponent implements OnInit {
   public token: String;
   constructor(private fb: FormBuilder, private router: Router, private active: ActivatedRoute, private loginService: LoginService, public toster: ToastrService) {
     this.active.queryParams.subscribe((params) => {
-      console.log(params);
       if (params && params['token']) {
         this.loginService.verifyToken(params.token).subscribe((res) => {
           this.token = params['token'];

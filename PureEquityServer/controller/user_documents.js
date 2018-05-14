@@ -187,10 +187,10 @@ User_Document.prototype.rmimg = function (req,res) {
                         for(var j=0;j<=docker[0].scandoc.length;j++)
                         {
                             if(img==docker[0].scandoc[j]){
-                                console.log('pelanu : '+j+':::looper::'+docker[0].scandoc);
+                                //console.log('pelanu : '+j+':::looper::'+docker[0].scandoc);
                                 docker[0].scandoc.splice(j,1);
                                 var updateObject={scandoc:docker[0].scandoc};
-                                console.log('pachinu : '+docker[0].scandoc);
+                                //console.log('pachinu : '+docker[0].scandoc);
                                 User_Documents.update({ _id: docker[0]._id }, { $set: updateObject }, function (er, dtt) {
                                     if (er) {
                                         console.log('error occured..' + er);

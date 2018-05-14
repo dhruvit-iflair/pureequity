@@ -9,8 +9,8 @@ module.exports = function (router) {
     
     router.post('/api/role', controller.post);
 
-    router.put('/api/role/:id', verify, controller.put);
+    router.put('/api/role/:id', controller.put);
     
-    router.delete('/api/role/:id', verify, controller.delete);
+    router.delete('/api/role/:id', controller.delete);
         
 }

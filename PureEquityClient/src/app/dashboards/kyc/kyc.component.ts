@@ -24,7 +24,7 @@ export class KycComponent implements OnInit {
   user; isEligible = false;
   isApproved = true; uid;
   countries = require('./countries.json');
-  idType = ['Passport', 'Driving License', 'Identity Card', 'Adhar Card'];
+  idType = ['Passport', 'Driving License', 'Identity Card'];
   constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private router: Router, private http: Http, private toastr: ToastrService) { }
 
   ngOnInit() {

@@ -8,6 +8,7 @@ import { RoleService } from '../../../../shared/services/role.service';
 import { UsersService } from '../../../../shared/services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../../environments/environment';
+import { Router,Params,ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-details',
@@ -17,10 +18,10 @@ import { environment } from '../../../../../environments/environment';
 export class UserDetailsComponent implements OnInit {
   @Input() detailsFormGroup : FormGroup;
   roles: Role[];
-  picker:any;
+  picker:any;isSameUser=false;
   picPoint = environment.picPoint + '/users/profileImage/';
   // public dialogRef: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
-  constructor( public roleService: RoleService, public userService: UsersService, public toster: ToastrService) {
+  constructor( public roleService: RoleService,public aroute:ActivatedRoute, public userService: UsersService, public toster: ToastrService) {
     this.roleService.getAllRoles();
     // this.dialogRef.afterOpen().subscribe(() => {
     //   this.detailsFormGroup.patchValue(this.user);
@@ -31,6 +32,12 @@ export class UserDetailsComponent implements OnInit {
     })
   }
   ngOnInit() {
+    var token=JSON.parse(localStorage.getItem('token'));
+    this.aroute.params.subscribe((params)=>{
+      if(token.user._id==params.id){
+        this.isSameUser=true;
+      }
+    });
   }
   editImage(event) {
     this.userService.imageUpload(event).subscribe((response) => {

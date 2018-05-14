@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { UsersRouting } from './users-routing.module';
 import { UsersComponent } from "./users/users.component";
 import { DemoMaterialModule } from '../../demo-material-module';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { RouterModule } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog,MatDialogRef  } from '@angular/material/dialog';
+
 import { FirstcapitalizePipe } from '../../shared/pipes/firstCapitalize.pipe';
 import { PersonalAddressComponent } from './edit-user/user-personal-details/personal-address/personal-address.component';
 import { PersonalDetailsComponent } from './edit-user/user-personal-details/personal-details/personal-details.component';
 import { UserDetailsComponent } from './edit-user/user-details/user-details.component';
 import { UserPersonalDetailsComponent } from './edit-user/user-personal-details/user-personal-details.component';
+import { ProfileComponent } from './profile/profile.component';
+
 
 @NgModule({
   imports: [
@@ -22,6 +26,7 @@ import { UserPersonalDetailsComponent } from './edit-user/user-personal-details/
     FormsModule, 
     ReactiveFormsModule,
     MatDialogModule, 
+    FlexLayoutModule,
   ],
   declarations: [
     UsersComponent, 
@@ -29,7 +34,8 @@ import { UserPersonalDetailsComponent } from './edit-user/user-personal-details/
     PersonalAddressComponent,
     PersonalDetailsComponent,
     UserDetailsComponent,
-    UserPersonalDetailsComponent
+    UserPersonalDetailsComponent,
+    ProfileComponent,
   ],
   entryComponents:[EditUserComponent]
 })

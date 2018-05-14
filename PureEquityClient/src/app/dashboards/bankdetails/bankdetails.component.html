@@ -22,9 +22,9 @@
                 <input matInput placeholder="Account Number" formControlName="acnumber" required>
               </mat-form-field>
               <mat-form-field style="max-width: 73.33%;">
-                <input matInput placeholder="Bank IFSC" formControlName="ifscnumber" required>
+                <input matInput placeholder="Bank IBAN" formControlName="ifscnumber" required>
               </mat-form-field>
-              <button mat-raised-button color="accent" (click)="checkifsc()">Check IFSC</button>
+              <button mat-raised-button color="accent" (click)="checkifsc()">Check IBAN</button>
               <mat-form-field>
                 <mat-select placeholder="Account Type" name="actype" formControlName="actype">
                   <mat-option *ngFor="let x of actype" [value]="x">{{x}}</mat-option>
@@ -61,7 +61,7 @@
                 <input matInput placeholder="Bank A/c Number" formControlName="acnumber" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Bank IFSC Code" formControlName="ifscnumber" required>
+                <input matInput placeholder="Bank IBAN Code" formControlName="ifscnumber" required>
               </mat-form-field>
               <mat-form-field>
                 <input type="number" matInput placeholder="Enter Amount" formControlName="amount" required>
@@ -86,7 +86,7 @@
               <mat-form-field>
                 <input matInput placeholder="Creadit Card Number" formControlName="ccnumber" required>
               </mat-form-field>
-              <!--style="max-width: 73.33%;" <button mat-raised-button color="accent" (click)="checkifsc()">Check IFSC</button> -->
+              <!--style="max-width: 73.33%;" <button mat-raised-button color="accent" (click)="checkifsc()">Check IBAN</button> -->
               <mat-form-field style="max-width: 15%;">
                 <mat-select placeholder="Month" name="expmonth" formControlName="expmonth">
                   <mat-option *ngFor="let x of expmonth" [value]="x">{{x}}</mat-option>
@@ -131,7 +131,7 @@
         </mat-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <mat-card>
+        <mat-card style="width: 100%;top:-23%;">
           <mat-card-header>
             <mat-card-title>Enter PayPal Detail</mat-card-title>
           </mat-card-header>
@@ -151,7 +151,7 @@
         </mat-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <mat-card style="width: 100%;">
+        <mat-card style="width: 100%;top:-23%;">
           <mat-card-header>
             <mat-card-title>Saved Paypal Account</mat-card-title>
           </mat-card-header>
@@ -164,7 +164,9 @@
                 <input type="number" matInput placeholder="Enter Amount" formControlName="amount" required>
               </mat-form-field>
               <div style="text-align: center;margin-top:5%;">
-                <button mat-raised-button (click)="uploaddocs()" color="accent">Pay with Paypal</button>
+                  <ngx-paypal [config]="payPalConfig" (click)="initConfig()"></ngx-paypal>
+                  <!-- <div id="btnPaypal"></div> -->
+                <!-- <button mat-raised-button (click)="makepayment()" color="accent">Pay with Paypal</button> -->
               </div>
             </form>
           </mat-card-content>

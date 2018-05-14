@@ -5,6 +5,7 @@ var mongoose = require("mongoose"),
     User = require('../models/user'),
     Role = require('../models/role'),
     Reset_Password = require('../models/reset_password'),
+    Mailer = require('../models/mailer'),
     config = require('../config/config'),
     jwt = require('jsonwebtoken'),
     async = require('async'),
@@ -12,6 +13,16 @@ var mongoose = require("mongoose"),
     crypto = require('crypto');
 var speakeasy = require('speakeasy');
 var QRCode = require('qrcode');
+
+var smtpTrans = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: config.ImapEmailer,
+        pass: config.ImapSect
+    }
+});
 
 UserCtrl.prototype.get = function (req, res, next) {
 
@@ -145,47 +156,55 @@ UserCtrl.prototype.register = function (req, res) {
             });
         },
         function (token, user, done) {
-            var smtpTrans = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
-                auth: {
-                    user: config.ImapEmailer,
-                    pass: config.ImapSect
-                }
-            });
-            var mailOptions = {
-                from: 'no-replay@PureEquity.com',
-                to: user.username,
-                subject: 'Welcome to Pure Equity',
-                text: 'You are receiving this because you (or someone else) have requested registration for your account.\n\n' +
-                    'Please click on the following link, or paste this into your browser to verify your email account:\n\n' +
-                    'http://' + config.redirectionHost + '/verify?token=' + token + ' \n\n'
-            };
-            smtpTrans.sendMail(mailOptions, function (err) {
-                console.log("Email sent to :: " + user.username);
-                var data = {
-                    token: token,
-                    tokentime: Date.now() + 3600000,
-                    user: user._id
-                }
-                var reset_password = new Reset_Password(data);
-
-                reset_password.save(function (err, reset) {
-                    if (err) {
-                        res.status(500).send({ message: err.message });
-                    }
-                    else if (reset && reset._id) {
-                        res.status(200).send({ message: "Please check your email's inbox we have send you a verification link!!" });
-                    }
-                    else if (!reset) {
-                        res.status(404).send({ message: "No Token generated !!" }).end();
+            Mailer.find({ title: 'Account Verification' })
+                .exec(function (er, docker) {
+                    if (er) {
+                        res.status(400).send({ message: er });
                     }
                     else {
-                        res.status(500).send({ message: "Error in generating token for this user !!" }).end();
+                        if (docker[0]) {
+                            var founder = docker[0].content.search("[(verificationLink)]");
+                            if (founder > -1) {
+                                var x = docker[0].content.split("[(verificationLink)]");
+                                var linker = 'http://' + config.redirectionHost + '/verify?token=' + token;
+                                docker[0].content = x[0] + linker + x[1];
+                            }
+                            var mailOptions = {
+                                from: 'no-replay@PureEquity.com',
+                                to: user.username,
+                                subject: docker[0].subject,
+                                text: docker[0].content
+                                // text: 'You are receiving this because you (or someone else) have requested registration for your account.\n\n' +
+                                //     'Please click on the following link, or paste this into your browser to verify your email account:\n\n' +
+                                //     'http://' + config.redirectionHost + '/verify?token=' + token + ' \n\n'
+                            };
+                            smtpTrans.sendMail(mailOptions, function (err) {
+                                console.log("Email sent to :: " + user.username);
+                                var data = {
+                                    token: token,
+                                    tokentime: Date.now() + 3600000,
+                                    user: user._id
+                                }
+                                var reset_password = new Reset_Password(data);
+
+                                reset_password.save(function (err, reset) {
+                                    if (err) {
+                                        res.status(500).send({ message: err.message });
+                                    }
+                                    else if (reset && reset._id) {
+                                        res.status(200).send({ message: "Please check your email's inbox we have send you a verification link!!" });
+                                    }
+                                    else if (!reset) {
+                                        res.status(404).send({ message: "No Token generated !!" }).end();
+                                    }
+                                    else {
+                                        res.status(500).send({ message: "Error in generating token for this user !!" }).end();
+                                    }
+                                });
+                            });
+                        }
                     }
                 });
-            });
         }
     ], function (err) {
         console.log('this err' + ' ' + err)
@@ -326,28 +345,37 @@ UserCtrl.prototype.verify = function (req, res) {
                                 })
                             },
                             function (tok, user, don) {
-                                var smtpTrans = nodemailer.createTransport({
-                                    host: 'smtp.gmail.com',
-                                    port: 465,
-                                    secure: true,
-                                    auth: {
-                                        user: config.ImapEmailer,
-                                        pass: config.ImapSect
-                                    }
-                                });
-                                var mailOptions = {
-                                    from: 'no-replay@PureEquity.com',
-                                    to: user.user.username,
-                                    subject: 'Verify your Account',
-                                    text: 'You are receiving this because you (or someone else) have requested verification for your account.\n\n' +
-                                        'Please click on the following link, or paste this into your browser to verify your email account:\n\n' +
-                                        'http://' + config.redirectionHost + '/verify?token=' + tok + ' \n\n'
-                                };
-                                smtpTrans.sendMail(mailOptions, function (err) {
-                                    console.log("Email sent to coz token expired :: " + user.user.username);
-                                    return res.status(200).send({ message: "Please check your email's inbox we have send you another verification link!!" }).end();
-                                    // don(err,{status : 200, message: "Please check your email's inbox we have send you a verification link!!"});
-                                });
+                                Mailer.find({ title: 'Account Reverification' })
+                                    .exec(function (er, docker) {
+                                        if (er) {
+                                            res.status(400).send({ message: er });
+                                        }
+                                        else {
+                                            if (docker[0]) {
+                                                var founder = docker[0].content.search("[(reverificationLink)]");
+                                                if (founder > -1) {
+                                                    var x = docker[0].content.split("[(reverificationLink)]");
+                                                    var linker = 'http://' + config.redirectionHost + '/verify?token=' + tok;
+                                                    docker[0].content = x[0] + linker + x[1];
+                                                }
+
+                                                var mailOptions = {
+                                                    from: 'no-replay@PureEquity.com',
+                                                    to: user.user.username,
+                                                    subject: docker[0].subject, //'Verify your Account',
+                                                    text: docker[0].content
+                                                    // text: 'You are receiving this because you (or someone else) have requested verification for your account.\n\n' +
+                                                    //     'Please click on the following link, or paste this into your browser to verify your email account:\n\n' +
+                                                    //     'http://' + config.redirectionHost + '/verify?token=' + tok + ' \n\n'
+                                                };
+                                                smtpTrans.sendMail(mailOptions, function (err) {
+                                                    console.log("Email sent to coz token expired :: " + user.user.username);
+                                                    return res.status(200).send({ message: "Please check your email's inbox we have send you another verification link!!" }).end();
+                                                    // don(err,{status : 200, message: "Please check your email's inbox we have send you a verification link!!"});
+                                                });
+                                            }
+                                        }
+                                    });
                             }
                         ], function (err, resty) {
                             if (err) {
@@ -385,26 +413,33 @@ UserCtrl.prototype.verify = function (req, res) {
 
         },
         function (reset, user, done) {
-            var smtpTransport = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
-                auth: {
-                    user: config.ImapEmailer,
-                    pass: config.ImapSect
-                }
-            });
-            var mailOptions = {
-                from: 'passwordreset@demo.com',
-                to: user.username,
-                subject: 'Account Verified!!',
-                text: 'Hello,\n\n' +
-                    'This is a confirmation that the your account ' + user.username + ' has just been verified.\n'
-            };
-            smtpTransport.sendMail(mailOptions, function (err) {
-                res.status(200).send({ message: "Account Verified!! Please login" }).end()
-                done(err);
-            });
+            Mailer.find({ title: 'Account Verified' })
+                .exec(function (er, docker) {
+                    if (er) {
+                        res.status(400).send({ message: er });
+                    }
+                    else {
+                        if (docker[0]) {
+                            var founder = docker[0].content.search("[(user)]");
+                            if (founder > -1) {
+                                var x = docker[0].content.split("[(user)]");
+                                docker[0].content = x[0] + user.username + x[1];
+                            }
+                            var mailOptions = {
+                                from: 'no-replay@PureEquity.com',
+                                to: user.username,
+                                subject: docker[0].subject, //'Account Verified!!',
+                                text:docker[0].content
+                                // text: 'Hello,\n\n' +
+                                //     'This is a confirmation that the your account ' + user.username + ' has just been verified.\n'
+                            };
+                            smtpTrans.sendMail(mailOptions, function (err) {
+                                res.status(200).send({ message: "Account Verified!! Please login" }).end()
+                                done(err);
+                            });
+                        }
+                    }
+                });
         }
     ], function (err, result) {
         if (err) {
@@ -452,12 +487,12 @@ UserCtrl.prototype.change_password = function (req, res) {
                     if (er) {
                         console.log('error occured..' + er);
                     }
-                    res.status(200).send({ message: "Password Changed Successfully !!" }).end()            
+                    res.status(200).send({ message: "Password Changed Successfully !!" }).end()
                 });
             });
         }
         else {
-            res.status(404).send({auth:false, message: 'This User does not exist!'});
+            res.status(404).send({ auth: false, message: 'This User does not exist!' });
         }
     }, function (errpt) {
         console.log(errpt);

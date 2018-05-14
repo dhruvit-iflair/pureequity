@@ -57,14 +57,19 @@ export class Dashboard1Component implements OnInit, OnDestroy {
         });
     }
     public int: any;
-    
+    public timer={hours:'',minutes:'',seconds:'',micros:''};
     onSelect(event) {
-        console.log(event);
+        //console.log(event);
     }
     
     ngOnInit() {
         this.int = setInterval(() => {          
                 this.dashboardService.trades();
+                var d=new Date();
+                this.timer.hours=d.getHours().toString();
+                this.timer.minutes=d.getMinutes().toString();
+                this.timer.seconds=d.getSeconds().toString();
+                this.timer.micros=d.getMilliseconds().toString();
         }, 500);
         $(document).ready(function () {
             Highcharts.stockChart('container', {

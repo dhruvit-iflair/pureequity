@@ -1,0 +1,40 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <!-- Card column -->
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Mail Management</mat-card-title>
+        <form [formGroup]="mailFormGroup">
+          <mat-form-field>
+            <input matInput type="text" placeholder="Title" [formControl]="mailFormGroup.controls['title']" [readonly]="isReadonly">
+          </mat-form-field>
+          <small *ngIf="mailFormGroup.controls['title'].hasError('required') && mailFormGroup.controls['title'].touched" class="text-danger support-text">Title is required.</small>
+          <mat-form-field>
+            <input matInput type="text" placeholder="Subject" [formControl]="mailFormGroup.controls['subject']">
+          </mat-form-field>
+          <small *ngIf="mailFormGroup.controls['subject'].hasError('required') && mailFormGroup.controls['subject'].touched" class="text-danger support-text">Subject is required.</small>
+
+          <ck-editor name="editor1" [formControl]="mailFormGroup.controls['content']" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+          <small *ngIf="mailFormGroup.controls['content'].hasError('required') && mailFormGroup.controls['content'].touched" class="text-danger support-text">Content is required.</small>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="row text-center" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width: 100%; float: left; ">
+      <button mat-raised-button color="red" [routerLink]="[ '/mails' ]">Back</button>
+      <button mat-raised-button color="primary" [disabled]="!mailFormGroup.valid" (click)="store();">Save</button>
+  </div>
+  <!-- <div fxLayout="row" style="width:100%">
+    <div style="margin-right:60%;margin-left:10%;">
+      <button mat-raised-button color="warn" [disabled]="!mailFormGroup.valid" class="btn-block btn-lg m-t-20 m-b-20" type="button"
+        (click)="store()">
+        Save
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="back()">
+        Back
+      </button>
+    </div>
+  </div> -->
+</div>

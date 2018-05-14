@@ -1,0 +1,493 @@
+<!-- <div fxLayout="row" fxLayoutWrap="wrap">
+  <div class="flexC">
+    <mat-card *ngFor="let user of users;">
+      <mat-card-header class="text-white" style="background-color:#555682;">
+        <mat-card-title>{{user.firstName}} {{user.lastName}} </mat-card-title>
+        <div style="margin-left: 50%;">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>create</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Remove</span>
+            </button>
+          </mat-menu>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <div style="max-width:30%;">
+            <img src="{{ picPoint }}{{user.image}}" alt="user" class="profiler" *ngIf="user.image">
+            <img src="assets/images/users/default.png" alt="user" class="profiler" *ngIf="!user.image">
+          </div>
+          <div style="max-width:75%;float: right;margin-top: -30%;">
+            <p fxlayout="row" fxlayoutalign="start center">
+              <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">card_membership</mat-icon>
+              <span>{{user.role.name}}</span>
+            </p>
+            <p fxlayout="row" fxlayoutalign="start center">
+              <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">mail_outline</mat-icon>
+              <span>{{user.username}}</span>
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> -->
+    <div class="flex-p" fxlayout="row" fxlayoutalign="space-between center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-between; align-items: center;">
+      <div fxlayout="row" style="flex-direction: row; box-sizing: border-box; display: flex;">
+        <mat-button-toggle-group class="mat-button-toggle-group" role="radiogroup">
+          <mat-button-toggle class="mat-button-toggle mat-button-toggle-checked" value="add" id="mat-button-toggle-2">
+            <label class="mat-button-toggle-label" for="mat-button-toggle-2-input">
+              <input class="mat-button-toggle-input cdk-visually-hidden" type="radio" id="mat-button-toggle-2-input" name="mat-button-toggle-group-0">
+              <div class="mat-button-toggle-label-content">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">person_add</mat-icon>
+              </div>
+            </label>
+            <div class="mat-button-toggle-focus-overlay"></div>
+            <div class="mat-button-toggle-ripple mat-ripple" matripple=""></div>
+          </mat-button-toggle>
+          <mat-button-toggle class="mat-button-toggle" value="search" id="mat-button-toggle-3">
+            <label class="mat-button-toggle-label" for="mat-button-toggle-3-input">
+              <input class="mat-button-toggle-input cdk-visually-hidden" type="radio" id="mat-button-toggle-3-input" name="mat-button-toggle-group-0">
+              <div class="mat-button-toggle-label-content">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">search</mat-icon>
+              </div>
+            </label>
+            <div class="mat-button-toggle-focus-overlay"></div>
+            <div class="mat-button-toggle-ripple mat-ripple" matripple=""></div>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <div fxlayout="row" fxlayoutalign="space-between center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-between; align-items: center;">
+        <mat-button-toggle-group class="mat-button-toggle-group" role="radiogroup">
+          <mat-button-toggle checked="true" class="mat-button-toggle mat-button-toggle-checked" value="grid" id="mat-button-toggle-4">
+            <label class="mat-button-toggle-label" for="mat-button-toggle-4-input">
+              <input class="mat-button-toggle-input cdk-visually-hidden" type="radio" id="mat-button-toggle-4-input" name="mat-button-toggle-group-1">
+              <div class="mat-button-toggle-label-content">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">view_module</mat-icon>
+              </div>
+            </label>
+            <div class="mat-button-toggle-focus-overlay"></div>
+            <div class="mat-button-toggle-ripple mat-ripple" matripple=""></div>
+          </mat-button-toggle>
+          <mat-button-toggle class="mat-button-toggle" value="list" id="mat-button-toggle-5">
+            <label class="mat-button-toggle-label" for="mat-button-toggle-5-input">
+              <input class="mat-button-toggle-input cdk-visually-hidden" type="radio" id="mat-button-toggle-5-input" name="mat-button-toggle-group-1">
+              <div class="mat-button-toggle-label-content">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">view_list</mat-icon>
+              </div>
+            </label>
+            <div class="mat-button-toggle-focus-overlay"></div>
+            <div class="mat-button-toggle-ripple mat-ripple" matripple=""></div>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+    <!---->
+    <div fxlayout="row wrap" class="ng-star-inserted" style="flex-flow: row wrap; box-sizing: border-box; display: flex;">
+      <!---->
+      <div class="flex-p ng-star-inserted" fxflex="100" fxflex.gt-md="33.3" fxflex.md="50" style="flex: 1 1 33.3%; box-sizing: border-box; max-width: 33.3%;">
+        <mat-card class="p-0 mat-card">
+          <div class="bg-primary" fxlayout="row" fxlayoutalign="space-between center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-between; align-items: center;">
+            <!---->
+            <h3 class="user-name ng-star-inserted">Ashley Ahlberg</h3>
+            <!---->
+            <button aria-haspopup="true" mat-icon-button="" class="mat-icon-button">
+              <span class="mat-button-wrapper">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">more_vert</mat-icon>
+              </span>
+              <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+              <div class="mat-button-focus-overlay"></div>
+            </button>
+          </div>
+          <mat-menu xposition="before" class="ng-tns-c18-110 ng-star-inserted">
+            <!---->
+          </mat-menu>
+          <div class="user-content" fxlayout="row" fxlayoutalign="space-around center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-around; align-items: center;">
+            <div fxflex="30" fxlayout="column" fxlayoutalign="center center" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 30%; place-content: center; align-items: center;">
+              <div class="user-img">
+                <!---->
+                <img class="transition-2 ng-star-inserted" src="assets/img/profile/ashley.jpg">
+                <!---->
+                <!---->
+              </div>
+              <div class="user-social">
+                <mat-slide-toggle class="mat-slide-toggle mat-primary" color="primary" id="mat-slide-toggle-18">
+                  <label class="mat-slide-toggle-label">
+                    <div class="mat-slide-toggle-bar mat-slide-toggle-bar-no-side-margin">
+                      <input class="mat-slide-toggle-input cdk-visually-hidden" type="checkbox" id="mat-slide-toggle-18-input"
+                        tabindex="0">
+                      <div class="mat-slide-toggle-thumb-container" style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <div class="mat-slide-toggle-thumb"></div>
+                        <div class="mat-slide-toggle-ripple mat-ripple" mat-ripple=""></div>
+                      </div>
+                    </div>
+                    <span class="mat-slide-toggle-content"></span>
+                  </label>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="user-details transition-2" fxflex="70" fxlayout="column" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 70%;">
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">card_membership</mat-icon>
+                <span>Product designer</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">mail_outline</mat-icon>
+                <span>ashley@gmail.com</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">call</mat-icon>
+                <span>(202) 756-9756</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_on</mat-icon>
+                <span>Washington</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+                <span>Joined 21 April, 2017 at 23:55</span>
+              </p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="flex-p ng-star-inserted" fxflex="100" fxflex.gt-md="33.3" fxflex.md="50" style="flex: 1 1 33.3%; box-sizing: border-box; max-width: 33.3%;">
+        <mat-card class="p-0 mat-card">
+          <div class="bg-primary" fxlayout="row" fxlayoutalign="space-between center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-between; align-items: center;">
+            <!---->
+            <h3 class="user-name ng-star-inserted">Bruno Vespa</h3>
+            <!---->
+            <button aria-haspopup="true" mat-icon-button="" class="mat-icon-button">
+              <span class="mat-button-wrapper">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">more_vert</mat-icon>
+              </span>
+              <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+              <div class="mat-button-focus-overlay"></div>
+            </button>
+          </div>
+          <mat-menu xposition="before" class="ng-tns-c18-111 ng-star-inserted">
+            <!---->
+          </mat-menu>
+          <div class="user-content" fxlayout="row" fxlayoutalign="space-around center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-around; align-items: center;">
+            <div fxflex="30" fxlayout="column" fxlayoutalign="center center" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 30%; place-content: center; align-items: center;">
+              <div class="user-img">
+                <!---->
+                <img class="transition-2 ng-star-inserted" src="assets/img/profile/bruno.jpg">
+                <!---->
+                <!---->
+              </div>
+              <div class="user-social">
+                <mat-slide-toggle class="mat-slide-toggle mat-primary" color="primary" id="mat-slide-toggle-19">
+                  <label class="mat-slide-toggle-label">
+                    <div class="mat-slide-toggle-bar mat-slide-toggle-bar-no-side-margin">
+                      <input class="mat-slide-toggle-input cdk-visually-hidden" type="checkbox" id="mat-slide-toggle-19-input"
+                        tabindex="0">
+                      <div class="mat-slide-toggle-thumb-container" style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <div class="mat-slide-toggle-thumb"></div>
+                        <div class="mat-slide-toggle-ripple mat-ripple" mat-ripple=""></div>
+                      </div>
+                    </div>
+                    <span class="mat-slide-toggle-content"></span>
+                  </label>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="user-details transition-2" fxflex="70" fxlayout="column" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 70%;">
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">card_membership</mat-icon>
+                <span>Sale manager</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">mail_outline</mat-icon>
+                <span>bruno@dell.com</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">call</mat-icon>
+                <span>(415) 231-0332</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_on</mat-icon>
+                <span>San Francisco</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+                <span>Joined 20 May, 2017 at 23:55</span>
+              </p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="flex-p ng-star-inserted" fxflex="100" fxflex.gt-md="33.3" fxflex.md="50" style="flex: 1 1 33.3%; box-sizing: border-box; max-width: 33.3%;">
+        <mat-card class="p-0 mat-card">
+          <div class="bg-primary" fxlayout="row" fxlayoutalign="space-between center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-between; align-items: center;">
+            <!---->
+            <h3 class="user-name ng-star-inserted">Andy Warhol</h3>
+            <!---->
+            <button aria-haspopup="true" mat-icon-button="" class="mat-icon-button">
+              <span class="mat-button-wrapper">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">more_vert</mat-icon>
+              </span>
+              <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+              <div class="mat-button-focus-overlay"></div>
+            </button>
+          </div>
+          <mat-menu xposition="before" class="ng-tns-c18-112 ng-star-inserted">
+            <!---->
+          </mat-menu>
+          <div class="user-content" fxlayout="row" fxlayoutalign="space-around center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-around; align-items: center;">
+            <div fxflex="30" fxlayout="column" fxlayoutalign="center center" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 30%; place-content: center; align-items: center;">
+              <div class="user-img">
+                <!---->
+                <img class="transition-2 ng-star-inserted" src="assets/img/avatars/avatar-3.png">
+                <!---->
+                <!---->
+              </div>
+              <div class="user-social">
+                <mat-slide-toggle class="mat-slide-toggle mat-primary" color="primary" id="mat-slide-toggle-20">
+                  <label class="mat-slide-toggle-label">
+                    <div class="mat-slide-toggle-bar mat-slide-toggle-bar-no-side-margin">
+                      <input class="mat-slide-toggle-input cdk-visually-hidden" type="checkbox" id="mat-slide-toggle-20-input"
+                        tabindex="0">
+                      <div class="mat-slide-toggle-thumb-container" style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <div class="mat-slide-toggle-thumb"></div>
+                        <div class="mat-slide-toggle-ripple mat-ripple" mat-ripple=""></div>
+                      </div>
+                    </div>
+                    <span class="mat-slide-toggle-content"></span>
+                  </label>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="user-details transition-2" fxflex="70" fxlayout="column" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 70%;">
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">card_membership</mat-icon>
+                <span>Product manager</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">mail_outline</mat-icon>
+                <span>andy@adecco.com</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">call</mat-icon>
+                <span>(212) 457-2308</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_on</mat-icon>
+                <span>New York</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+                <span>Joined 28 June, 2017 at 20:55</span>
+              </p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="flex-p ng-star-inserted" fxflex="100" fxflex.gt-md="33.3" fxflex.md="50" style="flex: 1 1 33.3%; box-sizing: border-box; max-width: 33.3%;">
+        <mat-card class="p-0 mat-card">
+          <div class="bg-primary" fxlayout="row" fxlayoutalign="space-between center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-between; align-items: center;">
+            <!---->
+            <h3 class="user-name ng-star-inserted">Julia Aniston</h3>
+            <!---->
+            <button aria-haspopup="true" mat-icon-button="" class="mat-icon-button">
+              <span class="mat-button-wrapper">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">more_vert</mat-icon>
+              </span>
+              <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+              <div class="mat-button-focus-overlay"></div>
+            </button>
+          </div>
+          <mat-menu xposition="before" class="ng-tns-c18-113 ng-star-inserted">
+            <!---->
+          </mat-menu>
+          <div class="user-content" fxlayout="row" fxlayoutalign="space-around center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-around; align-items: center;">
+            <div fxflex="30" fxlayout="column" fxlayoutalign="center center" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 30%; place-content: center; align-items: center;">
+              <div class="user-img">
+                <!---->
+                <img class="transition-2 ng-star-inserted" src="assets/img/profile/julia.jpg">
+                <!---->
+                <!---->
+              </div>
+              <div class="user-social">
+                <mat-slide-toggle class="mat-slide-toggle mat-primary" color="primary" id="mat-slide-toggle-21">
+                  <label class="mat-slide-toggle-label">
+                    <div class="mat-slide-toggle-bar mat-slide-toggle-bar-no-side-margin">
+                      <input class="mat-slide-toggle-input cdk-visually-hidden" type="checkbox" id="mat-slide-toggle-21-input"
+                        tabindex="0">
+                      <div class="mat-slide-toggle-thumb-container" style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <div class="mat-slide-toggle-thumb"></div>
+                        <div class="mat-slide-toggle-ripple mat-ripple" mat-ripple=""></div>
+                      </div>
+                    </div>
+                    <span class="mat-slide-toggle-content"></span>
+                  </label>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="user-details transition-2" fxflex="70" fxlayout="column" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 70%;">
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">card_membership</mat-icon>
+                <span>Sales manager</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">mail_outline</mat-icon>
+                <span>julia@apple.com</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">call</mat-icon>
+                <span>(224) 267-1346</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_on</mat-icon>
+                <span>Illinois, Chicago</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+                <span>Joined 29 June, 2017 at 20:45</span>
+              </p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="flex-p ng-star-inserted" fxflex="100" fxflex.gt-md="33.3" fxflex.md="50" style="flex: 1 1 33.3%; box-sizing: border-box; max-width: 33.3%;">
+        <mat-card class="p-0 mat-card">
+          <div class="bg-primary" fxlayout="row" fxlayoutalign="space-between center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-between; align-items: center;">
+            <!---->
+            <h3 class="user-name ng-star-inserted">Adam Sandler</h3>
+            <!---->
+            <button aria-haspopup="true" mat-icon-button="" class="mat-icon-button">
+              <span class="mat-button-wrapper">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">more_vert</mat-icon>
+              </span>
+              <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+              <div class="mat-button-focus-overlay"></div>
+            </button>
+          </div>
+          <mat-menu xposition="before" class="ng-tns-c18-114 ng-star-inserted">
+            <!---->
+          </mat-menu>
+          <div class="user-content" fxlayout="row" fxlayoutalign="space-around center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-around; align-items: center;">
+            <div fxflex="30" fxlayout="column" fxlayoutalign="center center" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 30%; place-content: center; align-items: center;">
+              <div class="user-img">
+                <!---->
+                <img class="transition-2 ng-star-inserted" src="assets/img/profile/adam.jpg">
+                <!---->
+                <!---->
+              </div>
+              <div class="user-social">
+                <mat-slide-toggle class="mat-slide-toggle mat-primary" color="primary" id="mat-slide-toggle-22">
+                  <label class="mat-slide-toggle-label">
+                    <div class="mat-slide-toggle-bar mat-slide-toggle-bar-no-side-margin">
+                      <input class="mat-slide-toggle-input cdk-visually-hidden" type="checkbox" id="mat-slide-toggle-22-input"
+                        tabindex="0">
+                      <div class="mat-slide-toggle-thumb-container" style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <div class="mat-slide-toggle-thumb"></div>
+                        <div class="mat-slide-toggle-ripple mat-ripple" mat-ripple=""></div>
+                      </div>
+                    </div>
+                    <span class="mat-slide-toggle-content"></span>
+                  </label>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="user-details transition-2" fxflex="70" fxlayout="column" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 70%;">
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">card_membership</mat-icon>
+                <span>Product manager</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">mail_outline</mat-icon>
+                <span>adam@gen-el.com</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">call</mat-icon>
+                <span>(224) 267-1346</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_on</mat-icon>
+                <span>Texas, Houston</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+                <span>Joined 27 June, 2017 at 19:50</span>
+              </p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="flex-p ng-star-inserted" fxflex="100" fxflex.gt-md="33.3" fxflex.md="50" style="flex: 1 1 33.3%; box-sizing: border-box; max-width: 33.3%;">
+        <mat-card class="p-0 mat-card">
+          <div class="bg-primary" fxlayout="row" fxlayoutalign="space-between center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-between; align-items: center;">
+            <!---->
+            <h3 class="user-name ng-star-inserted">Tereza Stiles</h3>
+            <!---->
+            <button aria-haspopup="true" mat-icon-button="" class="mat-icon-button">
+              <span class="mat-button-wrapper">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">more_vert</mat-icon>
+              </span>
+              <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+              <div class="mat-button-focus-overlay"></div>
+            </button>
+          </div>
+          <mat-menu xposition="before" class="ng-tns-c18-115 ng-star-inserted">
+            <!---->
+          </mat-menu>
+          <div class="user-content" fxlayout="row" fxlayoutalign="space-around center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center space-around; align-items: center;">
+            <div fxflex="30" fxlayout="column" fxlayoutalign="center center" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 30%; place-content: center; align-items: center;">
+              <div class="user-img">
+                <!---->
+                <img class="transition-2 ng-star-inserted" src="assets/img/profile/tereza.jpg">
+                <!---->
+                <!---->
+              </div>
+              <div class="user-social">
+                <mat-slide-toggle class="mat-slide-toggle mat-primary" color="primary" id="mat-slide-toggle-23">
+                  <label class="mat-slide-toggle-label">
+                    <div class="mat-slide-toggle-bar mat-slide-toggle-bar-no-side-margin">
+                      <input class="mat-slide-toggle-input cdk-visually-hidden" type="checkbox" id="mat-slide-toggle-23-input"
+                        tabindex="0">
+                      <div class="mat-slide-toggle-thumb-container" style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <div class="mat-slide-toggle-thumb"></div>
+                        <div class="mat-slide-toggle-ripple mat-ripple" mat-ripple=""></div>
+                      </div>
+                    </div>
+                    <span class="mat-slide-toggle-content"></span>
+                  </label>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="user-details transition-2" fxflex="70" fxlayout="column" style="flex: 1 1 100%; box-sizing: border-box; flex-direction: column; display: flex; max-width: 70%;">
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">card_membership</mat-icon>
+                <span>Sale manager</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">mail_outline</mat-icon>
+                <span>tereza@airlines.com</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">call</mat-icon>
+                <span>(214) 617-2614</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_on</mat-icon>
+                <span>Texas, Dallas</span>
+              </p>
+              <p fxlayout="row" fxlayoutalign="start center" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
+                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+                <span>Joined 29 June, 2017 at 20:50</span>
+              </p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>

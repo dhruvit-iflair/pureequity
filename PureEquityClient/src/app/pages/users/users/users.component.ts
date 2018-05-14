@@ -30,12 +30,12 @@ export class UsersComponent {
     this.userService.getAllUsers();
   }
   pageEvent(event){
-    console.log(event)
+    //console.log(event)
     event = this.page;
     this.i = event.pageIndex * event.pageSize;
   };
   view(_id){
-    console.log(_id);
+    //console.log(_id);
   }
   expandfilter(){
     if(!this.x){
@@ -48,16 +48,19 @@ export class UsersComponent {
     }
   }
   edit(user:User){
-    // let dialogRef = this.dialog.open(EditUserComponent,{
-    //   data: user,
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //     if (result) {
-    //       console.log(result);
-    //     }
-    // });
     this.userService.getAUsers(user._id);
-    this.router.navigate(['/users/edit',user._id])
+     let dialogRef = this.dialog.open(EditUserComponent,{
+       data: user,
+       height:'600px'
+     });
+    dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+        }
+    });
+    
+    //this.router.navigate(['/users/edit',user._id]);
+
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace

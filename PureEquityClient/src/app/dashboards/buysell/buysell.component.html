@@ -1,0 +1,93 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <div fxFlex.gt-sm="48%" fxFlex="50" style="margin-left:2%;">
+      <mat-card id="buy" (click)="enablebuybtc()" [ngClass]="(enablebuycontainer==true)?'enabledcard':'disabledcard'">
+        <mat-card-content>
+          <div style="text-align:center;cursor: pointer;">
+            <mat-icon style="font-size: 120px;">cloud_download</mat-icon>
+            <span>Buy BTC</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex.gt-sm="48%" fxFlex="50">
+      <mat-card id="sell" (click)="enablesellbtc()" [ngClass]="(enablesellcontainer==true)?'enabledcard':'disabledcard'">
+        <mat-card-content>
+          <div style="text-align:center;cursor: pointer;">
+            <mat-icon style="font-size: 120px;">cloud_upload</mat-icon>
+            <span>Sell BTC</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <!-- <div fxFlex.gt-sm="8%" fxFlex="8" class="customizedCss"> -->
+  <mat-card class="customizedCss">
+    <mat-card-content>
+      OR
+    </mat-card-content>
+  </mat-card>
+  <!-- </div> -->
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <div fxFlex.gt-sm="100%" fxFlex="100" style="margin-left:2%;">
+      <mat-card>
+        <mat-card-content>
+          <div style="text-align:center;" *ngIf="enablebuycontainer">
+            <span>Available : {{availableBalance}}</span>
+            <form [formGroup]="buysellForm">
+              <div fxLayout="row" fxLayoutWrap="wrap">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" (ngModelChange)="estimation()">
+                </mat-form-field>
+                <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Subtotal:" [formControl]="buysellForm.controls['subtotal']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Approx. BTC to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
+                </mat-form-field>
+
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="purchase()">
+                    BUY BTC
+                  </button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+          <div style="text-align:center;" *ngIf="enablesellcontainer">
+            <span>Available : {{availableBalance}}</span>
+            <form [formGroup]="buysellForm">
+              <div fxLayout="row" fxLayoutWrap="wrap">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="I Want To Sell:" [formControl]="buysellForm.controls['amount']" (ngModelChange)="estimation()">
+                </mat-form-field>
+                <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Subtotal:" [formControl]="buysellForm.controls['subtotal']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Approx. USD to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
+                </mat-form-field>
+
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="purchase()">
+                    SELL BTC
+                  </button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
