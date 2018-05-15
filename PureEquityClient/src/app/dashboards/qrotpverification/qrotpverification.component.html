@@ -1,12 +1,23 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
   <!-- Card column -->
   <div fxFlex.gt-sm="48%" fxFlex="50">
-      <app-change-password></app-change-password>
+    <app-change-password></app-change-password>
   </div>
   <div fxFlex.gt-sm="48%" fxFlex="50">
     <mat-card>
+      <mat-card-header class="bg-primary text-white">
+        <mat-card-title-group>
+          <mat-card-title fxLayout="row">
+              Enable/Disable 2FA Security
+          </mat-card-title>
+        </mat-card-title-group>
+        <div fxFlex="fxFlex"></div>
+        <!-- <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();">
+                <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon> 
+            </button> -->
+      </mat-card-header>
       <mat-card-content>
-        <mat-card-title>Enable/Disable 2FA Security</mat-card-title>
+        <!-- <mat-card-title>Enable/Disable 2FA Security</mat-card-title> -->
         <form [formGroup]="veryform" (ngSubmit)="verifyotp()">
           <div fxLayout="row" fxLayoutWrap="wrap" *ngIf="isqrenable">
             <img src="{{qr.img}}" height="200px" width="200px" style="margin-left: 15%;">

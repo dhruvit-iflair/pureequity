@@ -19,7 +19,7 @@ export class BankdetailsService {
       this.Bankdetails.next(response);
     }, 
     (error) => {
-      this.toaster.error('Something went wrong, please try again later', 'Error');
+      // this.toaster.error('Something went wrong, please try again later', 'Error');
       console.log(error);
     });
   }
@@ -31,7 +31,7 @@ export class BankdetailsService {
       this.Bankdetail.next(response);
     },
     (error) => {
-      this.toaster.error('Something went wrong, please try again later', 'Error');
+      // this.toaster.error('Something went wrong, please try again later', 'Error');
       console.log(error);
     });
   }
@@ -43,7 +43,7 @@ export class BankdetailsService {
       this.UserBankdetail.next(response);
     }, 
     (error) => {
-      this.toaster.error((error.error['message']) ? error.error.message : error.error, 'Error');      
+      // this.toaster.error((error.error['message']) ? error.error.message : error.error, 'Error');      
       console.log(error);
     });
   }

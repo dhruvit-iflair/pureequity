@@ -58,7 +58,6 @@ export class KycAdminComponent implements OnInit {
       taxnumber: [{ value: '', disabled: true }, Validators.required],
       istrn: []
     });
-    this.isEdit = true;
     this.secondFormGroup = this._formBuilder.group({
       scandoc: [null, Validators.required]
     });
@@ -90,6 +89,7 @@ export class KycAdminComponent implements OnInit {
           this.uploadedimgs = gotcha[0].scandoc;
           this.secondFormGroup.patchValue({ scandoc: this.uploadedimgs });
         }, (ers) => {
+          this.isEdit = true;
           console.log('Error while fetching data:' + ers);
         });
     });
