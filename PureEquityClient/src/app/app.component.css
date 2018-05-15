@@ -1,12 +1,12 @@
-.responsivelogo{
+.responsivelogo {
     display: none;
 }
 
-@media(max-width:640px){
-    .responsivelogo{
+@media(max-width:640px) {
+    .responsivelogo {
         display: block;
     }
-    .originallogo{
+    .originallogo {
         display: none;
     }
 }

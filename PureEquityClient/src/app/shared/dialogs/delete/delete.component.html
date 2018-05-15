@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{data.title}}</h2>
 <mat-dialog-content>{{data.content}}</mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="closeDialog(false);" mat-dialog-close >No</button>
+  <button mat-raised-button (click)="closeDialog(false);" mat-dialog-close >No</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button style="background:red;" mat-button [mat-dialog-close]="true" (click)="closeDialog(true);">Yes</button>
+      <button color="{{data.class}}"  mat-raised-button [mat-dialog-close]="true" (click)="closeDialog(true);">Yes</button>
 </mat-dialog-actions>

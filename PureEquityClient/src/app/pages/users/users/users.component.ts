@@ -69,7 +69,7 @@ export class UsersComponent {
   }
   delete(user:User){
     let dialogRef = this.dialog.open(DeleteComponent,{
-      data: { title: 'Delete?', content: 'Are you sure to delete ' + user.username + ' ?' },
+      data: { title: 'Delete?', content: 'Are you sure to delete ' + user.username + ' ?', class:'warn' },
     });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {

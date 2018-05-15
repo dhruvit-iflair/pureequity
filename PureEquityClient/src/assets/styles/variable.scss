@@ -16,7 +16,7 @@ $headingfont:'Poppins', sans-serif;
 
 $primary: mat-palette($mat-blue, 600);
 $accent: mat-palette($mat-indigo, 500);
-$warn: mat-palette($mat-pink, 500);
+$warn: mat-palette($mat-red, 500);
 $theme: mat-light-theme($primary, $accent, $warn);
 $background: map-get($theme, background);
 $foreground: map-get($theme, foreground);
@@ -37,7 +37,6 @@ $custom-typography: mat-typography-config(
 // Dark Theme
 
 /*Theme Colors*/
- 
 $topbar: #2196f3;
 $sidebar: #fff;
 $sidebar-white: #e5edef;

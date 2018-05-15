@@ -135,7 +135,7 @@ export class KycAdminComponent implements OnInit {
     };
 
     let dialogRef = this.dialog.open(DeleteComponent, {
-      data: { title: 'Want to Save ?', content: '' },
+      data: { title: 'Want to Save ?', content: '', class:'primary' },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

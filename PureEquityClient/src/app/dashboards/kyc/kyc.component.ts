@@ -129,7 +129,7 @@ export class KycComponent implements OnInit {
     };
 
     let dialogRef = this.dialog.open(DeleteComponent, {
-      data: { title: 'Want to Save ?', content: '' },
+      data: { title: 'Want to Save ?', content: '' , class:'warn'},
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
