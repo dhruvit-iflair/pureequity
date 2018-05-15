@@ -74,6 +74,9 @@ export class ProfileComponent implements OnInit {
      });
    });
   }
+  cancel(){
+    window.history.back();
+  }
   updateUserDetails(){
     this.detailsFormGroup.patchValue({ updated_at: Date.now() });
     var cred = JSON.parse(localStorage.getItem('token'));

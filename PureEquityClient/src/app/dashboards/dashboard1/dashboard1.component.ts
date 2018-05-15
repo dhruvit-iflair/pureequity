@@ -62,11 +62,7 @@ export class Dashboard1Component implements OnInit, OnDestroy {
     public int: any;
     public timer={hours:'',minutes:'',seconds:'',micros:''};
     onSelect(event) {
-<<<<<<< HEAD
-        // console.log(event);
-=======
         //console.log(event);
->>>>>>> cc3bcafff13312da777b36c4f15bfeaf7e7c25ef
     }
     
     ngOnInit() {
