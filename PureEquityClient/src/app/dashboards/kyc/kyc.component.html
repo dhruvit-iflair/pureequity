@@ -1,39 +1,19 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
     <!-- Card column -->
     <div fxFlex.gt-sm="50%" fxFlex="50">
-        <mat-card>
-            <mat-card-header class="bg-primary text-white" *ngIf="!isApproved">
+        <mat-card *ngIf="isEdit" @card>
+            <mat-card-header class="bg-primary text-white">
                 <mat-card-title-group>
                     <mat-card-title fxLayout="row">
                         Kyc Details
                     </mat-card-title>
                 </mat-card-title-group>
                 <div fxFlex="fxFlex"></div>
-                <!-- <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();" *ngIf="!isEdit && uid">
-                    <mat-icon class="mat-icon material-icons" role="img">save</mat-icon>
+                <!-- <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();">
+                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon> 
                 </button> -->
-
-                <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();" *ngIf="isEdit && uid">
-                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
-                </button>
             </mat-card-header>
-            <mat-card-header class="bg-primary text-white" *ngIf="isApproved">
-                <mat-card-title-group>
-                    <mat-card-title fxLayout="row">
-                        Kyc Details
-                    </mat-card-title>
-                </mat-card-title-group>
-                <div fxFlex="fxFlex"></div>
-                <!-- <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();" *ngIf="isEdit && uid">
-                    <mat-icon class="mat-icon material-icons" role="img">save</mat-icon>
-                </button> -->
-
-                <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();" *ngIf="!isEdit && uid">
-                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
-                </button>
-            </mat-card-header>
-
-            <mat-card-content *ngIf="!isEdit" @card>
+            <mat-card-content>
                 <mat-horizontal-stepper [linear]="isLinear">
                     <mat-step [stepControl]="firstFormGroup">
                         <form [formGroup]="firstFormGroup">
@@ -101,7 +81,22 @@
 
             </mat-card-content>
 
-            <mat-card-content *ngIf="isEdit && uid" @card>
+        </mat-card>
+
+        <mat-card *ngIf="!isEdit">
+            <mat-card-header class="bg-primary text-white">
+                <mat-card-title-group>
+                    <mat-card-title fxLayout="row">
+                        Kyc Details
+                    </mat-card-title>
+                </mat-card-title-group>
+                <div fxFlex="fxFlex"></div>
+                <button mat-fab color="primary" @card class="half-header" bottom (click)="isEdit = !isEdit">
+                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
+                </button>
+            </mat-card-header>
+
+            <mat-card-content @card>
                 <form [formGroup]="dispalayFormGroup">
                     <mat-form-field>
                         <mat-select placeholder="Select Country" name="country" formControlName="country">
@@ -120,9 +115,9 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <input formControlName="issuedate" matInput [matDatepicker]="issuedate" placeholder="ID Issue Date" disabled>
-                        <mat-datepicker-toggle matSuffix [for]="issuedate"></mat-datepicker-toggle>
-                        <mat-datepicker #issuedate disabled="false"></mat-datepicker>
+                        <input formControlName="issuedate" matInput placeholder="ID Issue Date" disabled>
+                        <!-- <mat-datepicker-toggle matSuffix [for]="issuedate"></mat-datepicker-toggle>
+                        <mat-datepicker #issuedate disabled="false"></mat-datepicker> -->
                     </mat-form-field>
                     <mat-form-field *ngIf="!istrn">
                         <input matInput placeholder="Tax Reference Number" formControlName="taxnumber">

@@ -54,8 +54,6 @@ export class KycComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       scandoc: [null, Validators.required]
     });
-    this.isEdit = true;
-    
     this.getInitialData();
   }
   getInitialData() {
@@ -86,6 +84,7 @@ export class KycComponent implements OnInit {
         this.uploadedimgs = gotcha[0].scandoc;
         this.secondFormGroup.patchValue({ scandoc: this.uploadedimgs });
       }, (ers) => {
+        this.isEdit = true;
         console.log('Error while fetching data:' + ers);
       });
   }
