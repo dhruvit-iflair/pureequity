@@ -15,11 +15,11 @@ const navItems=[
     title: 'Bank',
     icon: 'no_encryption'
   },
-  {
-    state: 'buysell',
-    title: 'Buy/Sell',
-    icon: 'import_export'
-  },
+  // {
+  //   state: 'buysell',
+  //   title: 'Buy/Sell',
+  //   icon: 'import_export'
+  // },
   {
     state: 'security',
     title: 'Security',
