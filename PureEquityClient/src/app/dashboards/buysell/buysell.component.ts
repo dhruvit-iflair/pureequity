@@ -14,6 +14,7 @@ import { environment } from '../../../environments/environment';
 export class BuysellComponent implements OnInit {
 
   public buysellForm: FormGroup;
+  public sellForm: FormGroup;
   constructor(private fb: FormBuilder, private http: Http, private router: Router, private toastr: ToastrService) { }
   availableBalance;pureequityfee='0.25%';
   enablesellcontainer=false;enablebuycontainer=false;
@@ -25,15 +26,22 @@ export class BuysellComponent implements OnInit {
       fee:[this.pureequityfee],
       estimation:[null]
     });
-    this.availableBalance='154.8524 EUR';
+    this.sellForm = this.fb.group({
+      amount: [null, Validators.compose([Validators.required])],
+      subtotal:[null],
+      fee:[this.pureequityfee],
+      estimation:[null]
+    });
   }
   enablebuybtc(){
     this.enablesellcontainer=false;
     this.enablebuycontainer=true;
+    this.availableBalance='154.8524 USD';
   }
   enablesellbtc(){
     this.enablebuycontainer=false;
     this.enablesellcontainer=true;
+    this.availableBalance='4.1524 BTC';
   }
   estimation(){
     this.http.get(environment.tradingApi+'/coins/btcusd').subscribe((data)=>{
@@ -44,14 +52,11 @@ export class BuysellComponent implements OnInit {
         this.buysellForm.patchValue({subtotal:subtotal+' USD',estimation:estbtc});
       }
       else{
-        //sell nu logic implementation baki che..
-        var subtotl = parseFloat(this.buysellForm.value.amount)*parseFloat(respdata.payload.data.bid);
-        //var subtotal = subtotl * respdata.payload.data.ask;
-        var estbtc= subtotal/respdata.payload.data.ask;
-        this.buysellForm.patchValue({subtotal:subtotal+' USD',estimation:estbtc});
+        var subtotl = parseFloat(this.sellForm.value.amount)*parseFloat(respdata.payload.data.ask);
+        var deductableusd= subtotl*parseFloat(this.pureequityfee)/100;
+        var estusd=subtotl-deductableusd;
+        this.sellForm.patchValue({subtotal:subtotl+' USD',estimation:estusd});
       }
     });
-    //var calculated= this.buysellForm.value.amount*parseFloat(this.pureequityfee)/100;
-    //calculation pending for showing values on form.
   }
 }

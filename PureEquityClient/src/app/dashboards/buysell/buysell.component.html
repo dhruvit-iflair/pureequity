@@ -22,11 +22,11 @@
     </div>
   </div>
   <!-- <div fxFlex.gt-sm="8%" fxFlex="8" class="customizedCss"> -->
-  <mat-card class="customizedCss">
+  <!-- <mat-card class="customizedCss">
     <mat-card-content>
       OR
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
   <!-- </div> -->
   <div fxFlex.gt-sm="100%" fxFlex="100">
     <div fxFlex.gt-sm="100%" fxFlex="100" style="margin-left:2%;">
@@ -62,20 +62,20 @@
 
           <div style="text-align:center;" *ngIf="enablesellcontainer">
             <span>Available : {{availableBalance}}</span>
-            <form [formGroup]="buysellForm">
+            <form [formGroup]="sellForm">
               <div fxLayout="row" fxLayoutWrap="wrap">
                 <mat-form-field>
-                  <input matInput type="number" placeholder="I Want To Sell:" [formControl]="buysellForm.controls['amount']" (ngModelChange)="estimation()">
+                  <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']" (ngModelChange)="estimation()">
                 </mat-form-field>
-                <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                 <mat-form-field>
-                  <input matInput type="text" placeholder="Subtotal:" [formControl]="buysellForm.controls['subtotal']" [readonly]="true">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
+                  <input matInput type="text" placeholder="Subtotal:" [formControl]="sellForm.controls['subtotal']" [readonly]="true">
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput type="text" placeholder="Approx. USD to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
+                  <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellForm.controls['fee']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Approx. USD to Receive:" [formControl]="sellForm.controls['estimation']" [readonly]="true">
                 </mat-form-field>
 
                 <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">

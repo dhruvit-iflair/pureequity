@@ -109,7 +109,7 @@ export class KycAdminComponent implements OnInit {
     }
   }
   removeDoc(imgnm){
-    let up={img:imgnm,user:this.user.user._id};
+    let up={img:imgnm,user:this.user._id};
     this.http.post(environment.api + "/userdocs/rmimage", up)
     .subscribe((res) => {
       var data = res.json();

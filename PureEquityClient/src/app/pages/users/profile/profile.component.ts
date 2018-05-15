@@ -93,7 +93,4 @@ export class ProfileComponent implements OnInit {
       // this.router.navigate(['/users']);
     })
   }
-  cancel(){
-    window.history.back();
-  }
 }
