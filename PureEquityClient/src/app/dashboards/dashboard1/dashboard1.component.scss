@@ -32,3 +32,11 @@ tbody.inactive {
     float: right;
     padding: 10px;
 }
+.highcharts-container {
+    width:100% !important;
+    height:100% !important;
+}
+
+g.highcharts-scrollbar {
+    display: none !important;
+}
