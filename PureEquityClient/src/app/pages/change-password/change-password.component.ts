@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/interfaces/user.interface';
 import { LoginService } from '../../shared/services/login.service';
+import { card } from '../../shared/animations/animations';
 
 const current_password = new FormControl('', Validators.required);
 const password = new FormControl('', [CustomValidators.notEqualTo(current_password), Validators.required]);
@@ -16,7 +17,8 @@ const confirmPassword = new FormControl('', [CustomValidators.notEqualTo(current
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss']
+  styleUrls: ['./change-password.component.scss'],
+  animations:[card]
 })
 export class ChangePasswordComponent implements OnInit {
   public form: FormGroup;

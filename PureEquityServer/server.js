@@ -20,7 +20,7 @@ var db = mongoose.connect(config.connection + config.dbName);
 app.use(cores.permission);
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: false }));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: false, parameterLimit:50000 }));
 
 app.use(passport.initialize());
 app.use(passport.session());

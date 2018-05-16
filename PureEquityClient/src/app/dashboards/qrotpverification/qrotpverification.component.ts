@@ -5,11 +5,13 @@ import { ToastrService } from 'ngx-toastr';
 import { CustomValidators } from 'ng2-validation';
 import { Http } from "@angular/http";
 import { environment } from '../../../environments/environment';
+import { card } from '../../shared/animations/animations';
 
 @Component({
   selector: 'app-qrotpverification',
   templateUrl: './qrotpverification.component.html',
-  styleUrls: ['./qrotpverification.component.css']
+  styleUrls: ['./qrotpverification.component.css'],
+  animations:[card]
 })
 export class QrotpverificationComponent implements OnInit {
   public veryform: FormGroup;

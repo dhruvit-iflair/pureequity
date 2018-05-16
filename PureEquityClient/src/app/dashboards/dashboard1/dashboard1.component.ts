@@ -85,8 +85,13 @@ export class Dashboard1Component implements OnInit, OnDestroy {
                     tooltip: {
                         valueDecimals: 2
                     }
-                }]
+                }],
+                navigator: { enabled: false }
             });
+            var cont = document.getElementById('container').style.height;
+            var card = document.getElementById('chart-card-content').style.height
+            card = cont;
+            $('.highcharts-range-selector-buttons').find('text').first().remove();
         });
     }
 
