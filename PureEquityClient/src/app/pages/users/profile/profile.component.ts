@@ -17,10 +17,10 @@ import { User_Profile } from '../../../shared/interfaces/user_profile.interface'
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private _formBuilder: FormBuilder,public provider:Http, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router) {
+  constructor(private _formBuilder: FormBuilder, public provider: Http, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router) {
     this.roleService.getAllRoles();
     this.act.params.subscribe((params) => {
-      this.uid=params.id;
+      this.uid = params.id;
     });
   }
   uid;
@@ -61,32 +61,44 @@ export class ProfileComponent implements OnInit {
       isVerifyEmail: [{ value: false, disabled: true }],
       created_at: [{ value: null, disabled: true }],
       updated_at: [{ value: null, disabled: true }],
+      createdBy: [null],
+      updatedBy: [null]
     });
-    
-   this.provider.get(environment.api+'/users/'+this.uid).subscribe((resp)=>{
-     var x=resp.json();
-     this.detailsFormGroup.patchValue(x);
-     this.detailsFormGroup.patchValue({ role: x.role._id });
-     this.provider.get(environment.api+'/user_profile/getbyuid/'+this.uid).subscribe((respd)=>{
-       this.profiledata=respd.json();
-      var y=respd.json();
-      this.detailsFormGroup.patchValue({user_profile:y[0]});
-     });
-   });
+
+    this.provider.get(environment.api + '/users/' + this.uid).subscribe((resp) => {
+      var x = resp.json();
+      this.detailsFormGroup.patchValue(x);
+      this.detailsFormGroup.patchValue({ role: x.role._id });
+      this.provider.get(environment.api + '/user_profile/getbyuid/' + this.uid).subscribe((respd) => {
+        this.profiledata = respd.json();
+        var y = respd.json();
+        this.detailsFormGroup.patchValue({ user_profile: y[0] });
+      });
+    });
   }
-  cancel(){
+  cancel() {
     window.history.back();
   }
-  updateUserDetails(){
+  updateUserDetails() {
     this.detailsFormGroup.patchValue({ updated_at: Date.now() });
     var cred = JSON.parse(localStorage.getItem('token'));
-    (this.detailsFormGroup.value.createdBy) ? this.detailsFormGroup.patchValue({ createdBy: cred.user._id }) : this.detailsFormGroup.patchValue({ updatedBy: cred.user._id, createdBy: cred.user._id });
+    // (this.detailsFormGroup.value.createdBy) ? this.detailsFormGroup.patchValue({ createdBy: cred.user._id }) : this.detailsFormGroup.patchValue({ updatedBy: cred.user._id, createdBy: cred.user._id });
     var data = this.detailsFormGroup.value;
-    data.user_profile = this.profiledata._id;
-    this.userService.updateUserDetails(data).subscribe((res) => {
-      this.toster.success('User Details has been updated', 'Success');
-      this.userService.getAllUsers();
-      this.router.navigate(['/users']);
+    data.user_profile._id = this.profiledata[0]._id;
+    this.userService.updateUserProfileDetails(data.user_profile).subscribe((res) => {
+      console.log(res);
+      var usrdata = this.detailsFormGroup.value;
+      usrdata.user_profile = this.profiledata[0]._id;
+      this.userService.updateUserDetails(usrdata).subscribe((res) => {
+        console.log(res);
+        this.toster.success('User Details has been updated', 'Success');
+        this.userService.getAllUsers();
+        this.router.navigate(['/users']);
+      }, (error) => {
+        console.log(error);
+        this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+        // this.router.navigate(['/users']);
+      });
     }, (error) => {
       console.log(error);
       this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
