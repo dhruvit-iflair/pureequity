@@ -8,3 +8,6 @@
 /PureEquityServer/node_modules/
 /PureEquityServer/package-lock.json
 /PureEquityServer/uploads/users/profileImage/
+
+#Ignore Documents
+/PureEquityServer/uploads/users/documents/

@@ -4,7 +4,7 @@
   <div fxFlex.gt-lg="40" fxFlex.gt-md="40" fxFlex.gt-xs="40" fxFlex="40" style="width: 30%; float: left; ">
       <div class="bg">
           <img mat-card-avatar src="assets/images/users/default.png" *ngIf="!detailsFormGroup.value.image">
-          <img mat-card-avatar src="{{ picPoint }}{{ detailsFormGroup.value.image }}" *ngIf="detailsFormGroup.value.image">
+          <img mat-card-avatar src="{{ detailsFormGroup.value.image }}" *ngIf="detailsFormGroup.value.image">
           <div class="overlay" onclick="document.getElementById('FileInput').click()">
             <mat-icon>create</mat-icon>
           </div>

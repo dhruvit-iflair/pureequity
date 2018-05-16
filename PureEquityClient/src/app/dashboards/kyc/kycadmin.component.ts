@@ -96,31 +96,19 @@ export class KycAdminComponent implements OnInit {
   }
   uploadDoc(event) {
     let file = event.target.files;
+    var that = this;
     for (var i = 0; i < file.length; i++) {
-      let up = new FormData();
-      up.append('image', file[i]);
-      this.http.post(environment.api + "/userdocs/image", up)
-        .subscribe((res) => {
-          var data = res.json();
-          this.uploadedimgs.push(data.image);
-          this.secondFormGroup.patchValue({ scandoc: this.uploadedimgs });
-          this.isEligible = true;
-        });
+      var FR= new FileReader();
+      FR.addEventListener("load", function(e) {
+        that.uploadedimgs.push(e.target['result']);
+        that.secondFormGroup.patchValue({scandoc: that.uploadedimgs});
+      }); 
+      FR.readAsDataURL( file[i] );
     }
   }
-  removeDoc(imgnm){
-    let up={img:imgnm,user:this.user._id};
-    this.http.post(environment.api + "/userdocs/rmimage", up)
-    .subscribe((res) => {
-      var data = res.json();
-      if(data=="File Removed Successfully."){
-        this.toastr.warning(data);
-        this.getInitialData();
-      }
-      else{
-        this.toastr.error(data);
-      }
-    });
+  removeDoc(i){
+    this.uploadedimgs.splice(i,1);
+    this.secondFormGroup.patchValue({scandoc: this.uploadedimgs});
   }
   
   finalsubmittion() {
