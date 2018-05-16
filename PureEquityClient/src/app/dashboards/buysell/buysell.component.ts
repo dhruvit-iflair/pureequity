@@ -18,7 +18,7 @@ export class BuysellComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: Http, private router: Router, private toastr: ToastrService) { }
   availableBalance;pureequityfee='0.25%';
   enablesellcontainer=false;enablebuycontainer=false;
-  
+  bidprice;
   ngOnInit() {
     this.buysellForm = this.fb.group({
       amount: [null, Validators.compose([Validators.required])],
@@ -46,6 +46,7 @@ export class BuysellComponent implements OnInit {
   estimation(){
     this.http.get(environment.tradingApi+'/coins/btcusd').subscribe((data)=>{
       var respdata=data.json();
+      this.bidprice=respdata.payload.data.bid;
       if(this.enablebuycontainer){
         var subtotal = parseFloat(this.buysellForm.value.amount)-parseFloat(this.pureequityfee);
         var estbtc= subtotal/respdata.payload.data.ask;
@@ -58,5 +59,13 @@ export class BuysellComponent implements OnInit {
         this.sellForm.patchValue({subtotal:subtotl+' USD',estimation:estusd});
       }
     });
+  }
+  buybtc(){
+    var obj={amount:this.buysellForm.value.estimation,price:this.bidprice};
+    //ahiya call karavi devano just for buy btc jema ammount ma approx.btc received ni value nd price ma bid value avse
+  }
+  sellbtc(){
+    var obj={amount:this.buysellForm.value.amount,price:this.bidprice};
+    //ahiya call karavi devano just for buy btc jema ammount ni value nd price ma bid value avse
   }
 }
