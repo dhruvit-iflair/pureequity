@@ -65,12 +65,37 @@
                                     <input type="file" id="FileInput" multiple (change)="uploadDoc($event);" accept="image/*" />
                                 </div>
                             </div>
-                            <div class="mat-form-field">
-                                <div *ngFor="let z of uploadedimgs;let i=index;" style="text-align:center;">
+                            <div class="mat-form-field" fxLayout="row" fxLayoutWrap="wrap" *ngIf="uploadedimgs.length">
+                                <div fxFlex.gt-sm="100%" fxFlex="100">
+                                    <h4>Uploaded Documents</h4>
+                                </div>
+                                <div  class="scrollmenu">
+                                        <a *ngFor="let z of uploadedimgs;let i=index;">
+                                            <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ z}}" *ngIf="z">
+                                            <mat-icon *ngIf="i>0" class="mat-icon material-icons crosssymbol" (click)="removeDoc(i);">clear</mat-icon>
+                                        </a>
+                                </div>
+                                <!-- <div *ngFor="let z of uploadedimgs;let i=index;" style="text-align:center;">
                                     <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ z }}" *ngIf="z">
                                     <mat-icon *ngIf="i>0" class="mat-icon material-icons crosssymbol" (click)="removeDoc(i);">clear</mat-icon>
-                                </div>
+                                </div> -->
                             </div>
+                            <div class="mat-form-field" fxLayout="row" fxLayoutWrap="wrap" *ngIf="isAdmin && deletedscandoc.length">
+                                    <div fxFlex.gt-sm="100%" fxFlex="100">
+                                        <h4>Deleted Documents</h4>
+                                    </div>
+                                        <!-- <div *ngFor="let z of deletedscandoc;let i=index;" style="text-align:center;">
+                                            <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ z.image }}" *ngIf="z">
+                                            <mat-icon *ngIf="i>0" class="mat-icon material-icons crosssymbol" >clear</mat-icon>
+                                        </div> -->
+                                    <div  class="scrollmenu">
+                                            <a *ngFor="let z of deletedscandoc;let i=index;">
+                                                <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ z.image}}" *ngIf="z">
+                                                <mat-icon class="mat-icon material-icons crosssymbol" (click)="removeDeletedDoc(i);">clear</mat-icon>
+                                            </a>
+                                    </div>
+                                </div>
+                
                             <div style="margin-top: 20px;">
                                 <button mat-raised-button color="accent" matStepperPrevious>Back</button>
                                 <button mat-raised-button color="warn" [disabled]="!firstFormGroup.valid || !secondFormGroup.valid" (click)="finalsubmittion()">Save & Submit</button>
@@ -125,14 +150,31 @@
 
                 </form>
                 <div fxLayout="row" fxLayoutWrap="wrap" class="scrollmenu">
+                    <div fxFlex.gt-sm="100%" fxFlex="100">
+                        <h4>Uploaded Documents</h4>
+                    </div>
                     <div  class="scrollmenu">
                              <a *ngFor="let z of uploadedimgs;let i=index;">
                                  <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ z }}" *ngIf="z">
                              </a>
                     </div>
                 </div>
-            </mat-card-content>
+                <div fxLayout="row" fxLayoutWrap="wrap" *ngIf="isAdmin &&  deletedscandoc.length">
+                    <div fxFlex.gt-sm="100%" fxFlex="100">
+                        <h4>Deleted Documents</h4>
+                    </div>
+                        <!-- <div *ngFor="let z of deletedscandoc;let i=index;" style="text-align:center;">
+                            <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ z.image }}" *ngIf="z">
+                            <mat-icon *ngIf="i>0" class="mat-icon material-icons crosssymbol" >clear</mat-icon>
+                        </div> -->
+                    <div  class="scrollmenu">
+                            <a *ngFor="let z of deletedscandoc;let i=index;">
+                                <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{ z.image}}" *ngIf="z">
+                            </a>
+                    </div>
+                </div>
 
+            </mat-card-content>
         </mat-card>
     </div>
     <div fxFlex.gt-sm="50%" fxFlex="50">

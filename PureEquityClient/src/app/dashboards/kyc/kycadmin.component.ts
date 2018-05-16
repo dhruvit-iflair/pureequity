@@ -37,6 +37,8 @@ export class KycAdminComponent implements OnInit {
   isApproved = true; uid;
   countries = require('./countries.json');
   isEdit = false;
+  isAdmin = true;
+  deletedscandoc = [];
   idType = ['Passport', 'Driving License', 'Identity Card'];
   constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private acRoute: ActivatedRoute, private router: Router, private http: Http, private toastr: ToastrService) { }
 
@@ -87,6 +89,7 @@ export class KycAdminComponent implements OnInit {
             taxnumber: gotcha[0].trn
           });
           this.uploadedimgs = gotcha[0].scandoc;
+          this.deletedscandoc =  gotcha[0].deletedscandoc;
           this.secondFormGroup.patchValue({ scandoc: this.uploadedimgs });
         }, (ers) => {
           this.isEdit = true;
@@ -110,7 +113,10 @@ export class KycAdminComponent implements OnInit {
     this.uploadedimgs.splice(i,1);
     this.secondFormGroup.patchValue({scandoc: this.uploadedimgs});
   }
-  
+  removeDeletedDoc(i){
+    this.deletedscandoc.splice(i,1);
+    this.secondFormGroup.patchValue({deletedscandoc: this.deletedscandoc});
+  }
   finalsubmittion() {
     var obj = {
       user: this.user._id,
@@ -120,6 +126,7 @@ export class KycAdminComponent implements OnInit {
       issueCountry: this.firstFormGroup.value.country,
       issueDate: this.firstFormGroup.value.issuedate,
       trn: this.firstFormGroup.value.taxnumber,
+      deletedscandoc:this.deletedscandoc
     };
 
     let dialogRef = this.dialog.open(DeleteComponent, {

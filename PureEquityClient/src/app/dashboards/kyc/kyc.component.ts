@@ -29,8 +29,10 @@ export class KycComponent implements OnInit {
   user; isEligible = false;
   isApproved = true; uid;
   isEdit = false;
+  isAdmin = false;
   countries = require('./countries.json');
   idType = ['Passport', 'Driving License', 'Identity Card'];
+  public deletedscandoc: Array <any>= [];
   constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private router: Router, private http: Http, private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -81,6 +83,7 @@ export class KycComponent implements OnInit {
           issuedate: gotcha[0].issueDate,
           taxnumber: gotcha[0].trn
         });
+        (gotcha[0].deletedscandoc)? this.deletedscandoc = gotcha[0].deletedscandoc: null;
         this.uploadedimgs = gotcha[0].scandoc;
         this.secondFormGroup.patchValue({ scandoc: this.uploadedimgs });
       }, (ers) => {
@@ -101,8 +104,15 @@ export class KycComponent implements OnInit {
     }
   }
   removeDoc(i) {
-    this.uploadedimgs.splice(i,1);
-    this.secondFormGroup.patchValue({scandoc: this.uploadedimgs});
+    if (this.isApproved) {
+      this.deletedscandoc.push({image:this.uploadedimgs[i],time:Date.now()});
+      this.uploadedimgs.splice(i,1);
+      this.secondFormGroup.patchValue({scandoc: this.uploadedimgs});
+    } 
+    else {
+      this.uploadedimgs.splice(i,1);
+      this.secondFormGroup.patchValue({scandoc: this.uploadedimgs});
+    }
   }
 
   finalsubmittion() {
@@ -114,6 +124,7 @@ export class KycComponent implements OnInit {
       issueCountry: this.firstFormGroup.value.country,
       issueDate: this.firstFormGroup.value.issuedate,
       trn: this.firstFormGroup.value.taxnumber,
+      deletedscandoc:this.deletedscandoc
     };
 
     let dialogRef = this.dialog.open(DeleteComponent, {

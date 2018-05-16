@@ -6,6 +6,7 @@ var User_Documents = new Schema({
     idType: String,
     idNumber:String,
     scandoc:Schema.Types.Mixed,
+    deletedscandoc:Schema.Types.Mixed,
     issueCountry:String,
     issueDate:Date,
     trn:String,
