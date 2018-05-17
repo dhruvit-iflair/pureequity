@@ -1,24 +1,17 @@
 <div [formGroup]="personalDetailsFormGroup">
-  <div class="row">
     <!-- <div class="col-md-6" fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50" style="width: 50%; float: left; ">
       <app-personal-details [personal]="personalDetailsFormGroup.controls.personal"></app-personal-details>
     </div> -->
-    <!-- <div class="col-md-6" fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50" style="width: 50%; float: left; "> -->
-      <app-personal-address [address]="personalDetailsFormGroup.controls.address"></app-personal-address>
-      <mat-form-field>
-          <input matInput [matDatepicker]="pcreatedat" [formControl]="personalDetailsFormGroup.controls['created_at']" placeholder="Registered At">
-          <mat-datepicker-toggle matSuffix [for]="pcreatedat"></mat-datepicker-toggle>
-          <mat-datepicker #pcreatedat></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput [matDatepicker]="pupdated" [formControl]="personalDetailsFormGroup.controls['updated_at']" placeholder="Last Updated At">
-          <mat-datepicker-toggle matSuffix [for]="pupdated"></mat-datepicker-toggle>
-          <mat-datepicker #pupdated></mat-datepicker>
-        </mat-form-field>
-    <!-- </div>     -->
-  </div>
-  <div>
-    <!-- <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-    <button mat-raised-button color="warn" matStepperNext>Next</button> -->
-  </div>
+<!-- <div class="col-md-6" fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50" style="width: 50%; float: left; "> -->
+    <app-personal-address [address]="personalDetailsFormGroup.controls.address" [personalDetailsFormGroup]='personalDetailsFormGroup'></app-personal-address>
+    <!-- <mat-form-field>
+      <input matInput [matDatepicker]="pcreatedat" [formControl]="personalDetailsFormGroup.controls['created_at']" placeholder="Registered At">
+      <mat-datepicker-toggle matSuffix [for]="pcreatedat"></mat-datepicker-toggle>
+      <mat-datepicker #pcreatedat></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="pupdated" [formControl]="personalDetailsFormGroup.controls['updated_at']" placeholder="Last Updated At">
+      <mat-datepicker-toggle matSuffix [for]="pupdated"></mat-datepicker-toggle>
+      <mat-datepicker #pupdated></mat-datepicker>
+    </mat-form-field> -->
 </div>

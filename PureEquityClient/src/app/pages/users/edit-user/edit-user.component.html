@@ -11,6 +11,11 @@
           </mat-tab>
           <mat-tab label="Personal">
             <div style="margin-top: 4%;">
+                <app-personal-details [personal]="detailsFormGroup.controls.user_profile.controls.personal"></app-personal-details>
+            </div>
+          </mat-tab>
+          <mat-tab label="Address">
+            <div style="margin-top: 4%;">
               <app-user-personal-details [personalDetailsFormGroup]="detailsFormGroup.controls.user_profile"></app-user-personal-details>
             </div>
           </mat-tab>
