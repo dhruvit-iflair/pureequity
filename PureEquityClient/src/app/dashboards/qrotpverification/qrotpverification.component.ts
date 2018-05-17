@@ -16,7 +16,7 @@ import { card } from '../../shared/animations/animations';
 export class QrotpverificationComponent implements OnInit {
   public veryform: FormGroup;
   constructor(private fb: FormBuilder, private http: Http, private router: Router, private toastr: ToastrService) { }
-  qr = { img: '', key: '' }; isqrenable = false;uid;
+  qr = { img: '', key: '' }; isqrenable = false;uid;isEnable;
   ngOnInit() {
     this.veryform = this.fb.group({
       totp: [null, Validators.compose([Validators.required])]
