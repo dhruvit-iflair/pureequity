@@ -15,7 +15,7 @@
           </mat-tab>
           <mat-tab label="Address">
               <div style="margin-top: 4%;">
-                  <app-personal-details [personal]="detailsFormGroup.controls.user_profile.controls.personal"></app-personal-details>
+                  <app-personal-details [personal]="detailsFormGroup.controls.user_profile.get('personal')"></app-personal-details>
               </div>
             </mat-tab>
         </mat-tab-group>

@@ -22,7 +22,7 @@ const confirmPassword = new FormControl('', [CustomValidators.notEqualTo(current
 })
 export class ChangePasswordComponent implements OnInit {
   public form: FormGroup;
-  public token: String;
+  public token: String;isChangePassword;
   public user: any;
   constructor(private fb: FormBuilder, private router: Router, private userService: UsersService, public loginService: LoginService, public toster: ToastrService) {
   }

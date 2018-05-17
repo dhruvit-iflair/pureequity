@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject, forwardRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl } from '@angular/forms';
 import { User } from '../../../shared/interfaces/user.interface';
 import { RoleService } from '../../../shared/services/role.service';
 import { Role } from '../../../shared/interfaces/role.interface';
@@ -76,6 +76,7 @@ export class ProfileComponent implements OnInit {
       });
     });
   }
+
   cancel() {
     window.history.back();
   }
