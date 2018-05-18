@@ -6,6 +6,8 @@ import { EditUserComponent } from '../../../pages/users/edit-user/edit-user.comp
 import { MatDialog} from '@angular/material';
 import { environment } from '../../../../environments/environment';
 import { UsersService } from '../../../shared/services/users.service';
+import { ProfileComponent } from '../../../pages/users/profile/profile.component';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -74,11 +76,17 @@ export class AppHeaderComponent {
       this.user = u.user
     }
     goToProfile(){
-      // let dialogRef = this.dialog.open(EditUserComponent,{
-      //   data: this.user,
-      //   height:'600px'
-      // });
       this.router.navigate(['/users/'+ this.user._id]);
+        // this.userService.getAUsers(this.user._id);
+        //  let dialogRef = this.dialog.open(ProfileComponent,{
+        //    data: this.user,
+        //    height:'600px'
+        //  });
+        // dialogRef.afterClosed().subscribe(result => {
+        //     if (result) {
+        //       console.log(result);
+        //     }
+        // });
     }
     logout(){
       localStorage.clear();

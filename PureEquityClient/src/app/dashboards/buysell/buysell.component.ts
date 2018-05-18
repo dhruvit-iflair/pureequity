@@ -63,6 +63,13 @@ export class BuysellComponent implements OnInit {
   buybtc(){
     var obj={amount:this.buysellForm.value.estimation,price:this.bidprice};
     //ahiya call karavi devano just for buy btc jema ammount ma approx.btc received ni value nd price ma bid value avse
+    this.http.post(environment.tradingApi+'/buy/btcusd/',obj)
+    .subscribe((resp)=>{
+      console.log(resp);
+      this.toastr.success('Transactions Success');
+    },(er)=>{
+      console.log(er);
+    });
   }
   sellbtc(){
     var obj={amount:this.buysellForm.value.amount,price:this.bidprice};

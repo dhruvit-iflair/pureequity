@@ -37,6 +37,6 @@ import { ProfileComponent } from './profile/profile.component';
     UserPersonalDetailsComponent,
     ProfileComponent,
   ],
-  entryComponents:[EditUserComponent]
+  entryComponents:[EditUserComponent,ProfileComponent]
 })
 export class UsersModule { }

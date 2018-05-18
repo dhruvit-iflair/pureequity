@@ -15,7 +15,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 export class KycadminComponent implements OnInit {
   displayedColumns = ['firstName', 'lastName','idType', 'country', 'status', 'action']
   dataSource: MatTableDataSource<any>;
-  public i :Number = 0;
+  public i :Number = 0;x=false;
   public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -53,6 +53,16 @@ export class KycadminComponent implements OnInit {
           });
         }
     });
+  }
+  expandfilter(){
+    if(!this.x){
+      document.getElementById('searchfilter').setAttribute('style', 'width: 35%;');
+      this.x=true;
+    }
+    else{
+      this.x=false;
+      document.getElementById('searchfilter').setAttribute('style', 'width: 0%;');
+    }
   }
   edit(xst){
     this.router.navigate(['/kyc/'+xst.user._id])

@@ -1,0 +1,15 @@
+.searchfilter mat-form-field {
+    width: 0;
+    transition: all .8s ease;
+    float: right;
+}
+.searchfilter mat-icon{
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 0;
+}
+.searchfilter{
+    height: 90px;
+    position: relative;
+}
