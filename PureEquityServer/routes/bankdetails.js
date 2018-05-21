@@ -11,8 +11,8 @@ module.exports = function (router) {
     
     router.post('/api/bankdetails', controller.post);
 
-    router.put('/api/bankdetails/:id', verify, controller.put);
+    router.put('/api/bankdetails/:id', controller.put);
     
-    router.delete('/api/bankdetails/:id', verify, controller.delete);
+    router.delete('/api/bankdetails/:id', controller.delete);
         
 }

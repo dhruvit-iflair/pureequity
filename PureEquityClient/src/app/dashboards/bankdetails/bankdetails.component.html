@@ -1,215 +1,187 @@
-<div fxLayout="row" fxLayoutWrap="wrap">
-    <div fxFlex.gt-sm="33%" fxFlex="33">
-        <mat-card @card *ngIf="!isbankdetails">
-            <mat-card-header class="bg-primary text-white">
-                <mat-card-title-group>
-                    <mat-card-title fxLayout="row">
-                        Bank Details
-                    </mat-card-title>
-                </mat-card-title-group>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="bankdetails">
-                    <mat-form-field>
-                        <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required="required">
-                    </mat-form-field>
-                    <div fxLayout="row" fxLayoutWrap="wrap">
-                        <div fxFlex.gt-sm="70%" fxFlex="70">
-                            <mat-form-field>
-                               <input matInput="matInput" placeholder="Bank IBAN" formControlName="ifscnumber" required="required">
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex.gt-sm="30%" fxFlex="30">
-                            <button mat-raised-button="mat-raised-button" color="accent" (click)="checkifsc()">Check IBAN</button>
+<div>
+    <div fxLayout="row" fxLayoutWrap="wrap">
+        <!-- <div fxFlex.gt-sm="33%" fxFlex="33"> -->
+            <form [formGroup]="mainform">
+                  <div formArrayName="bankdetails">
+                      <div *ngFor="let address of mainform.controls.bankdetails.controls; let i=index">
+                          <div [formGroupName]="i"  fxFlex.gt-sm="33%" fxFlex="33">
+                              <mat-card @card>
+                                  <mat-card-header class="bg-primary text-white">
+                                      <mat-card-title-group>
+                                          <mat-card-title fxLayout="row">
+                                            Bank Details
+                                          </mat-card-title>
+                                      </mat-card-title-group>
+                                      <div fxFlex="fxFlex"></div>
+                                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasdetails" (click)='removeForm(i, "bankdetails", "Removed Bank Details") ' >
+                                          <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
+                                      </button>
+                                    </mat-card-header>
+                                  <mat-card-content *ngIf="!hasdetails" style="text-align:center;">
+                                      <span> Details not found,add your bank details.</span>
+                                      <button mat-fab color="warn" (click)="hasdetails=true;" style="background-color: #555682;margin-top:3%;">
+                                          <mat-icon>add</mat-icon>
+                                      </button>
+                                  </mat-card-content>
+                                  <mat-card-content *ngIf="hasdetails" @card>
+                                      <mat-form-field>
+                                          <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required="required">
+                                      </mat-form-field>
+                                      <div fxLayout="row" fxLayoutWrap="wrap">
+                                          <div fxFlex.gt-sm="70%" fxFlex="70">
+                                              <mat-form-field>
+                                                <input matInput="matInput" placeholder="Bank IBAN" formControlName="ifscnumber" required="required">
+                                              </mat-form-field>
+                                          </div>
+                                          <div fxFlex.gt-sm="30%" fxFlex="30">
+                                              <button mat-raised-button="mat-raised-button" color="accent">Check IBAN</button>
+                                          </div>
+                                      </div>
+                                      <mat-form-field>
+                                          <mat-select placeholder="Account Type" name="actype" formControlName="actype">
+                                              <mat-option *ngFor="let x of actype" [value]="x">{{x}}</mat-option>
+                                          </mat-select>
+                                      </mat-form-field>
+                                      <mat-form-field>
+                                          <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required">
+                                      </mat-form-field>
+                                      <mat-form-field>
+                                          <mat-select placeholder="Bank Document" name="bankdoctype" formControlName="bankdoctype">
+                                              <mat-option *ngFor="let y of bankdoctype" [value]="y">{{y}}</mat-option>
+                                          </mat-select>
+                                      </mat-form-field>
+                                      <mat-checkbox formControlName="isagreed" [(ngModel)]="isagreed">Agree Terms & conditions</mat-checkbox>
+                                      <div style="text-align: center;margin-top:5%;">
+                                          <button mat-raised-button="mat-raised-button" [disabled]="!mainform.controls['bankdetails'].valid" (click)="save(i,'bankdetails','Saved Bank Details')" color="accent">Save</button>
+                                      </div>
+                                  </mat-card-content>
+                              </mat-card>
                         </div>
                     </div>
-                    <mat-form-field>
-                        <mat-select placeholder="Account Type" name="actype" formControlName="actype">
-                            <mat-option *ngFor="let x of actype" [value]="x">{{x}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-select placeholder="Bank Document" name="bankdoctype" formControlName="bankdoctype">
-                            <mat-option *ngFor="let y of bankdoctype" [value]="y">{{y}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-checkbox formControlName="isagreed" [(ngModel)]="isagreed">Agree Terms & conditions</mat-checkbox>
-                    <div style="text-align: center;margin-top:5%;">
-                      <button mat-raised-button="mat-raised-button" (click)="saveBank()" color="accent">Save</button>
-                      <!-- <button mat-raised-button="mat-raised-button" color="accent">Cancel</button> -->
-                    </div>
-                  </form>
-            </mat-card-content>
-        </mat-card>
-        <mat-card @card *ngIf="isbankdetails">
-            <mat-card-header class="bg-primary text-white">
-                <mat-card-title-group>
-                    <mat-card-title fxLayout="row">
-                        Saved Bank Details
-                    </mat-card-title>
-                </mat-card-title-group>
-                <div fxFlex="fxFlex"></div>
-                <button mat-fab color="primary" @card class="half-header" bottom (click)="isbankdetails = !isbankdetails">
-                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
+                </div>
+            </form>
+        <!-- </div> -->
+        <!-- <div fxFlex.gt-sm="10" fxFlex="10"> -->
+            <div class="marubutton" *ngIf="hasdetails">
+                <button mat-fab color="warn" (click)="addNewForm('bankdetails')" style="background-color: #555682;">
+                    <mat-icon>add</mat-icon>
                 </button>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="savedbankdetails">
-                    <mat-form-field>
-                        <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required="required">
-                    </mat-form-field>
-                    <div fxLayout="row" fxLayoutWrap="wrap">
-                        <div fxFlex.gt-sm="100%" fxFlex="100">
-                            <mat-form-field>
-                               <input matInput="matInput" placeholder="Bank IFSC" formControlName="ifscnumber" required="required">
-                            </mat-form-field>
+            </div>
+        <!-- </div> -->
+    </div>
+</div>
+<div>
+    <div fxLayout="row" fxLayoutWrap="wrap">
+        <!-- <div fxFlex.gt-sm="33%" fxFlex="33"> -->
+            <form [formGroup]="mainform">
+                  <div formArrayName="ccinfo">
+                      <div *ngFor="let address of mainform.controls.ccinfo.controls; let i=index">
+                          <div [formGroupName]="i"  fxFlex.gt-sm="33%" fxFlex="33">
+                              <mat-card @card>
+                                  <mat-card-header class="bg-primary text-white">
+                                      <mat-card-title-group>
+                                          <mat-card-title fxLayout="row">
+                                            Credit Card Details
+                                          </mat-card-title>
+                                      </mat-card-title-group>
+                                      <div fxFlex="fxFlex"></div>
+                                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasccdetails" (click)='removeForm(i, "ccinfo", "Removed Card Details") ' >
+                                          <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
+                                      </button>
+                                    </mat-card-header>
+                                  <mat-card-content *ngIf="!hasccdetails" style="text-align:center;">
+                                      <span> Details not found,add your card details.</span>
+                                      <button mat-fab color="warn" (click)="hasccdetails=true;" style="background-color: #555682;margin-top:3%;">
+                                          <mat-icon>add</mat-icon>
+                                      </button>
+                                  </mat-card-content>
+                                  <mat-card-content *ngIf="hasccdetails" @card>
+                                      <mat-form-field>
+                                          <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required">
+                                      </mat-form-field>
+                                      <mat-form-field>
+                                          <input matInput="matInput" placeholder="Creadit Card Number" formControlName="ccnumber" required="required">
+                                      </mat-form-field>
+                                      <mat-form-field style="max-width: 15%;">
+                                          <mat-select placeholder="Month" name="expmonth" formControlName="expmonth">
+                                              <mat-option *ngFor="let x of expmonth" [value]="x">{{x}}</mat-option>
+                                          </mat-select>
+                                      </mat-form-field>
+                                      <mat-form-field style="max-width: 20%;">
+                                          <mat-select placeholder="Year" name="expyear" formControlName="expyear">
+                                              <mat-option *ngFor="let xy of expyear" [value]="xy">{{xy}}</mat-option>
+                                          </mat-select>
+                                      </mat-form-field>
+                                      <mat-form-field style="max-width: 60%;">
+                                          <input matInput="matInput" placeholder="Enter CVV" formControlName="cvvnumber" required="required">
+                                      </mat-form-field>
+                                      <div style="text-align: center;margin-top:5%;">
+                                          <button mat-raised-button="mat-raised-button" [disabled]="!mainform.controls['ccinfo'].valid" (click)="save(i,'ccinfo', 'Saved Card Details')" color="accent">Save</button>
+                                      </div>
+                                  </mat-card-content>
+                              </mat-card>
                         </div>
-                        <!-- <div fxFlex.gt-sm="30%" fxFlex="30">
-                            <button mat-raised-button="mat-raised-button" color="accent" (click)="checkifsc()">Check IFSC</button>
-                        </div> -->
                     </div>
-                    <mat-form-field>
-                        <mat-select placeholder="Account Type" name="actype" formControlName="actype">
-                            <mat-option *ngFor="let x of actype" [value]="x">{{x}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-select placeholder="Bank Document" name="bankdoctype" formControlName="bankdoctype">
-                            <mat-option *ngFor="let y of bankdoctype" [value]="y">{{y}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                  </form>           
-            </mat-card-content>
-        </mat-card>
+                </div>
+            </form>
+        <!-- </div> -->
+        <!-- <div fxFlex.gt-sm="10" fxFlex="10"> -->
+            <div class="marubutton" *ngIf="hasccdetails">
+                <button mat-fab color="warn" (click)="addNewForm('ccinfo')" style="background-color: #555682;">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        <!-- </div> -->
     </div>
-
-  
-    <div fxFlex.gt-sm="33%" fxFlex="33">
-        <mat-card @card *ngIf="!isccinfo">
-            <mat-card-header class="bg-primary text-white">
-                <mat-card-title-group>
-                    <mat-card-title fxLayout="row">
-                        Enter Credit Card Information
-                    </mat-card-title>
-                </mat-card-title-group>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="ccinfo">
-                    <mat-form-field>
-                      <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput="matInput" placeholder="Creadit Card Number" formControlName="ccnumber" required="required">
-                    </mat-form-field>
-                    <mat-form-field style="max-width: 15%;">
-                      <mat-select placeholder="Month" name="expmonth" formControlName="expmonth">
-                        <mat-option *ngFor="let x of expmonth" [value]="x">{{x}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field style="max-width: 20%;">
-                      <mat-select placeholder="Year" name="expyear" formControlName="expyear">
-                        <mat-option *ngFor="let xy of expyear" [value]="xy">{{xy}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field style="max-width: 60%;">
-                      <input matInput="matInput" placeholder="Enter CVV" formControlName="cvvnumber" required="required">
-                    </mat-form-field>
-                    <div style="text-align: center;margin-top:5%;">
-                      <button mat-raised-button="mat-raised-button" (click)="saveCCDetails()" color="accent">Save</button>
+</div>
+<div>
+    <div fxLayout="row" fxLayoutWrap="wrap">
+        <!-- <div fxFlex.gt-sm="33%" fxFlex="33"> -->
+            <form [formGroup]="mainform">
+                  <div formArrayName="ppdetails">
+                      <div *ngFor="let address of mainform.controls.ppdetails.controls; let i=index">
+                          <div [formGroupName]="i"  fxFlex.gt-sm="33%" fxFlex="33">
+                              <mat-card @card>
+                                  <mat-card-header class="bg-primary text-white">
+                                      <mat-card-title-group>
+                                          <mat-card-title fxLayout="row">
+                                            PayPal Details
+                                          </mat-card-title>
+                                      </mat-card-title-group>
+                                      <div fxFlex="fxFlex"></div>
+                                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails" (click)='removeForm(i, "ppdetails", "Removed PayPal Details") ' >
+                                          <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
+                                      </button>
+                                    </mat-card-header>
+                                  <mat-card-content *ngIf="!hasppdetails" style="text-align:center;">
+                                      <span> Details not found,add your paypal details.</span>
+                                      <button mat-fab color="warn" (click)="hasppdetails=true;" style="background-color: #555682;margin-top:3%;">
+                                          <mat-icon>add</mat-icon>
+                                      </button>
+                                  </mat-card-content>
+                                  <mat-card-content *ngIf="hasppdetails" @card>
+                                      <mat-form-field>
+                                          <input matInput="matInput" type="email" placeholder="Paypal Registered Email" formControlName="email" required="required">
+                                      </mat-form-field>
+                                      <mat-form-field>
+                                          <input matInput="matInput" type="password" placeholder="Paypal Password" formControlName="pwd" required="required">
+                                      </mat-form-field>
+                                      <div style="text-align: center;margin-top:5%;">
+                                          <button mat-raised-button="mat-raised-button" [disabled]="!mainform.controls['ppdetails'].valid" (click)="save(i,'ppdetails', 'Saved PayPal Details')" color="accent">Save</button>
+                                      </div>
+                                  </mat-card-content>
+                              </mat-card>
+                        </div>
                     </div>
-                  </form>
-            </mat-card-content>
-        </mat-card>
-        <mat-card @card *ngIf="isccinfo">
-            <mat-card-header class="bg-primary text-white">
-                <mat-card-title-group>
-                    <mat-card-title fxLayout="row">
-                        Saved Credit Card Detail
-                    </mat-card-title>
-                </mat-card-title-group>
-                <div fxFlex="fxFlex"></div>
-                <button mat-fab color="primary" @card class="half-header" bottom (click)="isccinfo = !isccinfo">
-                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
-                </button>    
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="sccdetails">
-                    <mat-form-field>
-                      <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput="matInput" placeholder="Creadit Card Number" formControlName="ccnumber" required="required">
-                    </mat-form-field>
-                    <mat-form-field style="max-width: 15%;">
-                      <mat-select placeholder="Month" name="expmonth" formControlName="expmonth">
-                        <mat-option *ngFor="let x of expmonth" [value]="x">{{x}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field style="max-width: 20%;">
-                      <mat-select placeholder="Year" name="expyear" formControlName="expyear">
-                        <mat-option *ngFor="let xy of expyear" [value]="xy">{{xy}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field style="max-width: 60%;">
-                      <input matInput="matInput" placeholder="Enter CVV" formControlName="cvvnumber" required="required">
-                    </mat-form-field>
-
-                  </form>           
-            </mat-card-content>
-        </mat-card>
-    </div>
- 
-    <div fxFlex.gt-sm="33%" fxFlex="33">
-        <mat-card @card *ngIf="!isppdetails">
-            <mat-card-header class="bg-primary text-white">
-                <mat-card-title-group>
-                    <mat-card-title fxLayout="row">
-                        Enter PayPal Detail
-                    </mat-card-title>
-                </mat-card-title-group>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="ppdetails">
-                    <mat-form-field>
-                      <input matInput="matInput" type="email" placeholder="Paypal Registered Email" formControlName="email" required="required">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput="matInput" type="password" placeholder="Paypal Password" formControlName="pwd" required="required">
-                    </mat-form-field>
-                    <div style="text-align: center;margin-top:5%;">
-                      <button mat-raised-button="mat-raised-button" (click)="savePPDetails()" color="accent">Attach Account</button>
-                    </div>
-                  </form>
-            </mat-card-content>
-        </mat-card>
-        <mat-card @card *ngIf="isppdetails">
-            <mat-card-header class="bg-primary text-white">
-                <mat-card-title-group>
-                    <mat-card-title fxLayout="row">
-                        Saved Paypal Account
-                    </mat-card-title>
-                </mat-card-title-group>
-                <div fxFlex="fxFlex"></div>
-                <button mat-fab color="primary" @card class="half-header" bottom (click)="isppdetails = !isppdetails">
-                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
-                </button>    
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="sppdetails">
-                    <mat-form-field>
-                      <input matInput="matInput" type="email" placeholder="Paypal Registered Email" formControlName="email" required="required">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput="matInput" type="password" placeholder="Paypal Password" formControlName="pwd" required="required">
-                    </mat-form-field>
-                  </form>
-            </mat-card-content>
-        </mat-card>
+                </div>
+            </form>
+        <!-- </div> -->
+        <!-- <div fxFlex.gt-sm="10" fxFlex="10"> -->
+            <div class="marubutton" *ngIf="hasppdetails">
+                <button mat-fab color="warn" (click)="addNewForm('ppdetails')" style="background-color: #555682;">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        <!-- </div> -->
     </div>
 </div>

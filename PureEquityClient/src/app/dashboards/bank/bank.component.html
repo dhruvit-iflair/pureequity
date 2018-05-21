@@ -1,0 +1,71 @@
+<div fxLayout="row" fxLayoutWrap="wrap" style="position: absolute;width: 86%;overflow-x: scroll;">
+  <div fxFlex.gt-sm="33%" fxFlex="33">
+    <form [formGroup]="mainform">
+      <div formArrayName="bankdetails" style="display: flex;">
+        <div *ngFor="let address of mainform.controls.bankdetails.controls; let i=index" style="min-width:400px">
+          <div [formGroupName]="i">
+            <mat-card @card *ngIf="!isbankdetails">
+              <mat-card-header class="bg-primary text-white">
+                <mat-card-title-group>
+                  <mat-card-title fxLayout="row">
+                    Bank Details
+                  </mat-card-title>
+                </mat-card-title-group>
+              </mat-card-header>
+              <mat-card-content *ngIf="!hasdetails" style="text-align:center;">
+                <span> Details not found,add your bank details.</span>
+                <button mat-fab color="warn" (click)="hasdetails=true;" style="background-color: #555682;margin-top:3%;">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </mat-card-content>
+              <mat-card-content *ngIf="hasdetails" @card>
+                <mat-form-field>
+                  <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required="required">
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutWrap="wrap">
+                  <div fxFlex.gt-sm="70%" fxFlex="70">
+                    <mat-form-field>
+                      <input matInput="matInput" placeholder="Bank IBAN" formControlName="ifscnumber" required="required">
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="30%" fxFlex="30">
+                    <button mat-raised-button="mat-raised-button" color="accent" (click)="checkifsc()">Check IBAN</button>
+                  </div>
+                </div>
+                <mat-form-field>
+                  <mat-select placeholder="Account Type" name="actype" formControlName="actype">
+                    <mat-option *ngFor="let x of actype" [value]="x">{{x}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required">
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-select placeholder="Bank Document" name="bankdoctype" formControlName="bankdoctype">
+                    <mat-option *ngFor="let y of bankdoctype" [value]="y">{{y}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-checkbox formControlName="isagreed" [(ngModel)]="isagreed">Agree Terms & conditions</mat-checkbox>
+                <div style="text-align: center;margin-top:5%;">
+                  <button mat-raised-button="mat-raised-button" (click)="saveBank()" color="accent">Save</button>
+                  <!-- <button mat-raised-button="mat-raised-button" color="accent">Cancel</button> -->
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- <div style="text-align: center;margin-top:5%;">
+    <button mat-raised-button="mat-raised-button" (click)="addAddress()" color="accent">Add</button>
+  </div> -->
+</div>
+<!-- <div class="marubutton">
+    <button mat-raised-button="mat-raised-button" (click)="addAddress()" color="accent">Add</button>
+  </div> -->
+<div class="marubutton" *ngIf="hasdetails">
+  <button mat-fab color="warn" (click)="addAddress()" style="background-color: #555682;">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

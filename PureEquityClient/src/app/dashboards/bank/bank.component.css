@@ -1,0 +1,11 @@
+mat-card-header.bg-primary.text-white.mat-card-header {
+    height: 50px;
+  }
+  .mat-warn{
+    background-color: #555682;
+}
+.marubutton{
+    top: 50% !important;
+    right: 10px !important;
+    position: absolute !important;
+}

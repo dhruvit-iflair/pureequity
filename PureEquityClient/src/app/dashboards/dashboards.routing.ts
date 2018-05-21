@@ -13,6 +13,7 @@ import { MaillistComponent } from './mailer/maillist/maillist.component';
 import { RolesComponent } from './roles/roles.component';
 import { RoleComponent } from './roles/role/role.component';
 import { BuysellComponent } from './buysell/buysell.component';
+import { BankComponent } from './bank/bank.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -36,7 +37,7 @@ export const DashboardsRoutes: Routes = [
     },
     {
       path:'bank',
-      component:BankdetailsComponent
+      component:BankComponent
     },
     {
       path:'mails',

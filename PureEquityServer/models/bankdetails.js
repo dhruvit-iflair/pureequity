@@ -2,14 +2,14 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Bankdetails = new Schema({
-    bankdetails: {
+    bankdetails: [{
         acnumber: String,
         ifscnumber: String,
         actype: String,
         name: String,
         bankdoctype: String,
         isagreed: String
-    },
+    }],
     ccinfo: {
         ccname: String,
         ccnumber: String,
