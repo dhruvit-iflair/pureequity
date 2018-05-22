@@ -99,7 +99,7 @@ export class KycComponent implements OnInit {
       FR.addEventListener("load", function(e) {
         that.uploadedimgs.push(e.target['result']);
         that.secondFormGroup.patchValue({scandoc: that.uploadedimgs});
-      }); 
+      });
       FR.readAsDataURL( file[i] );
     }
   }
@@ -108,7 +108,7 @@ export class KycComponent implements OnInit {
       this.deletedscandoc.push({image:this.uploadedimgs[i],time:Date.now()});
       this.uploadedimgs.splice(i,1);
       this.secondFormGroup.patchValue({scandoc: this.uploadedimgs});
-    } 
+    }
     else {
       this.uploadedimgs.splice(i,1);
       this.secondFormGroup.patchValue({scandoc: this.uploadedimgs});
@@ -162,5 +162,24 @@ export class KycComponent implements OnInit {
     else {
       this.isEdit = false
     }
+  }
+  onDrop(event: any) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log(event.dataTransfer.files);
+      if (event.dataTransfer && event.dataTransfer.files) {
+         this.uploadDoc({target: { files: event.dataTransfer.files}});
+      }
+      // your code goes here after droping files or any
+  }
+
+  onDragOver(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  }
+
+  onDragLeave(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
   }
 }

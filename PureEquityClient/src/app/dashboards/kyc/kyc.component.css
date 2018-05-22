@@ -64,3 +64,12 @@ md-calendar {
 mat-card-header.bg-primary.text-white.mat-card-header {
     height: 50px;
 }
+div.upload{
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    text-align: center;
+    height: 150px;
+    border: dashed #8f90b7 2px;
+    background-color: #efefff;
+}
