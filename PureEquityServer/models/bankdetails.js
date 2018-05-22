@@ -10,17 +10,17 @@ var Bankdetails = new Schema({
         bankdoctype: String,
         isagreed: String
     }],
-    ccinfo: {
+    ccinfo: [{
         ccname: String,
         ccnumber: String,
         expmonth: String,
         expyear: String,
         cvvnumber: String
-    },
-    ppdetails: {
+    }],
+    ppdetails: [{
         email: String,
         pwd: String
-    },
+    }],
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
     createdBy: { type: Schema.Types.ObjectId, ref: 'user' },
