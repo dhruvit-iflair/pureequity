@@ -25,6 +25,9 @@ export class BankdetailsComponent implements OnInit {
   bankdetails: FormGroup;
   mainform: any;
   isagreed = false;
+  isBankEdit = false;
+  isCCEdit = false;
+  isPPEdit = false;
   hasdetails = false;
   hasppdetails = false;
   hasccdetails = false;

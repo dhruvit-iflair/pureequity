@@ -5,7 +5,17 @@ mat-card-header.bg-primary.text-white.mat-card-header {
     background-color: #555682;
 }
 .marubutton{
-    top: 50% !important;
+    top: 25% !important;
     right: 10px !important;
     position: absolute !important;
+}
+.marubutton1{
+  top: 55% !important;
+  right: 10px !important;
+  position: absolute !important;
+}
+.marubutton2{
+  top: 80% !important;
+  right: 10px !important;
+  position: absolute !important;
 }
