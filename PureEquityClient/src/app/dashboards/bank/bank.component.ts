@@ -27,8 +27,9 @@ export class BankComponent implements OnInit {
   disableform: any;
   isagreed = false;
   public isbankdetails = false;
-  public isccinfo = false;
-  public isppdetails = false; resp;
+  // public isccinfo = false;
+  // public isppdetails = false;
+  resp;
   public data: any; hasdetails = false;
   token;
   hasccdetails = false;
@@ -47,15 +48,6 @@ export class BankComponent implements OnInit {
     this.mainform = this._formBuilder.group({
       bankdetails: this._formBuilder.array([
         this.initForm('bankdetails'),
-      ]),
-      ccinfo: this._formBuilder.array([
-      ]),
-      ppdetails: this._formBuilder.array([
-      ])
-    });
-    this.disableform = this._formBuilder.group({
-      bankdetails: this._formBuilder.array([
-        this.initDisableForm('bankdetails'),
       ]),
       ccinfo: this._formBuilder.array([
       ]),
@@ -99,16 +91,14 @@ export class BankComponent implements OnInit {
     // tslint:disable-next-line:prefer-const
     let controlArray = <FormArray>this.mainform.controls[key];
     controlArray.controls = [];
-    // tslint:disable-next-line:prefer-const
-    let controlArray2 = <FormArray>this.disableform.controls[key];
-    controlArray2.controls = [];
     for (let index = 0; index < data.length; index++) {
       const fb = this.initForm(key);
       fb.patchValue(data[index]);
       controlArray.push(fb);
-      const fb2 = this.initDisableForm(key);
-      fb2.patchValue(data[index]);
-      controlArray2.push(fb2);
+      (controlArray.enabled) ? controlArray.disable() : null;
+      // controlArray.disable();
+      console.log(this.mainform.value);
+      console.log(data, key);
     }
   }
   initForm(key) {
@@ -135,32 +125,9 @@ export class BankComponent implements OnInit {
     };
     return currentForm[key];
   }
-  initDisableForm(key) {
-    const currentForm = {
-      bankdetails: this._formBuilder.group({
-        acnumber: [{value: '', disabled: true}, Validators.required],
-        ifscnumber: [{value: '', disabled: true}, Validators.required],
-        actype: [{value: '', disabled: true}, Validators.required],
-        name: [{value: '', disabled: true}, Validators.required],
-        bankdoctype: [{value: '', disabled: true}, Validators.required],
-        isagreed: []
-      }),
-      ccinfo: this._formBuilder.group({
-        ccname: [{value: '', disabled: true}, Validators.required],
-        ccnumber: [{value: '', disabled: true}, Validators.required],
-        expmonth: [{value: '', disabled: true}, Validators.required],
-        expyear: [{value: '', disabled: true}, Validators.required],
-        cvvnumber: [{value: '', disabled: true}, Validators.required]
-      }),
-      ppdetails: this._formBuilder.group({
-        email: [{value: '', disabled: true}, Validators.compose([Validators.required, Validators.email])],
-        pwd: [{value: '', disabled: true}, Validators.required]
-      }),
-    };
-    return currentForm[key];
-  }
   addNewForm(key) {
-    if (this.mainform.controls[key].valid) {
+    console.log(this.mainform.value);
+    if (this.mainform.controls[key].valid || this.mainform.controls[key].disabled) {
       const control = <FormArray>this.mainform.controls[key];
       control.push(this.initForm(key));
     } else {
@@ -171,9 +138,6 @@ export class BankComponent implements OnInit {
     const control = <FormArray>this.mainform.controls[key];
     control.controls = [];
     control.push(this.initForm(key));
-    const control2 = <FormArray>this.disableform.controls[key];
-    control2.controls = [];
-    control2.push(this.initDisableForm(key));
   }
 
   save( key, message) {
@@ -182,6 +146,7 @@ export class BankComponent implements OnInit {
     obj.user = this.token.user._id;
     obj[key] = this.mainform.value[key];
     obj.updated_at = Date.now();
+    console.log(obj, this.mainform.value);
     if (this.resp && this.resp._id) {
       this.http.put(environment.api + '/bankdetails/' + this.resp._id, obj).subscribe((res) => {
         console.log(res);
@@ -212,17 +177,9 @@ export class BankComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         control.removeAt(i);
+        console.log(this.mainform.value)
         this.save(key, message);
       }
     });
   }
-  // addAddress() {
-  //   const control = <FormArray>this.mainform.controls['bankdetails'];
-  //   control.push(this.initAddress());
-  // }
-
-  // removeAddress(i: number) {
-  //   const control = <FormArray>this.mainform.controls['bankdetails'];
-  //   control.removeAt(i);
-  // }
 }

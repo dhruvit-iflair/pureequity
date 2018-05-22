@@ -3,7 +3,7 @@
   <div fxFlex.gt-sm="33%" fxFlex="33">
     <form [formGroup]="mainform">
       <div formArrayName="bankdetails" style="display: flex;">
-        <div *ngFor="let address of mainform.controls.bankdetails.controls; let i=index" style="min-width:400px">
+        <div *ngFor="let address of mainform.controls.bankdetails.controls; let i=index; let isEdit" style="min-width:400px">
           <div [formGroupName]="i">
             <mat-card @card>
               <mat-card-header class="bg-primary text-white">
@@ -13,23 +13,50 @@
                   </mat-card-title>
                 </mat-card-title-group>
                 <div fxFlex="fxFlex"></div>
-                <button mat-fab color="primary" @card class="half-header" *ngIf="hasdetails && isEdit" (click)='removeForm(i, "bankdetails", "Removed Bank Details") ' >
+                <button mat-fab color="primary" @card class="half-header" *ngIf="hasdetails && isEdit[i]" (click)='removeForm(i, "bankdetails", "Removed Bank Details") ' >
                     <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                 </button>
-                <button mat-fab color="primary" @card class="half-header" *ngIf="hasdetails && !isEdit" (click)='isEdit = !isEdit' >
+                <button mat-fab color="primary" @card class="half-header" *ngIf="hasdetails && !isEdit[i]" (click)='isEdit[i] = !isEdit[i]; address.enable();' >
                     <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
                 </button>
               </mat-card-header>
               <mat-card-content *ngIf="!hasdetails" style="text-align:center;">
                 <span> Details not found,add your bank details.</span>
-                <button mat-fab color="warn" (click)="hasdetails=true;" style="background-color: #555682;margin-top:3%;">
+                <button mat-fab color="warn" (click)="hasdetails=true; isEdit[i] = 'true'; address.enable();" style="background-color: #555682;margin-top:3%;">
                   <mat-icon>add</mat-icon>
                 </button>
               </mat-card-content>
-              <mat-card-content *ngIf="hasdetails && !isEdit" style="text-align:center;">
-                <strong>Account Details</strong><span> {{data.bankdetails[i].acnumber}}</span>
+              <mat-card-content *ngIf="hasdetails && !isEdit[i]" style="text-align:center;">
+                <!-- <strong>Account Details</strong><span> {{data.bankdetails[i].acnumber}}</span> -->
+                <mat-form-field>
+                  <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required="required">
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutWrap="wrap">
+                  <div fxFlex.gt-sm="70%" fxFlex="70">
+                    <mat-form-field>
+                      <input matInput="matInput" placeholder="Bank IBAN" formControlName="ifscnumber" required="required">
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="30%" fxFlex="30">
+                    <button mat-raised-button="mat-raised-button" color="accent" >Check IBAN</button>
+                  </div>
+                </div>
+                <mat-form-field>
+                  <mat-select placeholder="Account Type" name="actype" formControlName="actype">
+                    <mat-option *ngFor="let x of actype" [value]="x">{{x}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required">
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-select placeholder="Bank Document" name="bankdoctype" formControlName="bankdoctype">
+                    <mat-option *ngFor="let y of bankdoctype" [value]="y">{{y}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-checkbox formControlName="isagreed">Agree Terms & conditions</mat-checkbox>
               </mat-card-content>
-              <mat-card-content *ngIf="hasdetails && isEdit" @card>
+              <mat-card-content *ngIf="hasdetails && isEdit[i]" @card>
                 <mat-form-field>
                   <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required="required">
                 </mat-form-field>
@@ -63,17 +90,22 @@
                 </div>
               </mat-card-content>
             </mat-card>
+            <div class="marubutton" *ngIf="hasdetails">
+              <button mat-fab color="warn" (click)="addNewForm('bankdetails'); " style="background-color: #555682;">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </form>
   </div>
 </div>
-<div class="marubutton" *ngIf="hasdetails">
+<!-- <div class="marubutton" *ngIf="hasdetails">
   <button mat-fab color="warn" (click)="addNewForm('bankdetails')" style="background-color: #555682;">
     <mat-icon>add</mat-icon>
   </button>
-</div>
+</div> -->
 </div>
 
 <div>
@@ -81,7 +113,7 @@
         <div fxFlex.gt-sm="33%" fxFlex="33">
           <form [formGroup]="mainform">
             <div formArrayName="ccinfo" style="display: flex;">
-              <div *ngFor="let address of mainform.controls.ccinfo.controls; let i=index" style="min-width:400px">
+              <div *ngFor="let address of mainform.controls.ccinfo.controls; let i=index; let isccinfo;" style="min-width:400px">
                 <div [formGroupName]="i">
                   <mat-card @card>
                     <mat-card-header class="bg-primary text-white">
@@ -91,23 +123,41 @@
                         </mat-card-title>
                       </mat-card-title-group>
                       <div fxFlex="fxFlex"></div>
-                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasccdetails && isccinfo" (click)='removeForm(i, "ccinfo", "Removed Card Details") '>
+                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasccdetails && isccinfo[i]" (click)='removeForm(i, "ccinfo", "Removed Card Details") '>
                           <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                       </button>
-                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasccdetails && !isccinfo" (click)='isccinfo = !isccinfo' >
+                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasccdetails && !isccinfo[i]" (click)='isccinfo[i] = !isccinfo[i]; address.enable();' >
                           <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
                       </button>
                     </mat-card-header>
                     <mat-card-content *ngIf="!hasccdetails" style="text-align:center;">
                       <span>  Details not found,add your card details..</span>
-                      <button mat-fab color="warn" (click)="hasccdetails=true;" style="background-color: #555682;margin-top:3%;">
+                      <button mat-fab color="warn" (click)="hasccdetails=true; isccinfo[i] = 'true'; address.enable();" style="background-color: #555682;margin-top:3%;">
                         <mat-icon>add</mat-icon>
                       </button>
                     </mat-card-content>
-                    <mat-card-content *ngIf="hasccdetails && !isccinfo" style="text-align:center;">
-                        <span> Details found,want to edit your bank details.</span>
+                    <mat-card-content *ngIf="hasccdetails && !isccinfo[i]" style="text-align:center;">
+                        <mat-form-field>
+                            <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput="matInput" placeholder="Creadit Card Number" formControlName="ccnumber" required="required">
+                        </mat-form-field>
+                        <mat-form-field style="max-width: 15%;">
+                            <mat-select placeholder="Month" name="expmonth" formControlName="expmonth">
+                                <mat-option *ngFor="let x of expmonth" [value]="x">{{x}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field style="max-width: 20%;">
+                            <mat-select placeholder="Year" name="expyear" formControlName="expyear">
+                                <mat-option *ngFor="let xy of expyear" [value]="xy">{{xy}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field style="max-width: 60%;">
+                            <input matInput="matInput" placeholder="Enter CVV" formControlName="cvvnumber" required="required">
+                        </mat-form-field>
                     </mat-card-content>
-                    <mat-card-content *ngIf="hasccdetails && isccinfo" @card>
+                    <mat-card-content *ngIf="hasccdetails && isccinfo[i]" @card>
                         <mat-form-field>
                             <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required">
                         </mat-form-field>
@@ -149,7 +199,7 @@
         <div fxFlex.gt-sm="33%" fxFlex="33">
           <form [formGroup]="mainform">
             <div formArrayName="ppdetails" style="display: flex;">
-              <div *ngFor="let address of mainform.controls.ppdetails.controls; let i=index" style="min-width:400px">
+              <div *ngFor="let address of mainform.controls.ppdetails.controls; let i=index; let isppinfo;" style="min-width:400px">
                 <div [formGroupName]="i">
                   <mat-card @card >
                     <mat-card-header class="bg-primary text-white">
@@ -159,23 +209,25 @@
                         </mat-card-title>
                       </mat-card-title-group>
                       <div fxFlex="fxFlex"></div>
-                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails && isppinfo" (click)='removeForm(i, "ppdetails", "Removed PayPal Details")'>
+                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails && isppinfo[i]" (click)='removeForm(i, "ppdetails", "Removed PayPal Details")'>
                           <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                       </button>
-                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails && !isppinfo" (click)='isppinfo = !isppinfo' >
+                      <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails && !isppinfo[i]" (click)='isppinfo[i] = !isppinfo[i]; address.enable();' >
                           <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
                       </button>
                   </mat-card-header>
                   <mat-card-content *ngIf="!hasppdetails" style="text-align:center;">
                     <span>  Details not found,add your PayPal details..</span>
-                    <button mat-fab color="warn" (click)="hasppdetails=true;" style="background-color: #555682;margin-top:3%;">
+                    <button mat-fab color="warn" (click)="hasppdetails=true; isppinfo[i] = 'true'; address.enable();" style="background-color: #555682;margin-top:3%;">
                       <mat-icon>add</mat-icon>
                     </button>
                   </mat-card-content>
-                  <mat-card-content *ngIf="hasppdetails && !isppinfo" style="text-align:center;">
-                      <span> Details found,want to edit your PayPal details.</span>
+                  <mat-card-content *ngIf="hasppdetails && !isppinfo[i]" style="text-align:center;">
+                      <mat-form-field>
+                          <input matInput="matInput" type="email" placeholder="Paypal Registered Email" formControlName="email" required="required">
+                      </mat-form-field>
                   </mat-card-content>
-                  <mat-card-content *ngIf="hasppdetails && isppinfo" @card>
+                  <mat-card-content *ngIf="hasppdetails && isppinfo[i]" @card>
                         <mat-form-field>
                             <input matInput="matInput" type="email" placeholder="Paypal Registered Email" formControlName="email" required="required">
                         </mat-form-field>
