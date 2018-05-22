@@ -24,13 +24,21 @@ export class BankComponent implements OnInit {
   expmonth = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   bankdetails: FormGroup;
   mainform: any;
-  disableform: any;
   isagreed = false;
   public isbankdetails = false;
   // public isccinfo = false;
   // public isppdetails = false;
   resp;
-  public data: any; hasdetails = false;
+  public data: {
+    bankdetails: Array<any>,
+    ccinfo: Array<any>,
+    ppdetails: Array<any>
+  } = {
+    bankdetails: [],
+    ccinfo: [],
+    ppdetails: []
+  };
+  hasdetails = false;
   token;
   hasccdetails = false;
   hasppdetails = false;
@@ -61,7 +69,6 @@ export class BankComponent implements OnInit {
     this.http.get(environment.api + '/bankdetails/user/' + this.token.user._id).subscribe((res) => {
       this.resp = res.json();
       this.data = res.json();
-      console.log(res.json());
       if (this.data && this.data.bankdetails && this.data.bankdetails.length) {
         this.valuepatcher(this.data.bankdetails, 'bankdetails');
         this.hasdetails = true;
@@ -95,10 +102,6 @@ export class BankComponent implements OnInit {
       const fb = this.initForm(key);
       fb.patchValue(data[index]);
       controlArray.push(fb);
-      (controlArray.enabled) ? controlArray.disable() : null;
-      // controlArray.disable();
-      console.log(this.mainform.value);
-      console.log(data, key);
     }
   }
   initForm(key) {
@@ -126,8 +129,7 @@ export class BankComponent implements OnInit {
     return currentForm[key];
   }
   addNewForm(key) {
-    console.log(this.mainform.value);
-    if (this.mainform.controls[key].valid || this.mainform.controls[key].disabled) {
+    if (this.mainform.controls[key].valid) {
       const control = <FormArray>this.mainform.controls[key];
       control.push(this.initForm(key));
     } else {
@@ -141,32 +143,34 @@ export class BankComponent implements OnInit {
   }
 
   save( key, message) {
-    // tslint:disable-next-line:prefer-const
-    let obj: { [k: string]: any } = {};
-    obj.user = this.token.user._id;
-    obj[key] = this.mainform.value[key];
-    obj.updated_at = Date.now();
-    console.log(obj, this.mainform.value);
-    if (this.resp && this.resp._id) {
-      this.http.put(environment.api + '/bankdetails/' + this.resp._id, obj).subscribe((res) => {
-        console.log(res);
-        this.toastr.success(message, 'Success');
-        this.router.navigate(['/security']).then(() => {
-          this.router.navigate(['/bank']);
-        });
-      }, (err) => {
-        console.log(err);
-      });
+    if (this.mainform.controls[key].valid) {
+      // tslint:disable-next-line:prefer-const
+        let obj: { [k: string]: any } = {};
+        obj.user = this.token.user._id;
+        obj[key] = this.mainform.value[key];
+        obj.updated_at = Date.now();
+        if (this.resp && this.resp._id) {
+          this.http.put(environment.api + '/bankdetails/' + this.resp._id, obj).subscribe((res) => {
+            this.toastr.success(message, 'Success');
+            this.router.navigate(['/security']).then(() => {
+              this.router.navigate(['/bank']);
+            });
+          }, (err) => {
+            console.log(err);
+          });
+        } else {
+          this.http.post(environment.api + '/bankdetails', obj).subscribe((res) => {
+            console.log(res);
+            this.toastr.success(message, 'Success');
+            this.router.navigate(['/security']).then(() => {
+              this.router.navigate(['/bank']);
+            });
+          }, (err) => {
+            console.log(err);
+          });
+        }
     } else {
-      this.http.post(environment.api + '/bankdetails', obj).subscribe((res) => {
-        console.log(res);
-        this.toastr.success(message, 'Success');
-        this.router.navigate(['/security']).then(() => {
-          this.router.navigate(['/bank']);
-        });
-      }, (err) => {
-        console.log(err);
-      });
+      this.toastr.warning('Please fill up all the required fields', 'Warning');
     }
   }
   removeForm(i, key, message) {
@@ -177,7 +181,6 @@ export class BankComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         control.removeAt(i);
-        console.log(this.mainform.value)
         this.save(key, message);
       }
     });
