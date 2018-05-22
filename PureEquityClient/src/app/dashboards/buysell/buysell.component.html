@@ -29,7 +29,7 @@
   </mat-card> -->
   <!-- </div> -->
   <div fxFlex.gt-sm="100%" fxFlex="100">
-    <div fxFlex.gt-sm="100%" fxFlex="100" style="margin-left:2%;">
+    <div fxFlex.gt-sm="40%" fxFlex="40" style="margin-left:2%;">
       <mat-card>
         <mat-card-content>
           <div style="text-align:center;" *ngIf="enablebuycontainer">
@@ -50,7 +50,7 @@
                   <input matInput type="text" placeholder="Approx. BTC to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
                 </mat-form-field>
 
-                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                <div fxFlex.gt-sm="10" fxFlex.gt-xs="10" fxFlex="10">
                   <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="buybtc()">
                     BUY BTC
                   </button>
@@ -78,7 +78,7 @@
                   <input matInput type="text" placeholder="Approx. USD to Receive:" [formControl]="sellForm.controls['estimation']" [readonly]="true">
                 </mat-form-field>
 
-                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                <div fxFlex.gt-sm="10" fxFlex.gt-xs="10" fxFlex="10">
                   <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="sellbtc()">
                     SELL BTC
                   </button>
