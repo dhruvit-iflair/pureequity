@@ -46,7 +46,7 @@ export class BuysellComponent implements OnInit {
   estimation(){
     this.http.get(environment.tradingApi+'/coins/btcusd').subscribe((data)=>{
       var respdata=data.json();
-      this.bidprice=respdata.payload.data.bid;
+      this.bidprice=parseFloat(respdata.payload.data.bid);
       if(this.enablebuycontainer){
         var subtotal = parseFloat(this.buysellForm.value.amount)-parseFloat(this.pureequityfee);
         var estbtc= subtotal/respdata.payload.data.ask;
@@ -61,18 +61,32 @@ export class BuysellComponent implements OnInit {
     });
   }
   buybtc(){
-    var obj={amount:this.buysellForm.value.estimation,price:this.bidprice};
+    var amountval=parseFloat(this.buysellForm.value.estimation).toFixed(6);
+    var obj={amount:parseFloat(amountval),price:this.bidprice};
     //ahiya call karavi devano just for buy btc jema ammount ma approx.btc received ni value nd price ma bid value avse
-    this.http.post(environment.tradingApi+'/buy/btcusd/',obj)
+    this.http.post(environment.tradingApi+'/buy/btcusd',obj)
     .subscribe((resp)=>{
       console.log(resp);
       this.toastr.success('Transactions Success');
     },(er)=>{
-      console.log(er);
+      var err=er.json();
+      console.log(err);
+      this.toastr.error(err.message,'Error');
     });
   }
   sellbtc(){
-    var obj={amount:this.buysellForm.value.amount,price:this.bidprice};
+    var amountval=parseFloat(this.sellForm.value.amount).toFixed(6);
+    var obj={amount:parseFloat(amountval),price:this.bidprice};
+    //var obj={amount:this.buysellForm.value.amount,price:this.bidprice};
     //ahiya call karavi devano just for buy btc jema ammount ni value nd price ma bid value avse
+    this.http.post(environment.tradingApi+'/sell/btcusd',obj)
+    .subscribe((resp)=>{
+      console.log(resp);
+      this.toastr.success('Transactions Success');
+    },(er)=>{
+      var err=er.json();
+      console.log(err);
+      this.toastr.error(err.message,'Error');
+    });
   }
 }
