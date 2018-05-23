@@ -18,8 +18,11 @@
         class="text-danger support-text">You must include your City.</small>
       </mat-form-field>
       <mat-form-field  fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
-        <input matInput placeholder="Country" formControlName="country" required>
-        <mat-icon matSuffix>flag</mat-icon>                
+          <mat-select placeholder="Select Country" name="country" formControlName="country">
+              <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
+          </mat-select>
+        <!-- <input matInput placeholder="Country" formControlName="country" required>
+        <mat-icon matSuffix>flag</mat-icon>                 -->
         <small *ngIf="address.controls['country'].hasError('required') && address.controls['country'].touched"
         class="text-danger support-text">You must include your Country.</small>
       </mat-form-field>
