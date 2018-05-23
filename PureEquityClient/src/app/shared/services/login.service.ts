@@ -24,4 +24,7 @@ export class LoginService {
     verifyAccount(data : any){
         return this.http.post(environment.api + '/users/verify',data);
     }
+    contact(data : any){
+        return this.http.post(environment.api + '/mails/send',data);
+    }
 }
