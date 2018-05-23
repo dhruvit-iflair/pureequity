@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { VerifyComponent } from './verify/verify.component';
 import { QrotpverificationComponentx } from './qrotpverification/qrotpverification.component';
+import { ContactUsComponent } from '../pages/contact-us/contact-us.component';
 
 export const AuthenticationRoutes: Routes = [
   {
@@ -15,6 +16,10 @@ export const AuthenticationRoutes: Routes = [
     children: [{
       path: '404',
       component: ErrorComponent
+    },
+    {
+      path: 'contact',
+      component: ContactUsComponent
     }, {
       path: 'forgot',
       component: ForgotComponent

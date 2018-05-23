@@ -73,7 +73,7 @@ export class Dashboard1Component implements OnInit, OnDestroy {
                 this.timer.minutes=d.getMinutes().toString();
                 this.timer.seconds=d.getSeconds().toString();
                 this.timer.micros=d.getMilliseconds().toString();
-        }, 500);
+        }, 1000);
         $(document).ready(function () {
             Highcharts.stockChart('container', {
                 rangeSelector: {

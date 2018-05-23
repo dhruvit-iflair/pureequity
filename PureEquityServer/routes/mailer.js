@@ -10,6 +10,8 @@ module.exports = function (router) {
     
     router.post('/api/mails', controller.post);
 
+    router.post('/api/mails/send', controller.send);
+
     router.put('/api/mails/:id', controller.put);
     
     router.delete('/api/mails/:id', controller.delete);

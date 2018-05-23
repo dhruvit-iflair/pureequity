@@ -1,0 +1,51 @@
+<div class="login-register">
+    <div class="login-register-box">
+        <mat-card>
+            <mat-card-content>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="text-center">
+                        <img alt="homepage" src="assets/Logo-15 size200.png" style="height:150px;width:  150px;">
+                        <img alt="homepage" src="assets/Horizontal-03.png" style="height: 30px;width: 180px;">
+                        <h4 class="m-t-0">Contact Us</h4>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutWrap="wrap">
+                        <!-- col full-->
+                        <!-- <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <mat-form-field>
+                                <input matInput placeholder="email" [formControl]="form.controls['email']"> 
+                            </mat-form-field> 
+                            <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="text-danger support-text">email is required.</small>
+                        </div> -->
+                        <!-- col full-->
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <mat-form-field style="width: 100%">
+                                <input matInput placeholder="Your Email" type="email" [formControl]="form.controls['email']">
+                            </mat-form-field>
+                            <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="text-danger support-text">You must include an email address.</small>
+                            <small *ngIf="form.controls['email'].errors?.email && form.controls['email'].touched" class="text-danger support-text">You must include a valid email address.</small>
+                        </div>
+                        <!-- col full-->
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <mat-form-field>
+                                <input matInput type="text" placeholder="Your Name" [formControl]="form.controls['name']">
+                            </mat-form-field>
+                            <small *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched" class="text-danger support-text">Your must include a name.</small>
+                        </div>
+                        <!-- col full-->
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <mat-form-field>
+                                <textarea matInput placeholder="Leave a message" [formControl]="form.controls['message']"></textarea>
+                              </mat-form-field>
+                            <small *ngIf="form.controls['message'].hasError('required') && form.controls['message'].touched" class="text-danger support-text">You must include a message.</small>
+                        </div>
+                        <!-- col full-->
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20" type="submit" [disabled]="!form.valid">Send Email</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

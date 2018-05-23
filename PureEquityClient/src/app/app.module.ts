@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ResponseInterceptor } from "./shared/interceptor/http.response.interceptor";
-import { TokenInterceptor } from "./shared/interceptor/http.request.interceptor";
+import { ResponseInterceptor } from './shared/interceptor/http.response.interceptor';
+import { TokenInterceptor } from './shared/interceptor/http.request.interceptor';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
@@ -32,10 +32,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 
-import { AuthGuard } from "./shared/guard/auth.guard";
+import { AuthGuard } from './shared/guard/auth.guard';
 import { DeleteComponent } from './shared/dialogs/delete/delete.component';
-//import { MatStepperModule } from '@angular/material';
-
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -70,7 +68,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       preventDuplicates: true,
     }),
     NgxChartsModule,
-    //MatStepperModule
   ],
   providers: [
     {
@@ -93,6 +90,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteComponent,FullComponent]
+  entryComponents: [DeleteComponent, FullComponent]
 })
 export class AppModule { }

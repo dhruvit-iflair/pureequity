@@ -20,7 +20,7 @@ export const AppRoutes: Routes = [{
     path: '',
     canActivate: [AuthGuard],
     loadChildren: './dashboards/dashboards.module#DashboardsModule'
-  },
+  }
   ]
 }, {
   path: '',
@@ -29,7 +29,8 @@ export const AppRoutes: Routes = [{
     path: '',
     loadChildren: './authentication/authentication.module#AuthenticationModule'
   }]
-}, {
+},
+{
   path: '**',
   redirectTo: 'authentication/404'
 }];
