@@ -13,3 +13,10 @@
     background: #ffffff;
     color:#555682;
 }
+.customflexcard{
+    text-align: -webkit-center;
+    display:block !important;
+}
+.mat-warn{
+    background-color: #555682;
+}
