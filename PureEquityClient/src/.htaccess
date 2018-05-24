@@ -1,7 +1,8 @@
- RewriteEngine on
-    RewriteCond %{REQUEST_FILENAME} -s [OR]
-    RewriteCond %{REQUEST_FILENAME} -l [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^.*$ - [NC,L]
- 
-    RewriteRule ^(.*) /index.html [NC,L]
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /PureEquity/
+  #RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /PureEquity/index.html [L]
+</IfModule>

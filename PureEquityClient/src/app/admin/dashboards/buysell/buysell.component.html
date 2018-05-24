@@ -1,0 +1,156 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+  </div>
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <div fxFlex.gt-sm="48%" fxFlex="50" style="margin-left:2%;">
+      <mat-card id="buy" (click)="enablebuybtc()" [ngClass]="(enablebuycontainer==true)?'enabledcard':'disabledcard'">
+        <mat-card-content>
+          <div style="text-align:center;cursor: pointer;">
+            <mat-icon style="font-size: 120px;">cloud_download</mat-icon>
+            <span>Buy BTC</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex.gt-sm="48%" fxFlex="50">
+      <mat-card id="sell" (click)="enablesellbtc()" [ngClass]="(enablesellcontainer==true)?'enabledcard':'disabledcard'">
+        <mat-card-content>
+          <div style="text-align:center;cursor: pointer;">
+            <mat-icon style="font-size: 120px;">cloud_upload</mat-icon>
+            <span>Sell BTC</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <!-- <div fxFlex.gt-sm="8%" fxFlex="8" class="customizedCss"> -->
+  <!-- <mat-card class="customizedCss">
+    <mat-card-content>
+      OR
+    </mat-card-content>
+  </mat-card> -->
+  <!-- </div> -->
+  <div fxFlex.gt-sm="100%" fxFlex="100" class="customflexcard" *ngIf="enablebuycontainer || enablesellcontainer">
+    <div fxFlex.gt-sm="40%" fxFlex="40" style="margin-left:2%;">
+      <mat-card>
+        <mat-card-content>
+          <div style="text-align:center;" *ngIf="enablebuycontainer">
+            <span>Available : {{availableBalance}}</span>
+            <form [formGroup]="buysellForm">
+              <div fxLayout="row" fxLayoutWrap="wrap">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" (ngModelChange)="estimation()">
+                </mat-form-field>
+                <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Subtotal:" [formControl]="buysellForm.controls['subtotal']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Approx. BTC to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
+                </mat-form-field>
+
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="buybtc()">
+                    BUY BTC
+                  </button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+          <div style="text-align:center;" *ngIf="enablesellcontainer">
+            <span>Available : {{availableBalance}}</span>
+            <form [formGroup]="sellForm">
+              <div fxLayout="row" fxLayoutWrap="wrap">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']" (ngModelChange)="estimation()">
+                </mat-form-field>
+                <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Subtotal:" [formControl]="sellForm.controls['subtotal']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellForm.controls['fee']" [readonly]="true">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Approx. USD to Receive:" [formControl]="sellForm.controls['estimation']" [readonly]="true">
+                </mat-form-field>
+
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="sellbtc()">
+                    SELL BTC
+                  </button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <div fxFlex.gt-sm="50%" fxFlex="50" style="margin-left:2%;">
+      <mat-card>
+        <mat-card-header class="bg-primary text-white">
+          <mat-card-title-group>
+            <mat-card-title fxLayout="row">
+              Top 10 Buyers
+            </mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <table>
+              <thead>
+                <th>Price(USD)</th>
+                <th>Amount(BTC)</th>
+                <th>Value(USD)</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let bid of orderbook.payload.data.bids">
+                  <td>{{bid[0]}}</td>
+                  <td>{{bid[1]}}</td>
+                  <td>{{bid[0] * bid[1]}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex.gt-sm="50%" fxFlex="50" style="margin-left:2%;">
+      <mat-card>
+        <mat-card-header class="bg-primary text-white">
+          <mat-card-title-group>
+            <mat-card-title fxLayout="row">
+              Top 10 Sellers
+            </mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <table>
+              <thead>
+                <th>Price(USD)</th>
+                <th>Amount(BTC)</th>
+                <th>Value(USD)</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ask of orderbook.payload.data.asks">
+                  <td>{{ask[0]}}</td>
+                  <td>{{ask[1]}}</td>
+                  <td>{{ask[0] * ask[1]}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
