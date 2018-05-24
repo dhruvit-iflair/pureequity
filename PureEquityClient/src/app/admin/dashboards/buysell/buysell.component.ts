@@ -19,9 +19,28 @@ export class BuysellComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: Http, private router: Router, private toastr: ToastrService) { }
   availableBalance; pureequityfee = '0.25%';
   enablesellcontainer = false; enablebuycontainer = false;
-  bidprice; availBalance; orderbook;
+  bidprice:any; 
+  availBalance:any; 
+  orderbook:any;
   public payPalConfig:PayPalConfig;
-
+  public tradeCoin:String = 'BTC / USD';
+  public tradeList: any[] = [
+    { name: 'BTC / USD', isActive: true,  value: 'btcusd' , data: []},
+    { name: 'BTC / EUR', isActive: false, value: 'btceur' , data: []},
+    { name: 'EUR / USD', isActive: false, value: 'eurusd' , data: []},
+    { name: 'XRP / USD', isActive: false, value: 'xrpusd' , data: []},
+    { name: 'XRP / EUR', isActive: false, value: 'xrpeur' , data: []},
+    { name: 'XRP / BTC', isActive: false, value: 'xrpbtc' , data: []},
+    { name: 'LTC / USD', isActive: false, value: 'ltcusd' , data: []},
+    { name: 'LTC / EUR', isActive: false, value: 'ltceur' , data: []},
+    { name: 'LTC / BTC', isActive: false, value: 'ltcbtc' , data: []},
+    { name: 'ETH / USD', isActive: false, value: 'ethusd' , data: []},
+    { name: 'ETH / EUR', isActive: false, value: 'etheur' , data: []},
+    { name: 'ETH / BTC', isActive: false, value: 'ethbtc' , data: []},
+    { name: 'BCH / USD', isActive: false, value: 'bchusd' , data: []},
+    { name: 'BCH / EUR', isActive: false, value: 'bcheur' , data: []},
+    { name: 'BCH / BTC', isActive: false, value: 'bchbtc' , data: []}
+  ];
   ngOnInit() {
     this.buysellForm = this.fb.group({
       amount: [null, Validators.compose([Validators.required])],
@@ -144,4 +163,13 @@ export class BuysellComponent implements OnInit {
       }]
     });
   }
+  toggleValue(i) {
+    if (!this.tradeList[i].isActive) {
+        this.tradeList.map(t=>{
+            t.isActive = false
+        });
+        this.tradeList[i].isActive = !this.tradeList[i].isActive;
+        this.tradeCoin = this.tradeList[i].name;
+    }
+}
 }

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./privicy-policy.component.css']
 })
 export class PrivicyPolicyComponent implements OnInit {
-
+  dir;
   constructor() { }
 
   ngOnInit() {

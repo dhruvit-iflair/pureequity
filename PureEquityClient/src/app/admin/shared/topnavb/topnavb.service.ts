@@ -26,7 +26,7 @@ const navItems=[
     icon: 'fingerprint'
   },
   {
-    state: 'contact',
+    state: 'dashboard',
     title: 'Contact Us',
     icon: 'hearing'
   }
