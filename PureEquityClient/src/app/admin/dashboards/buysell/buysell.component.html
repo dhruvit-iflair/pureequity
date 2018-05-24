@@ -1,8 +1,5 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="100%" fxFlex="100">
-    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-  </div>
-  <div fxFlex.gt-sm="100%" fxFlex="100">
     <div fxFlex.gt-sm="48%" fxFlex="50" style="margin-left:2%;">
       <mat-card id="buy" (click)="enablebuybtc()" [ngClass]="(enablebuycontainer==true)?'enabledcard':'disabledcard'">
         <mat-card-content>
@@ -153,4 +150,9 @@
         </mat-card-content>
       </mat-card>
     </div>
+  </div>
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <div fxFlex.gt-sm="45%" fxFlex="45"></div>
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    <div fxFlex.gt-sm="45%" fxFlex="45"></div>
   </div>

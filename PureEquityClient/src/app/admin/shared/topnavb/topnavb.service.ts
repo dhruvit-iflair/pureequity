@@ -24,6 +24,11 @@ const navItems=[
     state: 'security',
     title: 'Security',
     icon: 'fingerprint'
+  },
+  {
+    state: 'contact',
+    title: 'Contact Us',
+    icon: 'hearing'
   }
 ];
 @Injectable()
