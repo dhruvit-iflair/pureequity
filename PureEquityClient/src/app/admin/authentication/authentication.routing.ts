@@ -9,6 +9,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { VerifyComponent } from './verify/verify.component';
 import { QrotpverificationComponentx } from './qrotpverification/qrotpverification.component';
 import { ContactUsComponent } from '../pages/contact-us/contact-us.component';
+import { PrivicyPolicyComponent } from '../pages/privicy-policy/privicy-policy.component';
+import { TermsConditionsComponent } from '../pages/terms-conditions/terms-conditions.component';
 
 export const AuthenticationRoutes: Routes = [
   {
@@ -20,6 +22,12 @@ export const AuthenticationRoutes: Routes = [
     {
       path: 'contact',
       component: ContactUsComponent
+    },{
+      path: 'policy',
+      component: PrivicyPolicyComponent
+    },{
+      path: 't&c',
+      component: TermsConditionsComponent
     }, {
       path: 'forgot',
       component: ForgotComponent

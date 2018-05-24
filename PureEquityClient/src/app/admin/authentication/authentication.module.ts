@@ -19,6 +19,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { VerifyComponent } from './verify/verify.component';
 import { QrotpverificationComponentx } from './qrotpverification/qrotpverification.component';
 import { ContactUsComponent } from '../pages/contact-us/contact-us.component';
+import { PrivicyPolicyComponent } from '../pages/privicy-policy/privicy-policy.component';
+import { TermsConditionsComponent } from '../pages/terms-conditions/terms-conditions.component';
 
 @NgModule({
   imports: [ 
@@ -46,6 +48,8 @@ import { ContactUsComponent } from '../pages/contact-us/contact-us.component';
     VerifyComponent,
     QrotpverificationComponentx,
     ContactUsComponent,
+    PrivicyPolicyComponent,
+    TermsConditionsComponent
   ],
   providers:[
       // Services
