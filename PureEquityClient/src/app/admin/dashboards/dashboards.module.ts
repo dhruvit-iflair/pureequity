@@ -29,6 +29,8 @@ import { RoleComponent } from './roles/role/role.component';
 import { BuysellComponent } from './buysell/buysell.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { BankComponent } from './bank/bank.component';
+import { DepositComponent } from './deposit/deposit.component';
+import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 
 @NgModule({
   imports: [
@@ -44,7 +46,7 @@ import { BankComponent } from './bank/bank.component';
     CKEditorModule,
     NgxPayPalModule
   ],
-  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent,QrotpverificationComponent, ChangePasswordComponent, MailerComponent, MaillistComponent, RolesComponent, RoleComponent, BuysellComponent, BankComponent ],
+  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent,QrotpverificationComponent, ChangePasswordComponent, MailerComponent, MaillistComponent, RolesComponent, RoleComponent, BuysellComponent, BankComponent, DepositComponent, WithdrawalComponent ],
   providers:[
     DashboardService,
     LoginService

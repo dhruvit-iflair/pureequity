@@ -14,6 +14,8 @@ import { RolesComponent } from './roles/roles.component';
 import { RoleComponent } from './roles/role/role.component';
 import { BuysellComponent } from './buysell/buysell.component';
 import { BankComponent } from './bank/bank.component';
+import { DepositComponent } from './deposit/deposit.component';
+import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -76,7 +78,15 @@ export const DashboardsRoutes: Routes = [
       //     component:ChangePasswordComponent
       //   }
       // ]
-    }
+    },
+    {
+      path:'deposit',
+      component:DepositComponent
+    },
+    {
+      path:'withdrawal',
+      component:WithdrawalComponent
+    },
   ]
   }
 ];

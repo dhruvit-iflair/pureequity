@@ -26,10 +26,20 @@ const navItems=[
     icon: 'fingerprint'
   },
   {
-    state: 'dashboard',
-    title: 'Contact Us',
-    icon: 'hearing'
-  }
+    state: 'deposit',
+    title: 'Deposit',
+    icon: 'attach_money'
+  },
+  {
+    state: '404',
+    title: 'Withdrawal',
+    icon: 'money_off'
+  },
+  // {
+  //   state: 'dashboard',
+  //   title: 'Contact Us',
+  //   icon: 'hearing'
+  // }
 ];
 @Injectable()
 export class TopnavbService {
