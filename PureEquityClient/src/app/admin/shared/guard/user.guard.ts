@@ -18,8 +18,8 @@ export class UserGuard implements CanActivate {
     ): Observable<boolean> | Promise<boolean> | boolean {
         var cred = JSON.parse(localStorage.getItem('token'));
         if (!cred || !(cred.user.role.name == 'user') ) {
-            localStorage.clear();
-            this.location.navigate(['/login']);
+            //localStorage.clear();
+            this.location.navigate(['/404']);
             return false;
         } else {
             return true;

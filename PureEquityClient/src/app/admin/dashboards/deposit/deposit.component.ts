@@ -35,7 +35,7 @@ export class DepositComponent implements OnInit {
         var pamount=this.payPalConfig.transactions[0].amount.total+' '+this.payPalConfig.transactions[0].amount.currency;
         var dataz = {
           title: 'PaypalDepositSuccess',
-          search: ['[(paypal.user)]', '[(paypal.paymentID)]', '[(paypal.amount)]',],
+          search: ['[(paypal.user)]', '[(paypal.paymentID)]', '[(paypal.amount)]'],
           replace: [userd, data.paymentID, pamount],
           from: 'no_replay@pureequity.com',
           to: this.tokendata.user.username,
