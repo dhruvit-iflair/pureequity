@@ -9,7 +9,7 @@
   "author": "iFlair",
   "dependencies": {
     "async": "^2.6.0",
-    "bcrypt": "^1.0.3",
+    "bcryptjs": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
