@@ -33,6 +33,8 @@ import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 
 import { AuthGuard } from './shared/guard/auth.guard';
+import { AdminGuard } from './shared/guard/admin.guard';
+import { UserGuard } from './shared/guard/user.guard';
 import { DeleteComponent } from './shared/dialogs/delete/delete.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -78,6 +80,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       useClass: PathLocationStrategy
     },
     AuthGuard,
+    AdminGuard,
+    UserGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

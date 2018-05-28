@@ -41,7 +41,7 @@ export class MaillistComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
   create(){
-    this.router.navigate(['/mail']);
+    this.router.navigate(['/admin/mail']);
   }
   delete(row){
     let dialogRef = this.dialog.open(DeleteComponent,{
@@ -52,13 +52,13 @@ export class MaillistComponent implements OnInit {
           this.http.delete(environment.api + '/mails/'+row._id)
           .subscribe((res)=>{
             this.tstr.success('Mail Template Deleted Successfully!','Success');
-            this.router.navigate(['/mail']).then(()=>{this.router.navigate(['/mails'])});
+            this.router.navigate(['/admin/mail']).then(()=>{this.router.navigate(['/admin/mails'])});
           });
         }
     });
   }
   edit(xst){
-    this.router.navigate(['/mail/'+xst._id])
+    this.router.navigate(['/admin/mail/'+xst._id])
   }
 
 }

@@ -49,7 +49,7 @@ export class KycadminComponent implements OnInit {
           this.http.delete(environment.api + '/userdocs/'+row._id)
           .subscribe((res)=>{
             this.tstr.success('KYC Deleted Successfully','Success');
-            this.router.navigate(['/kyc']).then(()=>{this.router.navigate(['/kycadmin'])});
+            this.router.navigate(['/admin/kyc']).then(()=>{this.router.navigate(['/admin/kycadmin'])});
           });
         }
     });
@@ -65,7 +65,7 @@ export class KycadminComponent implements OnInit {
     }
   }
   edit(xst){
-    this.router.navigate(['/kyc/'+xst.user._id])
+    this.router.navigate(['/admin/kyc/'+xst.user._id])
   }
   changeStatus(dt){
     var updobj={isApproved:!dt.isApproved}

@@ -94,7 +94,7 @@ export class ProfileComponent implements OnInit {
         console.log(res);
         this.toster.success('User Details has been updated', 'Success');
         this.userService.getAllUsers();
-        this.router.navigate(['/users']);
+        this.router.navigate(['/admin/users']);
       }, (error) => {
         console.log(error);
         this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');

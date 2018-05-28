@@ -59,7 +59,7 @@ export class UsersComponent {
         }
     });
     
-    //this.router.navigate(['/users/edit',user._id]);
+    //this.router.navigate(['/admin/users/edit',user._id]);
 
   }
   applyFilter(filterValue: string) {

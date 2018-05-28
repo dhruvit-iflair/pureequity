@@ -39,7 +39,7 @@ export class RoleComponent implements OnInit {
       this.http.put(environment.api+'/role/'+this.param,this.rolerFormGroup.value)
       .subscribe((res)=>{
         this.toastr.success('Role Saved Successfully!','Success');
-        this.router.navigate(['/roles']);
+        this.router.navigate(['/admin/roles']);
       },(er)=>{
         this.toastr.error('Internal Server Error!','Something went wrong!');
       });
@@ -48,7 +48,7 @@ export class RoleComponent implements OnInit {
       this.http.post(environment.api+'/role',this.rolerFormGroup.value)
       .subscribe((res)=>{
         this.toastr.success('Role Saved Successfully!','Success');
-        this.router.navigate(['/roles']);
+        this.router.navigate(['/admin/roles']);
       },(er)=>{
         this.toastr.error('Internal Server Error!','Something went wrong!');
       });

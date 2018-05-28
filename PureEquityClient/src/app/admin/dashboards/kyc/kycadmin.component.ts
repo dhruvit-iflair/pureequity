@@ -139,7 +139,7 @@ export class KycAdminComponent implements OnInit {
             .subscribe((resp: any) => {
               var x = resp.json();
               this.toastr.success('KYC Filled Successfully', 'Success');
-              this.router.navigate(['/kycadmin']);
+              this.router.navigate(['/admin/kyc']);
             }, (er) => {
               this.toastr.error('Internal Server Error.', 'Error');
             });
@@ -149,7 +149,7 @@ export class KycAdminComponent implements OnInit {
             .subscribe((resp: any) => {
               var x = resp.json();
               this.toastr.success('KYC Updated Successfully', 'Success');
-              this.router.navigate(['/kycadmin']);
+              this.router.navigate(['/admin/kyc']);
             }, (er) => {
               this.toastr.error('Internal Server Error.', 'Error');
             });

@@ -14,6 +14,8 @@ export const UsersRouting: Routes = [
   {
     path: ':id',
     component: ProfileComponent
+  },{
+    path: '**',
+    redirectTo: '404'
   }
-
 ];
