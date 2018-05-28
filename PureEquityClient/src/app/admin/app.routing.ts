@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { FullComponent } from './layouts/full/full.component';
 import { AppBlankComponent } from './layouts/blank/blank.component';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { AdminGuard } from './shared/guard/admin.guard';
 
 export const AppRoutes: Routes = [{
   path: '',
@@ -13,9 +14,12 @@ export const AppRoutes: Routes = [{
     pathMatch: 'full'
   },
   {
-    path: 'users',
-    canActivate: [AuthGuard],
-    loadChildren: './pages/users/users.module#UsersModule'
+    path: 'admin',
+    canActivate: [AuthGuard, AdminGuard],
+    children:[{
+      path: 'users',
+      loadChildren: './pages/users/users.module#UsersModule'
+    }]
   }, {
     path: '',
     canActivate: [AuthGuard],
@@ -32,5 +36,5 @@ export const AppRoutes: Routes = [{
 },
 {
   path: '**',
-  redirectTo: 'authentication/404'
+  redirectTo: '404'
 }];

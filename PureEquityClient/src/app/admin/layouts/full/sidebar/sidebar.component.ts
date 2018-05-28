@@ -38,6 +38,6 @@ export class AppSidebarComponent {
     this.router.navigate(['/login']);
   };
   goToProfile(){
-    this.router.navigate(['/users/edit/'+ this.user._id])
+    this.router.navigate(['/admin/users/edit/'+ this.user._id])
   }
 }

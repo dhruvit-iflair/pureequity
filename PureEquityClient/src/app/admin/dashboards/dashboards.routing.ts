@@ -14,6 +14,8 @@ import { RolesComponent } from './roles/roles.component';
 import { RoleComponent } from './roles/role/role.component';
 import { BuysellComponent } from './buysell/buysell.component';
 import { BankComponent } from './bank/bank.component';
+import { AdminGuard } from '../shared/guard/admin.guard';
+import { UserGuard } from '../shared/guard/user.guard';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -25,50 +27,73 @@ export const DashboardsRoutes: Routes = [
     // },
     ,{
       path: 'kyc', 
+      canActivate:[UserGuard],
       component: KycComponent
     },
     {
       path: 'kyc/:id', 
+      canActivate:[UserGuard],      
       component: KycAdminComponent
     },
-    {
-      path: 'kycadmin', 
-      component: KycadminComponent
-    },
+    // {
+    //   path: 'kycadmin', 
+    //   canActivate:[UserGuard],      
+    //   component: KycadminComponent
+    // },
     {
       path:'bank',
+      canActivate:[UserGuard],      
       component:BankComponent
     },
     {
-      path:'mails',
-      component:MaillistComponent
-    },
-    {
-      path:'mail',
-      component:MailerComponent
-    },
-    {
-      path:'mail/:id',
-      component:MailerComponent
-    },
-    {
-      path:'roles',
-      component:RolesComponent
-    },
-    {
-      path:'role',
-      component:RoleComponent
-    },
-    {
-      path:'role/:id',
-      component:RoleComponent
+      path:'admin',
+      canActivate:[AdminGuard],
+      children:[ {
+        path:'mails',
+        component:MaillistComponent
+      },
+      {
+        path:'mail',
+        component:MailerComponent
+      },
+      {
+        path:'mail/:id',
+        component:MailerComponent
+      },
+      {
+        path:'roles',
+        component:RolesComponent
+      },
+      {
+        path:'role',
+        component:RoleComponent
+      },
+      {
+        path:'role/:id',
+        component:RoleComponent
+      },
+      {
+        path: 'kyc', 
+        component: KycadminComponent
+      },
+      {
+        path: 'kyc/:id', 
+        component: KycAdminComponent
+      },
+      {
+        path:'security',
+        component:QrotpverificationComponent,       
+      }
+     ]
     },
     {
       path:'buysell',
+      canActivate:[UserGuard],      
       component:BuysellComponent
     },
     {
       path:'security',
+      canActivate:[UserGuard],      
       component:QrotpverificationComponent,
       // children:[
       //   {
@@ -78,5 +103,9 @@ export const DashboardsRoutes: Routes = [
       // ]
     }
   ]
+  },
+  {
+    path: '**',
+    redirectTo: '404'
   }
 ];

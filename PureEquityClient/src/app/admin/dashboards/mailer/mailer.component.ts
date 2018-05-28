@@ -41,7 +41,7 @@ export class MailerComponent implements OnInit {
       this.http.put(environment.api+'/mails/'+this.param,this.mailFormGroup.value)
       .subscribe((res)=>{
         this.toastr.success('Mail Template Saved Successfully!','Success');
-        this.router.navigate(['/mails']);
+        this.router.navigate(['/admin/mails']);
       },(er)=>{
         this.toastr.error('Internal Server Error!','Something went wrong!');
       });
@@ -50,7 +50,7 @@ export class MailerComponent implements OnInit {
       this.http.post(environment.api+'/mails',this.mailFormGroup.value)
       .subscribe((res)=>{
         this.toastr.success('Mail Template Saved Successfully!','Success');
-        this.router.navigate(['/mails']);
+        this.router.navigate(['/admin/mails']);
       },(er)=>{
         this.toastr.error('Internal Server Error!','Something went wrong!');
       });

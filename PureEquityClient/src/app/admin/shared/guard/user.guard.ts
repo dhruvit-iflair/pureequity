@@ -5,7 +5,7 @@ import { GlobalService } from "../services/global.service";
 import { Location } from '@angular/common';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class UserGuard implements CanActivate {
     public role:any;
     constructor(private globalService:GlobalService, private location:Router){
         this.globalService.roleStatus().subscribe((role)=>{
@@ -17,7 +17,7 @@ export class AdminGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean> | Promise<boolean> | boolean {
         var cred = JSON.parse(localStorage.getItem('token'));
-        if (!cred || !(cred.user.role.name == 'admin') ) {
+        if (!cred || !(cred.user.role.name == 'user') ) {
             localStorage.clear();
             this.location.navigate(['/login']);
             return false;

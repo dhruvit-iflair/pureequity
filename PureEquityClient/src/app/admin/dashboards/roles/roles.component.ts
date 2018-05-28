@@ -41,7 +41,7 @@ export class RolesComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
   create(){
-    this.router.navigate(['/role']);
+    this.router.navigate(['/admin/role']);
   }
   delete(row){
     let dialogRef = this.dialog.open(DeleteComponent,{
@@ -52,13 +52,13 @@ export class RolesComponent implements OnInit {
           this.http.delete(environment.api + '/role/'+row._id)
           .subscribe((res)=>{
             this.tstr.success('Role Removed Successfully!','Success');
-            this.router.navigate(['/role']).then(()=>{this.router.navigate(['/roles'])});
+            this.router.navigate(['/admin/role']).then(()=>{this.router.navigate(['/admin/roles'])});
           });
         }
     });
   }
   edit(xst){
-    this.router.navigate(['/role/'+xst._id])
+    this.router.navigate(['/admin/role/'+xst._id])
   }
 
 }

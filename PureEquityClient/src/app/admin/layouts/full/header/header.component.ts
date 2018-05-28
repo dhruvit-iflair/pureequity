@@ -76,7 +76,7 @@ export class AppHeaderComponent {
       this.user = u.user
     }
     goToProfile(){
-      this.router.navigate(['/users/'+ this.user._id]);
+      this.router.navigate(['/admin/users/'+ this.user._id]);
         // this.userService.getAUsers(this.user._id);
         //  let dialogRef = this.dialog.open(ProfileComponent,{
         //    data: this.user,

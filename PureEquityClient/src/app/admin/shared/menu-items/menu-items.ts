@@ -31,19 +31,19 @@ export interface Menu {
 
 const ADMINMENUITEMS = [
   {
-    state: 'dashboard',
+    state: '/dashboard',
     name: 'Dashboard',
     type: 'link',
     icon: 'dashboard',
   },
   {
-    state: 'users',
+    state: '/admin/users',
     name: 'User Management',
     type: 'link',
     icon: 'av_timer',
   },
   {
-    state: 'kycadmin',
+    state: '/admin/kyc',
     name: 'KYC',
     type: 'link',
     icon: 'perm_contact_calendar',
@@ -55,19 +55,19 @@ const ADMINMENUITEMS = [
   //   icon: 'no_encryption',
   // },
   {
-    state: 'security',
+    state: '/admin/security',
     name: 'Security',
     type: 'link',
     icon: 'fingerprint',
   },
   {
-    state: 'mails',
+    state: '/admin/mails',
     name: 'Mail Management',
     type: 'link',
     icon: 'widgets',
   },
   {
-    state: 'roles',
+    state: '/admin/roles',
     name: 'Role Management',
     type: 'link',
     icon: 'extension',

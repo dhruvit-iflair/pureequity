@@ -93,7 +93,7 @@ export class EditUserComponent implements OnInit {
       this.userService.getAllUsers();
       this.click = true;
       this.cancel();
-      this.router.navigate(['/users']);
+      this.router.navigate(['/admin/users']);
     }, (error) => {
       console.log(error);
       this.click = true;
