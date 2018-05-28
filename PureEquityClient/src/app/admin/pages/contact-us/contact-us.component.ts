@@ -39,9 +39,6 @@ export class ContactUsComponent implements OnInit {
         console.log(response)
         this.toastr.success(response.message, 'Success');  
       }
-      else{
-        this.toastr.warning('Email not verified ! Please Verify your Email', 'Warning');  
-      }
     }, (error) => {
       this.toastr.error((error.error['message']) ? error.error.message : error.error, 'Error');
       console.log(error);
