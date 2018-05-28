@@ -1,4 +1,4 @@
-<div class="main-container" [dir]="dir" [ngClass]="{'minisidebar': minisidebar, 'boxed': boxed, 'danger': danger, 'blue': blue, 'green': green, 'dark': dark, 'sidebar-opened': sidebarOpened, 'sidebar-closed': !sidebarOpened }">
+<div class="main-container" [dir]="dir">
   <mat-toolbar color="primary" class="topbar telative" style="background:#555682;">
       <div class="navbar-header">
           <a class="navbar-brand" href="">
@@ -10,7 +10,7 @@
       </div>
   </mat-toolbar>
   <mat-sidenav-content class="page-wrapper">
-      <perfect-scrollbar [config]="config">
+      <perfect-scrollbar>
           <div class="page-content">
             <div fxLayout="row" fxLayoutWrap="wrap">
                 <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">

@@ -37,6 +37,12 @@ mat-toolbar{
             }
         }
     }
+    .mat-nav-list{
+        padding-top: 0;
+    }
+    .mat-nav-list .mat-list-item{
+        height: 55px;
+    }
     
     .app-search{
         // display: none;

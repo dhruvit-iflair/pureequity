@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./terms-conditions.component.css']
 })
 export class TermsConditionsComponent implements OnInit {
-
+  dir;
   constructor() { }
 
   ngOnInit() {

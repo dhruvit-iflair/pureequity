@@ -29,6 +29,7 @@ require('./user_profile')(router);
 require('./user_documents')(router);
 require('./reset_password')(router);
 require('./bankdetails')(router);
+require('./history')(router);
 
 
 //All of the Schema Collected here

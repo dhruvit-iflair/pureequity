@@ -16,6 +16,8 @@ import { BuysellComponent } from './buysell/buysell.component';
 import { BankComponent } from './bank/bank.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
 import { UserGuard } from '../shared/guard/user.guard';
+import { DepositComponent } from './deposit/deposit.component';
+import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -101,7 +103,17 @@ export const DashboardsRoutes: Routes = [
       //     component:ChangePasswordComponent
       //   }
       // ]
-    }
+    },
+    {
+      path:'deposit',
+      canActivate:[UserGuard],      
+      component:DepositComponent
+    },
+    {
+      path:'withdrawal',
+      canActivate:[UserGuard],      
+      component:WithdrawalComponent
+    },
   ]
   },
   {
