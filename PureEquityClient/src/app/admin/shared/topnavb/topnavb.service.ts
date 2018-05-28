@@ -36,6 +36,11 @@ const navItems=[
     icon: 'money_off'
   },
   // {
+  //   state: 'reports',
+  //   title: 'Reports',
+  //   icon: 'cloud_download'
+  // },
+  // {
   //   state: 'dashboard',
   //   title: 'Contact Us',
   //   icon: 'hearing'

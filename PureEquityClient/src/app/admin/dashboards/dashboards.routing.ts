@@ -18,6 +18,7 @@ import { AdminGuard } from '../shared/guard/admin.guard';
 import { UserGuard } from '../shared/guard/user.guard';
 import { DepositComponent } from './deposit/deposit.component';
 import { WithdrawalComponent } from './withdrawal/withdrawal.component';
+import { ReportsComponent } from '../pages/reports/reports.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -114,6 +115,12 @@ export const DashboardsRoutes: Routes = [
       canActivate:[UserGuard],      
       component:WithdrawalComponent
     },
+    {
+      path:'reports',
+      canActivate:[UserGuard],      
+      component:ReportsComponent
+    },
+    
   ]
   },
   {
