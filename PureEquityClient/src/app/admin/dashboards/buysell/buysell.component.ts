@@ -185,15 +185,15 @@ export class BuysellComponent implements OnInit {
     this.saveHistory(this.history);
     var amountval = parseFloat(this.buysellForm.value.estimation).toFixed(6);
     var obj = { amount: parseFloat(amountval), price: this.bidprice };
-    this.http.post(environment.tradingApi + '/buy/btcusd', obj)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.toastr.success('Transactions Success');
-      }, (er) => {
-        var err = er.json();
-        console.log(err);
-        this.toastr.error(err.message, 'Error');
-      });
+    // this.http.post(environment.tradingApi + '/buy/btcusd', obj)
+    //   .subscribe((resp) => {
+    //     console.log(resp);
+    //     this.toastr.success('Transactions Success');
+    //   }, (er) => {
+    //     var err = er.json();
+    //     console.log(err);
+    //     this.toastr.error(err.message, 'Error');
+    //   });
   }
   sellbtc() {
     if (this.history && this.history.transactions) {
@@ -251,15 +251,15 @@ export class BuysellComponent implements OnInit {
     var amountval = parseFloat(this.sellForm.value.amount).toFixed(6);
     var obj = { amount: parseFloat(amountval), price: this.bidprice };
     //var obj={amount:this.buysellForm.value.amount,price:this.bidprice};
-    this.http.post(environment.tradingApi + '/sell/btcusd', obj)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.toastr.success('Transactions Success');
-      }, (er) => {
-        var err = er.json();
-        console.log(err);
-        this.toastr.error(err.message, 'Error');
-      });
+    // this.http.post(environment.tradingApi + '/sell/btcusd', obj)
+    //   .subscribe((resp) => {
+    //     console.log(resp);
+    //     this.toastr.success('Transactions Success');
+    //   }, (er) => {
+    //     var err = er.json();
+    //     console.log(err);
+    //     this.toastr.error(err.message, 'Error');
+    //   });
   }
   public initConfig(): void {
     this.payPalConfig = new PayPalConfig(PayPalIntegrationType.ClientSideREST, PayPalEnvironment.Sandbox, {
@@ -314,12 +314,14 @@ export class BuysellComponent implements OnInit {
     if (data['_id']) {
       this.http.put(environment.api + '/history/'+data._id,data).subscribe((res:any)=>{
         console.log(res);
+        this.history=res.json();
       },(error)=>{
         console.log(error);
       })
     } else {
       this.http.post(environment.api + '/history',data).subscribe((res:any)=>{
         console.log(res);
+        this.history=res.json();
       },(error)=>{
         console.log(error);
       })

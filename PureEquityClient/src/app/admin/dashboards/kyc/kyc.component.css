@@ -72,4 +72,5 @@ div.upload{
     height: 150px;
     border: dashed #8f90b7 2px;
     background-color: #efefff;
+    cursor: pointer;
 }
