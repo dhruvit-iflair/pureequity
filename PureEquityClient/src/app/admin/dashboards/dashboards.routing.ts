@@ -19,6 +19,7 @@ import { UserGuard } from '../shared/guard/user.guard';
 import { DepositComponent } from './deposit/deposit.component';
 import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 import { ReportsComponent } from '../pages/reports/reports.component';
+import { ReviewTransactionsComponent } from '../pages/review-transactions/review-transactions.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -120,7 +121,11 @@ export const DashboardsRoutes: Routes = [
       canActivate:[UserGuard],      
       component:ReportsComponent
     },
-    
+    {
+      path:'review-transactions',
+      canActivate:[UserGuard],      
+      component:ReviewTransactionsComponent
+    },
   ]
   },
   {

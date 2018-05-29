@@ -1,0 +1,71 @@
+<div fxFlex.gt-sm="40%" fxFlex="40">
+    <mat-card>
+        <mat-card-header class="bg-primary text-white">
+            <mat-card-title>Buy</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="text-align:center;">
+            <span>Available : {{availableBalanceBuy}}</span>
+            <form [formGroup]="marketOrderBuyForm">
+              <div fxLayout="row" fxLayoutWrap="wrap">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="I Want To Buy" [formControl]="marketOrderBuyForm.controls['amount']">
+                </mat-form-field>
+                <small *ngIf="marketOrderBuyForm.controls['amount'].hasError('required') && marketOrderBuyForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                    <h4 style="width: 50%;float: left;"> Sub-Total </h4>
+                    <h4 style="width: 50%;float: right;"> 0.00 USD </h4> 
+                </div>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                    <h4 style="width: 50%;float: left;"> Fees </h4>
+                    <h4 style="width: 50%;float: right;"> 0.00 USD </h4> 
+                </div>
+
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
+                    BUY BTC
+                  </button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+  </div>
+  <div fxFlex.gt-sm="40%" fxFlex="40">
+    <mat-card>
+        <mat-card-header class="bg-primary text-white">
+            <mat-card-title>Sell</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="text-align:center;">
+            <span>Available : {{availableBalanceSell}} </span>
+            <form [formGroup]="marketOrderSellForm">
+                <div fxLayout="row" fxLayoutWrap="wrap">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="I Want To Sell" [formControl]="marketOrderSellForm.controls['amount']">
+                  </mat-form-field>
+                  <small *ngIf="marketOrderSellForm.controls['amount'].hasError('required') && marketOrderSellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                      <h4 style="width: 50%;float: left;"> Sub-Total </h4>
+                      <h4 style="width: 50%;float: right;"> 0.00 USD </h4> 
+                  </div>
+                  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                      <h4 style="width: 50%;float: left;"> Fees </h4>
+                      <h4 style="width: 50%;float: right;"> 0.00 USD </h4> 
+                  </div>
+  
+                  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                    <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
+                      SELL BTC
+                    </button>
+                  </div>
+  
+                </div>
+              </form>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  </div>

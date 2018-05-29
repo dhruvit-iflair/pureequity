@@ -1,0 +1,71 @@
+<div fxFlex.gt-sm="40%" fxFlex="40">
+  <mat-card>
+      <mat-card-header class="bg-primary text-white">
+          <mat-card-title>Stop Buy</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div style="text-align:center;">
+          <span>Available : {{availableBalanceBuy}}</span>
+          <form [formGroup]="stopOrderBuyForm">
+            <div fxLayout="row" fxLayoutWrap="wrap">
+              <mat-form-field>
+                <input matInput type="number" placeholder="Available To Buy In USD" [formControl]="stopOrderBuyForm.controls['amount']">
+              </mat-form-field>
+              <small *ngIf="stopOrderBuyForm.controls['amount'].hasError('required') && stopOrderBuyForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+
+              <mat-form-field>
+                <input matInput type="number" placeholder="if Price Rise To" [formControl]="stopOrderBuyForm.controls['priceRice']">
+              </mat-form-field>
+
+              <!-- <mat-form-field> -->
+                  <mat-checkbox  [formControl]="stopOrderBuyForm.controls['trailing']">Trailing stop</mat-checkbox>
+              <!-- </mat-form-field> -->
+
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
+                  BUY BTC
+                </button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+</div>
+<div fxFlex.gt-sm="40%" fxFlex="40">
+  <mat-card>
+      <mat-card-header class="bg-primary text-white">
+          <mat-card-title>Stop Sell</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div style="text-align:center;">
+          <span>Available : {{availableBalanceSell}} </span>
+          <form [formGroup]="stopOrderSellForm">
+              <div fxLayout="row" fxLayoutWrap="wrap">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="Available To Sell In USD" [formControl]="stopOrderSellForm.controls['amount']">
+                </mat-form-field>
+                <small *ngIf="stopOrderSellForm.controls['amount'].hasError('required') && stopOrderSellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+  
+                <mat-form-field>
+                  <input matInput type="number" placeholder="if Price Falls To" [formControl]="stopOrderSellForm.controls['priceFalls']">
+                </mat-form-field>
+  
+                <!-- <mat-form-field> -->
+                    <mat-checkbox  [formControl]="stopOrderSellForm.controls['trailing']">Trailing stop</mat-checkbox>
+                <!-- </mat-form-field> -->
+  
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
+                    SELL BTC
+                  </button>
+                </div>
+
+              </div>
+            </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+</div>

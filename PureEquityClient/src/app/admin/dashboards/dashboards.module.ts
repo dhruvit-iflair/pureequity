@@ -32,6 +32,10 @@ import { BankComponent } from './bank/bank.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 import { ReportsComponent } from '../pages/reports/reports.component';
+import { ReviewTransactionsComponent } from '../pages/review-transactions/review-transactions.component';
+import { LimitOrderComponent } from './buysell/limit-order/limit-order.component';
+import { MarketOrderComponent } from './buysell/market-order/market-order.component';
+import { StopOrderComponent } from './buysell/stop-order/stop-order.component';
 
 @NgModule({
   imports: [
@@ -47,7 +51,7 @@ import { ReportsComponent } from '../pages/reports/reports.component';
     CKEditorModule,
     NgxPayPalModule
   ],
-  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent,QrotpverificationComponent, ChangePasswordComponent, MailerComponent, MaillistComponent, RolesComponent, RoleComponent, BuysellComponent, BankComponent, DepositComponent, WithdrawalComponent, ReportsComponent ],
+  declarations: [ Dashboard1Component, Dashboard2Component,KycComponent, KycadminComponent,KycAdminComponent, BankdetailsComponent,QrotpverificationComponent, ChangePasswordComponent, MailerComponent, MaillistComponent, RolesComponent, RoleComponent, BuysellComponent, BankComponent, DepositComponent, WithdrawalComponent, ReportsComponent, ReviewTransactionsComponent, LimitOrderComponent, MarketOrderComponent, StopOrderComponent ],
   providers:[
     DashboardService,
     LoginService

@@ -41,6 +41,11 @@ const navItems=[
   //   icon: 'cloud_download'
   // },
   // {
+  //   state: 'review-transactions',
+  //   title: 'Review Transactions',
+  //   icon: 'history'
+  // }
+  // {
   //   state: 'dashboard',
   //   title: 'Contact Us',
   //   icon: 'hearing'

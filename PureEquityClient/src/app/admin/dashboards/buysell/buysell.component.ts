@@ -44,6 +44,12 @@ export class BuysellComponent implements OnInit {
     { name: 'BCH / EUR', isActive: false, value: 'bcheur' , data: []},
     { name: 'BCH / BTC', isActive: false, value: 'bchbtc' , data: []}
   ];
+  public sideNave:any[] = [
+    { name: 'Instant Order (Simple)',isActive: true, },
+    { name: 'Limit Order (Advanced)',isActive: false, },
+    { name: 'Market Order (Advanced)',isActive: false, },
+    { name: 'Stop Order (Advanced)',isActive: false, }
+  ]
   ngOnInit() {
     this.buysellForm = this.fb.group({
       amount: [null, Validators.compose([Validators.required])],
@@ -294,6 +300,14 @@ export class BuysellComponent implements OnInit {
           });
           this.tradeList[i].isActive = !this.tradeList[i].isActive;
           this.tradeCoin = this.tradeList[i].name;
+      }
+  }
+  toggleSideMenu(i) {
+      if (!this.sideNave[i].isActive) {
+          this.sideNave.map(t=>{
+              t.isActive = false
+          });
+          this.sideNave[i].isActive = !this.sideNave[i].isActive;
       }
   }
   saveHistory(data){
