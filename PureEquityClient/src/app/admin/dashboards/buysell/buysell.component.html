@@ -1,124 +1,138 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
   <!-- column -->
-  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-      <mat-card>
-          <mat-card-content style="font-size: smaller; float: left; width: 100%; background:#fff; ">
-              <div class="row">
-                  <div
-                      *ngFor="let list of tradeList; let i = index"
-                      class="padding-10 {{(list.isActive)? 'active' : 'non-active'}}"
-                      (click)="toggleValue(i);">
-                      <label>
-                          {{list.name}}</label>
-                  </div>
-              </div>
-          </mat-card-content>
-      </mat-card>
-  </div>
+  <!-- <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100"> -->
+  <!-- <mat-card style="float: right; width: 70%;" >
+      <mat-card-content style="font-size: smaller; float: right; width: 70%; background:#fff; ">
+        <div class="row">
+          <div *ngFor="let list of tradeList; let i = index" class="padding-10 {{(list.isActive)? 'active' : 'non-active'}}" (click)="toggleValue(i);">
+            <label>
+              {{list.name}}</label>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card> -->
+  <!-- </div> -->
   <div fxFlex.gt-sm="100%" fxFlex="100">
     <div fxFlex.gt-sm="30%" fxFlex="30" style="height: 100%;">
-        <mat-card>
-            <mat-card-content>
-                <mat-nav-list class="list">
-                    <mat-list-item *ngFor="let list of sideNave; let i = index;">
-                        <a mat-list-item   class="{{(list.isActive)? 'mat-list-item active' : 'mat-list-item'}}" (click)='toggleSideMenu(i) '>{{ list.name }}
-                            <mat-icon>keyboard_arrow_right</mat-icon>
-                        </a>
-                    </mat-list-item>
-                </mat-nav-list>
-            </mat-card-content>
-        </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <mat-nav-list class="list">
+            <mat-list-item *ngFor="let list of sideNave; let i = index;">
+              <a mat-list-item class="{{(list.isActive)? 'mat-list-item active' : 'mat-list-item'}}" (click)='toggleSideMenu(i) '>{{ list.name }}</a>
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-card-content>
+      </mat-card>
     </div>
-    <div *ngIf="sideNave[0].isActive" style="justify-content: center;align-items: center;min-width: 100%; margin-left: -5% !important;">
-      <div fxFlex.gt-sm="40%" fxFlex="40">
-        <mat-card>
-            <mat-card-header class="bg-primary text-white">
-                <mat-card-title>Buy {{tradeCoin}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div style="text-align:center;">
-                <span>Available : {{availableBalanceBuy}}</span>
-                <form [formGroup]="buysellForm">
-                  <div fxLayout="row" fxLayoutWrap="wrap">
-                    <mat-form-field>
-                      <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" (ngModelChange)="estimation('true')">
-                    </mat-form-field>
-                    <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
-                    <mat-form-field>
-                      <input matInput type="text" placeholder="Subtotal:" [formControl]="buysellForm.controls['subtotal']" [readonly]="true">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput type="text" placeholder="Approx. BTC to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
-                    </mat-form-field>
-    
-                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                      <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="buybtc()">
-                        BUY {{tradeCoin}}
-                      </button>
+    <div fxFlex.gt-sm="70%" fxFlex="70">
+      <mat-card style="margin-bottom:2%;">
+        <mat-card-content style="font-size: smaller;">
+          <div class="row">
+            <div *ngFor="let list of tradeList; let i = index" class="padding-10 {{(list.isActive)? 'active' : 'non-active'}}" (click)="toggleValue(i);">
+              <label>
+                {{list.name}}</label>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content style="font-size: smaller; float: left; width: 100%; background:#fff; ">
+          <div class="row">
+            <div *ngIf="sideNave[0].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
+              <div fxFlex.gt-sm="45%" fxFlex="45">
+                <mat-card>
+                  <mat-card-header class="bg-primary text-white">
+                    <mat-card-title>Buy {{tradeCoin}}</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div style="text-align:center;">
+                      <span>Available : {{availableBalanceBuy}}</span>
+                      <form [formGroup]="buysellForm">
+                        <div fxLayout="row" fxLayoutWrap="wrap">
+                          <mat-form-field>
+                            <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" (ngModelChange)="estimation('true')">
+                          </mat-form-field>
+                          <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                          <mat-form-field>
+                            <input matInput type="text" placeholder="Subtotal:" [formControl]="buysellForm.controls['subtotal']" [readonly]="true">
+                          </mat-form-field>
+                          <mat-form-field>
+                            <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
+                          </mat-form-field>
+                          <mat-form-field>
+                            <input matInput type="text" placeholder="Approx. BTC to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
+                          </mat-form-field>
+
+                          <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="buybtc()">
+                              BUY {{tradeCoin}}
+                            </button>
+                          </div>
+
+                        </div>
+                      </form>
                     </div>
-    
-                  </div>
-                </form>
+
+                  </mat-card-content>
+                </mat-card>
               </div>
-    
-            </mat-card-content>
-          </mat-card>
-      </div>
-      <div fxFlex.gt-sm="8%" fxFlex="8" class="customizedCss">
-          <mat-card>
-            <mat-card-content style="background-color: #555581;color: #fff;padding-left: 16px; font-size: 30px;">
-              OR
-            </mat-card-content>
-          </mat-card>
-      </div>      
-      <div fxFlex.gt-sm="40%" fxFlex="40">
-        <mat-card>
-            <mat-card-header class="bg-primary text-white">
-                <mat-card-title>Sell {{tradeCoin}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div style="text-align:center;">
-                <span>Available : {{availableBalanceSell}}</span>
-                <form [formGroup]="sellForm">
-                  <div fxLayout="row" fxLayoutWrap="wrap">
-                    <mat-form-field>
-                      <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']" (ngModelChange)="estimation(false)">
-                    </mat-form-field>
-                    <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
-                    <mat-form-field>
-                      <input matInput type="text" placeholder="Subtotal:" [formControl]="sellForm.controls['subtotal']" [readonly]="true">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellForm.controls['fee']" [readonly]="true">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput type="text" placeholder="Approx. USD to Receive:" [formControl]="sellForm.controls['estimation']" [readonly]="true">
-                    </mat-form-field>
-    
-                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                      <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="sellbtc()">
-                        SELL {{tradeCoin}}
-                      </button>
+              <div fxFlex.gt-sm="11%" fxFlex="11" class="customizedCss">
+                <mat-card>
+                  <mat-card-content style="background-color: #555581;color: #fff;padding-left: 13px; font-size: 30px;">
+                    OR
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div fxFlex.gt-sm="45%" fxFlex="45">
+                <mat-card>
+                  <mat-card-header class="bg-primary text-white">
+                    <mat-card-title>Sell {{tradeCoin}}</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div style="text-align:center;">
+                      <span>Available : {{availableBalanceSell}}</span>
+                      <form [formGroup]="sellForm">
+                        <div fxLayout="row" fxLayoutWrap="wrap">
+                          <mat-form-field>
+                            <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']" (ngModelChange)="estimation(false)">
+                          </mat-form-field>
+                          <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                          <mat-form-field>
+                            <input matInput type="text" placeholder="Subtotal:" [formControl]="sellForm.controls['subtotal']" [readonly]="true">
+                          </mat-form-field>
+                          <mat-form-field>
+                            <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellForm.controls['fee']" [readonly]="true">
+                          </mat-form-field>
+                          <mat-form-field>
+                            <input matInput type="text" placeholder="Approx. USD to Receive:" [formControl]="sellForm.controls['estimation']" [readonly]="true">
+                          </mat-form-field>
+
+                          <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="sellbtc()">
+                              SELL {{tradeCoin}}
+                            </button>
+                          </div>
+
+                        </div>
+                      </form>
                     </div>
-    
-                  </div>
-                </form>
+                  </mat-card-content>
+                </mat-card>
               </div>
-            </mat-card-content>
-          </mat-card>
-      </div>
-    </div>
-    <div *ngIf="sideNave[1].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
-        <app-limit-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell' ></app-limit-order>
-    </div>
-    <div *ngIf="sideNave[2].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
-        <app-market-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell' ></app-market-order>
-    </div>
-    <div *ngIf="sideNave[3].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
-        <app-stop-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell' ></app-stop-order>
+            </div>
+            <div *ngIf="sideNave[1].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
+              <app-limit-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-limit-order>
+            </div>
+            <div *ngIf="sideNave[2].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
+              <app-market-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-market-order>
+            </div>
+            <div *ngIf="sideNave[3].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
+              <app-stop-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-stop-order>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
   <!-- <div fxFlex.gt-sm="100%" fxFlex="100">
@@ -182,7 +196,7 @@
       </div>
     </div> -->
 </div>
-  <!-- <div fxFlex.gt-sm="100%" fxFlex="100">
+<!-- <div fxFlex.gt-sm="100%" fxFlex="100">
     <div fxFlex.gt-sm="45%" fxFlex="45"></div>
     <ngx-paypal [config]="payPalConfig"></ngx-paypal>
     <div fxFlex.gt-sm="45%" fxFlex="45"></div>
