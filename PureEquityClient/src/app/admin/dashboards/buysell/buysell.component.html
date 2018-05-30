@@ -13,21 +13,21 @@
     </mat-card> -->
   <!-- </div> -->
   <div fxFlex.gt-sm="100%" fxFlex="100">
-    <div fxFlex.gt-sm="30%" fxFlex="30" style="height: 100%;">
-      <mat-card>
-        <mat-card-content>
+    <div fxFlex.gt-sm="25%" fxFlex="25" style="height: 100%;">
+      <mat-card style="height: inherit;">
+        <mat-card-content style="padding: 0;">
           <mat-nav-list class="list">
-            <mat-list-item *ngFor="let list of sideNave; let i = index;">
-              <a mat-list-item class="{{(list.isActive)? 'mat-list-item active' : 'mat-list-item'}}" (click)='toggleSideMenu(i) '>{{ list.name }}</a>
-              <mat-icon>keyboard_arrow_right</mat-icon>
+            <mat-list-item *ngFor="let list of sideNave; let i = index;" (click)='toggleSideMenu(i) '>
+              <a mat-list-item class="{{(list.isActive)? 'mat-list-item active' : 'mat-list-item'}}">{{ list.name }}</a>
+              <mat-icon class="{{(list.isActive)? 'mat-icon material-icons active' : 'mat-icon material-icons'}}" style="height: 48px;padding-top: 10px;">keyboard_arrow_right</mat-icon>
             </mat-list-item>
           </mat-nav-list>
         </mat-card-content>
       </mat-card>
     </div>
-    <div fxFlex.gt-sm="70%" fxFlex="70">
-      <mat-card style="margin-bottom:2%;">
-        <mat-card-content style="font-size: smaller;">
+    <div fxFlex.gt-sm="75%" fxFlex="75">
+      <mat-card style="margin-bottom:2%;float: right;">
+        <mat-card-content style="font-size: smaller;float: inherit;">
           <div class="row">
             <div *ngFor="let list of tradeList; let i = index" class="padding-10 {{(list.isActive)? 'active' : 'non-active'}}" (click)="toggleValue(i);">
               <label>
@@ -121,14 +121,14 @@
                 </mat-card>
               </div>
             </div>
-            <div *ngIf="sideNave[1].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
-              <app-limit-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-limit-order>
+            <div *ngIf="sideNave[1].isActive">
+              <app-limit-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-limit-order>
             </div>
-            <div *ngIf="sideNave[2].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
-              <app-market-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-market-order>
+            <div *ngIf="sideNave[2].isActive">
+              <app-market-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-market-order>
             </div>
-            <div *ngIf="sideNave[3].isActive" style="justify-content: center;align-items: center;min-width: 100%;">
-              <app-stop-order [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-stop-order>
+            <div *ngIf="sideNave[3].isActive">
+              <app-stop-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-stop-order>
             </div>
           </div>
         </mat-card-content>

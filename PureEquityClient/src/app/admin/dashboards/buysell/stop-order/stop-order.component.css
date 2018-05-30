@@ -1,3 +1,22 @@
 .mat-warn{
     background-color: #555682;
 }
+.customizedCss{
+    /* position: absolute;
+    left: 46%;
+    top: 10%;
+    background: #555682;
+    color:#ffffff;
+    border-radius: 50%; */
+    height: 100px;
+    /* position: absolute; */
+    left: 46%;
+    /* top: 10px; */
+    /* margin-top: 14%; */
+    background: #555682;
+    color: #ffffff;
+    border-radius: 50%;
+    z-index: 3;
+    flex: 1 !important;
+    width: 100px;
+}
