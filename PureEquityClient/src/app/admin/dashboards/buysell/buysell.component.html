@@ -1,3 +1,8 @@
+<style>
+  .mat-nav-list .mat-list-item .mat-list-item-content {
+    padding: 0 !important;
+}
+</style>
 <div fxLayout="row" fxLayoutWrap="wrap">
   <!-- column -->
   <!-- <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100"> -->
@@ -15,8 +20,8 @@
   <div fxFlex.gt-sm="100%" fxFlex="100">
     <div fxFlex.gt-sm="25%" fxFlex="25" style="height: 100%;">
       <mat-card style="height: inherit;">
-        <mat-card-content style="padding: 0;">
-          <mat-nav-list class="list">
+        <mat-card-content style="padding: 0;" class="pardada">
+          <mat-nav-list class="list" style="padding: 29px 10px 29px;">
             <mat-list-item *ngFor="let list of sideNave; let i = index;" (click)='toggleSideMenu(i) '>
               <a mat-list-item class="{{(list.isActive)? 'mat-list-item active' : 'mat-list-item'}}">{{ list.name }}</a>
               <mat-icon class="{{(list.isActive)? 'mat-icon material-icons active' : 'mat-icon material-icons'}}" style="height: 48px;padding-top: 10px;">keyboard_arrow_right</mat-icon>
