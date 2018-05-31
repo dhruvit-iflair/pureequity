@@ -69,9 +69,10 @@ export class ProfileComponent implements OnInit {
       var x = resp.json();
       this.detailsFormGroup.patchValue(x);
       this.detailsFormGroup.patchValue({ role: x.role._id });
+      this.profiledata = x.user_profile;
       this.provider.get(environment.api + '/user_profile/getbyuid/' + this.uid).subscribe((respd) => {
-        this.profiledata = respd.json();
         var y = respd.json();
+        this.profiledata = y[0];
         this.detailsFormGroup.patchValue({ user_profile: y[0] });
       });
     });
@@ -85,16 +86,16 @@ export class ProfileComponent implements OnInit {
     var cred = JSON.parse(localStorage.getItem('token'));
     // (this.detailsFormGroup.value.createdBy) ? this.detailsFormGroup.patchValue({ createdBy: cred.user._id }) : this.detailsFormGroup.patchValue({ updatedBy: cred.user._id, createdBy: cred.user._id });
     var data = this.detailsFormGroup.value;
-    data.user_profile._id = this.profiledata[0]._id;
+    data.user_profile._id = this.profiledata._id;
     this.userService.updateUserProfileDetails(data.user_profile).subscribe((res) => {
       console.log(res);
       var usrdata = this.detailsFormGroup.value;
-      usrdata.user_profile = this.profiledata[0]._id;
+      usrdata.user_profile = this.profiledata._id;
       this.userService.updateUserDetails(usrdata).subscribe((res) => {
         console.log(res);
-        this.toster.success('User Details has been updated', 'Success');
+        this.toster.success('Your Details has been updated', 'Success');
         this.userService.getAllUsers();
-        this.router.navigate(['/admin/users']);
+        this.router.navigate(['/']);
       }, (error) => {
         console.log(error);
         this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');

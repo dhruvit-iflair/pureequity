@@ -20,6 +20,8 @@ import { DepositComponent } from './deposit/deposit.component';
 import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 import { ReportsComponent } from '../pages/reports/reports.component';
 import { ReviewTransactionsComponent } from '../pages/review-transactions/review-transactions.component';
+import { UsersComponent } from '../pages/users/users/users.component';
+import { ProfileComponent } from '../pages/users/profile/profile.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -87,6 +89,22 @@ export const DashboardsRoutes: Routes = [
       {
         path:'security',
         component:QrotpverificationComponent,       
+      },
+      {
+        path:'users',
+        children:[
+          {
+            path: '',
+            component: UsersComponent
+          },
+          {
+            path: ':id',
+            component: ProfileComponent
+          },{
+            path: '**',
+            redirectTo: '404'
+          }
+        ],
       }
      ]
     },
@@ -126,6 +144,19 @@ export const DashboardsRoutes: Routes = [
       canActivate:[UserGuard],      
       component:ReviewTransactionsComponent
     },
+    {
+      path:'users',
+      canActivate:[UserGuard],      
+      children:[
+        {
+          path: ':id',
+          component: ProfileComponent
+        },{
+          path: '**',
+          redirectTo: '404'
+        }
+      ],
+    }
   ]
   },
   {
