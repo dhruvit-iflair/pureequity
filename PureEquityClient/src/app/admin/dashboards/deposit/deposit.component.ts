@@ -12,11 +12,13 @@ import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-payp
 })
 export class DepositComponent implements OnInit {
   public tokendata;
+  public transactions;
   constructor(private http: Http, private router: Router, private toastr: ToastrService) { }
   public payPalConfig: PayPalConfig;
   ngOnInit() {
     this.tokendata= JSON.parse(localStorage.getItem('token'));
     this.initConfig();
+    this.transaction();
   }
   public initConfig(): void {
     this.payPalConfig = new PayPalConfig(PayPalIntegrationType.ClientSideREST, PayPalEnvironment.Sandbox, {
@@ -66,5 +68,14 @@ export class DepositComponent implements OnInit {
         }
       }]
     });
+  }
+  transaction() {
+      this.http.get(environment.api +'/history/user/'+this.tokendata.user._id).subscribe((res:any) => {
+        var tran = res.json();
+        this.transactions = tran.transactions;
+        console.log(this.transactions);
+      },(err:any) => {
+        console.log(err);
+      })
   }
 }

@@ -73,6 +73,26 @@
                         <div fxLayout="row" fxLayoutWrap="wrap">
                             <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                                 <mat-tab-group>
+                                    <mat-tab label="Enable 2FA ">
+                                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                                            <button
+                                                mat-raised-button
+                                                color="warn"
+                                                class="btn-block btn-lg m-t-20 m-b-20"
+                                                (click)='isEnable = !isEnable' style="font-weight:bold;">
+                                                Enable 2FA Security
+                                            </button>
+                                        </div>
+                                    </mat-tab>
+                                    <mat-tab label="Features">
+                                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                                            <button
+                                                mat-raised-button
+                                                class="btn-block btn-lg m-t-20 m-b-20">
+                                                <a href="https://www.google.com/landing/2step/features.html" target="_blank">See features</a>
+                                            </button>
+                                        </div>
+                                    </mat-tab>
                                     <mat-tab label="Why you need it">
                                         <div class="text-wrap-1">
                                             <h3 class="super">
@@ -193,7 +213,7 @@
 
                             <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                                 <div fxLayout="row" fxLayoutWrap="wrap">
-                                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                                    <!-- <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                                         <button
                                             mat-raised-button
                                             color="warn"
@@ -208,7 +228,7 @@
                                             class="btn-block btn-lg m-t-20 m-b-20">
                                             <a href="https://www.google.com/landing/2step/features.html" target="_blank">See features</a>
                                         </button>
-                                    </div>
+                                    </div> -->
                                     <div fxLayout="row" fxLayoutWrap="wrap">
                                        <div class="text-center" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                                           <h4> Get Google Authentication App</h4>

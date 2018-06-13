@@ -10,3 +10,11 @@
         display: none;
     }
 }
+
+.no-padding > mat-dialog-container.mat-dialog-container {
+    padding: 0 !important;
+}
+.mat-dialog-container {
+    height: auto;
+    padding: 0;
+}

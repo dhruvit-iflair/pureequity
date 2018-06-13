@@ -16,6 +16,7 @@ export interface Saperator {
 export interface ChildrenItems {
   state: string;
   name: string;
+  icon: string;
   type?: string;
 }
 
@@ -29,18 +30,35 @@ export interface Menu {
   children?: ChildrenItems[];
 }
 
-const ADMINMENUITEMS = [
+const ADMINMENUITEMS : any = [
   {
     state: '/dashboard',
     name: 'Dashboard',
     type: 'link',
     icon: 'dashboard',
   },
+  // {
+  //   state: '/admin/users',
+  //   name: 'User Management',
+  //   type: 'link',
+  //   icon: 'av_timer',
+  // },
   {
-    state: '/admin/users',
     name: 'User Management',
-    type: 'link',
-    icon: 'av_timer',
+    type: 'sub',
+    icon: 'supervised_user_circle',
+    children: [
+      {
+        state: '/admin/users',
+        name: 'User Management',
+        icon: 'perm_identity',
+      },
+      {
+        state: '/admin/roles',
+        name: 'Role Management',
+        icon: 'extension'
+      }
+    ]
   },
   {
     state: '/admin/kyc',
@@ -66,12 +84,12 @@ const ADMINMENUITEMS = [
     type: 'link',
     icon: 'widgets',
   },
-  {
-    state: '/admin/roles',
-    name: 'Role Management',
-    type: 'link',
-    icon: 'extension',
-  }
+  // {
+  //   state: '/admin/roles',
+  //   name: 'Role Management',
+  //   type: 'link',
+  //   icon: 'extension',
+  // }
 ];
 const USERMENUITEMS = [
   {

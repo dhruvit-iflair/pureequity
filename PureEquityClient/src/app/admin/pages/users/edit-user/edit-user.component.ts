@@ -118,6 +118,10 @@ export class EditUserComponent implements OnInit {
       });
     }
   }
+  gotoKYC(){
+    this.cancel();
+    this.router.navigate(['/admin/kyc/'+ this.user._id]);
+  }
 }
 
 

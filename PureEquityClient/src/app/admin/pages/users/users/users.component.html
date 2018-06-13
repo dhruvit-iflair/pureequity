@@ -1,26 +1,31 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
+      <mat-card-header class="bg-primary text-white" style="height: 53px;">
+          <mat-card-title-group>
+              <mat-card-title fxLayout="row">
+                 User Management
+              </mat-card-title>
+          </mat-card-title-group>
+          <div fxFlex="fxFlex"></div>
+          <form class="app-search2">
+              <input type="text" class="form-control" placeholder="Search"  (keyup)="applyFilter($event.target.value)" >
+          </form>
+          <button mat-icon-button class="srh-btn2" style="margin-top: -5px;">
+              <mat-icon>search</mat-icon>
+          </button>
+          <!-- <mat-form-field style="width: 30%;margin: -15px;">  -->
+              <!-- <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" style="width: 30%; margin: -15px; background-color: white; height: 45px; margin-top: -8px; margin-right: -8px; border-radius: 5px; color: #555682;"> -->
+
+           <!-- </mat-form-field>           -->
+
+          <!-- <button mat-button color="primary" (click)='expandfilter()' style="color: #fff">
+              <mat-icon class="mat-icon material-icons" role="img">search</mat-icon>
+          </button> -->
+      </mat-card-header>
       <mat-card-content>
-        <mat-card-title>Users</mat-card-title>
-        <!-- <button mat-raised-button class='mat-top-right' color="primary">
-          <mat-icon>add</mat-icon>
-        </button> -->
-        <div class="bg-light p-10 p-r-20 p-l-20 searchfilter">
-          <mat-form-field id="searchfilter">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-          </mat-form-field>
-          <mat-icon matSuffix (click)="expandfilter()">search</mat-icon>
-        </div>
         <div class="table-rasponsive">
           <mat-table [dataSource]="dataSource" matSort>
-
-            <!-- # Column -->
-            <!-- <ng-container matColumnDef="no">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
-                    <mat-cell *matCellDef="let row;let idex = index"> {{ i + idex }} </mat-cell>
-                  </ng-container> -->
-
             <!-- Progress Column -->
             <ng-container matColumnDef="username">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>

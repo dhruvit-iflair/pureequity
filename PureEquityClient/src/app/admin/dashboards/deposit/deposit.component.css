@@ -1,0 +1,7 @@
+tr.sell > td:first-child {
+    color: red;
+}
+
+tr.buy > td:first-child {
+    color: green;
+}

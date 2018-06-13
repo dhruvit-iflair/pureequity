@@ -1,6 +1,6 @@
 <div>
     <div fxLayout="row" fxLayoutWrap="wrap" style="width: 86%;">
-      <div fxFlex.gt-sm="33%" fxFlex="33">
+      <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='isBankDescription'>
         <form [formGroup]="mainform">
           <div formArrayName="bankdetails" style="display: flex;">
             <div *ngFor="let address of mainform.controls.bankdetails.controls; let i=index; let isEdit;" style="min-width:400px">
@@ -13,19 +13,19 @@
                       </mat-card-title>
                     </mat-card-title-group>
                     <div fxFlex="fxFlex"></div>
-                    <button mat-fab color="primary" @card class="half-header" *ngIf="hasdetails && isEdit[i] && data.bankdetails[i]" (click)='removeForm(i, "bankdetails", "Removed Bank Details") ' >
+                    <button mat-fab color="warn" style="background-color: #f44336;" @card class="half-header" *ngIf="hasdetails && isEdit[i] && data.bankdetails[i]" (click)='removeForm(i, "bankdetails", "Removed Bank Details") ' >
                         <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                     </button>
-                    <button mat-fab color="primary" @card class="half-header" *ngIf="hasdetails && !isEdit[i] && data.bankdetails[i]" (click)='isEdit[i] = !isEdit[i]' >
+                    <button mat-fab color="primary" style="background-color:grey !important;" @card class="half-header" *ngIf="hasdetails && !isEdit[i] && data.bankdetails[i]" (click)='isEdit[i] = !isEdit[i]' >
                         <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
                     </button>
-                    <button mat-fab color="primary" @card class="half-header" *ngIf="hasdetails && !isEdit[i] && !data.bankdetails[i]" (click)='removeForm(i, "bankdetails", "Removed Bank Details") ' >
+                    <button mat-fab color="warn" style="background-color: #f44336;" @card class="half-header" *ngIf="hasdetails && !isEdit[i] && !data.bankdetails[i]" (click)='removeForm(i, "bankdetails", "Removed Bank Details") ' >
                         <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                     </button>
                   </mat-card-header>
                   <mat-card-content *ngIf="!hasdetails" style="text-align:center;">
                     <span> Details not found,add your bank details.</span>
-                    <button mat-fab color="warn" (click)="hasdetails=true;" style="background-color: #555682;margin-top:3%;">
+                    <button mat-fab color="warn" style="background-color: #f44336;" (click)="hasdetails=true;" style="background-color: #555682;margin-top:3%;">
                       <mat-icon>add</mat-icon>
                     </button>
                   </mat-card-content>
@@ -126,8 +126,35 @@
           </div>
         </form>
       </div>
+      <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='!isBankDescription'>
+          <mat-card @card>
+              <mat-card-header class="bg-primary text-white">
+                  <mat-card-title-group>
+                    <mat-card-title fxLayout="row">
+                      Bank Details
+                    </mat-card-title>
+                  </mat-card-title-group>
+              </mat-card-header>
+              <mat-card-content>
+                <div fxLayout="row" fxLayoutWrap="wrap">
+                  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. In dapibus augue non sapien. Etiam neque. Fusce consectetuer risus a nunc. Nunc dapibus tortor vel mi dapibus sollicitudin. In enim a arcu imperdiet malesuada. Donec quis nibh at felis congue commodo. Phasellus faucibus molestie nisl. Pellentesque arcu. Duis risus. Maecenas lorem. Fusce tellus. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat.</p>
+                  </div>
+                  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                      <button
+                          mat-raised-button
+                          color="warn"
+                          class="btn-block btn-lg m-t-20 m-b-20"
+                          (click)='isBankDescription = !isBankDescription' style="font-weight:bold;">
+                          Add Bank Details
+                      </button>
+                  </div>
+                </div>
+              </mat-card-content>
+          </mat-card>
+      </div>
     </div>
-    <div class="marubutton" *ngIf="hasdetails">
+    <div class="marubutton" *ngIf="hasdetails && isBankDescription">
       <button mat-fab color="warn" (click)="addNewForm('bankdetails')" style="background-color: #555682;">
         <mat-icon>add</mat-icon>
       </button>
@@ -136,7 +163,7 @@
 
     <div>
         <div fxLayout="row" fxLayoutWrap="wrap" style="width: 86%;">
-            <div fxFlex.gt-sm="33%" fxFlex="33">
+            <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='isCCDescription'>
               <form [formGroup]="mainform">
                 <div formArrayName="ccinfo" style="display: flex;">
                   <div *ngFor="let address of mainform.controls.ccinfo.controls; let i=index; let isccinfo;" style="min-width:400px">
@@ -149,19 +176,19 @@
                             </mat-card-title>
                           </mat-card-title-group>
                           <div fxFlex="fxFlex"></div>
-                          <button mat-fab color="primary" @card class="half-header" *ngIf="hasccdetails && isccinfo[i] && data.ccinfo[i]" (click)='removeForm(i, "ccinfo", "Removed Card Details")' >
+                          <button mat-fab color="warn" style="background-color: #f44336;" @card class="half-header" *ngIf="hasccdetails && isccinfo[i] && data.ccinfo[i]" (click)='removeForm(i, "ccinfo", "Removed Card Details")' >
                               <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                           </button>
-                          <button mat-fab color="primary" @card class="half-header" *ngIf="hasccdetails && !isccinfo[i] && data.ccinfo[i]" (click)='isccinfo[i] = !isccinfo[i]' >
+                          <button mat-fab color="primary" style="background-color:grey !important;" @card class="half-header" *ngIf="hasccdetails && !isccinfo[i] && data.ccinfo[i]" (click)='isccinfo[i] = !isccinfo[i]' >
                               <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
                           </button>
-                          <button mat-fab color="primary" @card class="half-header" *ngIf="hasccdetails && !isccinfo[i] && !data.ccinfo[i]" (click)='removeForm(i, "ccinfo", "Removed Card Details")' >
+                          <button mat-fab color="warn" style="background-color: #f44336;" @card class="half-header" *ngIf="hasccdetails && !isccinfo[i] && !data.ccinfo[i]" (click)='removeForm(i, "ccinfo", "Removed Card Details")' >
                               <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                           </button>
                         </mat-card-header>
                         <mat-card-content *ngIf="!hasccdetails" style="text-align:center;">
                           <span>  Details not found,add your card details..</span>
-                          <button mat-fab color="warn" (click)="hasccdetails=true;" style="background-color: #555682;margin-top:3%;">
+                          <button mat-fab color="warn" style="background-color: #f44336;" (click)="hasccdetails=true;" style="background-color: #555682;margin-top:3%;">
                             <mat-icon>add</mat-icon>
                           </button>
                         </mat-card-content>
@@ -171,7 +198,7 @@
                                       <input matInput="matInput" placeholder="Name on Credit Card" disabled value="{{data.ccinfo[i].ccname}}" required="required">
                                   </mat-form-field>
                                   <mat-form-field>
-                                      <input matInput="matInput" placeholder="Creadit Card Number" disabled value="{{data.ccinfo[i].ccnumber}}" required="required">
+                                      <input matInput="matInput" placeholder="Credit Card Number" disabled value="{{data.ccinfo[i].ccnumber}}" required="required">
                                   </mat-form-field>
                                   <mat-form-field style="max-width: 15%;">
                                       <mat-select placeholder="Month" name="expmonth" disabled value="{{data.ccinfo[i].expmonth}}">
@@ -242,8 +269,35 @@
                 </div>
               </form>
             </div>
+            <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='!isCCDescription'>
+                <mat-card @card>
+                    <mat-card-header class="bg-primary text-white">
+                        <mat-card-title-group>
+                          <mat-card-title fxLayout="row">
+                              Credit Card Details
+                          </mat-card-title>
+                        </mat-card-title-group>
+                    </mat-card-header>
+                    <mat-card-content>
+                      <div fxLayout="row" fxLayoutWrap="wrap">
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. In dapibus augue non sapien. Etiam neque. Fusce consectetuer risus a nunc. Nunc dapibus tortor vel mi dapibus sollicitudin. In enim a arcu imperdiet malesuada. Donec quis nibh at felis congue commodo. Phasellus faucibus molestie nisl. Pellentesque arcu. Duis risus. Maecenas lorem. Fusce tellus. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat.</p>                        
+                        </div>
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <button
+                                mat-raised-button
+                                color="warn"
+                                class="btn-block btn-lg m-t-20 m-b-20"
+                                (click)='isCCDescription = !isCCDescription' style="font-weight:bold;">
+                                Add Credit Card  Details
+                            </button>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>      
           </div>
-          <div class="marubutton1" *ngIf="hasccdetails">
+          <div class="marubutton1" *ngIf="hasccdetails && isCCDescription">
             <button mat-fab color="warn" (click)="addNewForm('ccinfo')" style="background-color: #555682;">
               <mat-icon>add</mat-icon>
             </button>
@@ -251,7 +305,7 @@
     </div>
     <div>
         <div fxLayout="row" fxLayoutWrap="wrap" style="width: 86%;">
-            <div fxFlex.gt-sm="33%" fxFlex="33">
+            <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='isPPDescription'>
               <form [formGroup]="mainform">
                 <div formArrayName="ppdetails" style="display: flex;">
                   <div *ngFor="let address of mainform.controls.ppdetails.controls; let i=index; let isppinfo;" style="min-width:400px">
@@ -270,19 +324,19 @@
                           <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails && !isppinfo[i]" (click)='isppinfo[i] = !isppinfo[i]' >
                               <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
                           </button> -->
-                          <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails && isppinfo[i] && data.ppdetails[i]" (click)='removeForm(i, "ppdetails", "Removed PayPal Details")' >
+                          <button mat-fab color="warn" style="background-color: #f44336;" @card class="half-header" *ngIf="hasppdetails && isppinfo[i] && data.ppdetails[i]" (click)='removeForm(i, "ppdetails", "Removed PayPal Details")' >
                               <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                           </button>
-                          <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails && !isppinfo[i] && data.ppdetails[i]" (click)='isppinfo[i] = !isppinfo[i]' >
+                          <button mat-fab color="primary" style="background-color:grey !important;" @card class="half-header" *ngIf="hasppdetails && !isppinfo[i] && data.ppdetails[i]" (click)='isppinfo[i] = !isppinfo[i]' >
                               <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
                           </button>
-                          <button mat-fab color="primary" @card class="half-header" *ngIf="hasppdetails && !isppinfo[i] && !data.ppdetails[i]" (click)='removeForm(i, "ppdetails", "Removed PayPal Details")' >
+                          <button mat-fab color="warn" style="background-color: #f44336;" @card class="half-header" *ngIf="hasppdetails && !isppinfo[i] && !data.ppdetails[i]" (click)='removeForm(i, "ppdetails", "Removed PayPal Details")' >
                               <mat-icon class="mat-icon material-icons" role="img">delete</mat-icon>
                           </button>
                       </mat-card-header>
                       <mat-card-content *ngIf="!hasppdetails" style="text-align:center;">
                         <span>  Details not found,add your PayPal details..</span>
-                        <button mat-fab color="warn" (click)="hasppdetails=true;" style="background-color: #555682;margin-top:3%;">
+                        <button mat-fab color="warn" style="background-color: #f44336;" (click)="hasppdetails=true;" style="background-color: #555682;margin-top:3%;">
                           <mat-icon>add</mat-icon>
                         </button>
                       </mat-card-content>
@@ -335,8 +389,35 @@
                 </div>
               </form>
             </div>
+            <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='!isPPDescription'>
+                <mat-card @card>
+                    <mat-card-header class="bg-primary text-white">
+                        <mat-card-title-group>
+                          <mat-card-title fxLayout="row">
+                              PayPal Details
+                          </mat-card-title>
+                        </mat-card-title-group>
+                    </mat-card-header>
+                    <mat-card-content>
+                      <div fxLayout="row" fxLayoutWrap="wrap" >
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. In dapibus augue non sapien. Etiam neque. Fusce consectetuer risus a nunc. Nunc dapibus tortor vel mi dapibus sollicitudin. In enim a arcu imperdiet malesuada. Donec quis nibh at felis congue commodo. Phasellus faucibus molestie nisl. Pellentesque arcu. Duis risus. Maecenas lorem. Fusce tellus. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat.</p>                        
+                        </div>
+                        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                            <button
+                                mat-raised-button
+                                color="warn"
+                                class="btn-block btn-lg m-t-20 m-b-20"
+                                (click)='isPPDescription = !isPPDescription' style="font-weight:bold;">
+                                Add PayPal Details
+                            </button>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>      
           </div>
-          <div class="marubutton2" *ngIf="hasppdetails">
+          <div class="marubutton2" *ngIf="hasppdetails && isPPDescription">
             <button mat-fab color="warn" (click)="addNewForm('ppdetails')" style="background-color: #555682;">
               <mat-icon>add</mat-icon>
             </button>

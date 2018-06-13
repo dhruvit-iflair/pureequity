@@ -28,6 +28,9 @@ export class UsersComponent {
   }
   ngOnInit() {
     this.userService.getAllUsers();
+    (<any>$(".srh-btn2")).on('click', function () {
+        (<any>$(".app-search2")).toggle(200);
+    });
   }
   pageEvent(event){
     // console.log(event)
@@ -51,7 +54,8 @@ export class UsersComponent {
     this.userService.getAUsers(user._id);
      let dialogRef = this.dialog.open(EditUserComponent,{
        data: user,
-       height:'600px'
+       height:'600px',
+       panelClass: 'no-padding'
      });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {
