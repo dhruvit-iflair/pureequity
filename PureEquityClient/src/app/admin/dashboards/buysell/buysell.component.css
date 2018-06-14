@@ -96,6 +96,3 @@ mat-icon.mat-icon.material-icons.active {
 mat-nav-list.list.mat-nav-list {
     padding-top: 0;
 }
-.mat-nav-list .mat-list-item .mat-list-item-content {
-    padding: 0 !important;
-}
