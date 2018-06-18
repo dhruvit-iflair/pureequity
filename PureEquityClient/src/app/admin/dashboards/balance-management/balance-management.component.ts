@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BalanceManagementComponent implements OnInit {
   displayedColumns = ['account', 'transaction_type', 'fees', 'rate', 'value', 'amount', 'time'];
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<any[]>;
   public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 
   public i :Number = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -23,7 +23,21 @@ export class BalanceManagementComponent implements OnInit {
       this.http.get(environment.api + '/history').subscribe((res:any)=>{
           var d = res.json();
           if (d.length && d[0].transactions) {
-            var transactions = d[0].transactions;
+            var transactions = [];
+            d.forEach(data => {
+              data.transactions.forEach(tr => {
+                transactions.push({
+                  'account' : tr.account ,
+                  'transaction_type' : tr.transaction_type.toString().toUpperCase() ,
+                  'fees' : tr.fees.amount ,
+                  'rate' : tr.rate.amount  ,
+                  'value' : tr.value.amount ,
+                  'amount' : tr.amount.amount  ,
+                  'time' : tr.time  ,
+                  'user': data.user
+                })
+              });
+            });
             this.dataSource = new MatTableDataSource(transactions);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
