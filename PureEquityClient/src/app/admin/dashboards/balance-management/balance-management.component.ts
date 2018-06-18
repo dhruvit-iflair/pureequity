@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { environment } from '../../../../environments/environment';
-import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog} from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-balance-management',
@@ -11,14 +10,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BalanceManagementComponent implements OnInit {
   displayedColumns = ['account', 'transaction_type', 'fees', 'rate', 'value', 'amount', 'time'];
-  dataSource: MatTableDataSource<any[]>;
-  public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 
-  public i :Number = 0;
+  // dataSource : any;
+  dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public http:Http) { }
-
+  
+  setPagnitionSort() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   ngOnInit() {
       this.http.get(environment.api + '/history').subscribe((res:any)=>{
           var d = res.json();
@@ -38,22 +40,19 @@ export class BalanceManagementComponent implements OnInit {
                 })
               });
             });
-            this.dataSource = new MatTableDataSource(transactions);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+            this.dataSource = new MatTableDataSource<any>(transactions);
+            this.setPagnitionSort();
           }
       },(error)=>{
         console.log(error);
       });
+      (<any>$(".srh-btn2")).on('click', function () {
+          (<any>$(".app-search2")).toggle(200);
+      });
   }
-  pageEvent(event){
-    // console.log(event)
-    event = this.page;
-    this.i = event.pageIndex * event.pageSize;
-  };
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 }
