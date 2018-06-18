@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class MarketOrderComponent implements OnInit {
   @Input() availableBalanceBuy:any;
   @Input() availableBalanceSell:any;
+  @Input() tradeCoin:any;
+
   public marketOrderBuyForm : FormGroup;
   public marketOrderSellForm : FormGroup;
 

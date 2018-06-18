@@ -10,8 +10,11 @@ import { Observable } from 'rxjs/Observable';
 export class UsersService {
   private users = new Subject<User[]>();
   private user = new Subject<User>();
+  private usersDoc = new Subject<any[]>();
   private editUser = new Subject<User>();
-  constructor(private http: HttpClient, private toster: ToastrService) { }
+  constructor(private http: HttpClient, private toster: ToastrService) { 
+    this.userdocs();
+  }
 
   getAllUsers() {
     this.http.get(environment.api + '/users').subscribe((res: User[]) => {
@@ -20,6 +23,7 @@ export class UsersService {
       // console.log(error);
       this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
     });
+    this.userdocs();
   }
   getUsers(): Observable<User[]> {
     return this.users.asObservable();
@@ -66,5 +70,13 @@ export class UsersService {
   }
   changePassword(data:any) {
     if(data._id) return this.http.put(environment.api + '/change_password/' +data._id, data)
+  }
+  userdocs(){
+    this.http.get(environment.api + '/userdocs/').subscribe((res:any)=>{
+        this.usersDoc.next(res);
+    });
+  }
+  getKYC(): Observable<any[]>{
+    return this.usersDoc.asObservable();
   }
 }

@@ -1,8 +1,7 @@
 import { Component, ViewChild,OnInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog} from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { DeleteComponent } from '../../shared/dialogs/delete/delete.component';
 import { Http } from "@angular/http";
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { environment } from "../../../../environments/environment"
 import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
@@ -25,7 +24,19 @@ export class KycadminComponent implements OnInit {
   ngOnInit() {
     this.http.get(environment.api + '/userdocs/').subscribe((res)=>{
       var x=res.json();
-      this.dataSource = new MatTableDataSource(x);
+      var dante = [];
+      x.forEach(ent => {
+        dante.push({
+          '_id' :  ent._id,
+          'firstName' : ent.user.firstName,
+          'lastName' :  ent.user.lastName,
+          'idType' :  ent.idType,
+          'issueCountry' :  ent.issueCountry,
+          'isApproved' :  ent.isApproved,
+          "user":ent.user
+        })
+      });
+      this.dataSource = new MatTableDataSource(dante);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -51,7 +62,8 @@ export class KycadminComponent implements OnInit {
           this.http.delete(environment.api + '/userdocs/'+row._id)
           .subscribe((res)=>{
             this.tstr.success('KYC Deleted Successfully','Success');
-            this.router.navigate(['/admin/kyc']).then(()=>{this.router.navigate(['/admin/kycadmin'])});
+            // this.router.navigate(['/admin/kyc']).then(()=>{this.router.navigate(['/admin/kycadmin'])});
+            this.ngOnInit();
           });
         }
     });

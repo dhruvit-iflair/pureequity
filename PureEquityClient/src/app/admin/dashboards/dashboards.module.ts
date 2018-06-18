@@ -52,6 +52,8 @@ import { PersonalDetailsComponent } from "../pages/users/edit-user/user-personal
 import { UserDetailsComponent } from "../pages/users/edit-user/user-details/user-details.component";
 import { UserPersonalDetailsComponent } from "../pages/users/edit-user/user-personal-details/user-personal-details.component";
 import { ProfileComponent } from "../pages/users/profile/profile.component";
+import { BalanceManagementComponent } from './balance-management/balance-management.component';
+import { UsersService } from "../shared/services/users.service";
 
 @NgModule({
   imports: [
@@ -97,9 +99,10 @@ import { ProfileComponent } from "../pages/users/profile/profile.component";
     PersonalDetailsComponent,
     UserDetailsComponent,
     UserPersonalDetailsComponent,
-    ProfileComponent
+    ProfileComponent,
+    BalanceManagementComponent
   ],
-  providers: [DashboardService, LoginService],
+  providers: [DashboardService, LoginService, UsersService],
   entryComponents:[EditUserComponent,ProfileComponent]
 })
 export class DashboardsModule {}

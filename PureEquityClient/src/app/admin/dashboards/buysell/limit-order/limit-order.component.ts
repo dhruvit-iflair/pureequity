@@ -11,7 +11,8 @@ export class LimitOrderComponent implements OnInit {
   public limitOrderSellForm : FormGroup;
   @Input() availableBalanceBuy:any;
   @Input() availableBalanceSell:any;
-
+  @Input() tradeCoin:any;
+  
   constructor(public fb:FormBuilder) { }
 
   ngOnInit() {
@@ -26,3 +27,4 @@ export class LimitOrderComponent implements OnInit {
   }
 
 }
+

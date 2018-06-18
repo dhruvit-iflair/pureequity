@@ -51,6 +51,9 @@
                 <button mat-icon-button color="primary" (click)="edit(row);">
                   <mat-icon>create</mat-icon>
                 </button>
+                <button mat-icon-button color="accent" routerLink='/admin/users/transactions/{{row._id}}'>
+                  <mat-icon>credit_card</mat-icon>
+                </button>
                 <button mat-icon-button color="warn" (click)="delete(row)">
                   <mat-icon>delete</mat-icon>
                 </button>

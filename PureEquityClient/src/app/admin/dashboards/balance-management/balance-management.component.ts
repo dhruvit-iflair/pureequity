@@ -5,11 +5,11 @@ import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog} from '
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-review-transactions',
-  templateUrl: './review-transactions.component.html',
-  styleUrls: ['./review-transactions.component.css']
+  selector: 'app-balance-management',
+  templateUrl: './balance-management.component.html',
+  styleUrls: ['./balance-management.component.css']
 })
-export class ReviewTransactionsComponent implements OnInit {
+export class BalanceManagementComponent implements OnInit {
   displayedColumns = ['account', 'transaction_type', 'fees', 'rate', 'value', 'amount', 'time'];
   dataSource: MatTableDataSource<any>;
   public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 
@@ -17,28 +17,20 @@ export class ReviewTransactionsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public http:Http, private acRoute: ActivatedRoute) { }
+  constructor(public http:Http) { }
 
   ngOnInit() {
-    this.acRoute.params.subscribe((params) => {
-      if (params && params.id) {
-          var id = params.id;
-      } 
-      else {
-          var usr = JSON.parse(localStorage.getItem('token'));
-          var id = usr.user._id;
-      }
-      this.http.get(environment.api + '/history/user/'+id).subscribe((res:any)=>{
+      this.http.get(environment.api + '/history').subscribe((res:any)=>{
           var d = res.json();
-          if (d && d.transactions) {
-            this.dataSource = new MatTableDataSource(d.transactions);
+          if (d.length && d[0].transactions) {
+            var transactions = d[0].transactions;
+            this.dataSource = new MatTableDataSource(transactions);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
       },(error)=>{
         console.log(error);
-      })  
-    });
+      });
   }
   pageEvent(event){
     // console.log(event)

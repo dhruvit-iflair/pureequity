@@ -73,6 +73,12 @@ const ADMINMENUITEMS : any = [
   //   icon: 'no_encryption',
   // },
   {
+    state: '/admin/balance-management',
+    name: 'Balance Management',
+    type: 'link',
+    icon: 'swap_vertical_circle',
+  },
+  {
     state: '/admin/security',
     name: 'Security',
     type: 'link',
