@@ -23,12 +23,14 @@ export class RolesComponent implements OnInit {
   constructor(public dialog: MatDialog,public http:Http, public router:Router,public tstr:ToastrService) { }
 
   ngOnInit() {
-    this.http.get(environment.api + '/role/')
-    .subscribe((res)=>{
+    this.http.get(environment.api + '/role/').subscribe((res)=>{
       var x=res.json();
       this.dataSource = new MatTableDataSource(x);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    });
+    (<any>$(".srh-btn2")).on('click', function () {
+        (<any>$(".app-search2")).toggle(200);
     });
   }
   pageEvent(event){

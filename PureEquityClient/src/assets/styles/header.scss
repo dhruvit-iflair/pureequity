@@ -101,3 +101,14 @@ mat-toolbar{
   flex: 1 0 auto;
 }
 
+
+.app-search2 {
+    display: none;
+    width: 30%;
+    .form-control {
+        border-radius: 5px;
+        color: #555682;
+        line-height: 20px; 
+        margin-top: -5px;
+    }
+}

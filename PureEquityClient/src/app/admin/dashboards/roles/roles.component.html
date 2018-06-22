@@ -1,11 +1,29 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
+        <mat-card-header class="bg-primary text-white" style="height: 55px;">
+            <mat-card-title-group>
+                <mat-card-title fxLayout="row">
+                    Roles Management
+                </mat-card-title>
+            </mat-card-title-group>
+            <!-- <div fxFlex="fxFlex"></div>
+            <button mat-fab color="primary" (click)="create()" style="float: right;top:10px;">
+              <mat-icon>add</mat-icon>
+            </button> -->
+            <div fxFlex="fxFlex"></div>
+            <form class="app-search2">
+                <input type="text" class="form-control" placeholder="Search"  (keyup)="applyFilter($event.target.value)" >
+            </form>
+            <button mat-icon-button class="srh-btn2" style="margin-top: -5px;">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-card-header>
       <mat-card-content>
-        <mat-card-title>Roles</mat-card-title>
-        <button mat-fab color="warn" (click)="create()" style="background-color: #555682;float: right;top: -40px;">
+        <!-- <mat-card-title>Roles</mat-card-title> -->
+        <!-- <button mat-fab color="warn" (click)="create()" style="background-color: #555682;float: right;top: -40px;">
           <mat-icon>add</mat-icon>
-        </button>
+        </button> -->
         <div class="table-rasponsive">
           <mat-table [dataSource]="dataSource" matSort>
 

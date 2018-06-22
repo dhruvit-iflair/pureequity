@@ -39,6 +39,7 @@ export class KycAdminComponent implements OnInit {
   isEdit = false;
   isAdmin = true;
   deletedscandoc = [];
+  params_id:String;
   idType = ['Passport', 'Driving License', 'Identity Card'];
   constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private acRoute: ActivatedRoute, private router: Router, private http: Http, private toastr: ToastrService) { }
 
@@ -67,6 +68,7 @@ export class KycAdminComponent implements OnInit {
   }
   getInitialData() {
     this.acRoute.params.subscribe((params) => {
+      this.params_id = params.id;
       this.http.get(environment.api + '/userdocs/byuid/' + params.id)
         .subscribe((res) => {
           var gotcha = res.json();
@@ -119,7 +121,7 @@ export class KycAdminComponent implements OnInit {
   }
   finalsubmittion() {
     var obj = {
-      user: this.user._id,
+      user: this.user._id || this.params_id,
       idType: this.firstFormGroup.value.idtype,
       idNumber: this.firstFormGroup.value.cardnumber,
       scandoc: this.uploadedimgs,

@@ -27,3 +27,6 @@
     border-radius: 50%;
     flex-shrink: 0;
 }
+.no-padding > mat-dialog-container.mat-dialog-container {
+    padding: 0 !important;
+}
