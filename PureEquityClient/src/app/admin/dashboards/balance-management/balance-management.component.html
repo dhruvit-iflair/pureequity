@@ -1,0 +1,75 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+      <mat-card>
+        <mat-card-header class="bg-primary text-white">
+            <mat-card-title-group>
+                <mat-card-title fxLayout="row">
+                    Balance Management
+                </mat-card-title>
+            </mat-card-title-group>
+            <div fxFlex="fxFlex"></div>
+            <form class="app-search2">
+                <input type="text" class="form-control" placeholder="Search"  (keyup)="applyFilter($event.target.value)" >
+            </form>
+            <button mat-icon-button class="srh-btn2" style="margin-top: -5px;">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-table #table [dataSource]="dataSource" matSort>
+          
+              <!-- Account Column -->
+              <ng-container matColumnDef="account">
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Account </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.account}} </mat-cell>
+              </ng-container>
+          
+              <!-- Type Column -->
+              <ng-container matColumnDef="transaction_type">
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Type </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="{{element.transaction_type }} mat-cell cdk-column-fees mat-column-fees"> {{element.transaction_type}} </mat-cell>
+              </ng-container>
+          
+              <!-- Fees Column -->
+              <ng-container matColumnDef="fees">
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Fees </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.fees}} </mat-cell>
+              </ng-container>
+          
+              <!-- Rate Column -->
+              <ng-container matColumnDef="rate">
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Rate </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.rate}} </mat-cell>
+              </ng-container>
+
+              <!-- Value Column -->
+              <ng-container matColumnDef="value">
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Value </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.value}} </mat-cell>
+              </ng-container>
+
+              <!-- Ammount Column -->
+              <ng-container matColumnDef="amount">
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Amount </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+              </ng-container>  
+
+              <!-- Time Column -->
+              <ng-container matColumnDef="time">
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Time </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.time | date:'short'}} </mat-cell>
+              </ng-container>  
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          
+            <mat-paginator #paginator
+                           [pageSize]="5"
+                           [pageSizeOptions]="[5, 10, 20]">
+            </mat-paginator>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  

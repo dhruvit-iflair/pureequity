@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { environment } from '../../../../environments/environment';
-import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog} from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog,MatDialogRef} from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-review-transactions',
@@ -16,26 +17,44 @@ export class ReviewTransactionsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public http:Http) { }
+  constructor(public http:Http, private acRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    var token = JSON.parse(localStorage.getItem('token'));
-    this.http.get(environment.api + '/history/user/'+token.user._id).subscribe((res:any)=>{
-      var d = res.json();
-      if (d && d.transactions) {
-        this.dataSource = new MatTableDataSource(d.transactions);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    this.acRoute.params.subscribe((params) => {
+      var id;
+      if (params && params.id) {
+         id = params.id;
+      } 
+      else if(localStorage.getItem('trnId')){
+         id=localStorage.getItem('trnId');
       }
-    },(error)=>{
-      console.log(error);
-    })
+      else {
+          var usr = JSON.parse(localStorage.getItem('token'));
+           id = usr.user._id;
+      }
+      this.http.get(environment.api + '/history/user/'+id).subscribe((res:any)=>{
+          var d = res.json();
+          if (d && d.transactions) {
+            this.dataSource = new MatTableDataSource(d.transactions);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }
+      },(error)=>{
+        console.log(error);
+      })  
+    });
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(localStorage.getItem('trnId'))
+    localStorage.removeItem('trnId');
   }
   pageEvent(event){
     // console.log(event)
     event = this.page;
     this.i = event.pageIndex * event.pageSize;
-  };
+  }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();

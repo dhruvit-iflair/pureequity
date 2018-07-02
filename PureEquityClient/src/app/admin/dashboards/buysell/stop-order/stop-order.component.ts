@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class StopOrderComponent implements OnInit {
   @Input() availableBalanceBuy:any;
   @Input() availableBalanceSell:any;
+  @Input() tradeCoin:any;
+
   public stopOrderBuyForm : FormGroup;
   public stopOrderSellForm : FormGroup;
 

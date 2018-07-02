@@ -37,6 +37,12 @@
               <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
               <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
             </ng-container>
+            
+            <!-- Created On Column -->
+            <ng-container matColumnDef="created_at">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Created On </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.created_at | date:'short'}} </mat-cell>
+            </ng-container>
 
             <!-- Action Column -->
             <ng-container matColumnDef="action">

@@ -22,6 +22,7 @@ import { ReportsComponent } from '../pages/reports/reports.component';
 import { ReviewTransactionsComponent } from '../pages/review-transactions/review-transactions.component';
 import { UsersComponent } from '../pages/users/users/users.component';
 import { ProfileComponent } from '../pages/users/profile/profile.component';
+import { BalanceManagementComponent } from './balance-management/balance-management.component';
 
 export const DashboardsRoutes: Routes = [
  { 
@@ -91,11 +92,19 @@ export const DashboardsRoutes: Routes = [
         component:QrotpverificationComponent,       
       },
       {
+        path:'balance-management',
+        component:BalanceManagementComponent,       
+      },
+      {
         path:'users',
         children:[
           {
             path: '',
             component: UsersComponent
+          },
+          {
+            path:'transactions/:id',
+            component:ReviewTransactionsComponent
           },
           {
             path: ':id',

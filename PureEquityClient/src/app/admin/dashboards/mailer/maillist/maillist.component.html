@@ -27,6 +27,10 @@
               <mat-cell *matCellDef="let row"> {{row.subject}} </mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="created_at">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Created On </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.created_at | date:'short'}} </mat-cell>
+            </ng-container>
             <!-- Action Column -->
             <ng-container matColumnDef="action">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>

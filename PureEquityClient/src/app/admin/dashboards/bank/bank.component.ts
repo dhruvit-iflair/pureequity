@@ -26,6 +26,7 @@ export class BankComponent implements OnInit {
   mainform: any;
   isagreed = false;
   public isbankdetails = false;
+  isBankDescription;isCCDescription;isPPDescription;
   // public isccinfo = false;
   // public isppdetails = false;
   resp;

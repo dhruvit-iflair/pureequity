@@ -61,12 +61,12 @@
                             <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
                           </mat-form-field>
                           <mat-form-field>
-                            <input matInput type="text" placeholder="Approx. BTC to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
+                            <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(0, 3)}} to Receive:" [formControl]="buysellForm.controls['estimation']" [readonly]="true">
                           </mat-form-field>
 
                           <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="buybtc()">
-                              BUY {{tradeCoin}}
+                              BUY {{tradeCoin.slice(0, 3)}}
                             </button>
                           </div>
 
@@ -105,12 +105,12 @@
                             <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellForm.controls['fee']" [readonly]="true">
                           </mat-form-field>
                           <mat-form-field>
-                            <input matInput type="text" placeholder="Approx. USD to Receive:" [formControl]="sellForm.controls['estimation']" [readonly]="true">
+                            <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(5, 9)}} to Receive:" [formControl]="sellForm.controls['estimation']" [readonly]="true">
                           </mat-form-field>
 
                           <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="sellbtc()">
-                              SELL {{tradeCoin}}
+                              SELL {{tradeCoin.slice(5, 9)}}
                             </button>
                           </div>
 
@@ -122,13 +122,13 @@
               </div>
             </div>
             <div *ngIf="sideNave[1].isActive">
-              <app-limit-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-limit-order>
+              <app-limit-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell' [tradeCoin]='tradeCoin'></app-limit-order>
             </div>
             <div *ngIf="sideNave[2].isActive">
-              <app-market-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-market-order>
+              <app-market-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell' [tradeCoin]='tradeCoin'></app-market-order>
             </div>
             <div *ngIf="sideNave[3].isActive">
-              <app-stop-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell'></app-stop-order>
+              <app-stop-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy' [availableBalanceSell]='availableBalanceSell' [tradeCoin]='tradeCoin'></app-stop-order>
             </div>
           </div>
         </mat-card-content>

@@ -3,6 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog} from '
 import { User } from '../../../shared/interfaces/user.interface';
 import { UsersService } from '../../../shared/services/users.service';
 import { DeleteComponent } from '../../../shared/dialogs/delete/delete.component';
+import { ReviewTransactionsComponent } from '../../review-transactions/review-transactions.component';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { Router } from '@angular/router';
 
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent {
-  displayedColumns = ['username', 'firstName', 'lastName', 'action']
+  displayedColumns = ['username', 'firstName', 'lastName','created_at', 'action']
   dataSource: MatTableDataSource<User>;
   public i :Number = 0;x=false;
   public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 
@@ -50,6 +51,21 @@ export class UsersComponent {
       document.getElementById('searchfilter').setAttribute('style', 'width: 0%;');
     }
   }
+
+  transactions(user:User){
+    localStorage.setItem('trnId',user._id.toString());
+    let dialogRef = this.dialog.open(ReviewTransactionsComponent,{
+      height:'600px',
+      width: '-webkit-fill-available',
+      panelClass: 'no-padding'
+    });
+   dialogRef.afterClosed().subscribe(result => {
+       if (result) {
+         console.log(result);
+       }
+   });
+  }
+
   edit(user:User){
     this.userService.getAUsers(user._id);
      let dialogRef = this.dialog.open(EditUserComponent,{

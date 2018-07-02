@@ -13,7 +13,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
   styleUrls: ['./maillist.component.css']
 })
 export class MaillistComponent implements OnInit {
-  displayedColumns = ['title', 'subject', 'action']
+  displayedColumns = ['title', 'subject','created_at', 'action']
   dataSource: MatTableDataSource<any>;
   public i :Number = 0;
   public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 

@@ -2,24 +2,24 @@
   <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
       <mat-card-header class="bg-primary text-white" style="height: 53px;">
-          <mat-card-title-group>
-              <mat-card-title fxLayout="row">
-                 User Management
-              </mat-card-title>
-          </mat-card-title-group>
-          <div fxFlex="fxFlex"></div>
-          <form class="app-search2">
-              <input type="text" class="form-control" placeholder="Search"  (keyup)="applyFilter($event.target.value)" >
-          </form>
-          <button mat-icon-button class="srh-btn2" style="margin-top: -5px;">
-              <mat-icon>search</mat-icon>
-          </button>
-          <!-- <mat-form-field style="width: 30%;margin: -15px;">  -->
-              <!-- <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" style="width: 30%; margin: -15px; background-color: white; height: 45px; margin-top: -8px; margin-right: -8px; border-radius: 5px; color: #555682;"> -->
+        <mat-card-title-group>
+          <mat-card-title fxLayout="row">
+            User Management
+          </mat-card-title>
+        </mat-card-title-group>
+        <div fxFlex="fxFlex"></div>
+        <form class="app-search2">
+          <input type="text" class="form-control" placeholder="Search" (keyup)="applyFilter($event.target.value)">
+        </form>
+        <button mat-icon-button class="srh-btn2" style="margin-top: -5px;">
+          <mat-icon>search</mat-icon>
+        </button>
+        <!-- <mat-form-field style="width: 30%;margin: -15px;">  -->
+        <!-- <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" style="width: 30%; margin: -15px; background-color: white; height: 45px; margin-top: -8px; margin-right: -8px; border-radius: 5px; color: #555682;"> -->
 
-           <!-- </mat-form-field>           -->
+        <!-- </mat-form-field>           -->
 
-          <!-- <button mat-button color="primary" (click)='expandfilter()' style="color: #fff">
+        <!-- <button mat-button color="primary" (click)='expandfilter()' style="color: #fff">
               <mat-icon class="mat-icon material-icons" role="img">search</mat-icon>
           </button> -->
       </mat-card-header>
@@ -44,12 +44,22 @@
               <mat-cell *matCellDef="let row"> {{row.lastName}} </mat-cell>
             </ng-container>
 
+            <!-- Created On Column -->
+            <ng-container matColumnDef="created_at">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Created On </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.created_at | date:'short'}} </mat-cell>
+            </ng-container>
+
             <!-- Action Column -->
             <ng-container matColumnDef="action">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
               <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
                 <button mat-icon-button color="primary" (click)="edit(row);">
                   <mat-icon>create</mat-icon>
+                </button>
+                <!-- routerLink='/admin/users/transactions/{{row._id}}' /  (click)="transactions(row);" -->
+                <button mat-icon-button color="accent" (click)="transactions(row);">
+                  <mat-icon>credit_card</mat-icon>
                 </button>
                 <button mat-icon-button color="warn" (click)="delete(row)">
                   <mat-icon>delete</mat-icon>

@@ -1,9 +1,20 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
   <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
+      <mat-card-header class="bg-primary text-white">
+          <mat-card-title-group>
+              <mat-card-title fxLayout="row">
+                  Transactions
+              </mat-card-title>
+          </mat-card-title-group>
+          <div fxFlex="fxFlex"></div>
+          <!-- <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();">
+              <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
+          </button> -->
+      </mat-card-header>
       <mat-card-content>
-        <mat-card-title>Review Transactions</mat-card-title>
-        <mat-table [dataSource]="dataSource" matSort>
+        <!-- <mat-card-title>Review Transactions</mat-card-title> -->
+        <mat-table [dataSource]="dataSource" matSort *ngIf='dataSource'>
 
           <!-- <ng-container matColumnDef="_id" style="display: none;">
             <mat-header-cell *matHeaderCellDef> _id </mat-header-cell>
@@ -17,7 +28,7 @@
         
           <ng-container matColumnDef="transaction_type">
             <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.transaction_type}} </mat-cell>
+            <mat-cell *matCellDef="let element" class="{{element.transaction_type }} mat-cell cdk-column-fees mat-column-fees"> {{element.transaction_type | uppercase}} </mat-cell>
           </ng-container>
         
           <ng-container matColumnDef="fees">
@@ -48,7 +59,10 @@
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
          </mat-table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event);"></mat-paginator>
+        <mat-paginator *ngIf='dataSource' [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event);"></mat-paginator>
+        <div class="table-rasponsive" *ngIf='!dataSource'>
+            <h3>No transactions found</h3>
+          </div>
       </mat-card-content>
     </mat-card>
   </div>

@@ -19,7 +19,7 @@ export class BuysellComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: Http, private router: Router, private toastr: ToastrService) { }
   availableBalanceBuy;availableBalanceSell; pureequityfee = '0.25%';
   enablesellcontainer = false; enablebuycontainer = false;
-  bidprice:any; 
+  bidprice:any; chipsValue;
   availBalance:any; 
   orderbook:any;
   estimate:any;
@@ -98,6 +98,21 @@ export class BuysellComponent implements OnInit {
         console.log(err);
       });
   }
+  setBalance(coinval){
+    this.http.get(environment.tradingApi + '/balance/'+coinval)
+    .subscribe((resp) => {
+      this.availBalance = resp.json();
+      var key1= Object.keys(this.availBalance.payload.data)[0];
+      var key2= Object.keys(this.availBalance.payload.data)[4];
+      var lbl1=key1.split('_');
+      var lbl2=key2.split('_');
+      this.availableBalanceBuy =  this.availBalance.payload.data[key1] + ' ' + lbl1[0].toUpperCase();
+      this.availableBalanceSell=  this.availBalance.payload.data[key2] + ' ' + lbl2[0].toUpperCase();
+    }, (er) => {
+      var err = er.json();
+      console.log(err);
+    });
+  }
   enablebuybtc() {
     this.enablesellcontainer = false;
     this.enablebuycontainer = true;
@@ -109,7 +124,8 @@ export class BuysellComponent implements OnInit {
     // this.availableBalance = this.availBalance.payload.data.btc_available + ' BTC';
   }
   estimation(enablebuycontainer) {
-    this.http.get(environment.tradingApi + '/coins/btcusd').subscribe((data) => {
+    this.http.get(environment.tradingApi + '/coins/'+this.chipsValue).subscribe((data) => {
+      debugger;
       var respdata = data.json();
       this.bidprice = parseFloat(respdata.payload.data.bid);
       this.estimate = respdata.payload.data;
@@ -181,7 +197,6 @@ export class BuysellComponent implements OnInit {
         user: token.user._id
       }
     }
-    console.log(this.history);
     this.saveHistory(this.history);
     var amountval = parseFloat(this.buysellForm.value.estimation).toFixed(6);
     var obj = { amount: parseFloat(amountval), price: this.bidprice };
@@ -300,6 +315,8 @@ export class BuysellComponent implements OnInit {
           });
           this.tradeList[i].isActive = !this.tradeList[i].isActive;
           this.tradeCoin = this.tradeList[i].name;
+          this.chipsValue=this.tradeList[i].value;
+          this.setBalance(this.chipsValue);
       }
   }
   toggleSideMenu(i) {
