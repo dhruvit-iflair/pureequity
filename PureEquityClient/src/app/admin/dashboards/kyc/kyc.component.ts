@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, state } from '@angular/core';
 import { Http } from "@angular/http";
-import { DateAdapter, MatDialog } from '@angular/material';
+import { DateAdapter, MatDialog, MatSnackBar } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { environment } from "../../../../environments/environment"
@@ -33,7 +33,7 @@ export class KycComponent implements OnInit {
   countries = require('./countries.json');
   idType = ['Passport', 'Driving License', 'Identity Card'];
   public deletedscandoc: Array <any>= [];
-  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private router: Router, private http: Http, private toastr: ToastrService) { }
+  constructor(private _formBuilder: FormBuilder,private snakebar:MatSnackBar, public dialog: MatDialog, private router: Router, private http: Http, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('token'));
@@ -136,20 +136,24 @@ export class KycComponent implements OnInit {
           this.http.post(environment.api + '/userdocs/', obj)
             .subscribe((resp: any) => {
               var x = resp.json();
-              this.toastr.success('KYC Filled Successfully', 'Success');
+              this.snakebar.open('KYC Filled Successfully','',{duration: 5000});
+              // this.toastr.success('KYC Filled Successfully', 'Success');
               this.router.navigate(['/dashboard']);
             }, (er) => {
-              this.toastr.error('Internal Server Error.', 'Error');
+              this.snakebar.open('Internal Server Error.','',{duration: 5000});
+              // this.toastr.error('Internal Server Error.', 'Error');
             });
         }
         else {
           this.http.put(environment.api + '/userdocs/' + this.uid, obj)
             .subscribe((resp: any) => {
               var x = resp.json();
-              this.toastr.success('KYC Updated Successfully', 'Success');
+              this.snakebar.open('KYC Updated Successfully','',{duration: 5000});
+              // this.toastr.success('KYC Updated Successfully', 'Success');
               this.router.navigate(['/dashboard']);
             }, (er) => {
-              this.toastr.error('Internal Server Error.', 'Error');
+              // this.toastr.error('Internal Server Error.', 'Error');
+              this.snakebar.open('Internal Server Error.','',{duration: 5000});              
             });
         }
       }

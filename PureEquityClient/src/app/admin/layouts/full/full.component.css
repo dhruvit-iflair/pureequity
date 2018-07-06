@@ -1,7 +1,9 @@
 .responsivelogo{
     display: none;
 }
-
+.dark-logo, .light-logo, .originallogo{
+    width: 225px;
+}
 @media(max-width:640px){
     .responsivelogo{
         display: block;

@@ -13,3 +13,6 @@
     height: 90px;
     position: relative;
 }
+.mat-card .mat-card-content{
+    padding: 0;
+}

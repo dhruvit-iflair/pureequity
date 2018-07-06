@@ -24,7 +24,7 @@ mat-sidenav {
         
         .mat-list-item-content{
             display: block;
-            padding: 0px 15px;
+            padding: 0;//padding: 0px 15px;
             &:hover{
                 background: none;
                 > a{

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
-import { DateAdapter, MatDialog } from '@angular/material';
+import { DateAdapter, MatDialog, MatSnackBar } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
@@ -47,6 +47,7 @@ export class BankComponent implements OnInit {
                 public dialog: MatDialog,
                 private router: Router,
                 private http: Http,
+                private snakebar:MatSnackBar,
                 private toastr: ToastrService,
                 private bankService: BankdetailsService) {
       this.token = JSON.parse(localStorage.getItem('token'));
@@ -134,7 +135,8 @@ export class BankComponent implements OnInit {
       const control = <FormArray>this.mainform.controls[key];
       control.push(this.initForm(key));
     } else {
-      this.toastr.warning('Please fill up all the required fields', 'Warning');
+      this.snakebar.open('Please fill up all the required fields','',{duration: 5000});
+      // this.toastr.warning('Please fill up all the required fields', 'Warning');
     }
   }
   addStartUpForm(key) {
@@ -152,7 +154,8 @@ export class BankComponent implements OnInit {
         obj.updated_at = Date.now();
         if (this.resp && this.resp._id) {
           this.http.put(environment.api + '/bankdetails/' + this.resp._id, obj).subscribe((res) => {
-            this.toastr.success(message, 'Success');
+            // this.toastr.success(message, 'Success');
+            this.snakebar.open(message,'',{duration: 5000});
             this.router.navigate(['/security']).then(() => {
               this.router.navigate(['/bank']);
             });
@@ -162,7 +165,8 @@ export class BankComponent implements OnInit {
         } else {
           this.http.post(environment.api + '/bankdetails', obj).subscribe((res) => {
             console.log(res);
-            this.toastr.success(message, 'Success');
+            // this.toastr.success(message, 'Success');
+            this.snakebar.open(message,'',{duration: 5000});
             this.router.navigate(['/security']).then(() => {
               this.router.navigate(['/bank']);
             });
@@ -171,7 +175,8 @@ export class BankComponent implements OnInit {
           });
         }
     } else {
-      this.toastr.warning('Please fill up all the required fields', 'Warning');
+      this.snakebar.open('Please fill up all the required fields','',{duration: 5000});
+      // this.toastr.warning('Please fill up all the required fields', 'Warning');
     }
   }
   removeForm(i, key, message) {

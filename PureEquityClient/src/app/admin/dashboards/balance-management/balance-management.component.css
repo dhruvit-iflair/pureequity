@@ -10,3 +10,6 @@ mat-cell.BUY.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-i
 mat-cell.SELL.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-inserted {
     color: red;
 }
+.mat-card .mat-card-content{
+    padding: 0;
+}

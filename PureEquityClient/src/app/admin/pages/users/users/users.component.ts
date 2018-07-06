@@ -55,9 +55,9 @@ export class UsersComponent {
   transactions(user:User){
     localStorage.setItem('trnId',user._id.toString());
     let dialogRef = this.dialog.open(ReviewTransactionsComponent,{
-      height:'600px',
+      height:'auto',
       width: '-webkit-fill-available',
-      panelClass: 'no-padding'
+      panelClass: 'setup'
     });
    dialogRef.afterClosed().subscribe(result => {
        if (result) {
@@ -70,8 +70,8 @@ export class UsersComponent {
     this.userService.getAUsers(user._id);
      let dialogRef = this.dialog.open(EditUserComponent,{
        data: user,
-       height:'600px',
-       panelClass: 'no-padding'
+       height:'auto',
+       panelClass: 'setup'
      });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {
@@ -90,6 +90,7 @@ export class UsersComponent {
   delete(user:User){
     let dialogRef = this.dialog.open(DeleteComponent,{
       data: { title: 'Delete?', content: 'Are you sure to delete ' + user.username + ' ?', class:'warn' },
+      panelClass:'setupchecker'
     });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {

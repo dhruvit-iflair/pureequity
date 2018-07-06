@@ -1,11 +1,10 @@
-
 <!-- ============================================================== -->
 <!-- Simple four boxes Row -->
 <!-- ============================================================== -->
 <div fxLayout="row" fxLayoutWrap="wrap">
-        <!-- column -->    
-        <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
-          <mat-card>
+    <!-- column -->
+    <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+        <mat-card>
             <mat-card-content>
                 <!-- Row -->
                 <div class="d-flex no-block">
@@ -14,21 +13,22 @@
                         <button mat-fab mat-card-icon class="shadow-none bg-inverse  bg-success">
                             <mat-icon>account_circle</mat-icon>
                         </button>
-                    </div> 
+                    </div>
                     <!-- column -->
                     <div>
+                        <h3 class="m-0">Users</h3>
                         <h3 class="m-0">{{timer.hours}}</h3>
                         <h6 class="text-muted m-0">Hours</h6>
-                    </div> 
-                    
-                </div>      
+                    </div>
+
+                </div>
             </mat-card-content>
-          </mat-card>
-        </div>
-        <!-- column -->
-        <!-- column -->    
-        <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
-          <mat-card>
+        </mat-card>
+    </div>
+    <!-- column -->
+    <!-- column -->
+    <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+        <mat-card>
             <mat-card-content>
                 <!-- Row -->
                 <div class="d-flex no-block">
@@ -37,21 +37,22 @@
                         <button mat-fab color="warn" mat-card-icon class="shadow-none  bg-warning">
                             <mat-icon>local_mall</mat-icon>
                         </button>
-                    </div> 
+                    </div>
                     <!-- column -->
                     <div>
+                        <h3 class="m-0">Transactions</h3>
                         <h3 class="m-0">{{timer.minutes}}</h3>
                         <h6 class="text-muted m-0">Minutes</h6>
-                    </div> 
-                    
-                </div>      
+                    </div>
+
+                </div>
             </mat-card-content>
-          </mat-card>
-        </div>
-        <!-- column --> 
-        <!-- column -->    
-        <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
-          <mat-card>
+        </mat-card>
+    </div>
+    <!-- column -->
+    <!-- column -->
+    <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+        <mat-card>
             <mat-card-content>
                 <!-- Row -->
                 <div class="d-flex no-block">
@@ -63,18 +64,19 @@
                     </div>
                     <!-- column -->
                     <div>
+                        <h3 class="m-0">Withdrawls</h3>
                         <h3 class="m-0">{{timer.seconds}}</h3>
                         <h6 class="text-muted m-0">Seconds</h6>
-                    </div> 
-                     
-                </div>      
+                    </div>
+
+                </div>
             </mat-card-content>
-          </mat-card>
-        </div>
-        <!-- column --> 
-        <!-- column -->    
-        <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
-          <mat-card>
+        </mat-card>
+    </div>
+    <!-- column -->
+    <!-- column -->
+    <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+        <mat-card>
             <mat-card-content>
                 <!-- Row -->
                 <div class="d-flex no-block">
@@ -83,20 +85,79 @@
                         <button mat-fab color="warn" mat-card-icon class="shadow-none bg-danger">
                             <mat-icon>content_paste</mat-icon>
                         </button>
-                    </div> 
+                    </div>
                     <!-- column -->
                     <div>
+                        <h3 class="m-0">Deposits</h3>
                         <h3 class="m-0">{{timer.micros}}</h3>
                         <h6 class="text-muted m-0">Milliseconds</h6>
-                    </div> 
-                    
-                </div>      
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <!-- column -->     
-      </div>
+                    </div>
 
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- column -->
+</div>
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+        <mat-card class="bg-purple">
+            <mat-card-content>
+                <!-- column -->
+                <div class="d-flex p-t-20 p-b-20 no-block align-items-center">
+                    <div class="stats">
+                        <h3 class="text-white m-0">Product Profit</h3>
+                        <h1 class="text-white m-0">37%</h1>
+                    </div>
+                    <div class="spark-count ml-auto"></div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+        <mat-card class="bg-purple">
+            <mat-card-content>
+                <!-- column -->
+                <div class="d-flex p-t-20 p-b-20 no-block align-items-center">
+                    <div class="stats">
+                        <h3 class="text-white m-0">Total Orders</h3>
+                        <h1 class="text-white m-0">15%</h1>
+                    </div>
+                    <div class="spark-count ml-auto"></div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+        <mat-card class="bg-purple">
+            <mat-card-content>
+                <!-- column -->
+                <div class="d-flex p-t-20 p-b-20 no-block align-items-center">
+                    <div class="stats">
+                        <h3 class="text-white m-0">Refunds</h3>
+                        <h1 class="text-white m-0">-7%</h1>
+                    </div>
+                    <div class="spark-count ml-auto"></div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+        <mat-card class="bg-purple">
+            <mat-card-content>
+                <!-- column -->
+                <div class="d-flex p-t-20 p-b-20 no-block align-items-center">
+                    <div class="stats">
+                        <h3 class="text-white m-0">Customers</h3>
+                        <h1 class="text-white m-0">13%</h1>
+                    </div>
+                    <div class="spark-count ml-auto"></div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
 <!-- Actual Dashboard Layout -->
 <div fxLayout="row" fxLayoutWrap="wrap">
     <!-- column -->
@@ -104,10 +165,7 @@
         <mat-card>
             <mat-card-content style="font-size: smaller; float: left; width: 100%; background:#fff; ">
                 <div class="row">
-                    <div
-                        *ngFor="let list of tradeList; let i = index"
-                        class="padding-10 {{(list.isActive)? 'active' : 'non-active'}}"
-                        (click)="toggleValue(i);">
+                    <div *ngFor="let list of tradeList; let i = index" class="padding-10 {{(list.isActive)? 'active' : 'non-active'}}" (click)="toggleValue(i);">
                         <label>
                             {{list.name}}</label>
                     </div>
@@ -144,17 +202,16 @@
     <!-- Column-->
     <div fxFlex.gt-lg="40" fxFlex.gt-md="35" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
-                <mat-card-header class="bg-primary text-white">
-                        <mat-card-title>Latest Transaction </mat-card-title>
-                        <mat-card-subtitle>{{tradeCoin}}</mat-card-subtitle>
-                    </mat-card-header>
+            <mat-card-header class="bg-primary text-white">
+                <mat-card-title>Latest Transaction </mat-card-title>
+                <mat-card-subtitle>{{tradeCoin}}</mat-card-subtitle>
+            </mat-card-header>
             <mat-card-content>
                 <!-- <mat-card-title>{{tradeCoin}} -->
                 <!-- </mat-card-title> -->
                 <!-- <mat-card-subtitle>{{trade | json}}</mat-card-subtitle> -->
                 <div class="table-25">
-                    <table
-                        style="width: 100%; text-align: left; padding: 0 0 0 0; margin-bottom: 0;">
+                    <table style="width: 100%; text-align: left; padding: 0 0 0 0; margin-bottom: 0;">
                         <thead>
                             <tr>
                                 <th>Amount</th>
@@ -162,9 +219,7 @@
                                 <th>Time</th>
                             </tr>
                         </thead>
-                        <tbody
-                            *ngFor="let list of tradeList; let i = index"
-                            class="{{(list.isActive)? 'acitve' : 'inactive'}}">
+                        <tbody *ngFor="let list of tradeList; let i = index" class="{{(list.isActive)? 'acitve' : 'inactive'}}">
                             <tr *ngFor="let t of list.data">
                                 <td *ngIf="list.isActive && t.amount"> {{t.amount}}</td>
                                 <td *ngIf="list.isActive && t.price" style="color:green;"> {{t.price}}</td>

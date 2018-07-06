@@ -14,8 +14,25 @@ export class ReviewTransactionsComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 
   public i :Number = 0;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
+  private paginator: MatPaginator;
+  private sort: MatSort;
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   constructor(public http:Http, private acRoute: ActivatedRoute) { }
 
@@ -36,8 +53,8 @@ export class ReviewTransactionsComponent implements OnInit {
           var d = res.json();
           if (d && d.transactions) {
             this.dataSource = new MatTableDataSource(d.transactions);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+            // this.dataSource.paginator = this.paginator;
+            // this.dataSource.sort = this.sort;
           }
       },(error)=>{
         console.log(error);

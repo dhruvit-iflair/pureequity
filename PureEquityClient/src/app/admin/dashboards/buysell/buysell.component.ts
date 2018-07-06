@@ -19,7 +19,7 @@ export class BuysellComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: Http, private router: Router, private toastr: ToastrService) { }
   availableBalanceBuy;availableBalanceSell; pureequityfee = '0.25%';
   enablesellcontainer = false; enablebuycontainer = false;
-  bidprice:any; chipsValue;
+  bidprice:any; chipsValue='btcusd';
   availBalance:any; 
   orderbook:any;
   estimate:any;
@@ -125,22 +125,24 @@ export class BuysellComponent implements OnInit {
   }
   estimation(enablebuycontainer) {
     this.http.get(environment.tradingApi + '/coins/'+this.chipsValue).subscribe((data) => {
-      debugger;
       var respdata = data.json();
       this.bidprice = parseFloat(respdata.payload.data.bid);
-      this.estimate = respdata.payload.data;
+      // this.estimate = respdata.payload.data;
+      console.log(this.bidprice);
       if (enablebuycontainer) {
-        var subtotal = parseFloat(this.buysellForm.value.amount) - parseFloat(this.pureequityfee);
-        var estbtc = subtotal / respdata.payload.data.ask;
-        this.fees = this.buysellForm.value.amount - subtotal;
-        this.buysellForm.patchValue({ subtotal: subtotal + ' USD', estimation: estbtc });
+        var tempval= parseFloat(this.pureequityfee)/100;
+        var subtotal = parseFloat(this.buysellForm.value.amount) - tempval;
+        var estbtc = subtotal / this.bidprice;
+        //this.fees = this.buysellForm.value.amount - subtotal;
+        this.buysellForm.patchValue({ subtotal: subtotal , estimation: estbtc });
       }
       else {
-        var subtotl = parseFloat(this.sellForm.value.amount) * parseFloat(respdata.payload.data.ask);
-        var deductableusd = subtotl * parseFloat(this.pureequityfee) / 100;
-        var estusd = subtotl - deductableusd;
-        this.fees = deductableusd;        
-        this.sellForm.patchValue({ subtotal: subtotl + ' USD', estimation: estusd });
+        //var tempval= parseFloat(this.pureequityfee)/100;
+        var subtotl = parseFloat(this.sellForm.value.amount) ;
+        //var deductableusd = subtotl * parseFloat(this.pureequityfee) / 100;
+        var estusd = subtotl / this.bidprice;
+        //this.fees = deductableusd;        
+        this.sellForm.patchValue({ subtotal: subtotl , estimation: estusd });
       }
     });
   }
@@ -200,6 +202,7 @@ export class BuysellComponent implements OnInit {
     this.saveHistory(this.history);
     var amountval = parseFloat(this.buysellForm.value.estimation).toFixed(6);
     var obj = { amount: parseFloat(amountval), price: this.bidprice };
+    console.log(obj);
     // this.http.post(environment.tradingApi + '/buy/btcusd', obj)
     //   .subscribe((resp) => {
     //     console.log(resp);
@@ -265,6 +268,7 @@ export class BuysellComponent implements OnInit {
     this.saveHistory(this.history);
     var amountval = parseFloat(this.sellForm.value.amount).toFixed(6);
     var obj = { amount: parseFloat(amountval), price: this.bidprice };
+    console.log(obj);
     //var obj={amount:this.buysellForm.value.amount,price:this.bidprice};
     // this.http.post(environment.tradingApi + '/sell/btcusd', obj)
     //   .subscribe((resp) => {
