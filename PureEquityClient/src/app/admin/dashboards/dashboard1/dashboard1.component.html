@@ -100,7 +100,7 @@
     <!-- column -->
 </div>
 
-<div fxLayout="row" fxLayoutWrap="wrap">
+<div fxLayout="row" fxLayoutWrap="wrap" *ngIf="hasPermission">
     <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
         <mat-card class="bg-purple">
             <mat-card-content>
@@ -180,7 +180,7 @@
 <!-- ============================================================== -->
 <div fxLayout="row" fxLayoutWrap="wrap">
     <!-- Column-->
-    <div fxFlex.gt-lg="60" fxFlex.gt-md="65" fxFlex.gt-xs="100" fxFlex="100">
+    <div fxFlex.gt-lg="60" fxFlex.gt-md="65" fxFlex.gt-xs="60" fxFlex="100">
         <mat-card>
             <mat-card-content id="chart-card-content">
                 <!-- <mat-card-title>Sales Overview</mat-card-title> -->
@@ -200,7 +200,7 @@
         </mat-card>
     </div>
     <!-- Column-->
-    <div fxFlex.gt-lg="40" fxFlex.gt-md="35" fxFlex.gt-xs="100" fxFlex="100">
+    <div fxFlex.gt-lg="40" fxFlex.gt-md="35" fxFlex.gt-xs="40" fxFlex="100">
         <mat-card>
             <mat-card-header class="bg-primary text-white">
                 <mat-card-title>Latest Transaction </mat-card-title>

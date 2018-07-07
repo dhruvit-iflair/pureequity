@@ -44,7 +44,7 @@
             <mat-icon>search</mat-icon>
         </button>
         <form class="app-search">
-            <input type="text" class="form-control" style="border-radius:20px;line-height: 20px;" placeholder="Search &amp; enter">
+            <input type="text" class="form-control" style="border-radius:20px;line-height: 20px;" placeholder="Search &amp; Enter">
             <a class="cl-srh-btn">
                 <i class="ti-close"></i>
             </a>
@@ -68,7 +68,7 @@
     <!-- ============================================================== -->
     <!-- Manual Topbar - style you can find in header.scss -->
     <!-- ============================================================== -->
-    <mat-toolbar *ngIf="!isAdmin" color="primary" class="topbar telative manualLiner" id="mNav" style="background:white;">
+    <mat-toolbar *ngIf="!isAdmin" color="primary" class="topbar telative manualLiner" id="mNav" style="background:white;justify-content: center;">
         <mat-nav-list *ngFor="let item of navItems" routerLinkActive="selected">
             <mat-list-item>
                 <a class="" [routerLink]="['/', item.state]">

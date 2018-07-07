@@ -66,12 +66,21 @@
 <!-- ============================================================== -->
 <!-- Profile - style you can find in header.scss -->
 <!-- ============================================================== -->
-<button mat-icon-button (click)="fullscr();">
+<!-- <button mat-icon-button (click)="fullscr();">
     <mat-icon>fullscreen</mat-icon>
+</button> -->
+<button mat-icon-button [matMenuTriggerFor]="flager">
+    <mat-icon>flags</mat-icon>
 </button>
-<button mat-icon-button>
-    <mat-icon>apps</mat-icon>
-</button>
+<mat-menu #flager="matMenu" class="mymegamenu">
+    <button mat-menu-item>
+        <mat-icon>flags</mat-icon> English </button>
+    <button mat-menu-item>
+        <mat-icon>flags</mat-icon> French </button>
+    <button mat-menu-item>
+        <mat-icon>flags</mat-icon> Arabic </button>
+</mat-menu>
+
 <button mat-icon-button [matMenuTriggerFor]="notifications">
     <mat-icon>notifications</mat-icon>
 </button>
@@ -80,9 +89,9 @@
     <button mat-menu-item>
         <img src="assets/images/users/default.png" alt="user" style="height:25px;width:25px;margin-right:5%;">Ashley messaged you </button>
     <button mat-menu-item>
-            <img src="assets/images/users/default.png" alt="user" style="height:25px;width:25px;margin-right:5%;"> Lobo messaged you </button>
+        <img src="assets/images/users/default.png" alt="user" style="height:25px;width:25px;margin-right:5%;"> Lobo messaged you </button>
     <button mat-menu-item>
-            <img src="assets/images/users/default.png" alt="user" style="height:25px;width:25px;margin-right:5%;"> Jane commented on your post </button>
+        <img src="assets/images/users/default.png" alt="user" style="height:25px;width:25px;margin-right:5%;"> Jane commented on your post </button>
 </mat-menu>
 <!-- ahiya nu maru -->
 <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">

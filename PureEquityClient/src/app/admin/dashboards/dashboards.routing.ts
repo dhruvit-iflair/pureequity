@@ -55,7 +55,12 @@ export const DashboardsRoutes: Routes = [
     {
       path:'admin',
       canActivate:[AdminGuard],
-      children:[ {
+      children:[
+        {
+          path: 'dashboard', 
+          component: Dashboard1Component
+        },
+      {
         path:'mails',
         component:MaillistComponent
       },

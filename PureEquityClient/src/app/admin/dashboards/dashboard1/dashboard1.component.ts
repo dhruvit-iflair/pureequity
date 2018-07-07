@@ -26,6 +26,7 @@ export interface Chart {
 })
 export class Dashboard1Component implements OnInit, OnDestroy {
     public isPending = false;
+    public hasPermission = false;
     public tradeCoin:String = 'BTC / USD';
     public tradeList: any[] = [
         { name: 'BTC / USD', isActive: true,  value: 'btcusd' , data: []},
@@ -45,6 +46,10 @@ export class Dashboard1Component implements OnInit, OnDestroy {
         { name: 'BCH / BTC', isActive: false, value: 'bchbtc' , data: []}
     ];
     constructor(public dashboardService: DashboardService) {
+        var token=JSON.parse(localStorage.getItem('token'));
+        if(token.user.role.name=='admin'){
+            this.hasPermission=true;
+        }
         if (localStorage.getItem('tradeList')) {
             this.tradeList = JSON.parse(localStorage.getItem('tradeList'));
             console.log(this.tradeList.findIndex(t=>t.isActive==true));
