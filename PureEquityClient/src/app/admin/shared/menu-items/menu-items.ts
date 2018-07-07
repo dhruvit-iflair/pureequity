@@ -32,7 +32,7 @@ export interface Menu {
 
 const ADMINMENUITEMS : any = [
   {
-    state: '/dashboard',
+    state: '/admin/dashboard',
     name: 'Dashboard',
     type: 'link',
     icon: 'dashboard',

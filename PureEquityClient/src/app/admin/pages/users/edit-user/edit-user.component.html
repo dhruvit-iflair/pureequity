@@ -1,4 +1,4 @@
-<div>
+<div class="setup">
   <mat-card>
       <mat-card-header class="bg-primary text-white">
           <mat-card-title-group>
@@ -35,7 +35,7 @@
     </mat-card-content>
   </mat-card>
 </div>
-<div class="row text-center">
+<div class="row text-center" style="text-align:right;padding:1%;">
   <button mat-raised-button color="red" (click)="cancel()">Back</button>
   <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="save();">Save</button>
 </div>

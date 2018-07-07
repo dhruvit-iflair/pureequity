@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CustomValidators } from 'ng2-validation';
 import { Http } from "@angular/http";
 import { environment } from '../../../../environments/environment';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-qrotpverificationx',
@@ -14,7 +15,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class QrotpverificationComponentx implements OnInit {
   public veryform: FormGroup;
-  constructor(private fb: FormBuilder, private http:Http , private router: Router, public loginService: LoginService, private toastr: ToastrService) { }
+  constructor(private fb: FormBuilder, private http:Http ,private snakebar:MatSnackBar, private router: Router, public loginService: LoginService, private toastr: ToastrService) { }
   qr = { img: '', key: '' }; isqrenable = false;
   ngOnInit() {
     this.veryform = this.fb.group({
@@ -39,7 +40,8 @@ export class QrotpverificationComponentx implements OnInit {
     },(err)=>{
       var x=err.json();
       if(x.verificationstatus!='success'){
-      this.toastr.error('Invalid OTP', 'Error');
+      this.snakebar.open('Invalid OTP','',{duration: 5000});
+      //this.toastr.error('Invalid OTP', 'Error');
       }
     });
     

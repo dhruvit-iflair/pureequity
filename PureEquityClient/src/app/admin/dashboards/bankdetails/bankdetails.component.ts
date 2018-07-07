@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
-import { DateAdapter, MatDialog } from '@angular/material';
+import { DateAdapter, MatDialog, MatSnackBar } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
@@ -41,6 +41,7 @@ export class BankdetailsComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private http: Http,
+    private snakebar:MatSnackBar,
     private toastr: ToastrService,
     private bankService: BankdetailsService) { }
 
@@ -127,7 +128,8 @@ export class BankdetailsComponent implements OnInit {
       const control = <FormArray>this.mainform.controls[key];
       control.push(this.initForm(key));
     } else {
-      this.toastr.warning('Please fill up all the required fields', 'Warning');
+      this.snakebar.open('Please fill up all the required fields','',{duration: 5000});
+      // this.toastr.warning('Please fill up all the required fields', 'Warning');
     }
   }
   addStartUpForm(key) {
@@ -145,13 +147,15 @@ export class BankdetailsComponent implements OnInit {
     if (this.data && this.data._id) {
       this.bankService.put(this.data._id, daa).subscribe((res) => {
         console.log(res);
-        this.toastr.success(message, 'Success');
+        // this.toastr.success(message, 'Success');
+        this.snakebar.open(message,'',{duration: 5000});
         this.bankService.getByUserId(daa.user);
       });
     } else {
       this.bankService.post(daa).subscribe((res) => {
         console.log(res);
-        this.toastr.success(message, 'Success');
+        this.snakebar.open(message,'',{duration: 5000});        
+        // this.toastr.success(message, 'Success');
         this.bankService.getByUserId(daa.user);
       });
     }

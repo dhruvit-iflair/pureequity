@@ -41,7 +41,11 @@ File: scss
 //for navbar logo responsive
 
 //for manual nav bar css
-
+#mNav .mat-nav-list.selected .mat-list-item:hover{
+    background: #555682 !important;
+    border-radius: 4px;
+    color: #ffffff;
+}
 #mNav .mat-nav-list.selected{
         background: #555682;
         border-radius: 4px;
@@ -54,13 +58,19 @@ File: scss
     }
     #mNav .mat-nav-list .mat-list-item:hover{
         border-radius: 4px;
+        background-color: #e2dab7;
+        color: black;
     }
     #mNav .mat-list-item:hover {
         background: none;
     }
-    #mNav .mat-list-item .mat-list-item-content:hover > a {
-        color: #e2dab7;
-    }
+    // #mNav .mat-list-item .mat-list-item-content:hover > a {
+    //     color: #e2dab7;
+    // }
+    // #mNav .mat-list-item:hover {
+    //     background-color: #e2dab7;
+    //     color: black;
+    // }
     #mNav .mat-list-item a {
         color: #99abb4;
         font-size: 16px;
@@ -77,7 +87,7 @@ File: scss
 //     background-color: #555682 !important;
 // }
 html .page-wrapper{
-    height:calc(100vh - 64px);
+    height:calc(100vh - 110px);//64px
     .page-content{
         padding: 15px;
     }

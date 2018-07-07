@@ -18,3 +18,38 @@
     height: auto;
     padding: 0;
 }
+mat-row.mat-row:hover {
+    background-color: #8181a8;
+}
+.mat-dialog-container {
+    padding: 0px 0px 20px 0px!important;
+    border-radius: 8px !important;
+}
+.setupchecker .mat-dialog-container{
+    padding: 24px !important;
+}
+/* .mat-card {
+    margin: 0px;
+} */
+
+
+.mat-card-title-group{
+    margin: 4px -8px !important;
+}
+:-webkit-full-screen {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	background: none;
+}
+:-ms-fullscreen {
+    width: auto;
+    height: auto;
+    margin: auto;
+  }
+
+/* :-moz-full-screen {
+}
+
+:fullscreen {
+} */

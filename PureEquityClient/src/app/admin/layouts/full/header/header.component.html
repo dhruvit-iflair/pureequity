@@ -66,17 +66,58 @@
 <!-- ============================================================== -->
 <!-- Profile - style you can find in header.scss -->
 <!-- ============================================================== -->
+<!-- <button mat-icon-button (click)="fullscr();">
+    <mat-icon>fullscreen</mat-icon>
+</button> -->
+<button mat-icon-button [matMenuTriggerFor]="flager">
+    <mat-icon>flags</mat-icon>
+</button>
+<mat-menu #flager="matMenu" class="mymegamenu">
+    <button mat-menu-item>
+        <mat-icon>flags</mat-icon> English </button>
+    <button mat-menu-item>
+        <mat-icon>flags</mat-icon> French </button>
+    <button mat-menu-item>
+        <mat-icon>flags</mat-icon> Arabic </button>
+</mat-menu>
+
+<button mat-icon-button [matMenuTriggerFor]="notifications">
+    <mat-icon>notifications</mat-icon>
+</button>
+<!-- ahiya nu maru -->
+<mat-menu #notifications="matMenu" class="mymegamenu">
+    <button mat-menu-item>
+        <img src="assets/images/users/default.png" alt="user" style="height:25px;width:25px;margin-right:5%;">Ashley messaged you </button>
+    <button mat-menu-item>
+        <img src="assets/images/users/default.png" alt="user" style="height:25px;width:25px;margin-right:5%;"> Lobo messaged you </button>
+    <button mat-menu-item>
+        <img src="assets/images/users/default.png" alt="user" style="height:25px;width:25px;margin-right:5%;"> Jane commented on your post </button>
+</mat-menu>
+<!-- ahiya nu maru -->
 <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
     <img src="{{user.image}}" alt="user" class="profile-pic" *ngIf="user.image">
     <img src="assets/images/users/default.png" alt="user" class="profile-pic" *ngIf="!user.image">
 </button>
 <mat-menu #profile="matMenu" class="mymegamenu">
+    <div class="user-info-wrapper" style="background: #555682;color: whitesmoke;margin-bottom:0;">
+        <img src="{{user.image}}" style="width: 80px;border-radius: 50%;" alt="user" class="profile-pic" *ngIf="user.image">
+        <img src="assets/images/users/default.png" alt="user" style="width: 80px;border-radius: 50%;" class="profile-pic" *ngIf="!user.image">
+        <div class="user-info">
+            <p class="name" style="margin-right:20px;">{{user.firstName}} {{user.lastName}}</p>
+        </div>
+    </div>
     <!-- <button mat-menu-item>
         <mat-icon>settings</mat-icon> Settings </button>
     <button mat-menu-item>
         <mat-icon>notifications_off</mat-icon> Disable notifications </button> -->
     <button mat-menu-item (click)="goToProfile();">
-        <mat-icon>account_box</mat-icon> Profile </button>
-    <button mat-menu-item (click)="logout();">
+        <mat-icon>person</mat-icon> Profile </button>
+    <button mat-menu-item>
+        <mat-icon>settings</mat-icon> Settings </button>
+    <button mat-menu-item>
+        <mat-icon>lock</mat-icon> Lock Screen </button>
+    <button mat-menu-item>
+        <mat-icon>help</mat-icon> Help </button>
+    <button mat-menu-item (click)="logout();" style="border-top: 1px solid rgba(0,0,0,.12);">
         <mat-icon>exit_to_app</mat-icon> Log Out </button>
 </mat-menu>

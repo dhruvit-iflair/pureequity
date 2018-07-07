@@ -7,6 +7,7 @@ import { MatDialog} from '@angular/material';
 import { environment } from '../../../../../environments/environment';
 import { UsersService } from '../../../shared/services/users.service';
 import { ProfileComponent } from '../../../pages/users/profile/profile.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ import { ProfileComponent } from '../../../pages/users/profile/profile.component
 })
 export class AppHeaderComponent {
     public config: PerfectScrollbarConfigInterface = {};
-    user:User;
+    user:User;data=true;
     public picPoint = environment.picPoint + '/users/profileImage/';  
     
     // This is for Notifications
@@ -91,6 +92,20 @@ export class AppHeaderComponent {
         //       console.log(result);
         //     }
         // });
+    }
+    fullscr(){
+      // document.body.requestFullscreen();
+      if(this.data){
+        document.body.webkitRequestFullscreen();
+        this.data=false;
+      }
+      else{
+        document.webkitExitFullscreen();
+        this.data=true;
+      }
+        // let elem =  document.body; 
+        // let methodToBeInvoked = elem.requestFullscreen || elem.webkitRequestFullScreen || elem['mozRequestFullscreen'] || elem['msRequestFullscreen'];
+        // if(methodToBeInvoked) methodToBeInvoked.call(elem);
     }
     logout(){
       localStorage.clear();

@@ -46,6 +46,7 @@ export class MaillistComponent implements OnInit {
   delete(row){
     let dialogRef = this.dialog.open(DeleteComponent,{
       data: { title: 'Want to Remove?', content: 'Are you sure?' },
+      panelClass:'setupchecker'
     });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {

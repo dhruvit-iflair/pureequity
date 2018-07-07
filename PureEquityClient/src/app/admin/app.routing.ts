@@ -8,7 +8,8 @@ import { AdminGuard } from './shared/guard/admin.guard';
 export const AppRoutes: Routes = [{
   path: '',
   component: FullComponent,
-  children: [{
+  children: [
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'

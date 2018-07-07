@@ -6,6 +6,7 @@ import { CustomValidators } from 'ng2-validation';
 import { Http } from "@angular/http";
 import { environment } from '../../../../environments/environment';
 import { card } from '../../shared/animations/animations';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-qrotpverification',
@@ -15,7 +16,7 @@ import { card } from '../../shared/animations/animations';
 })
 export class QrotpverificationComponent implements OnInit {
   public veryform: FormGroup;
-  constructor(private fb: FormBuilder, private http: Http, private router: Router, private toastr: ToastrService) { }
+  constructor(private fb: FormBuilder, private http: Http,private snakebar:MatSnackBar, private router: Router, private toastr: ToastrService) { }
   qr = { img: '', key: '' }; isqrenable = false;uid;isEnable;
   ngOnInit() {
     this.veryform = this.fb.group({
@@ -60,7 +61,8 @@ export class QrotpverificationComponent implements OnInit {
       }, (err) => {
         var x = err.json();
         if (x.verificationstatus != 'success') {
-          this.toastr.error('The 2FA Code you entered was not correct. Please try again with a new Secret Code.', 'Error');
+          this.snakebar.open('The 2FA Code you entered was not correct. Please try again with a new Secret Code.','',{duration: 5000});
+          // this.toastr.error('The 2FA Code you entered was not correct. Please try again with a new Secret Code.', 'Error');
         }
       });
   }
@@ -78,7 +80,8 @@ export class QrotpverificationComponent implements OnInit {
       }, (err) => {
         var x = err.json();
         if (x.verificationstatus != 'success') {
-          this.toastr.error('The 2FA Code you entered was not correct. Please try again with a new Secret Code.', 'Error');
+          this.snakebar.open('The 2FA Code you entered was not correct. Please try again with a new Secret Code.','',{duration: 5000});
+          // this.toastr.error('The 2FA Code you entered was not correct. Please try again with a new Secret Code.', 'Error');
         }
       });
   }
@@ -94,19 +97,22 @@ export class QrotpverificationComponent implements OnInit {
     .subscribe((resp: any) => {
       var x = resp.json();
       if (x.nModified == 1 && aEnabled==false) {
-        this.toastr.success('Two Factor Authentification Disabled From Now Onwards.', 'Success');
+        this.snakebar.open('Two Factor Authentification Disabled From Now Onwards.','',{duration: 5000});        
+        // this.toastr.success('Two Factor Authentification Disabled From Now Onwards.', 'Success');
         this.isqrenable = true;
         this.router.navigate(['/login']);
       }
       if (x.nModified == 1 && aEnabled==true) {
-        this.toastr.success('Two Factor Authentification Enabled From Now Onwards.', 'Success');
+        this.snakebar.open('Two Factor Authentification Enabled From Now Onwards.','',{duration: 5000});                
+        // this.toastr.success('Two Factor Authentification Enabled From Now Onwards.', 'Success');
         this.isqrenable = false;
         this.router.navigate(['/login']);
       }
     }, (err) => {
       var x = err.json();
       if (x.nModified != 1) {
-        this.toastr.error('The 2FA Code you entered was not correct. Please try again with a new Secret Code.', 'Error');
+        this.snakebar.open('The 2FA Code you entered was not correct. Please try again with a new Secret Code.','',{duration: 5000}); 
+        // this.toastr.error('The 2FA Code you entered was not correct. Please try again with a new Secret Code.', 'Error');
       }
     });
   }
