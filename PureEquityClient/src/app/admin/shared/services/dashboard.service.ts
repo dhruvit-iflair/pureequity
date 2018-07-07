@@ -82,18 +82,18 @@ export class DashboardService {
     return this.tra.asObservable();
   };
   graph() {
-    this.http.get(environment.api + '/graph').subscribe((res: any) => {
-      const source = from(res);
-      const data = source.pipe( groupBy(d => d.coin),mergeMap(group => group.pipe(toArray())));
+    // this.http.get(environment.api + '/graph').subscribe((res: any) => {
+    //   const source = from(res);
+    //   const data = source.pipe( groupBy(d => d.coin),mergeMap(group => group.pipe(toArray())));
      
-      data.subscribe((graph) => {
-        graph.forEach((a:any) => {
-            this.graphData[a.coin].push([a.timestamp, a.openPrice]);
-        })
-      });
-    }, (error) => {
-      console.log(error);
-    })
+    //   data.subscribe((graph) => {
+    //     graph.forEach((a:any) => {
+    //         this.graphData[a.coin].push([a.timestamp, a.openPrice]);
+    //     })
+    //   });
+    // }, (error) => {
+    //   console.log(error);
+    // })
   }
   graphList(key){
     return this.graphData[key]?this.graphData[key] : false;
