@@ -54,6 +54,7 @@ import { UserPersonalDetailsComponent } from "../pages/users/edit-user/user-pers
 import { ProfileComponent } from "../pages/users/profile/profile.component";
 import { BalanceManagementComponent } from './balance-management/balance-management.component';
 import { UsersService } from "../shared/services/users.service";
+import { KycdetailsComponent } from './kycdetails/kycdetails.component';
 
 @NgModule({
   imports: [
@@ -100,9 +101,10 @@ import { UsersService } from "../shared/services/users.service";
     UserDetailsComponent,
     UserPersonalDetailsComponent,
     ProfileComponent,
-    BalanceManagementComponent
+    BalanceManagementComponent,
+    KycdetailsComponent
   ],
   providers: [DashboardService, LoginService, UsersService],
-  entryComponents:[EditUserComponent,ProfileComponent]
+  entryComponents:[EditUserComponent,ProfileComponent, KycdetailsComponent]
 })
 export class DashboardsModule {}

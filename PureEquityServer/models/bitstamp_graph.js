@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var Graph = new Schema({
     coin            : String,
-    timestamp       : Date,
+    timestamp       : String,
     openPrice       : String,
     updated_at      : Date,
 	created_at      : Date

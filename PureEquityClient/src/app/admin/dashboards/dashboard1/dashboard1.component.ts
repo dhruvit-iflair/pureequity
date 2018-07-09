@@ -7,6 +7,10 @@ import { Trades, TradesData } from '../../shared/interfaces/trades.interface';
 import { single, multi, co, charti} from './cdata';
 import * as $ from 'jquery'
 import * as Highcharts from 'highcharts/highstock.js';
+
+import { from } from 'rxjs/observable/from';
+import { mergeMap, groupBy, toArray } from 'rxjs/operators';
+
 declare var require: any;
 
 const data: any = require('./data.json');
@@ -45,6 +49,23 @@ export class Dashboard1Component implements OnInit, OnDestroy {
         { name: 'BCH / EUR', isActive: false, value: 'bcheur' , data: []},
         { name: 'BCH / BTC', isActive: false, value: 'bchbtc' , data: []}
     ];
+    public graphData: any = {
+        btcusd: [],
+        btceur: [],
+        eurusd: [],
+        xrpusd: [],
+        xrpeur: [],
+        xrpbtc: [],
+        ltcusd: [],
+        ltceur: [],
+        ltcbtc: [],
+        ethusd: [],
+        etheur: [],
+        ethbtc: [],
+        bchusd: [],
+        bcheur: [],
+        bchbtc: []
+    };
     constructor(public dashboardService: DashboardService) {
         var token=JSON.parse(localStorage.getItem('token'));
         if(token.user.role.name=='admin'){
@@ -63,6 +84,18 @@ export class Dashboard1Component implements OnInit, OnDestroy {
                     this.isPending = false;                
                 }
         });
+        this.dashboardService.graphList.subscribe((grp)=>{
+            const source = from(grp);
+            const data = source.pipe( groupBy((d:any)=> d.coin),mergeMap(group => group.pipe(toArray())));
+            
+            data.subscribe((graph) => {
+                graph.forEach((a:any) => {
+                    var date = new Date(a.timestamp*1000);
+                    this.graphData[a.coin].push([a.timestamp*1000, parseFloat(a.openPrice)]);
+                })
+                this.drawGraph();
+            });
+        })
     }
     public int: any;
     public timer={hours:'',minutes:'',seconds:'',micros:''};
@@ -72,21 +105,26 @@ export class Dashboard1Component implements OnInit, OnDestroy {
     
     ngOnInit() {
         this.int = setInterval(() => {          
-                this.dashboardService.trades();
-                var d=new Date();
-                this.timer.hours=d.getHours().toString();
-                this.timer.minutes=d.getMinutes().toString();
-                this.timer.seconds=d.getSeconds().toString();
-                this.timer.micros=d.getMilliseconds().toString();
+            this.dashboardService.trades();
+            var d = new Date();
+            this.timer.hours=d.getHours().toString();
+            this.timer.minutes=d.getMinutes().toString();
+            this.timer.seconds=d.getSeconds().toString();
+            this.timer.micros=d.getMilliseconds().toString();
         }, 1000);
+        this.dashboardService.graph();
+
+    }
+    drawGraph(){
+        let that = this;
         $(document).ready(function () {
             Highcharts.stockChart('container', {
                 rangeSelector: {
                     selected: 1
                 },
                 series: [{
-                    name: 'USD',
-                    data: charti,
+                    name: that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].name,
+                    data: that.graphData[that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].value],
                     tooltip: {
                         valueDecimals: 2
                     }

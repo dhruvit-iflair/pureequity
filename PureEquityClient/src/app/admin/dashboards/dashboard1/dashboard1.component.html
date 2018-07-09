@@ -18,7 +18,7 @@
                     <div>
                         <h3 class="m-0">Users</h3>
                         <h3 class="m-0">{{timer.hours}}</h3>
-                        <h6 class="text-muted m-0">Hours</h6>
+                        <!-- <h6 class="text-muted m-0">Hours</h6> -->
                     </div>
 
                 </div>
@@ -42,7 +42,7 @@
                     <div>
                         <h3 class="m-0">Transactions</h3>
                         <h3 class="m-0">{{timer.minutes}}</h3>
-                        <h6 class="text-muted m-0">Minutes</h6>
+                        <!-- <h6 class="text-muted m-0">Minutes</h6> -->
                     </div>
 
                 </div>
@@ -66,7 +66,7 @@
                     <div>
                         <h3 class="m-0">Withdrawls</h3>
                         <h3 class="m-0">{{timer.seconds}}</h3>
-                        <h6 class="text-muted m-0">Seconds</h6>
+                        <!-- <h6 class="text-muted m-0">Seconds</h6> -->
                     </div>
 
                 </div>
@@ -90,7 +90,7 @@
                     <div>
                         <h3 class="m-0">Deposits</h3>
                         <h3 class="m-0">{{timer.micros}}</h3>
-                        <h6 class="text-muted m-0">Milliseconds</h6>
+                        <!-- <h6 class="text-muted m-0">Milliseconds</h6> -->
                     </div>
 
                 </div>
@@ -159,8 +159,7 @@
     </div>
 </div>
 <!-- Actual Dashboard Layout -->
-<div fxLayout="row" fxLayoutWrap="wrap">
-    <!-- column -->
+<!-- <div fxLayout="row" fxLayoutWrap="wrap">
     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-content style="font-size: smaller; float: left; width: 100%; background:#fff; ">
@@ -173,18 +172,32 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->
-</div>
+</div> -->
 <!-- ============================================================== -->
 <!-- Charts -->
 <!-- ============================================================== -->
 <div fxLayout="row" fxLayoutWrap="wrap">
     <!-- Column-->
-    <div fxFlex.gt-lg="60" fxFlex.gt-md="65" fxFlex.gt-xs="60" fxFlex="100">
+    <div fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-content id="chart-card-content">
                 <!-- <mat-card-title>Sales Overview</mat-card-title> -->
                 <!-- <mat-card-subtitle></mat-card-subtitle> -->
+                <!-- <div class="r-100 f-r">
+                </div> -->
+                <section layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+                    <!-- <div layout="row" layout-align="start center" flex>
+                        <md-button class="md-primary">Submit</md-button>
+                        <span flex></span>
+                    </div>
+                    <md-button class="md-warn">Cancel</md-button>
+                    <md-button class="md-warn">Delete Boundary Partner Type</md-button> -->
+                    <button mat-button [matMenuTriggerFor]="menu" (menuClosed)="drawGraph()">{{tradeCoin}}</button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item *ngFor="let list of tradeList; let i = index" class="{{(list.isActive)? 'mat-menu-item ng-star-inserted active ' : 'mat-menu-item ng-star-inserted non-active'}}" (click)="toggleValue(i);">{{list.name}}</button>
+                    </mat-menu>
+
+                </section>
                 <div class="barchrt" style="height:360px;">
                     <div id="container" style="height: 370px; min-width: 310px"></div>
                     <!-- <ngx-charts-line-chart [view]="view" [scheme]="colorScheme"
@@ -199,17 +212,13 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- Column-->
-    <div fxFlex.gt-lg="40" fxFlex.gt-md="35" fxFlex.gt-xs="40" fxFlex="100">
+    <!-- <div fxFlex.gt-lg="40" fxFlex.gt-md="35" fxFlex.gt-xs="40" fxFlex="100">
         <mat-card>
             <mat-card-header class="bg-primary text-white">
                 <mat-card-title>Latest Transaction </mat-card-title>
                 <mat-card-subtitle>{{tradeCoin}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <!-- <mat-card-title>{{tradeCoin}} -->
-                <!-- </mat-card-title> -->
-                <!-- <mat-card-subtitle>{{trade | json}}</mat-card-subtitle> -->
                 <div class="table-25">
                     <table style="width: 100%; text-align: left; padding: 0 0 0 0; margin-bottom: 0;">
                         <thead>
@@ -230,5 +239,5 @@
                 </div>
             </mat-card-content>
         </mat-card>
-    </div>
+    </div> -->
 </div>

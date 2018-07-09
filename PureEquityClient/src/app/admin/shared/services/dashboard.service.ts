@@ -6,31 +6,31 @@ import { Observable } from 'rxjs/Observable';
 import { ToastrService } from 'ngx-toastr';
 import { Coins } from "../interfaces/coins.interface";
 import { Trades } from "../interfaces/trades.interface";
-import { from } from 'rxjs/observable/from';
-import { partition, map, mergeMap,groupBy,filter, merge, toArray } from 'rxjs/operators';
 
 @Injectable()
 export class DashboardService {
   public coins = new Subject<Coins>();
   public tra = new Subject<any>();
+  public graphData = new Subject<any>();
+  public graphList = this.graphData.asObservable();
   public isActive = [];
-  public graphData: any = {
-    btcusd: [],
-    btceur: [],
-    eurusd: [],
-    xrpusd: [],
-    xrpeur: [],
-    xrpbtc: [],
-    ltcusd: [],
-    ltceur: [],
-    ltcbtc: [],
-    ethusd: [],
-    etheur: [],
-    ethbtc: [],
-    bchusd: [],
-    bcheur: [],
-    bchbtc: []
-  };
+  // public graphData: any = {
+  //   btcusd: [],
+  //   btceur: [],
+  //   eurusd: [],
+  //   xrpusd: [],
+  //   xrpeur: [],
+  //   xrpbtc: [],
+  //   ltcusd: [],
+  //   ltceur: [],
+  //   ltcbtc: [],
+  //   ethusd: [],
+  //   etheur: [],
+  //   ethbtc: [],
+  //   bchusd: [],
+  //   bcheur: [],
+  //   bchbtc: []
+  // };
 
   public tradeList: any[] = [
     { name: 'BTC / USD', isActive: true,  value: 'btcusd', data: [] ,graph:[] },
@@ -82,20 +82,21 @@ export class DashboardService {
     return this.tra.asObservable();
   };
   graph() {
-    // this.http.get(environment.api + '/graph').subscribe((res: any) => {
-    //   const source = from(res);
-    //   const data = source.pipe( groupBy(d => d.coin),mergeMap(group => group.pipe(toArray())));
+    this.http.get(environment.api + '/graph').subscribe((res: any) => {
+      // const source = from(res);
+      // const data = source.pipe( groupBy(d => d.coin),mergeMap(group => group.pipe(toArray())));
      
-    //   data.subscribe((graph) => {
-    //     graph.forEach((a:any) => {
-    //         this.graphData[a.coin].push([a.timestamp, a.openPrice]);
-    //     })
-    //   });
-    // }, (error) => {
-    //   console.log(error);
-    // })
+      // data.subscribe((graph) => {
+      //   graph.forEach((a:any) => {
+      //       this.graphData[a.coin].push([a.timestamp, a.openPrice]);
+      //   })
+      // });
+      this.graphData.next(res);
+    }, (error) => {
+      console.log(error);
+    })
   }
-  graphList(key){
-    return this.graphData[key]?this.graphData[key] : false;
-  }
+  // graphList(key){
+  //   return this.graphData[key]?this.graphData[key] : false;
+  // }
 }
