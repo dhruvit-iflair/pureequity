@@ -86,7 +86,7 @@ img,
 }
 
 .mat-icon.material-icons {
-  color: #535353;
+  // color: #535353;
 }
 .tabbing{
    background-color: #535353;
@@ -101,4 +101,10 @@ img,
 mat-card-title-group.mat-card-title-group {
   width: 15%;
   margin-top: 5px;
+}
+.iconsetter{
+  right: -7px;
+  position: absolute;
+  top: -10px;
+  color:white !important;
 }

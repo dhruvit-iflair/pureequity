@@ -52,7 +52,7 @@ Reset_PasswordCtrl.prototype.generate = function (req, res, next) {
                         var founder=docker[0].content.search("[(resetLink)]");
                         if(founder>-1){
                             var x=docker[0].content.split("[(resetLink)]");
-                            docker[0].content=x[0]+'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +x[1];
+                          //  docker[0].content=x[0]+'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +x[1];
                         }
                         var mailOptions = {
                             from: 'no-replay@PureEquity.com',

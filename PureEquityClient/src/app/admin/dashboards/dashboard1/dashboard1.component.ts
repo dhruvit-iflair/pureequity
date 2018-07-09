@@ -102,7 +102,17 @@ export class Dashboard1Component implements OnInit, OnDestroy {
     onSelect(event) {
         // console.log(event);
     }
-    
+    // Line chart
+    lineChart1: Chart = {
+        type: 'Line',
+        data: data['LineWithArea'],
+        options: {
+          low: 0,
+          high: 35000,    
+          showArea: true,
+          fullWidth: true    
+        }
+    }
     ngOnInit() {
         this.int = setInterval(() => {          
             this.dashboardService.trades();
@@ -135,6 +145,15 @@ export class Dashboard1Component implements OnInit, OnDestroy {
             var card = document.getElementById('chart-card-content').style.height
             card = cont;
             $('.highcharts-range-selector-buttons').find('text').first().remove();
+            (<any>$('.spark-count')).sparkline([4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9], {
+                type: 'bar'
+                , width: '100%'
+                , height: '70'
+                , barWidth: '2'
+                , resize: true
+                , barSpacing: '6'
+                , barColor: 'rgba(255, 255, 255, 0.3)'
+            });
         });
     }
 

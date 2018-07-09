@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject, forwardRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA,MatSnackBar } from '@angular/material';
 import { User } from '../../../shared/interfaces/user.interface';
 import { RoleService } from '../../../shared/services/role.service';
 import { Role } from '../../../shared/interfaces/role.interface';
@@ -24,7 +24,7 @@ export class EditUserComponent implements OnInit {
   click: Boolean = false;
   //user: User;
    
-  constructor(private _formBuilder: FormBuilder, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router, public dialogRef: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public user: User) {
+  constructor(private _formBuilder: FormBuilder,private snakebar:MatSnackBar, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router, public dialogRef: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public user: User) {
     this.roleService.getAllRoles();
     //  this.act.params.subscribe((params) => {
     //    if(params.id)
@@ -89,7 +89,8 @@ export class EditUserComponent implements OnInit {
     var data = this.detailsFormGroup.value;
     data.user_profile = this.user.user_profile._id;
     this.userService.updateUserDetails(data).subscribe((res) => {
-      this.toster.success('User Details has been updated', 'Success');
+      this.snakebar.open('User Details has been updated','',{duration: 5000});
+      // this.toster.success('User Details has been updated', 'Success');
       this.userService.getAllUsers();
       this.click = true;
       this.cancel();
@@ -97,7 +98,8 @@ export class EditUserComponent implements OnInit {
     }, (error) => {
       console.log(error);
       this.click = true;
-      this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+      this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});          
+      // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
       // this.router.navigate(['/users']);
     })
   }
@@ -114,7 +116,8 @@ export class EditUserComponent implements OnInit {
         this.updateUserDetails();
       }, (error) => {
         console.log(error);
-        this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+        this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});                  
+        // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
       });
     }
   }

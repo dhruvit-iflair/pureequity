@@ -2,8 +2,19 @@
   <!-- Card column -->
   <div fxFlex.gt-sm="100%" fxFlex="100">
     <mat-card>
+        <mat-card-header class="bg-primary text-white">
+            <mat-card-title-group>
+                <mat-card-title fxLayout="row">
+                    Edit Role
+                </mat-card-title>
+            </mat-card-title-group>
+            <button mat-icon-button class="srh-btn2 iconsetter" (click)="cancel()">
+                <mat-icon>clear</mat-icon>
+            </button>
+            <div fxFlex="fxFlex"></div>
+        </mat-card-header>
       <mat-card-content>
-        <mat-card-title>Role Management</mat-card-title>
+        <!-- <mat-card-title>Role Management</mat-card-title> -->
         <form [formGroup]="rolerFormGroup">
           <mat-form-field>
             <input matInput type="text" placeholder="Name" [formControl]="rolerFormGroup.controls['name']">
@@ -20,8 +31,8 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="row text-center" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width: 100%; float: left; ">
-    <button mat-raised-button color="red" [routerLink]="[ '/admin/roles' ]">Back</button>
+  <div class="row text-center" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width: 100%; text-align:right; ">
+    <button mat-raised-button color="red" (click)="cancel()">Back</button>
     <button mat-raised-button color="primary" [disabled]="!rolerFormGroup.valid" (click)="store();">Save</button>
   </div>
 </div>

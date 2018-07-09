@@ -4,3 +4,9 @@ mat-cell.buy.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-i
 mat-cell.sell.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-inserted {
     color: red;
 }
+.iconsetter{
+    right: -7px;
+    position: absolute;
+    top: -10px;
+    color:white !important;
+  }

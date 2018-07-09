@@ -1,11 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog} from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog, MatSnackBar} from '@angular/material';
 import { DeleteComponent } from '../../../shared/dialogs/delete/delete.component';
 import { Http } from "@angular/http";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { environment } from "../../../../../environments/environment"
 import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
+import { MailerComponent } from '../mailer.component';
 
 @Component({
   selector: 'app-maillist',
@@ -20,7 +21,7 @@ export class MaillistComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog,public http:Http, public router:Router,public tstr:ToastrService) { }
+  constructor(public dialog: MatDialog,public http:Http,private snakebar:MatSnackBar, public router:Router,public tstr:ToastrService) { }
 
   ngOnInit() {
     this.http.get(environment.api + '/mails/')
@@ -52,14 +53,23 @@ export class MaillistComponent implements OnInit {
         if (result) {
           this.http.delete(environment.api + '/mails/'+row._id)
           .subscribe((res)=>{
-            this.tstr.success('Mail Template Deleted Successfully!','Success');
+        this.snakebar.open('Mail Template Deleted Successfully!','',{duration: 5000});                    
+            // this.tstr.success('Mail Template Deleted Successfully!','Success');
             this.router.navigate(['/admin/mail']).then(()=>{this.router.navigate(['/admin/mails'])});
           });
         }
     });
   }
   edit(xst){
-    this.router.navigate(['/admin/mail/'+xst._id])
+    // this.router.navigate(['/admin/mail/'+xst._id])
+    let dialogRef = this.dialog.open(MailerComponent,{
+      data: xst,
+      height:'auto',
+      panelClass:'setupchecker'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+    });
   }
 
 }

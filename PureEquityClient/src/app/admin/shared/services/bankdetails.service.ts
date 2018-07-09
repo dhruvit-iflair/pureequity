@@ -6,13 +6,14 @@ import { map, catchError } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class BankdetailsService {
   public Bankdetail = new Subject<any>();
   public Bankdetails = new Subject<any>();
   public UserBankdetail = new Subject<any>();
-  constructor(private http: HttpClient, public toaster: ToastrService) { }
+  constructor(private http: HttpClient,private snakebar:MatSnackBar, public toaster: ToastrService) { }
 
   get() {
     this.http.get(environment.api + '/bankdetails').subscribe((response) => {
@@ -62,7 +63,8 @@ export class BankdetailsService {
   }
 
   handelError(error) {
-    this.toaster.error('Something went wrong, please try again later', 'Error');
+    this.snakebar.open('Something went wrong, please try again later','',{duration: 5000});
+    // this.toaster.error('Something went wrong, please try again later', 'Error');
     console.log(error);
   }
 
