@@ -34,7 +34,7 @@ export class ReviewTransactionsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  constructor(public http:Http, private acRoute: ActivatedRoute) { }
+  constructor(public http:Http, private acRoute: ActivatedRoute,public dialogRef: MatDialogRef<ReviewTransactionsComponent>) { }
 
   ngOnInit() {
     this.acRoute.params.subscribe((params) => {
@@ -66,6 +66,9 @@ export class ReviewTransactionsComponent implements OnInit {
     //Add 'implements OnDestroy' to the class.
     if(localStorage.getItem('trnId'))
     localStorage.removeItem('trnId');
+  }
+  cancel(){
+    this.dialogRef.close();
   }
   pageEvent(event){
     // console.log(event)

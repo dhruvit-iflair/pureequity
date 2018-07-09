@@ -6,6 +6,7 @@ import { LoginService } from '../../shared/services/login.service';
 import { RoleService } from '../../shared/services/role.service';
 import { Role } from '../../shared/interfaces/role.interface';
 import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material';
 
 const password = new FormControl('', Validators.required);
 const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
@@ -19,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
   public form: FormGroup; isvalidcapcha;
   public roles: Array<Role> = [];
-  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService, public roleService: RoleService, public toster: ToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService, public roleService: RoleService, public toster: ToastrService,private snakebar:MatSnackBar) {
     this.roleService.getAllRoles();
   }
   data = {}; imgurl;
@@ -53,11 +54,13 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     if (this.isvalidcapcha) {
       this.loginService.register(this.form.value).subscribe((response) => {
-        this.toster.success(response['message'], 'Success');
+        //this.toster.success(response['message'], 'Success');
+        this.snakebar.open(response['message'],'',{duration: 5000});        
         this.router.navigate(['/login']);
       }, (error) => {
         console.log(error);
-        this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+        this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});
+       // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
       })
     }
   }

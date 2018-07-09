@@ -9,6 +9,7 @@ import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/interfaces/user.interface';
 import { LoginService } from '../../shared/services/login.service';
 import { card } from '../../shared/animations/animations';
+import { MatSnackBar } from '@angular/material';
 
 const current_password = new FormControl('', Validators.required);
 const password = new FormControl('', [CustomValidators.notEqualTo(current_password), Validators.required]);
@@ -24,7 +25,7 @@ export class ChangePasswordComponent implements OnInit {
   public form: FormGroup;
   public token: String;isChangePassword;
   public user: any;
-  constructor(private fb: FormBuilder, private router: Router, private userService: UsersService, public loginService: LoginService, public toster: ToastrService) {
+  constructor(private fb: FormBuilder,private snakebar:MatSnackBar, private router: Router, private userService: UsersService, public loginService: LoginService, public toster: ToastrService) {
   }
 
   ngOnInit() {
@@ -47,18 +48,22 @@ export class ChangePasswordComponent implements OnInit {
     this.loginService.login(cred).subscribe((res: any) => {
       if (res.auth) {
         this.userService.changePassword(this.form.value).subscribe((response) => {
-          this.toster.success(response['message'], 'Success');
+          this.snakebar.open(response['message'],'',{duration: 5000});
+          //this.toster.success(response['message'], 'Success');
           localStorage.clear();
           window.location.href = '/login';
         }, (error) => {
           console.log(error);
-          this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+          this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});          
+          // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
         })
       } else {
-        this.toster.error("Current Password not matched", 'Error');
+        this.snakebar.open('Current Password not matched','',{duration: 5000});        
+        // this.toster.error("Current Password not matched", 'Error');
       }
     }, (error) => {
-      this.toster.error("Current Password not matched", 'Error');
+      this.snakebar.open('Current Password not matched','',{duration: 5000});        
+      // this.toster.error("Current Password not matched", 'Error');
     })
   }
 }

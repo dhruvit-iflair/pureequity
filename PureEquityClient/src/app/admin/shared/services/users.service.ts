@@ -5,6 +5,7 @@ import { User } from "../interfaces/user.interface";
 import { environment } from "../../../../environments/environment";
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs/Observable';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +13,7 @@ export class UsersService {
   private user = new Subject<User>();
   private usersDoc = new Subject<any[]>();
   private editUser = new Subject<User>();
-  constructor(private http: HttpClient, private toster: ToastrService) { 
+  constructor(private http: HttpClient,private snakebar:MatSnackBar, private toster: ToastrService) { 
     this.userdocs();
   }
 
@@ -21,7 +22,8 @@ export class UsersService {
       this.users.next(res);
     }, (error) => {
       // console.log(error);
-      this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+      this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});                  
+      // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
     });
     this.userdocs();
   }
@@ -40,7 +42,8 @@ export class UsersService {
       this.user.next(res);
     }, (error) => {
       console.log(error);
-      this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+      this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});                        
+      // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
     });
   }
   getUser(): Observable<User> {
@@ -49,10 +52,12 @@ export class UsersService {
   deleteUser(id: String) {
     this.http.delete(environment.api + '/users/' + id).subscribe((res: User) => {
       this.getAllUsers();
-      this.toster.success("Deleted User", 'Success');
+      this.snakebar.open('Deleted User','',{duration: 5000});                        
+      // this.toster.success("Deleted User", 'Success');
     }, (error) => {
       console.log(error);
-      this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+      this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});                        
+      // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
     });
   }
   imageUpload(event:any) {

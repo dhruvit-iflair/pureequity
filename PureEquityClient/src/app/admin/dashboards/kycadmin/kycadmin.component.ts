@@ -5,6 +5,7 @@ import { Http } from "@angular/http";
 import { environment } from "../../../../environments/environment"
 import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-kycadmin',
@@ -19,7 +20,7 @@ export class KycadminComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog,public http:Http, public router:Router,public tstr:ToastrService) { }
+  constructor(public dialog: MatDialog,public http:Http, public router:Router,public tstr:ToastrService,private snakebar:MatSnackBar) { }
 
   ngOnInit() {
     this.http.get(environment.api + '/userdocs/').subscribe((res)=>{
@@ -62,7 +63,9 @@ export class KycadminComponent implements OnInit {
         if (result) {
           this.http.delete(environment.api + '/userdocs/'+row._id)
           .subscribe((res)=>{
-            this.tstr.success('KYC Deleted Successfully','Success');
+        this.snakebar.open('KYC Deleted Successfully.','',{duration: 5000});                  
+            
+            // this.tstr.success('KYC Deleted Successfully','Success');
             // this.router.navigate(['/admin/kyc']).then(()=>{this.router.navigate(['/admin/kycadmin'])});
             this.ngOnInit();
           });
@@ -87,10 +90,12 @@ export class KycadminComponent implements OnInit {
     this.http.patch(environment.api + '/userdocs/'+dt._id,updobj)
     .subscribe((res)=>{
       if(res.statusText=="OK"){
-        this.tstr.success('Status Updated Successfully','Success');
+        this.snakebar.open('Status Updated Successfully.','',{duration: 5000});                          
+        // this.tstr.success('Status Updated Successfully','Success');
       }
       else{
-        this.tstr.error('Internal Server Error','Error');
+        this.snakebar.open('Internal Server Error.','',{duration: 5000});
+        // this.tstr.error('Internal Server Error','Error');
       }
     });
   }

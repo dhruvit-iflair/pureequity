@@ -9,6 +9,7 @@ import { Http } from "@angular/http";
 import { environment } from "../../../../../environments/environment";
 import { ActivatedRoute, Router } from '@angular/router';
 import { User_Profile } from '../../../shared/interfaces/user_profile.interface';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,7 @@ import { User_Profile } from '../../../shared/interfaces/user_profile.interface'
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private _formBuilder: FormBuilder, public provider: Http, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router) {
+  constructor(private _formBuilder: FormBuilder,private snakebar:MatSnackBar, public provider: Http, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router) {
     this.roleService.getAllRoles();
     this.act.params.subscribe((params) => {
       this.uid = params.id;
@@ -93,17 +94,20 @@ export class ProfileComponent implements OnInit {
       usrdata.user_profile = this.profiledata._id;
       this.userService.updateUserDetails(usrdata).subscribe((res) => {
         console.log(res);
+      this.snakebar.open('Your Details has been updated','',{duration: 5000});                  
         this.toster.success('Your Details has been updated', 'Success');
         this.userService.getAllUsers();
         this.router.navigate(['/']);
       }, (error) => {
         console.log(error);
-        this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+      this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});                  
+        // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
         // this.router.navigate(['/users']);
       });
     }, (error) => {
       console.log(error);
-      this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
+      this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});                
+      // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
       // this.router.navigate(['/users']);
     })
   }

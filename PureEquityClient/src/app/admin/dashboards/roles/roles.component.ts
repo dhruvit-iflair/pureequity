@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog} from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, PageEvent, MatDialog,MatSnackBar} from '@angular/material';
 import { DeleteComponent } from '../../shared/dialogs/delete/delete.component';
+import { RoleComponent } from './role/role.component';
 import { Http } from "@angular/http";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { environment } from "../../../../environments/environment"
@@ -20,7 +21,7 @@ export class RolesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog,public http:Http, public router:Router,public tstr:ToastrService) { }
+  constructor(public dialog: MatDialog,public http:Http, public router:Router,private snakebar:MatSnackBar,public tstr:ToastrService) { }
 
   ngOnInit() {
     this.http.get(environment.api + '/role/').subscribe((res)=>{
@@ -54,14 +55,25 @@ export class RolesComponent implements OnInit {
         if (result) {
           this.http.delete(environment.api + '/role/'+row._id)
           .subscribe((res)=>{
-            this.tstr.success('Role Removed Successfully!','Success');
-            this.router.navigate(['/admin/role']).then(()=>{this.router.navigate(['/admin/roles'])});
+        this.snakebar.open('Role Deleted Successfully!','',{duration: 5000});            
+            // this.tstr.success('Role Removed Successfully!','Success');
+            this.router.navigate(['/']).then(()=>{this.router.navigate(['/admin/roles'])});
           });
         }
     });
   }
   edit(xst){
-    this.router.navigate(['/admin/role/'+xst._id])
+    //this.router.navigate(['/admin/role/'+xst._id])
+     let dialogRef = this.dialog.open(RoleComponent,{
+       data: xst,
+       height:'auto',
+       panelClass: 'setup'
+     });
+    dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+        }
+    });
   }
 
 }

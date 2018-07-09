@@ -2,8 +2,18 @@
   <!-- Card column -->
   <div fxFlex.gt-sm="100%" fxFlex="100">
     <mat-card>
+        <mat-card-header class="bg-primary text-white">
+            <mat-card-title-group>
+                <mat-card-title fxLayout="row">
+                    Edit Mail Template
+                </mat-card-title>
+            </mat-card-title-group>
+            <button mat-icon-button class="srh-btn2 iconsetter" (click)="cancel()">
+                <mat-icon>clear</mat-icon>
+            </button>
+            <div fxFlex="fxFlex"></div>
+        </mat-card-header>
       <mat-card-content>
-        <mat-card-title>Mail Management</mat-card-title>
         <form [formGroup]="mailFormGroup">
           <mat-form-field>
             <input matInput type="text" placeholder="Title" [formControl]="mailFormGroup.controls['title']" [readonly]="isReadonly">
@@ -14,14 +24,14 @@
           </mat-form-field>
           <small *ngIf="mailFormGroup.controls['subject'].hasError('required') && mailFormGroup.controls['subject'].touched" class="text-danger support-text">Subject is required.</small>
 
-          <ck-editor name="editor1" [formControl]="mailFormGroup.controls['content']" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+          <ck-editor name="editor1" [formControl]="mailFormGroup.controls['content']" skin="moono-lisa" [config]="config" language="en" [fullPage]="true"></ck-editor>
           <small *ngIf="mailFormGroup.controls['content'].hasError('required') && mailFormGroup.controls['content'].touched" class="text-danger support-text">Content is required.</small>
         </form>
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="row text-center" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width: 100%; float: left; ">
-      <button mat-raised-button color="red" [routerLink]="[ '/admin/mails' ]">Back</button>
+  <div class="row" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100" style="width:100%;text-align:right;">
+      <button mat-raised-button color="red" (click)="cancel()">Back</button>
       <button mat-raised-button color="primary" [disabled]="!mailFormGroup.valid" (click)="store();">Save</button>
   </div>
   <!-- <div fxLayout="row" style="width:100%">
