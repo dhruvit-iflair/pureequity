@@ -30,7 +30,7 @@ require('./user_documents')(router);
 require('./reset_password')(router);
 require('./bankdetails')(router);
 require('./history')(router);
-
+require('./bitstamp_graph')(router);
 
 //All of the Schema Collected here
 require('../models/models');

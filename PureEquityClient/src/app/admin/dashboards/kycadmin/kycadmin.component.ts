@@ -6,6 +6,7 @@ import { environment } from "../../../../environments/environment"
 import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { KycdetailsComponent } from '../kycdetails/kycdetails.component';
 
 @Component({
   selector: 'app-kycadmin',
@@ -83,7 +84,14 @@ export class KycadminComponent implements OnInit {
     }
   }
   edit(xst){
-    this.router.navigate(['/admin/kyc/'+xst.user._id])
+    console.log('/admin/kyc/'+xst.user._id);
+    let dialogRef = this.dialog.open(KycdetailsComponent,{
+      data: xst
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+    });
+    // this.router.navigate(['/admin/kyc/'+xst.user._id])
   }
   changeStatus(dt){
     var updobj={isApproved:!dt.isApproved}
