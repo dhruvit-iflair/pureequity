@@ -32,6 +32,7 @@ export class Dashboard1Component implements OnInit, OnDestroy {
     public isPending = false;
     public hasPermission = false;
     public tradeCoin:String = 'BTC / USD';
+    public selectedValue :any = 'btcusd';
     public tradeList: any[] = [
         { name: 'BTC / USD', isActive: true,  value: 'btcusd' , data: []},
         { name: 'BTC / EUR', isActive: false, value: 'btceur' , data: []},
@@ -86,15 +87,11 @@ export class Dashboard1Component implements OnInit, OnDestroy {
         });
         this.dashboardService.graphList.subscribe((grp)=>{
             const source = from(grp);
-            const data = source.pipe( groupBy((d:any)=> d.coin),mergeMap(group => group.pipe(toArray())));
-            
-            data.subscribe((graph) => {
-                graph.forEach((a:any) => {
-                    var date = new Date(a.timestamp*1000);
-                    this.graphData[a.coin].push([a.timestamp*1000, parseFloat(a.openPrice)]);
-                })
-                this.drawGraph();
-            });
+            this.graphData= { btcusd: [], btceur: [], eurusd: [], xrpusd: [], xrpeur: [], xrpbtc: [], ltcusd: [], ltceur: [], ltcbtc: [], ethusd: [], etheur: [], ethbtc: [], bchusd: [], bcheur: [], bchbtc: []};
+            grp.forEach((a:any) => {
+                this.graphData[a.coin].push([a.timestamp*1000, parseFloat(a.openPrice)]);
+            })
+            this.drawGraph();
         })
     }
     public int: any;
@@ -122,7 +119,7 @@ export class Dashboard1Component implements OnInit, OnDestroy {
             this.timer.seconds=d.getSeconds().toString();
             this.timer.micros=d.getMilliseconds().toString();
         }, 1000);
-        this.dashboardService.graph();
+        // this.dashboardService.graph();
 
     }
     drawGraph(){

@@ -29,7 +29,7 @@ export class UsersComponent {
   }
   ngOnInit() {
     this.userService.getAllUsers();
-    (<any>$(".srh-btn2")).on('click', function () {
+    (<any>$(".srh-btn2, .cl-srh-btn2")).on('click', function () {
         (<any>$(".app-search2")).toggle(200);
     });
   }

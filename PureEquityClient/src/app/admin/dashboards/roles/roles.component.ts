@@ -30,7 +30,7 @@ export class RolesComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-    (<any>$(".srh-btn2")).on('click', function () {
+    (<any>$(".srh-btn2, .cl-srh-btn2")).on('click', function () {
         (<any>$(".app-search2")).toggle(200);
     });
   }

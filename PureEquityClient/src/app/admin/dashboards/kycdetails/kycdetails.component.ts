@@ -46,6 +46,9 @@ export class KycdetailsComponent implements OnInit {
     });
     this.getInitialData();
   }
+  cancel(){
+    this.dialogRef.close();
+  }
   getInitialData() {
       this.http.get(environment.api + '/userdocs/byuid/' + this.data.user._id)
         .subscribe((res) => {

@@ -240,19 +240,29 @@
                 <!-- <mat-card-subtitle></mat-card-subtitle> -->
                 <!-- <div class="r-100 f-r">
                 </div> -->
-                <section layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+                <div fxLayout="row" fxLayoutWrap="wrap">
                     <!-- <div layout="row" layout-align="start center" flex>
                         <md-button class="md-primary">Submit</md-button>
                         <span flex></span>
                     </div>
                     <md-button class="md-warn">Cancel</md-button>
                     <md-button class="md-warn">Delete Boundary Partner Type</md-button> -->
-                    <button mat-button [matMenuTriggerFor]="menu" (menuClosed)="drawGraph()">{{tradeCoin}}</button>
+                    <!-- <button mat-button [matMenuTriggerFor]="menu" (menuClosed)="drawGraph()">{{tradeCoin}}</button>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item *ngFor="let list of tradeList; let i = index" class="{{(list.isActive)? 'mat-menu-item ng-star-inserted active ' : 'mat-menu-item ng-star-inserted non-active'}}" (click)="toggleValue(i);">{{list.name}}</button>
-                    </mat-menu>
-
-                </section>
+                    </mat-menu> -->
+                    <div fxFlex.gt-lg="80" fxFlex.gt-md="80" fxFlex.gt-xs="80" fxFlex="80">
+                    </div>
+                    <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="20" fxFlex="20">
+                        <mat-form-field>
+                            <mat-select placeholder="Select Coin" [(ngModel)]="selectedValue" (ngModelChange)="drawGraph()">
+                                <mat-option *ngFor="let list of tradeList; let i = index" [value]="list.value">
+                                    {{list.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
                 <div class="barchrt" style="height:360px;">
                     <div id="container" style="height: 370px; min-width: 310px"></div>
                     <!-- <ngx-charts-line-chart [view]="view" [scheme]="colorScheme"
