@@ -20,9 +20,9 @@
                 <!-- <mat-card-title>Enable/Disable 2FA Security</mat-card-title> -->
                 <form [formGroup]="veryform" (ngSubmit)="verifyotp()">
                     <div fxLayout="row" fxLayoutWrap="wrap" *ngIf="isqrenable">
-                        <img src="{{qr.img}}" height="200px" width="200px" style="margin-left: 15%;"></div>
+                        <img src="{{qr.img}}" height="200px" width="200px" style="margin-left: 29%;"></div>
                         <div fxLayout="row" fxLayoutWrap="wrap">
-                            <span style="margin-left: 16%;" *ngIf="isqrenable">{{qr.key}}</span>
+                            <span style="margin-left: 33%;" *ngIf="isqrenable">{{qr.key}}</span>
                             <span style="margin-top: 10%;margin-bottom: 10%;" *ngIf="!isqrenable">
                                 2FA successfully activated. Your account is now secured with 2FA.
                             </span>
