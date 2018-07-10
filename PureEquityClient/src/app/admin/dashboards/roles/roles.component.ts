@@ -48,7 +48,7 @@ export class RolesComponent implements OnInit {
   }
   delete(row){
     let dialogRef = this.dialog.open(DeleteComponent,{
-      data: { title: 'Want to Remove?', content: 'Are you sure?' },
+      data: { title: 'Want to Remove?', content: 'Are you sure?', class:'warn' },
       panelClass:'setupchecker'
     });
     dialogRef.afterClosed().subscribe(result => {
