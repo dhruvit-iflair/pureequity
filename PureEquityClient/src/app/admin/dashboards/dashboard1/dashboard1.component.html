@@ -255,7 +255,7 @@
                     </div>
                     <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="20" fxFlex="20">
                         <mat-form-field>
-                            <mat-select placeholder="Select Coin" [(ngModel)]="selectedValue" (ngModelChange)="drawGraph()">
+                            <mat-select placeholder="Select Coin" [(ngModel)]="selectedValue" (ngModelChange)="drawGraph($event)">
                                 <mat-option *ngFor="let list of tradeList; let i = index" [value]="list.value">
                                     {{list.name}}
                                 </mat-option>

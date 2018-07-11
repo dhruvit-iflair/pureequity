@@ -80,4 +80,6 @@ div.upload{
     top: -10px;
     color:white !important;
   }
-  
+  .mat-card{
+    margin: 0 !important;
+  }

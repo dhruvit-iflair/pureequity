@@ -55,4 +55,15 @@ File: scss
 .dark {  
   @include angular-material-theme($dark-theme); 
 }
-  
+.mat-dialog-container {
+	// padding: 0px !important;
+	border: 5px solid #E2DAB7;
+}
+// .mat-card {
+// 	margin: 0 0 0 0 !important;
+// }
+@media(max-width: 1200px) {
+	.login-register {
+	display: block;
+}
+}

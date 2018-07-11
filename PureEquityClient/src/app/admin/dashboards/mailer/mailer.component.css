@@ -7,3 +7,6 @@
     position: absolute;
     top: -10px;
 }
+.mat-card{
+    margin: 0 !important;
+  }

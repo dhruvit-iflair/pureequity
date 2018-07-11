@@ -5,3 +5,9 @@
 /* mat-header-row ::last-child > .mat-sort-header-container{
     float: right;
 } */
+.mat-card{
+    margin: 0 !important;
+  }
+  .mat-dialog-container {
+      padding: 0 !important;
+  }
