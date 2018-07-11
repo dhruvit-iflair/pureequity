@@ -5,13 +5,14 @@ import { DashboardService } from '../../shared/services/dashboard.service';
 import { Coins } from '../../shared/interfaces/coins.interface';
 import { Trades, TradesData } from '../../shared/interfaces/trades.interface';
 import { single, multi, co, charti} from './cdata';
-import * as $ from 'jquery'
+// import * as $ from 'jquery'
 import * as Highcharts from 'highcharts/highstock.js';
 
 import { from } from 'rxjs/observable/from';
 import { mergeMap, groupBy, toArray } from 'rxjs/operators';
 
 declare var require: any;
+declare var $ :any;
 
 const data: any = require('./data.json');
 
@@ -124,36 +125,60 @@ export class Dashboard1Component implements OnInit, OnDestroy {
     }
     drawGraph(){
         let that = this;
-        $(document).ready(function () {
-            Highcharts.stockChart('container', {
-                rangeSelector: {
-                    selected: 1
-                },
-                series: [{
-                    name: that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].name,
-                    data: that.graphData[that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].value],
-                    tooltip: {
-                        valueDecimals: 2
-                    }
-                }],
-                navigator: { enabled: false }
-            });
-            var cont = document.getElementById('container').style.height;
-            var card = document.getElementById('chart-card-content').style.height
-            card = cont;
-            $('.highcharts-range-selector-buttons').find('text').first().remove();
-            (<any>$('.spark-count')).sparkline([4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9], {
-                type: 'bar'
-                , width: '100%'
-                , height: '70'
-                , barWidth: '2'
-                , resize: true
-                , barSpacing: '6'
-                , barColor: 'rgba(255, 255, 255, 0.3)'
-            });
-        });
+        // $(document).ready(function () {
+        //     Highcharts.stockChart('container', {
+        //         rangeSelector: {
+        //             selected: 1
+        //         },
+        //         series: [{
+        //             name: that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].name,
+        //             data: that.graphData[that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].value],
+        //             tooltip: {
+        //                 valueDecimals: 2
+        //             }
+        //         }],
+        //         navigator: { enabled: false }
+        //     });
+        //     var cont = document.getElementById('container').style.height;
+        //     var card = document.getElementById('chart-card-content').style.height
+        //     card = cont;
+        //     $('.highcharts-range-selector-buttons').find('text').first().remove();
+        //     // (<any>$('.spark-count')).sparkline([4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9], {
+        //     //     type: 'bar'
+        //     //     , width: '100%'
+        //     //     , height: '70'
+        //     //     , barWidth: '2'
+        //     //     , resize: true
+        //     //     , barSpacing: '6'
+        //     //     , barColor: 'rgba(255, 255, 255, 0.3)'
+        //     // });
+        // });
     }
-
+    ngAfterViewInit() {
+        //Sparkline chart
+        var sparklineLogin = function () {
+          // spark count
+          $('.spark-count').sparkline([4, 5, 9, 2, 12, 5, 10, 9, 2, 3, 4, 12, 4, 9], {
+            type: 'bar'
+            , width: '100%'
+            , height: '70'
+            , barWidth: '2'
+            , resize: true
+            , barSpacing: '6'
+            , barColor: 'rgba(255, 255, 255, 0.3)'    
+          });
+    
+        }
+        var sparkResize;
+        $(window).resize(function (e) {
+          clearTimeout(sparkResize);
+          sparkResize = setTimeout(sparklineLogin, 500);
+        });
+        $(document).ready(function () {
+        sparklineLogin();
+        });
+        // alert($('.spark-count').sparkline)
+      }
     ngOnDestroy() {
         if (this.int) {
             clearInterval(this.int);

@@ -32,9 +32,7 @@
           "../node_modules/highcharts/css/highcharts.css"
       ],
       "scripts": [
-          "assets/js/jquery-2.2.4.min.js",
           "../node_modules/ng-recaptcha/index.js",
-          "assets/js/jquery.sparkline.min.js",
           "../node_modules/highcharts/js/highstock.js"
       ],
       "environmentSource": "environments/environment.ts",
