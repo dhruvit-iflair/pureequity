@@ -92,7 +92,7 @@ export class Dashboard1Component implements OnInit, OnDestroy {
             grp.forEach((a:any) => {
                 this.graphData[a.coin].push([a.timestamp*1000, parseFloat(a.openPrice)]);
             })
-            this.drawGraph();
+            this.drawGraph('btcusd');
         })
     }
     public int: any;
@@ -120,10 +120,32 @@ export class Dashboard1Component implements OnInit, OnDestroy {
             this.timer.seconds=d.getSeconds().toString();
             this.timer.micros=d.getMilliseconds().toString();
         }, 1000);
-        // this.dashboardService.graph();
+        this.dashboardService.graph();
 
     }
-    drawGraph(){
+    // drawGraph(){
+    //     let that = this;
+    //     $(document).ready(function () {
+    //         Highcharts.stockChart('container', {
+    //             rangeSelector: {
+    //                 selected: 1
+    //             },
+    //             series: [{
+    //                 name: that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].name,
+    //                 data: that.graphData[that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].value],
+    //                 tooltip: {
+    //                     valueDecimals: 2
+    //                 }
+    //             }],
+    //             navigator: { enabled: false }
+    //         });
+    //         var cont = document.getElementById('container').style.height;
+    //         var card = document.getElementById('chart-card-content').style.height
+    //         card = cont;
+    //         $('.highcharts-range-selector-buttons').find('text').first().remove();
+    //     });
+    // }
+    drawGraph(event){        
         let that = this;
         $(document).ready(function () {
             Highcharts.stockChart('container', {
@@ -131,8 +153,8 @@ export class Dashboard1Component implements OnInit, OnDestroy {
                     selected: 1
                 },
                 series: [{
-                    name: that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].name,
-                    data: that.graphData[that.tradeList[that.tradeList.findIndex(t=>t.isActive==true)].value],
+                    name: that.tradeList[that.tradeList.findIndex(t=>t.value==event)].name,
+                    data: that.graphData[that.tradeList[that.tradeList.findIndex(t=>t.value==event)].value],
                     tooltip: {
                         valueDecimals: 2
                     }
@@ -142,9 +164,9 @@ export class Dashboard1Component implements OnInit, OnDestroy {
             var cont = document.getElementById('container').style.height;
             var card = document.getElementById('chart-card-content').style.height
             card = cont;
-            $('.highcharts-range-selector-buttons').find('text').first().remove();
         });
     }
+
     ngAfterViewInit() {
         //Sparkline chart
         var sparklineLogin = function () {
@@ -158,7 +180,6 @@ export class Dashboard1Component implements OnInit, OnDestroy {
             , barSpacing: '6'
             , barColor: 'rgba(255, 255, 255, 0.3)'    
           });
-    
         }
         var sparkResize;
         $(window).resize(function (e) {
