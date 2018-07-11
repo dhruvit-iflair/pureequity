@@ -5,7 +5,7 @@
                 Kyc Details
             </mat-card-title>
         </mat-card-title-group>
-        <div fxFlex="fxFlex"></div>
+        <!-- <div fxFlex="fxFlex"></div> -->
         <button mat-icon-button class="srh-btn2 iconsetter" (click)="cancel()">
             <mat-icon>clear</mat-icon>
         </button>
@@ -53,7 +53,7 @@
                 <form [formGroup]="secondFormGroup">
                     <ng-template matStepLabel>Upload your Documents</ng-template>
                     <div class="mat-form-field" fxLayout="row" fxLayoutWrap="wrap">
-                      <div class='upload' (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+                      <div class='upload' (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" onclick="document.getElementById('FileInput').click()">
                   <!-- <div class='upload' (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" onclick="document.getElementById('FileInput').click()"> -->
                           <h4 style="padding-top: 35px; color: #555682;">Drag &amp; Drop Documents</h4>
                       </div>
