@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { KycdetailsComponent } from '../kycdetails/kycdetails.component';
+declare var $ :any;
 
 @Component({
   selector: 'app-kycadmin',
@@ -42,8 +43,8 @@ export class KycadminComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-    (<any>$(".srh-btn2, .cl-srh-btn2")).on('click', function () {
-        (<any>$(".app-search2")).toggle(200);
+    $(".srh-btn2, .cl-srh-btn2").on('click', function () {
+        $(".app-search2").toggle(200);
     });
   }
   pageEvent(event){

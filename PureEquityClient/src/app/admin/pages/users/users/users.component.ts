@@ -7,6 +7,7 @@ import { ReviewTransactionsComponent } from '../../review-transactions/review-tr
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { Router } from '@angular/router';
 
+declare var $:any;
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',

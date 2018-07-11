@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { environment } from '../../../../environments/environment';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
+declare var $ :any;
 
 @Component({
   selector: 'app-balance-management',
@@ -46,8 +47,8 @@ export class BalanceManagementComponent implements OnInit {
       },(error)=>{
         console.log(error);
       });
-      (<any>$(".srh-btn2, .cl-srh-btn2")).on('click', function () {
-          (<any>$(".app-search2")).toggle(200);
+      $(".srh-btn2, .cl-srh-btn2").on('click', function () {
+          $(".app-search2").toggle(200);
       });
   }
   applyFilter(filterValue: string) {
