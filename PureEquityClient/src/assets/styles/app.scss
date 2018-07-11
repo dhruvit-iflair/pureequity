@@ -1055,3 +1055,57 @@ div.scrollmenu a {
 .highcharts-navigator {
     display: none !important; 
 }
+
+/* 10 - 07 */
+.mat-menu-content {
+    padding-top: 0 !important;
+}
+.cdk-overlay-pane .mat-dialog-container {
+    padding: 15px;
+}
+.mat-dialog-actions {
+    margin-bottom: 0 !important;
+}
+.cdk-overlay-pane .mat-dialog-container .row {
+    margin-bottom: 10px;
+    width: calc(100% - 10px) !important;
+}
+.mat-dialog-container .mat-card .iconsetter.mat-icon-button {
+    right: 0;
+    top: 4px;
+}
+.app-search2 {
+    position: relative;
+}
+.app-search2 .cl-srh-btn2 {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    line-height: 30px;
+    color: #000;
+}
+.cdk-overlay-pane .mat-dialog-container .mat-card-title-group {
+    width: 250px;
+}
+
+.login-register .ng-untouched img:nth-child(1n) {
+    display: block;
+    height: 110px !important;
+    width: 100% !important;
+    max-width: 110px;
+    margin: 0 auto;
+}
+.login-register .ng-untouched img:nth-child(2n) {
+    display: block;
+    height: 22px !important;
+}
+.login-register .ng-untouched h4 {
+    margin-bottom: 10px;
+}
+.login-register .mat-form-field .mat-form-field-infix {
+    border-top: none;
+}
+.mat-card .mat-card-content {
+    font-size: 14px;
+}
+
