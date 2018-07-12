@@ -65,6 +65,7 @@ export class MaillistComponent implements OnInit {
     let dialogRef = this.dialog.open(MailerComponent,{
       data: xst,
       height:'auto',
+      width:'75%',
       panelClass:'setup'
     });
     dialogRef.afterClosed().subscribe(result => {

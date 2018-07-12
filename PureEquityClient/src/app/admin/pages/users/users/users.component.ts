@@ -57,7 +57,7 @@ export class UsersComponent {
     localStorage.setItem('trnId',user._id.toString());
     let dialogRef = this.dialog.open(ReviewTransactionsComponent,{
       height:'auto',
-      width: '-webkit-fill-available',
+      width: '70%',
       panelClass: 'setup'
     });
    dialogRef.afterClosed().subscribe(result => {
@@ -72,6 +72,7 @@ export class UsersComponent {
      let dialogRef = this.dialog.open(EditUserComponent,{
        data: user,
        height:'auto',
+       width: '64%',
        panelClass: 'setup'
      });
     dialogRef.afterClosed().subscribe(result => {

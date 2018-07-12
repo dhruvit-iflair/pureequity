@@ -82,4 +82,21 @@ div.upload{
   }
   .mat-card{
     margin: 0 !important;
-  }
+  }-card-content.mat-card-content {
+    padding: 0 !important;
+}
+.mat-dialog-container,
+mat-dialog-container {
+    padding: 0 !important;  
+}
+.mat-mini-fab .mat-button-wrapper,
+span.mat-button-wrapper {
+    padding: 6px 0 !important;
+}
+div.scrollmenu a {
+    padding-top: 15px;
+}
+
+div.scrollmenu {
+    height: fit-content;
+}

@@ -1,7 +1,9 @@
-mat-cell.buy.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-inserted {
+mat-cell.buy.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-inserted ,
+mat-cell.buy.mat-cell.cdk-column-fees.mat-column-fees {
     color: green;
 }
-mat-cell.sell.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-inserted {
+mat-cell.sell.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-inserted,
+mat-cell.sell.mat-cell.cdk-column-fees.mat-column-fees {
     color: red;
 }
 .iconsetter{
@@ -10,3 +12,10 @@ mat-cell.sell.mat-cell.cdk-column-fees.mat-column-fees.ng-star-inserted.ng-star-
     top: -10px;
     color:white !important;
   }
+  .mat-card .mat-card-content {
+      padding: 0 !important;
+  }
+
+.mat-dialog-container {
+    padding: 0px 0px 0 0px!important;
+}

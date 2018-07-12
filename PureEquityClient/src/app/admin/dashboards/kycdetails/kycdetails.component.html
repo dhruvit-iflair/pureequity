@@ -67,6 +67,10 @@
                                 <a *ngFor="let z of uploadedimgs;let i=index;">
                                     <img mat-card-avatar style="height: 150px;width: 150px;border-radius:0%;" src="{{z}}" *ngIf="z">
                                     <mat-icon *ngIf="i>0" class="mat-icon material-icons crosssymbol" (click)="removeDoc(i);">clear</mat-icon>
+                                    <!-- <button mat-mini-fab class="mat-mini-fab mat-warn crosssymbol" color="warn" (click)="removeDoc(i);" *ngIf="i>0">
+                                        <mat-icon >clear</mat-icon> 
+                                    </button> -->
+
                                 </a>
                         </div>
                     </div>

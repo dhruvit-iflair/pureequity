@@ -29,9 +29,9 @@
             <mat-cell *matCellDef="let element"> {{element.account}} </mat-cell>
           </ng-container>
         
-          <ng-container matColumnDef="transaction_type">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="{{element.transaction_type }} mat-cell cdk-column-fees mat-column-fees"> {{element.transaction_type | uppercase}} </mat-cell>
+          <ng-container matColumnDef="transaction_type" style="max-width: 50px !important; position:relative;">
+            <mat-header-cell *matHeaderCellDef mat-sort-header style="max-width: 50px !important; position:relative;"> Type </mat-header-cell>
+            <mat-cell *matCellDef="let element" style="max-width: 50px !important; position:relative;" class="{{element.transaction_type }} mat-cell cdk-column-fees mat-column-fees"> {{element.transaction_type | uppercase}} </mat-cell>
           </ng-container>
         
           <ng-container matColumnDef="fees">
@@ -63,7 +63,7 @@
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
          </mat-table>
         <mat-paginator *ngIf='dataSource' [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event);"></mat-paginator>
-        <div class="table-rasponsive" *ngIf='!dataSource'>
+        <div class="table-rasponsive" *ngIf='!dataSource' style="padding: 24px !important">
             <h3>No transactions found</h3>
           </div>
       </mat-card-content>

@@ -87,7 +87,8 @@ export class KycadminComponent implements OnInit {
   edit(xst){
     console.log('/admin/kyc/'+xst.user._id);
     let dialogRef = this.dialog.open(KycdetailsComponent,{
-      data: xst
+      data: xst,
+      width:'50%'
     });
     dialogRef.afterClosed().subscribe(result => {
         console.log(result);
