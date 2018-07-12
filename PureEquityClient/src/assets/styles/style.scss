@@ -62,6 +62,25 @@ File: scss
 // .mat-card {
 // 	margin: 0 0 0 0 !important;
 // }
+
+
+.customChart .stats {
+	float: left;
+	width: 100%;
+	text-align: center;
+}
+.customChart .stats h6, 
+.customChart .stats h1 {
+	margin-bottom: 10px;
+}
+.customChart .d-flex {
+	float: none;
+	display: block;
+}
+.customChart .ml-auto {
+	margin-left: auto;
+	text-align: center;
+}
 @media(max-width: 1200px) {
 	.login-register {
 	display: block;
