@@ -159,7 +159,7 @@ MailerCtrl.prototype.send = function (req, res, next) {
                             from: req.body.from,
                             to: req.body.to,
                             subject: docker[0].subject,
-                            text: docker[0].content
+                            html: docker[0].content
                         };
                         smtpTrans.sendMail(mailOptions, function (err) {
                             console.log("Email sent to :: " + req.body.to + "from " + req.body.from);

@@ -52,13 +52,13 @@ Reset_PasswordCtrl.prototype.generate = function (req, res, next) {
                         var founder=docker[0].content.search("[(resetLink)]");
                         if(founder>-1){
                             var x=docker[0].content.split("[(resetLink)]");
-                          //  docker[0].content=x[0]+'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +x[1];
+                           docker[0].content=x[0]+'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +x[1];
                         }
                         var mailOptions = {
                             from: 'no-replay@PureEquity.com',
                             to: user.username,
                             subject: docker[0].subject,
-                            text:docker[0].content
+                            html:docker[0].content
                             // text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                             //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
                             //     'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +
@@ -210,7 +210,7 @@ Reset_PasswordCtrl.prototype.verify = function (req, res, next) {
                             from: 'no-replay@PureEquity.com',
                             to: user.username,
                             subject: docker[0].subject,
-                            text:docker[0].content
+                            html:docker[0].content
                             // text: 'Hello,\n\n' +
                             //     'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
                         };
