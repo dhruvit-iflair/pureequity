@@ -18,7 +18,7 @@ export class MailerComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: Http,private snakebar:MatSnackBar, private router: Router,private aroute:ActivatedRoute , private toastr: ToastrService,public dialogRef: MatDialogRef<MailerComponent>, @Inject(MAT_DIALOG_DATA) public data) { }
   public mailFormGroup: FormGroup;
   public param;isReadonly=false;
-  public config={font_names : 'Arial;Times New Roman;Verdana;Roboto;Sans Sherif;'};
+  public config={font_names : 'Arial;Times New Roman;Verdana;Roboto;Sans Sherif;', extraPlugins: 'divarea'};
   
   ngOnInit() {
     //this.aroute.params.subscribe((params)=>{
