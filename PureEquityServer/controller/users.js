@@ -173,7 +173,7 @@ UserCtrl.prototype.register = function (req, res) {
                                 from: 'no-replay@PureEquity.com',
                                 to: user.username,
                                 subject: docker[0].subject,
-                                text: docker[0].content
+                                html: docker[0].content
                                 // text: 'You are receiving this because you (or someone else) have requested registration for your account.\n\n' +
                                 //     'Please click on the following link, or paste this into your browser to verify your email account:\n\n' +
                                 //     'http://' + config.redirectionHost + '/verify?token=' + token + ' \n\n'
@@ -363,7 +363,7 @@ UserCtrl.prototype.verify = function (req, res) {
                                                     from: 'no-replay@PureEquity.com',
                                                     to: user.user.username,
                                                     subject: docker[0].subject, //'Verify your Account',
-                                                    text: docker[0].content
+                                                    html: docker[0].content
                                                     // text: 'You are receiving this because you (or someone else) have requested verification for your account.\n\n' +
                                                     //     'Please click on the following link, or paste this into your browser to verify your email account:\n\n' +
                                                     //     'http://' + config.redirectionHost + '/verify?token=' + tok + ' \n\n'
@@ -429,7 +429,7 @@ UserCtrl.prototype.verify = function (req, res) {
                                 from: 'no-replay@PureEquity.com',
                                 to: user.username,
                                 subject: docker[0].subject, //'Account Verified!!',
-                                text:docker[0].content
+                                html:docker[0].content
                                 // text: 'Hello,\n\n' +
                                 //     'This is a confirmation that the your account ' + user.username + ' has just been verified.\n'
                             };
