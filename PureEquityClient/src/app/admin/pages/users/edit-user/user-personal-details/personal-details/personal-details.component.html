@@ -1,17 +1,17 @@
 <div [formGroup]="personal" fxLayout="row" fxLayoutWrap="wrap">
-      <mat-form-field fxFlex.gt-lg="50" fxFlex.gt-md="50" >
+      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <input matInput placeholder="Middle Name" formControlName="middleName" required>
         <mat-icon matSuffix>account_circle</mat-icon>        
         <small *ngIf="personal.controls['middleName'].hasError('required') && personal.controls['middleName'].touched"
         class="text-danger support-text">You must include middle name.</small>
       </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="50" fxFlex.gt-md="50" >
+      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <input matInput placeholder="Place of Birth" formControlName="placeOfBirth" required>
         <mat-icon matSuffix>place</mat-icon>
         <small *ngIf="personal.controls['placeOfBirth'].hasError('required') && personal.controls['placeOfBirth'].touched"
         class="text-danger support-text">You must include place of birth.</small>
       </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="50" fxFlex.gt-md="50" >
+      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <mat-select placeholder="Gender" name="gender" formControlName="gender">
           <mat-option value="male">
             {{ 'Male' }}
@@ -27,19 +27,19 @@
         <small *ngIf="personal.controls['gender'].hasError('required') && personal.controls['gender'].touched"
         class="text-danger support-text">You must include your gender.</small>
       </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="50" fxFlex.gt-md="50" >
+      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <input matInput placeholder="Country Code" formControlName="countryCode" required>
         <mat-icon matSuffix>flag</mat-icon>  
         <small *ngIf="personal.controls['countryCode'].hasError('required') && personal.controls['countryCode'].touched"
         class="text-danger support-text">You must include country code.</small>      
       </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="50" fxFlex.gt-md="50" >
+      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <input matInput placeholder="Contact No" formControlName="contactNumber" required>
         <mat-icon matSuffix>contact_phone</mat-icon> 
         <small *ngIf="personal.controls['contactNumber'].hasError('required') && personal.controls['contactNumber'].touched"
         class="text-danger support-text">You must include contact number.</small>               
       </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="50" fxFlex.gt-md="50" >
+      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <input matInput placeholder="Social Link" formControlName="socialLink" required>
         <mat-icon matSuffix>group</mat-icon>                
         <small *ngIf="personal.controls['socialLink'].hasError('required') && personal.controls['socialLink'].touched"

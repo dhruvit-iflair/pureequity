@@ -133,7 +133,7 @@ export class KycdetailsComponent implements OnInit {
     for (var i = 0; i < file.length; i++) {
       var FR= new FileReader();
       FR.addEventListener("load", function(e) {
-        that.uploadedimgs.push(FR.result);
+        that.uploadedimgs.push(e.target['result']);
         that.secondFormGroup.patchValue({scandoc: that.uploadedimgs});
       });
       FR.readAsDataURL( file[i] );

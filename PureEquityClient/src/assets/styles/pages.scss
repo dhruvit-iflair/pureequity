@@ -152,6 +152,15 @@ html .page-wrapper{
         color:aqua;
     }
 }
+
+.warning{
+    background: lightyellow;
+    text-align: center;
+    color: black;
+}
+.warning > span{
+    font-weight: bold;
+}
 /*******************
  Mail page
 *******************/

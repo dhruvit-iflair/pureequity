@@ -75,7 +75,6 @@ export class Dashboard1Component implements OnInit, OnDestroy {
         }
         if (localStorage.getItem('tradeList')) {
             this.tradeList = JSON.parse(localStorage.getItem('tradeList'));
-            console.log(this.tradeList.findIndex(t=>t.isActive==true));
             this.tradeList[this.tradeList.findIndex(t=>t.isActive==true)].isActive = false;
             this.tradeList[this.tradeList.findIndex(t=>t.name == 'BTC / USD')].isActive = true;
         }

@@ -29,7 +29,7 @@ export class FullComponent implements OnDestroy, AfterViewInit {
       
   public config: PerfectScrollbarConfigInterface = {};
   private _mobileQueryListener: () => void;
-  public navItems;isAdmin;
+  public navItems;isAdmin;is2FAEnabled;
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public menuItems: MenuItems,private topnav:TopnavbService) {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -40,6 +40,12 @@ export class FullComponent implements OnDestroy, AfterViewInit {
     var tokendata=JSON.parse(localStorage.getItem('token'));
     if(tokendata.user.role.name!='admin'){
       this.isAdmin=false;
+      if(tokendata.user.is2FAEnabled){
+        this.is2FAEnabled=true;
+      }
+      else{
+        this.is2FAEnabled=false;
+      }
     }
     else{
       this.isAdmin=true;

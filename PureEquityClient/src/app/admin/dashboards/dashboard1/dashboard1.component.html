@@ -154,7 +154,7 @@
         </mat-card>
     </div>
 </div> -->
-<div fxLayout="row" fxLayoutWrap="wrap">
+<div fxLayout="row" fxLayoutWrap="wrap" *ngIf="hasPermission">
     <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
         <mat-card class="bg-info customChart">
             <mat-card-content>
