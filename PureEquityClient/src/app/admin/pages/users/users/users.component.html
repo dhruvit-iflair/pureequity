@@ -11,15 +11,21 @@
         <form class="app-search2">
           <input type="text" class="form-control" placeholder="Search" (keyup)="applyFilter($event.target.value)">
           <a class="cl-srh-btn2">
-              <i class="ti-close"></i>
+            <i class="ti-close"></i>
           </a>
         </form>
         <button mat-icon-button class="srh-btn2" style="margin-top: -5px;">
           <mat-icon>search</mat-icon>
         </button>
-        <button mat-icon-button style="margin-top: -5px;">
+        <button mat-icon-button [matMenuTriggerFor]="hamburger" style="margin-top: -5px;">
           <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #hamburger="matMenu" class="mymegamenu">
+          <button mat-menu-item (click)="addUser();">
+            <mat-icon>add</mat-icon> New User </button>
+          <button mat-menu-item>
+            <mat-icon>vertical_align_bottom</mat-icon> Export to CSV </button>
+        </mat-menu>
         <!-- <mat-form-field style="width: 30%;margin: -15px;">  -->
         <!-- <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" style="width: 30%; margin: -15px; background-color: white; height: 45px; margin-top: -8px; margin-right: -8px; border-radius: 5px; color: #555682;"> -->
 

@@ -26,6 +26,7 @@ md-calendar {
     font-size: 35px;
     top: -130px;
     left: -20px;
+    cursor: pointer;
 }
 
 .dropzone {

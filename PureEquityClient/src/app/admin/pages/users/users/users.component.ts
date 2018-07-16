@@ -100,6 +100,18 @@ export class UsersComponent {
         }
     });
   }
+  addUser(){
+    let dialogRef = this.dialog.open(EditUserComponent,{
+      height:'auto',
+      width: '64%',
+      panelClass: 'setup'
+    });
+   dialogRef.afterClosed().subscribe(result => {
+       if (result) {
+         console.log(result);
+       }
+   });
+  }
 }
 
 
