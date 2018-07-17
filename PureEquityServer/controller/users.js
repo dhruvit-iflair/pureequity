@@ -499,4 +499,118 @@ UserCtrl.prototype.change_password = function (req, res) {
     });
 }
 
+UserCtrl.prototype.newUser = function (req,res) {
+    
+    async.waterfall([
+        function (done) {
+            crypto.randomBytes(20, function (err, buf) {
+                var token = buf.toString('hex');
+                done(err, token);
+            });
+        },
+        function (token, done) {
+            User.register(new User(req.body), req.body.password, function (err, doc) {
+                if (err) {
+                    return res.status(409).send({ message: "A user is already register with this email address" }).end();
+                }
+                else if (doc && doc._id) {
+                    done(err, token, doc);
+                }
+                else if (!doc) {
+                    return res.status(404).send({ message: "No User Found !!" }).end();
+                }
+                else {
+                    return res.status(500).send({ message: "Error in removing this user!!" }).end();
+                }
+            });
+        },
+        function (token, user, done) {
+            Mailer.find({title:'Reset Password'})
+            .exec(function(er,docker){
+                if(er){
+                    res.status(400).send({message:er});
+                }
+                else{
+                    if (docker[0]) {
+                        var founder=docker[0].content.search("[(resetLink)]");
+                        if(founder>-1){
+                            var x=docker[0].content.split("[(resetLink)]");
+                           docker[0].content=x[0]+'http://' + config.redirectionHost + '/reset?token=' + token +'&type=new'+ '\n\n' +x[1];
+                        }
+                        var mailOptions = {
+                            from: 'no-replay@PureEquity.com',
+                            to: user.username,
+                            subject: "Set New Password",
+                            html:docker[0].content
+                            // text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                            //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                            //     'http://' + config.redirectionHost + '/reset?token=' + token + '\n\n' +
+                            //     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                        };
+                        smtpTrans.sendMail(mailOptions, function (err) {
+                            console.log("Email sent to :: " + user.username);
+                            Reset_Password.find({ user: user._id, isUsed: false }).exec(function (err, re) {
+                                if (err) {
+                                    res.status(500).send({ message: err.message });
+                                }
+                                else if (re.length && re[0]._id) {
+                                    var data = {
+                                        token: token,
+                                        tokentime: Date.now() + 3600000,
+                                        user: user._id
+                                    }
+                                    Reset_Password.findByIdAndUpdate(re[0]._id, data, function (err, reset) {
+                                        if (err) {
+                                            res.status(500).send({ message: err.message });
+                                        }
+                                        else if (reset && reset._id) {
+                                            res.status(200).send({ message: "Success" }).end();
+                                        }
+                                        else if (!reset) {
+                                            res.status(404).send({ message: "No Token generated !!" }).end();
+                                        }
+                                        else {
+                                            res.status(500).send({ message: "Error in resetting password this user !!" }).end();
+                                        }
+                                    });
+                                }
+                                else if (!re.length) {
+                                    var data = {
+                                        token: token,
+                                        tokentime: Date.now() + 3600000,
+                                        user: user._id
+                                    }
+                                    var reset_password = new Reset_Password(data);
+        
+                                    reset_password.save(function (err, reset) {
+                                        if (err) {
+                                            res.status(500).send({ message: err.message });
+                                        }
+                                        else if (reset && reset._id) {
+                                            res.status(200).send({ message: "Please Check you email's Inbox" }).end();
+                                        }
+                                        else if (!reset) {
+                                            res.status(404).send({ message: "No Token generated !!" }).end();
+                                        }
+                                        else {
+                                            res.status(500).send({ message: "Error in generating token for this user !!" }).end();
+                                        }
+                                    });
+                                }
+                                else {
+                                    res.status(500).send({ message: "Error in getting token this user !!" }).end();
+                                }
+        
+                            })
+                        });
+                    }
+                }
+            });
+        }
+    ], function (err) {
+        console.log('this err' + ' ' + err)
+        res.status(500).send({ message: "Error in resetting password this user!!" }).end();
+    });
+    
+}
 module.exports = new UserCtrl();

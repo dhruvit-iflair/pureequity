@@ -6,7 +6,7 @@ import { DeleteComponent } from '../../../shared/dialogs/delete/delete.component
 import { ReviewTransactionsComponent } from '../../review-transactions/review-transactions.component';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { Router } from '@angular/router';
-
+import { NewUserComponent } from "../new-user/new-user.component";
 declare var $:any;
 @Component({
   selector: 'app-users',
@@ -101,9 +101,9 @@ export class UsersComponent {
     });
   }
   addUser(){
-    let dialogRef = this.dialog.open(EditUserComponent,{
+    let dialogRef = this.dialog.open(NewUserComponent,{
       height:'auto',
-      width: '64%',
+      width: '50%',
       panelClass: 'setup'
     });
    dialogRef.afterClosed().subscribe(result => {

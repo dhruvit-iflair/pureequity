@@ -6,6 +6,8 @@ module.exports = function (router) {
 
     router.get('/api/users', verify, controller.get);
 
+    router.post('/api/users', controller.newUser);
+
     router.get('/api/users/:id', controller.getById);
     
     router.post('/api/users/verify', controller.verify);

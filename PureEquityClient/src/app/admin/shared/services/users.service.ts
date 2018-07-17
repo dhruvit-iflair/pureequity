@@ -84,4 +84,7 @@ export class UsersService {
   getKYC(): Observable<any[]>{
     return this.usersDoc.asObservable();
   }
+  newUser(data:any) {
+    return this.http.post(environment.api + '/users', data)    
+  }
 }

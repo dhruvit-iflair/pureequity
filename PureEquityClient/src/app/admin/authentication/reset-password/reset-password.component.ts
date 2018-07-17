@@ -19,6 +19,7 @@ const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
 export class ResetPasswordComponent implements OnInit {
   public form: FormGroup;
   public token: String;
+  public title : String = "Reset Password";
   constructor(private fb: FormBuilder, private router: Router, private active: ActivatedRoute, private loginService: LoginService, public toster: ToastrService,private snakebar:MatSnackBar) {
     this.active.queryParams.subscribe((params) => {
       // console.log(params);
@@ -31,6 +32,9 @@ export class ResetPasswordComponent implements OnInit {
         })
       } else {
         this.router.navigate(['/forgot']);
+      }
+      if(params['type']){
+        this.title = "Set New Password";
       }
 
     })
