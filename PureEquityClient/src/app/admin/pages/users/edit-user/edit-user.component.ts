@@ -35,7 +35,6 @@ export class EditUserComponent implements OnInit {
     this.dialogRef.close();
   }
   ngOnInit() {
-    debugger;
     this.detailsFormGroup = this._formBuilder.group({
       _id: ['', Validators.required],
       username: [{ value: '', disabled: true }, Validators.required],
