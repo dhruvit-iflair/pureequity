@@ -260,7 +260,16 @@ use profile section
         }
     }
 }
-
+#snav .mat-list-item.selected>.mat-list-item-content .sub-item a {
+    background-color: transparent;
+    color: #607d8b;
+}
+#snav .mat-list-item.selected>.mat-list-item-content .sub-item .mat-icon {
+    color: #99abb4;
+}
+#snav .mat-list-item.selected>.mat-list-item-content .sub-item .mat-list-item a:hover{
+    color:#e2dab7;
+}
 
 .sidebar-closed #snav{
     &.mat-sidenav ~ .mat-drawer-content {

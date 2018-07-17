@@ -1,5 +1,5 @@
 <div>
-    <div fxLayout="row" fxLayoutWrap="wrap" style="width: 86%;">
+    <div fxLayout="row" fxLayoutWrap="wrap" style="width: 90%; overflow-x:auto;">
       <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='isBankDescription'>
         <form [formGroup]="mainform">
           <div formArrayName="bankdetails" style="display: flex;">
@@ -162,7 +162,7 @@
     </div>
 
     <div>
-        <div fxLayout="row" fxLayoutWrap="wrap" style="width: 86%;">
+        <div fxLayout="row" fxLayoutWrap="wrap" style="width: 90%; overflow-x:auto;">
             <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='isCCDescription'>
               <form [formGroup]="mainform">
                 <div formArrayName="ccinfo" style="display: flex;">
@@ -304,7 +304,7 @@
           </div>
     </div>
     <div>
-        <div fxLayout="row" fxLayoutWrap="wrap" style="width: 86%;">
+        <div fxLayout="row" fxLayoutWrap="wrap" style="width: 90%; overflow-x:auto;">
             <div fxFlex.gt-sm="33%" fxFlex="33" *ngIf='isPPDescription'>
               <form [formGroup]="mainform">
                 <div formArrayName="ppdetails" style="display: flex;">
