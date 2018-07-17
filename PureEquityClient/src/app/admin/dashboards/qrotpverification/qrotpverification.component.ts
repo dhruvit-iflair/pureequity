@@ -7,7 +7,7 @@ import { Http } from "@angular/http";
 import { environment } from '../../../../environments/environment';
 import { card } from '../../shared/animations/animations';
 import { MatSnackBar } from '@angular/material';
-
+import { FullComponent } from "../../layouts/full/full.component";
 @Component({
   selector: 'app-qrotpverification',
   templateUrl: './qrotpverification.component.html',
@@ -15,14 +15,15 @@ import { MatSnackBar } from '@angular/material';
   animations:[card]
 })
 export class QrotpverificationComponent implements OnInit {
-  public veryform: FormGroup;
-  constructor(private fb: FormBuilder, private http: Http,private snakebar:MatSnackBar, private router: Router, private toastr: ToastrService) { }
+  public veryform: FormGroup;tokendt;
+  constructor(private fb: FormBuilder,private fc:FullComponent, private http: Http,private snakebar:MatSnackBar, private router: Router, private toastr: ToastrService) { }
   qr = { img: '', key: '' }; isqrenable = false;uid;isEnable;
   ngOnInit() {
     this.veryform = this.fb.group({
       totp: [null, Validators.compose([Validators.required])]
     });
     var tokendata = JSON.parse(localStorage.getItem('token'));
+    this.tokendt=tokendata;
     this.uid=tokendata.user._id;
     // if (tokendata) {
     //   this.qr.img = tokendata.data.twofactor.dataURL;
@@ -99,14 +100,22 @@ export class QrotpverificationComponent implements OnInit {
       if (x.nModified == 1 && aEnabled==false) {
         this.snakebar.open('Two Factor Authentification Disabled From Now Onwards.','',{duration: 5000});        
         // this.toastr.success('Two Factor Authentification Disabled From Now Onwards.', 'Success');
+        this.tokendt.user.is2FAEnabled=false;
+        localStorage.setItem('token',JSON.stringify(this.tokendt));
         this.isqrenable = true;
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']).then(()=>{
+          this.fc.ngOnInit();
+        });
       }
       if (x.nModified == 1 && aEnabled==true) {
         this.snakebar.open('Two Factor Authentification Enabled From Now Onwards.','',{duration: 5000});                
         // this.toastr.success('Two Factor Authentification Enabled From Now Onwards.', 'Success');
+        this.tokendt.user.is2FAEnabled=true;
+        localStorage.setItem('token',JSON.stringify(this.tokendt));
         this.isqrenable = false;
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']).then(()=>{
+          this.fc.ngOnInit();
+        });
       }
     }, (err) => {
       var x = err.json();

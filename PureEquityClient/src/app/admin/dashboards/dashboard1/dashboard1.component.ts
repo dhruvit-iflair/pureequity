@@ -30,6 +30,15 @@ export interface Chart {
     styleUrls: ['./dashboard1.component.scss']
 })
 export class Dashboard1Component implements OnInit, OnDestroy {
+    lineChart1: Chart = {
+        type: 'Line',
+        data: data['LineWithArea'],
+        options: {
+          low: 0,
+          showArea: true,
+          fullWidth: true    
+        }
+    }; 
     public isPending = false;
     public hasPermission = false;
     public tradeCoin:String = 'BTC / USD';
@@ -91,7 +100,7 @@ export class Dashboard1Component implements OnInit, OnDestroy {
             grp.forEach((a:any) => {
                 this.graphData[a.coin].push([a.timestamp*1000, parseFloat(a.openPrice)]);
             })
-            this.drawGraph('btcusd');
+            // this.drawGraph('btcusd');
         })
     }
     public int: any;
@@ -100,16 +109,16 @@ export class Dashboard1Component implements OnInit, OnDestroy {
         // console.log(event);
     }
     // Line chart
-    lineChart1: Chart = {
-        type: 'Line',
-        data: data['LineWithArea'],
-        options: {
-          low: 0,
-          high: 35000,    
-          showArea: true,
-          fullWidth: true    
-        }
-    }
+    // lineChart1: Chart = {
+    //     type: 'Line',
+    //     data: data['LineWithArea'],
+    //     options: {
+    //       low: 0,
+    //       high: 35000,    
+    //       showArea: true,
+    //       fullWidth: true    
+    //     }
+    // }
     ngOnInit() {
         this.int = setInterval(() => {          
             this.dashboardService.trades();
@@ -119,7 +128,7 @@ export class Dashboard1Component implements OnInit, OnDestroy {
             this.timer.seconds=d.getSeconds().toString();
             this.timer.micros=d.getMilliseconds().toString();
         }, 1000);
-        this.dashboardService.graph();
+        // this.dashboardService.graph();
 
     }
     // drawGraph(){
