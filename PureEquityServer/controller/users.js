@@ -525,7 +525,7 @@ UserCtrl.prototype.newUser = function (req,res) {
             });
         },
         function (token, user, done) {
-            Mailer.find({title:'Reset Password'})
+            Mailer.find({title:'New User Registration'})
             .exec(function(er,docker){
                 if(er){
                     res.status(400).send({message:er});
@@ -540,7 +540,7 @@ UserCtrl.prototype.newUser = function (req,res) {
                         var mailOptions = {
                             from: 'no-replay@PureEquity.com',
                             to: user.username,
-                            subject: "Set New Password",
+                            subject: docker[0].subject,
                             html:docker[0].content
                             // text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                             //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +

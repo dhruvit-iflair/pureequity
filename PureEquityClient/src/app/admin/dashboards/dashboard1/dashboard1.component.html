@@ -264,7 +264,11 @@
                     </div>
                 </div>
                 <div class="barchrt" style="height:360px;">
-                    <div id="container" style="height: 370px; min-width: 310px"></div>
+                    <div class="linearea" style="height:400px;">
+                        <x-chartist class="" [data]="lineChart1.data" [type]="lineChart1.type" [options]="lineChart1.options" [responsiveOptions]="lineChart1.responsiveOptions"
+                            [events]="lineChart1.events"> </x-chartist>
+                    </div>
+                    <!-- <div id="container" style="height: 370px; min-width: 310px"></div> -->
                     <!-- <ngx-charts-line-chart [view]="view" [scheme]="colorScheme"
                     [results]="multi" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
                     [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale"
