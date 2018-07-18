@@ -10,6 +10,7 @@ import { GlobalService } from './services/global.service';
 import { TopnavbService } from './topnavb/topnavb.service';
 import { FileDropDirective } from "./directives/filedrops.directive";
 import { BankdetailsService } from './services/bankdetails.service';
+import { CsvService } from './services/csv.service';
 @NgModule({
   declarations: [
     AccordionAnchorDirective,
@@ -23,7 +24,16 @@ import { BankdetailsService } from './services/bankdetails.service';
     AccordionLinkDirective,
     AccordionDirective,
    ],
-  providers: [ MenuItems, RoleService, UsersService, DashboardService, GlobalService,TopnavbService, BankdetailsService],
+  providers: [ 
+    MenuItems,
+    RoleService,
+    UsersService,
+    DashboardService,
+    GlobalService,
+    TopnavbService,
+    BankdetailsService,
+    CsvService
+  ],
 
 })
 export class SharedModule { }

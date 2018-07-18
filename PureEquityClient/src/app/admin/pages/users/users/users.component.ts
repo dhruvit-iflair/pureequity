@@ -7,6 +7,8 @@ import { ReviewTransactionsComponent } from '../../review-transactions/review-tr
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { Router } from '@angular/router';
 import { NewUserComponent } from "../new-user/new-user.component";
+import { CsvService } from '../../../shared/services/csv.service';
+import { from } from 'rxjs/observable/from';
 declare var $:any;
 @Component({
   selector: 'app-users',
@@ -17,15 +19,22 @@ export class UsersComponent {
   displayedColumns = ['username', 'firstName', 'lastName','created_at', 'action']
   dataSource: MatTableDataSource<User>;
   public i :Number = 0;x=false;
-  public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 } 
+  public exportData:Array<any>=[];
+  public page : { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private userService: UsersService, public dialog: MatDialog, public router:Router) {
+  constructor(
+        private userService: UsersService,
+        public dialog: MatDialog,
+        public router:Router,
+        public csvservice:CsvService,
+      ) {
     this.userService.getUsers().subscribe((res: User[]) => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.exportData = res;
     })
   }
   ngOnInit() {
@@ -66,6 +75,19 @@ export class UsersComponent {
        }
    });
   }
+  exportToCSV(){
+      this.exportData.map((data:any)=>{
+          return (data.created_at)?data.created_at = new Date(data.created_at) : data.created_at = ' ';
+      })
+      let options = {
+          doc_title:'User Management',
+          doc_table_header: "No,Email,First Name,Last Name,Created On",
+          doc_data:this.exportData,
+          doc_key: ['username', 'firstName','lastName','created_at'],
+          doc_file_name:`User_${Date.now()}.csv`
+      }
+      this.csvservice.convert(options);
+  }
 
   edit(user:User){
     this.userService.getAUsers(user._id);
@@ -80,7 +102,7 @@ export class UsersComponent {
           console.log(result);
         }
     });
-    
+
     //this.router.navigate(['/admin/users/edit',user._id]);
 
   }
@@ -96,7 +118,7 @@ export class UsersComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.userService.deleteUser(user._id);    
+          this.userService.deleteUser(user._id);
         }
     });
   }
