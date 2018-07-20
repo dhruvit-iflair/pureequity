@@ -26,7 +26,7 @@
                                       <mat-icon>create</mat-icon>
                                     </div>
                                 </div>
-                                <input type="file" id="FileInput" (change)="editImage($event);" accept="image/*" />    
+                                <input type="file" id="FileInput" (change)="editImage($event);" accept="image/*" />
                             </div>
                             <div fxFlex.gt-lg="80" fxFlex.gt-md="70" fxFlex.gt-xs="100" fxFlex="70">
                                 <mat-form-field>
@@ -46,7 +46,7 @@
                                     <mat-icon matSuffix>contact_mail</mat-icon>
                                     <small *ngIf="form.controls['username'].hasError('required') && form.controls['username'].touched" class="text-danger support-text">You must include email.</small>
                                     <!-- <mat-error *ngIf="form.controls['username'].hasError('email') && !form.controls['username'].hasError('required') && form.controls['username'].touched">Invalid Email</mat-error> -->
-                                </mat-form-field>      
+                                </mat-form-field>
                                 <mat-form-field>
                                     <mat-select placeholder="Role" name="role" [formControl]="form.controls['role']">
                                         <mat-option *ngFor="let role of roles" [value]="role._id">
@@ -63,11 +63,11 @@
                         <div fxLayout="row" fxLayoutWrap="wrap">
                             <div formGroupName="user_profile" fxLayout="row" fxLayoutWrap="wrap">
                                 <div formGroupName="personal">
-                                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
+                                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50" style='padding-right: 15px;'>
                                         <mat-form-field>
                                             <input matInput placeholder="Middle Name" formControlName="middleName" required>
-                                            <mat-icon matSuffix>account_circle</mat-icon>        
-                                            <small *ngIf="form['controls'].user_profile['controls'].personal['controls'].middleName.hasError('required') && form['controls'].user_profile['controls'].personal['controls'].middleName.touched" 
+                                            <mat-icon matSuffix>account_circle</mat-icon>
+                                            <small *ngIf="form['controls'].user_profile['controls'].personal['controls'].middleName.hasError('required') && form['controls'].user_profile['controls'].personal['controls'].middleName.touched"
                                             class="text-danger support-text">You must include middle name.</small>
                                         </mat-form-field>
                                         <mat-form-field>
@@ -96,62 +96,66 @@
                                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
                                         <mat-form-field>
                                             <input matInput placeholder="Country Code" formControlName="countryCode" required>
-                                            <mat-icon matSuffix>flag</mat-icon>  
+                                            <mat-icon matSuffix>flag</mat-icon>
                                             <small *ngIf="form['controls'].user_profile['controls'].personal['controls'].countryCode.hasError('required') && form['controls'].user_profile['controls'].personal['controls'].countryCode.touched"
-                                            class="text-danger support-text">You must include country code.</small>      
+                                            class="text-danger support-text">You must include country code.</small>
                                         </mat-form-field>
                                         <mat-form-field>
                                             <input matInput placeholder="Contact No" formControlName="contactNumber" required>
-                                            <mat-icon matSuffix>contact_phone</mat-icon> 
+                                            <mat-icon matSuffix>contact_phone</mat-icon>
                                             <small *ngIf="form['controls'].user_profile['controls'].personal['controls'].contactNumber.hasError('required') && form['controls'].user_profile['controls'].personal['controls'].contactNumber.touched"
-                                            class="text-danger support-text">You must include contact number.</small>               
+                                            class="text-danger support-text">You must include contact number.</small>
                                         </mat-form-field>
                                         <mat-form-field>
                                             <input matInput placeholder="Social Link" formControlName="socialLink" required>
-                                            <mat-icon matSuffix>group</mat-icon>                
+                                            <mat-icon matSuffix>group</mat-icon>
                                             <small *ngIf="form['controls'].user_profile['controls'].personal['controls'].socialLink.hasError('required') && form['controls'].user_profile['controls'].personal['controls'].socialLink.touched"
                                             class="text-danger support-text">You must include social link.</small>
                                         </mat-form-field>
                                     </div>
-                                </div>                            
+                                </div>
                             </div>
                         </div>
                     </mat-tab>
                     <mat-tab label="Address">
-                        <div  formGroupName="user_profile">
+                        <div formGroupName="user_profile">
                             <div formGroupName="address" fxLayout="row" fxLayoutWrap="wrap">
-                                <mat-form-field  fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
-                                    <input matInput placeholder="Address 1" formControlName="apartment" required>
-                                    <mat-icon matSuffix>home</mat-icon>
-                                    <small *ngIf="form['controls'].user_profile['controls'].address['controls'].apartment.hasError('required') && form['controls'].user_profile['controls'].address['controls'].apartment.touched"
-                                    class="text-danger support-text">You must include Apartment.</small>
-                                </mat-form-field>
-                                <mat-form-field  fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
-                                    <input matInput placeholder="Address 2" formControlName="streetAddress" required>
-                                    <mat-icon matSuffix>place</mat-icon>
-                                    <small *ngIf="form['controls'].user_profile['controls'].address['controls'].streetAddress.hasError('required') && form['controls'].user_profile['controls'].address['controls'].streetAddress.touched"
-                                    class="text-danger support-text">You must include Street.</small>
-                                </mat-form-field>
-                                <mat-form-field  fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
-                                    <input matInput placeholder="City" formControlName="city" required>
-                                    <mat-icon matSuffix>location_city</mat-icon>        
-                                    <small *ngIf="form['controls'].user_profile['controls'].address['controls'].city.hasError('required') && form['controls'].user_profile['controls'].address['controls'].city.touched"
-                                    class="text-danger support-text">You must include your City.</small>
-                                </mat-form-field>
-                                <mat-form-field  fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
-                                    <mat-select placeholder="Select Country" name="country" formControlName="country">
-                                        <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
-                                    </mat-select>
-                                    <small *ngIf="form['controls'].user_profile['controls'].address['controls'].country.hasError('required') && form['controls'].user_profile['controls'].address['controls'].country.touched"
-                                    class="text-danger support-text">You must include your Country.</small>
-                                </mat-form-field>
-                                <mat-form-field  fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
-                                    <input matInput placeholder="Zip Code" formControlName="zipcode" required>
-                                    <mat-icon matSuffix>markunread_mailbox</mat-icon>                        
-                                    <small *ngIf="form['controls'].user_profile['controls'].address['controls'].zipcode.hasError('required') && form['controls'].user_profile['controls'].address['controls'].zipcode.touched"
-                                    class="text-danger support-text">You must include Zip Code.</small>
-                                </mat-form-field>                                   
-                            </div>    
+                                <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50" style='padding-right: 15px;'>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Address 1" formControlName="apartment" required>
+                                        <mat-icon matSuffix>home</mat-icon>
+                                        <small *ngIf="form['controls'].user_profile['controls'].address['controls'].apartment.hasError('required') && form['controls'].user_profile['controls'].address['controls'].apartment.touched"
+                                        class="text-danger support-text">You must include Apartment.</small>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Address 2" formControlName="streetAddress" required>
+                                        <mat-icon matSuffix>place</mat-icon>
+                                        <small *ngIf="form['controls'].user_profile['controls'].address['controls'].streetAddress.hasError('required') && form['controls'].user_profile['controls'].address['controls'].streetAddress.touched"
+                                        class="text-danger support-text">You must include Street.</small>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput placeholder="City" formControlName="city" required>
+                                        <mat-icon matSuffix>location_city</mat-icon>
+                                        <small *ngIf="form['controls'].user_profile['controls'].address['controls'].city.hasError('required') && form['controls'].user_profile['controls'].address['controls'].city.touched"
+                                        class="text-danger support-text">You must include your City.</small>
+                                    </mat-form-field>
+                                </div>
+                                <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="50">
+                                    <mat-form-field>
+                                        <mat-select placeholder="Select Country" name="country" formControlName="country">
+                                            <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
+                                        </mat-select>
+                                        <small *ngIf="form['controls'].user_profile['controls'].address['controls'].country.hasError('required') && form['controls'].user_profile['controls'].address['controls'].country.touched"
+                                        class="text-danger support-text">You must include your Country.</small>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Zip Code" formControlName="zipcode" required>
+                                        <mat-icon matSuffix>markunread_mailbox</mat-icon>
+                                        <small *ngIf="form['controls'].user_profile['controls'].address['controls'].zipcode.hasError('required') && form['controls'].user_profile['controls'].address['controls'].zipcode.touched"
+                                        class="text-danger support-text">You must include Zip Code.</small>
+                                    </mat-form-field>
+                                </div>
+                            </div>
                         </div>
                     </mat-tab>
                 </mat-tab-group>
