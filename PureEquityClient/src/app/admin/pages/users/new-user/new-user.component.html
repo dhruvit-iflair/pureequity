@@ -107,8 +107,9 @@
                                             class="text-danger support-text">You must include contact number.</small>
                                         </mat-form-field>
                                         <mat-form-field>
-                                            <input matInput placeholder="Social Link" formControlName="socialLink" required>
+                                            <input type='url'  matInput placeholder="Social Link" formControlName="socialLink" required>
                                             <mat-icon matSuffix>group</mat-icon>
+                                            <mat-hint *ngIf="form['controls'].user_profile['controls'].personal['controls'].socialLink.hasError('dirty') || !form['controls'].user_profile['controls'].personal['controls'].socialLink.hasError('valid') ">Example : http://www.example.com</mat-hint>
                                             <small *ngIf="form['controls'].user_profile['controls'].personal['controls'].socialLink.hasError('required') && form['controls'].user_profile['controls'].personal['controls'].socialLink.touched"
                                             class="text-danger support-text">You must include social link.</small>
                                         </mat-form-field>

@@ -9,6 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from "../../../../../environments/environment";
 import { ActivatedRoute, Router } from '@angular/router';
 import { User_Profile } from '../../../shared/interfaces/user_profile.interface';
+const reg = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -23,7 +25,7 @@ export class EditUserComponent implements OnInit {
   picPoint = environment.picPoint + '/users/profileImage/';
   click: Boolean = false;
   //user: User;
-   
+
   constructor(private _formBuilder: FormBuilder,private snakebar:MatSnackBar, public roleService: RoleService, public userService: UsersService, public toster: ToastrService, public act: ActivatedRoute, public router: Router, public dialogRef: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public user: User) {
     this.roleService.getAllRoles();
     //  this.act.params.subscribe((params) => {
@@ -49,7 +51,7 @@ export class EditUserComponent implements OnInit {
           gender: ['', Validators.required],
           countryCode: ['', Validators.required],
           contactNumber: ['', Validators.required],
-          socialLink: ['', Validators.required]
+          socialLink: ['', Validators.compose([Validators.required, Validators.pattern(reg)])]
         }),
         address: this._formBuilder.group({
           apartment: ['', Validators.required],
@@ -98,7 +100,7 @@ export class EditUserComponent implements OnInit {
     }, (error) => {
       console.log(error);
       this.click = true;
-      this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});          
+      this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});
       // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
       // this.router.navigate(['/users']);
     })
@@ -106,7 +108,7 @@ export class EditUserComponent implements OnInit {
   save(){
     if (!this.click) {
       this.click = false;
-      this.detailsFormGroup.patchValue({ user_profile:{ updated_at: Date.now() }});    
+      this.detailsFormGroup.patchValue({ user_profile:{ updated_at: Date.now() }});
       var cred = JSON.parse(localStorage.getItem('token'));
       (this.detailsFormGroup.value.user_profile.createdBy)? this.detailsFormGroup.patchValue({ user_profile:{ updatedBy: cred.user._id }}) : this.detailsFormGroup.patchValue({ user_profile:{ createdBy: cred.user._id, updatedBy: cred.user._id }});
       var data = this.detailsFormGroup.value.user_profile;
@@ -116,7 +118,7 @@ export class EditUserComponent implements OnInit {
         this.updateUserDetails();
       }, (error) => {
         console.log(error);
-        this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});                  
+        this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});
         // this.toster.error((error.error['message']) ? error.error.message : error.error, 'Error');
       });
     }
@@ -129,7 +131,7 @@ export class EditUserComponent implements OnInit {
 
 
 
-// providers:[{ 
+// providers:[{
 //   provide: NG_VALUE_ACCESSOR,
 //   multi: true,
 //   useExisting: forwardRef(() => EditUserComponent),

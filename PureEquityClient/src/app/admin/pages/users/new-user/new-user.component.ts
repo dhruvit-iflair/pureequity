@@ -9,6 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from "../../../../../environments/environment";
 import { ActivatedRoute, Router } from '@angular/router';
 import { User_Profile } from '../../../shared/interfaces/user_profile.interface';
+const reg = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
@@ -41,7 +43,7 @@ export class NewUserComponent implements OnInit {
   }
   ngOnInit() {
     this.form = this._formBuilder.group({
-      username: ['', Validators.required], //username: ['', [Validators.required, Validators.email]], 
+      username: ['', Validators.required], //username: ['', [Validators.required, Validators.email]],
       password: [this.random.toString()],
       isVerifyEmail: [true],
       firstName: ['', Validators.required],
@@ -55,7 +57,7 @@ export class NewUserComponent implements OnInit {
           gender: ['', Validators.required],
           countryCode: ['', Validators.required],
           contactNumber: ['', Validators.required],
-          socialLink: ['', Validators.required]
+          socialLink: ['', Validators.compose([Validators.required, Validators.pattern(reg)])]
         }),
         address: this._formBuilder.group({
           apartment: ['', Validators.required],
@@ -99,7 +101,7 @@ export class NewUserComponent implements OnInit {
             console.log(error);
         });
     },(error)=>{
-        this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});          
+        this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});
         console.log(error);
     });
   }
