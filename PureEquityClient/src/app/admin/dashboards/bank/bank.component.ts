@@ -11,6 +11,8 @@ import { card, flip } from '../../shared/animations/animations';
 import { BankdetailsService } from '../../shared/services/bankdetails.service';
 import { Bank } from '../../shared/interfaces/user.interface';
 
+const credCardRegx = /^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}| 222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$/
+
 @Component({
   selector: 'app-bank',
   templateUrl: './bank.component.html',
@@ -19,7 +21,7 @@ import { Bank } from '../../shared/interfaces/user.interface';
 })
 export class BankComponent implements OnInit {
 
-  bankdoctype = ['A', 'B', 'C', 'D']; actype = ['Current', 'Saving'];
+  bankdoctype = ['Passport', 'Driving License', 'Identity Card']; actype = ['Current', 'Saving'];
   expyear = ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
   expmonth = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   bankdetails: FormGroup;
@@ -79,8 +81,13 @@ export class BankComponent implements OnInit {
         this.hasdetails = false;
       }
       if (this.data && this.data.ccinfo && this.data.ccinfo.length) {
+        console.log(this.data);
         this.valuepatcher(this.data.ccinfo, 'ccinfo');
         this.hasccdetails = true;
+        (this.data.ccinfo.length > -1)? this.data.ccinfo.forEach((cc)=>{
+          cc['ccnumber'] ='XXXXXXXXXXXX' + cc['ccnumber'].substr(cc['ccnumber'].length-4);
+          return cc['cvvnumber'] = ''
+        }):null;
       } else {
         this.addStartUpForm('ccinfo');
         this.hasccdetails = false;
@@ -109,19 +116,19 @@ export class BankComponent implements OnInit {
   initForm(key) {
     const currentForm = {
       bankdetails: this._formBuilder.group({
-        acnumber: ['', Validators.required],
+        acnumber: ['', Validators.compose([Validators.required,Validators.pattern(".{12,20}"),Validators.maxLength(20), Validators.minLength(12)])],
         ifscnumber: ['', Validators.required],
         actype: ['', Validators.required],
-        name: ['', Validators.required],
+        name: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]*$"), Validators.maxLength(30)])],
         bankdoctype: ['', Validators.required],
         isagreed: []
       }),
       ccinfo: this._formBuilder.group({
-        ccname: ['', Validators.required],
-        ccnumber: ['', Validators.required],
+        ccname: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]*$"), Validators.maxLength(30)])],
+        ccnumber: ['', Validators.compose([Validators.required,Validators.pattern(credCardRegx), Validators.maxLength(16), Validators.minLength(16)])],
         expmonth: ['', Validators.required],
         expyear: ['', Validators.required],
-        cvvnumber: ['', Validators.required]
+        cvvnumber: ['']
       }),
       ppdetails: this._formBuilder.group({
         email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -191,4 +198,16 @@ export class BankComponent implements OnInit {
       }
     });
   }
+  isNumber($event){
+    if ($event.which < 48 || $event.which > 57) $event.preventDefault();
+  }
+
+  isChar($event){
+    var charCode = ($event.charCode) ? $event.charCode : (($event.keyCode) ? $event.keyCode : (($event.which) ? $event.which : 0));
+    if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122) && charCode !=32) {
+          $event.preventDefault()
+    }
+
+  }
 }
+

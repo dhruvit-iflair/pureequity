@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start":"ng serve --host 0.0.0.0",
+    "start": "ng serve --host 0.0.0.0",
     "server": "ng build --prod --base-href=/PureEquity/",
     "dev": "ng serve --host=0.0.0.0 -env=dev",
     "source-build": "ng build --prod --base-href=/PureEquity/ -env=source && cp -R ./PureEquity/ /opt/lampp/htdocs/",
@@ -30,6 +30,7 @@
     "@swimlane/ngx-charts": "^7.1.1",
     "@swimlane/ngx-datatable": "^11.2.0",
     "angular-calendar": "^0.22.3",
+    "angular2-text-mask": "^9.0.0",
     "chartist": "^0.11.0",
     "core-js": "^2.5.4",
     "countrynames": "^0.1.1",
