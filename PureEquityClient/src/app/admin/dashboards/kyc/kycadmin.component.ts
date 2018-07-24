@@ -9,6 +9,7 @@ import { environment } from "../../../../environments/environment"
 import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { DeleteComponent } from '../../shared/dialogs/delete/delete.component';
+import { ImageModalComponent } from '../../shared/dialogs/image-modal/image-modal.component';
 
 declare var require: any;
 
@@ -189,5 +190,17 @@ export class KycAdminComponent implements OnInit {
   onDragLeave(evt) {
     evt.preventDefault();
     evt.stopPropagation();
+  }
+  fancyImage(img){
+    let dialogRef = this.dialog.open(ImageModalComponent, {
+      // data: { title: 'Want to Save ?', content: '', class:'primary' },
+      data:{
+        image:img
+      },
+      height:'70%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    });
   }
 }

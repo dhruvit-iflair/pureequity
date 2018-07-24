@@ -88,7 +88,7 @@ div.upload{
 }
 .mat-dialog-container,
 mat-dialog-container {
-    padding: 0 !important;  
+    padding: 0 !important;
 }
 .mat-mini-fab .mat-button-wrapper,
 span.mat-button-wrapper {
@@ -100,4 +100,8 @@ div.scrollmenu a {
 
 div.scrollmenu {
     height: fit-content;
+}
+img:hover {
+  opacity: 0.7;
+  cursor: pointer;
 }

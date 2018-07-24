@@ -74,3 +74,8 @@ div.upload{
     background-color: #efefff;
     cursor: pointer;
 }
+
+img:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}

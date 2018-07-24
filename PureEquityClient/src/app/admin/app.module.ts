@@ -36,7 +36,7 @@ import { AuthGuard } from './shared/guard/auth.guard';
 import { AdminGuard } from './shared/guard/admin.guard';
 import { UserGuard } from './shared/guard/user.guard';
 import { DeleteComponent } from './shared/dialogs/delete/delete.component';
-
+import { ImageModalComponent } from './shared/dialogs/image-modal/image-modal.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 2,
@@ -52,6 +52,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppBlankComponent,
     DeleteComponent,
     AppSidebarComponent,
+    ImageModalComponent
   ],
   imports: [
     BrowserModule,
@@ -94,6 +95,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteComponent, FullComponent]
+  entryComponents: [DeleteComponent, FullComponent, ImageModalComponent]
 })
 export class AppModule { }

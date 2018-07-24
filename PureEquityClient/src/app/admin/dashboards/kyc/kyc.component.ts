@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { DeleteComponent } from '../../shared/dialogs/delete/delete.component';
 import { card } from '../../shared/animations/animations';
+import { ImageModalComponent } from '../../shared/dialogs/image-modal/image-modal.component';
 
 declare var require: any;
 
@@ -153,7 +154,7 @@ export class KycComponent implements OnInit {
               this.router.navigate(['/dashboard']);
             }, (er) => {
               // this.toastr.error('Internal Server Error.', 'Error');
-              this.snakebar.open('Internal Server Error.','',{duration: 5000});              
+              this.snakebar.open('Internal Server Error.','',{duration: 5000});
             });
         }
       }
@@ -185,5 +186,17 @@ export class KycComponent implements OnInit {
   onDragLeave(evt) {
     evt.preventDefault();
     evt.stopPropagation();
+  }
+  fancyImage(img){
+    let dialogRef = this.dialog.open(ImageModalComponent, {
+      // data: { title: 'Want to Save ?', content: '', class:'primary' },
+      data:{
+        image:img
+      },
+      height:'70%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    });
   }
 }
