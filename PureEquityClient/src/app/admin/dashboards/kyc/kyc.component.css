@@ -23,9 +23,10 @@ md-calendar {
 .crosssymbol {
     color: red;
     position: relative;
-    font-size: 35px;
-    top: -130px;
+    font-size: 30px;
+    top: -135px;
     left: -20px;
+    cursor: pointer;
 }
 
 .dropzone {

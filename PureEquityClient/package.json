@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start":"ng serve --host 0.0.0.0",
+    "start": "ng serve --host 0.0.0.0",
     "server": "ng build --prod --base-href=/PureEquity/",
     "dev": "ng serve --host=0.0.0.0 -env=dev",
     "source-build": "ng build --prod --base-href=/PureEquity/ -env=source && cp -R ./PureEquity/ /opt/lampp/htdocs/",
@@ -49,6 +49,7 @@
     "ngx-perfect-scrollbar": "^5.3.5",
     "ngx-quill": "^2.2.0",
     "ngx-toastr": "^8.3.2",
+    "pusher-js": "^4.2.2",
     "rxjs": "^5.5.8",
     "zone.js": "^0.8.23"
   },

@@ -255,7 +255,7 @@
                     </div>
                     <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="20" fxFlex="20">
                         <mat-form-field>
-                            <mat-select placeholder="Select Coin" [(ngModel)]="selectedValue" (ngModelChange)="drawGraph($event)">
+                            <mat-select placeholder="Select Coin" [(ngModel)]="selectedValue" (ngModelChange)="graphSetter($event)">
                                 <mat-option *ngFor="let list of tradeList; let i = index" [value]="list.value">
                                     {{list.name}}
                                 </mat-option>
@@ -263,16 +263,17 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="barchrt" style="height:360px;">
-                    <div class="linearea" style="height:400px;">
-                        <x-chartist class="" [data]="lineChart1.data" [type]="lineChart1.type" [options]="lineChart1.options" [responsiveOptions]="lineChart1.responsiveOptions"
-                            [events]="lineChart1.events"> </x-chartist>
+                <div class="barchrt-scroll">
+                    <div class="barchrt" style="height:490px;">
+                        <div class="linearea" style="height:480px;">
+                            <x-chartist [data]="lineChart1.data" [type]="lineChart1.type" [options]="lineChart1.options" [responsiveOptions]="lineChartOptions.responsive"> </x-chartist>
+                        </div>
+                        <!-- <div id="container" style="height: 370px; min-width: 310px"></div> -->
+                        <!-- <ngx-charts-line-chart [view]="view" [scheme]="colorScheme"
+                        [results]="multi" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
+                        [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale"
+                        (select)="onSelect($event)"> </ngx-charts-line-chart> -->
                     </div>
-                    <!-- <div id="container" style="height: 370px; min-width: 310px"></div> -->
-                    <!-- <ngx-charts-line-chart [view]="view" [scheme]="colorScheme"
-                    [results]="multi" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
-                    [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale"
-                    (select)="onSelect($event)"> </ngx-charts-line-chart> -->
                 </div>
                 <!-- <ul class="list-inline text-center"> <li> <h6 class="text-muted
                 text-success m-0"> <i class="fa fa-circle font-10 m-r-10 "></i>Ample</h6> </li>
@@ -309,4 +310,25 @@
             </mat-card-content>
         </mat-card>
     </div> -->
+</div>
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <!-- <div class="w100"> -->
+                    <!-- <mat-card-title>Canvas chart</mat-card-title> -->
+                    <!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div> -->
+                    <!-- <ngx-charts-area-chart-normalized class="chart-container" [scheme]="colorScheme" [schemeType]="schemeType" [results]="dateData"
+                        [legend]="showLegend" [gradient]="gradient" [xAxis]="showXAxis" (legendLabelClick)="onLegendLabelClick($event)"
+                        [yAxis]="showYAxis" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel" [timeline]="timeline" [showGridLines]="showGridLines" [roundDomains]="roundDomains"
+                        [tooltipDisabled]="tooltipDisabled" [curve]="curve" (select)="select($event)">
+                    </ngx-charts-area-chart-normalized> -->
+                    <canvas baseChart height="130" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                        </canvas>
+                <!-- </div> -->
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
