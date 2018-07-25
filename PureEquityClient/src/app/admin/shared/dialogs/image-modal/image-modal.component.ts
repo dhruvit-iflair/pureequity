@@ -13,7 +13,7 @@ export class ImageModalComponent implements OnInit {
 
   ngOnInit() {
   }
-  closeDialog(data) {
-    this.dialogRef.close(data);
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

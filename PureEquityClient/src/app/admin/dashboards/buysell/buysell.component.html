@@ -37,7 +37,7 @@
                                             <form [formGroup]="buysellForm">
                                                 <div fxLayout="row" fxLayoutWrap="wrap">
                                                     <mat-form-field>
-                                                        <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" (ngModelChange)="estimation('true')">
+                                                        <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" maxLength='12' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
                                                     </mat-form-field>
                                                     <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                                                     <mat-form-field>
@@ -82,7 +82,7 @@
                                             <form [formGroup]="sellForm">
                                                 <div fxLayout="row" fxLayoutWrap="wrap">
                                                     <mat-form-field>
-                                                        <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']" (ngModelChange)="estimation(false)">
+                                                        <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']"> <!-- (ngModelChange)="estimation(false)" -->
                                                     </mat-form-field>
                                                     <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                                                     <mat-form-field>

@@ -112,8 +112,12 @@ export class BuysellComponent implements OnInit {
                 console.log(err);
             }
         );
-
-        // setInterval(() => {
+        this.buysellForm.controls['amount'].valueChanges.subscribe((data) => {
+            this.calcBuy();
+        })
+        this.sellForm.controls['amount'].valueChanges.subscribe((data) => {
+            this.calcSell();
+        })        // setInterval(() => {
         //   this.orders();
         // }, 10000);
     }
@@ -224,16 +228,6 @@ export class BuysellComponent implements OnInit {
             this.saveHistory(this.history);
             var amountval = parseFloat(this.buysellForm.value.estimation).toFixed(6);
             var obj = { amount: parseFloat(amountval), price: this.bidprice };
-            console.log(obj);
-            // this.http.post(environment.tradingApi + '/buy/btcusd', obj)
-            //   .subscribe((resp) => {
-            //     console.log(resp);
-            //     this.toastr.success('Transactions Success');
-            //   }, (er) => {
-            //     var err = er.json();
-            //     console.log(err);
-            //     this.toastr.error(err.message, 'Error');
-            //   });
         } else {
             this.snakebar.open(
                 "You are requested to enable 2FA from security to keep using Pure Equity platform.",
@@ -298,17 +292,6 @@ export class BuysellComponent implements OnInit {
             this.saveHistory(this.history);
             var amountval = parseFloat(this.sellForm.value.amount).toFixed(6);
             var obj = { amount: parseFloat(amountval), price: this.bidprice };
-            console.log(obj);
-            //var obj={amount:this.buysellForm.value.amount,price:this.bidprice};
-            // this.http.post(environment.tradingApi + '/sell/btcusd', obj)
-            //   .subscribe((resp) => {
-            //     console.log(resp);
-            //     this.toastr.success('Transactions Success');
-            //   }, (er) => {
-            //     var err = er.json();
-            //     console.log(err);
-            //     this.toastr.error(err.message, 'Error');
-            //   });
         } else {
             this.snakebar.open(
                 "You are requested to enable 2FA from security to keep using Pure Equity platform.",
@@ -379,46 +362,80 @@ export class BuysellComponent implements OnInit {
             );
         }
     }
+    // estimation(container) {
+    //     let a = this.buysellForm.value
+    //     if (a.amount > 0) {
+    //         this.calcBuy();
+    //     }
+    // }
+    // estSell() {
+    //     let a = this.sellForm.value;
+    //     if (a.amount > 0) {
+    //         this.calcSell();
+    //     }
+    // }
+    calcBuy() {
+        let allVal = this.buysellForm.value;
+        if (allVal.amount > 0) {
+            this.http
+                .get(environment.tradingApi + "/coins/" + this.chipsValue)
+                .subscribe(data => {
+                    let payload = data.json();
+                    let subtotal =
+                        allVal.amount -
+                        ((allVal.amount * parseFloat(this.pureequityfee)) / 100);
+                    let approx = subtotal / payload.payload.data.ask;
+                    var newCac = {
+                        subtotal: subtotal.toFixed(8),
+                        estimation: approx.toFixed(8)
+                    };
+                    this.buysellForm.patchValue(newCac);
+                });
+        }
+    }
+    calcSell() {
+        let allVal = this.sellForm.value;
+        if (allVal.amount > 0) {
+            this.http
+                .get(environment.tradingApi + "/coins/" + this.chipsValue)
+                .subscribe(data => {
+                    let payload = data.json();
+                    let subtotal = allVal.amount * payload.payload.data.ask;
+                    let approx = subtotal - ((subtotal * parseFloat(this.pureequityfee)) / 100);
+                    var newCac = {
+                        subtotal: subtotal.toFixed(8),
+                        estimation: approx.toFixed(8)
+                    };
+                    this.sellForm.patchValue(newCac);
+                });
 
-    // instantOrderBuy(){
-    //     let subtotal = (spend(usd) - 0.25%)
-    // }
-
-    // enablebuybtc() {
-    //     this.enablesellcontainer = false;
-    //     this.enablebuycontainer = true;
-    //     // this.availableBalance = this.availBalance.payload.data.usd_available + ' USD';
-    // }
-    // enablesellbtc() {
-    //     this.enablebuycontainer = false;
-    //     this.enablesellcontainer = true;
-    //     // this.availableBalance = this.availBalance.payload.data.btc_available + ' BTC';
-    // }
-    // estimation(enablebuycontainer) {
-    //     this.http
-    //         .get(environment.tradingApi + "/coins/" + this.chipsValue)
-    //         .subscribe(data => {
-    //             var respdata = data.json();
-    //             this.bidprice = parseFloat(respdata.payload.data.bid);
-    //             // this.estimate = respdata.payload.data;
-    //             console.log(this.bidprice);
-    //             if (enablebuycontainer) {
-    //                 var tempval = parseFloat(this.pureequityfee) / 100;
-    //                 var subtotal = parseFloat(this.buysellForm.value.amount) - tempval;
-    //                 var estbtc = subtotal / this.bidprice;
-    //                 //this.fees = this.buysellForm.value.amount - subtotal;
-    //                 this.buysellForm.patchValue({
-    //                     subtotal: subtotal,
-    //                     estimation: estbtc
-    //                 });
-    //             } else {
-    //                 //var tempval= parseFloat(this.pureequityfee)/100;
-    //                 var subtotl = parseFloat(this.sellForm.value.amount);
-    //                 //var deductableusd = subtotl * parseFloat(this.pureequityfee) / 100;
-    //                 var estusd = subtotl / this.bidprice;
-    //                 //this.fees = deductableusd;
-    //                 this.sellForm.patchValue({ subtotal: subtotl, estimation: estusd });
-    //             }
-    //         });
-    // }
+        }
+    }
 }
+
+// estimation(enablebuycontainer) {
+//   this.http
+//       .get(environment.tradingApi + "/coins/" + this.chipsValue)
+//       .subscribe(data => {
+//           var respdata = data.json();
+//           this.bidprice = parseFloat(respdata.payload.data.ask);
+//           // this.estimate = respdata.payload.data;
+//           if (enablebuycontainer) {
+//               var tempval = parseFloat(this.pureequityfee) / 100;
+//               var subtotal = parseFloat(this.buysellForm.value.amount) - tempval;
+//               var estbtc = subtotal / this.bidprice;
+//               //this.fees = this.buysellForm.value.amount - subtotal;
+//               this.buysellForm.patchValue({
+//                   subtotal: subtotal,
+//                   estimation: estbtc
+//               });
+//           } else {
+//               //var tempval= parseFloat(this.pureequityfee)/100;
+//               var subtotl = parseFloat(this.sellForm.value.amount);
+//               //var deductableusd = subtotl * parseFloat(this.pureequityfee) / 100;
+//               var estusd = subtotl / this.bidprice;
+//               //this.fees = deductableusd;
+//               this.sellForm.patchValue({ subtotal: subtotl, estimation: estusd });
+//           }
+//       });
+// }
