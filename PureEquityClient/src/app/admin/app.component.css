@@ -23,7 +23,7 @@ mat-row.mat-row:hover {
      /* #8181a8; */
 }
 .mat-dialog-container {
-    /* padding: 0px 0px 20px 0px!important; */
+    padding: 0px 0px 0px 0px!important;
     border-radius: 8px !important;
 }
 .setupchecker .mat-dialog-container{
