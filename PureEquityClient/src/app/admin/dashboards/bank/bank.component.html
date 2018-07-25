@@ -33,7 +33,7 @@
                     <!-- <strong>Account Details</strong><span> {{data.bankdetails[i].acnumber}}</span> -->
                     <form class="example-form">
                         <mat-form-field>
-                            <input matInput disabled placeholder="Account Number" value="{{data.bankdetails[i].acnumber}}" required="required">
+                            <input matInput disabled placeholder="Account Number" value="{{data.bankdetails[i].acnumber}}" required="required" type='text' minLength='12' maxLength='20' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                           </mat-form-field>
                           <mat-form-field>
                             <input matInput disabled placeholder="Bank IBAN" value="{{data.bankdetails[i].ifscnumber}}" required="required">
@@ -44,7 +44,7 @@
                             </mat-select>
                           </mat-form-field>
                           <mat-form-field>
-                            <input matInput disabled placeholder="Your Name" value="{{data.bankdetails[i].name}}" required="required">
+                            <input matInput disabled placeholder="Your Name" value="{{data.bankdetails[i].name}}" required="required" (keypress)='isChar($event)'>
                           </mat-form-field>
                           <mat-form-field>
                             <mat-select placeholder="Bank Document" disabled name="bankdoctype" value="{{data.bankdetails[i].bankdoctype}}">
@@ -56,7 +56,7 @@
                   </mat-card-content>
                   <mat-card-content *ngIf="hasdetails && isEdit[i] && data.bankdetails[i]" @card>
                     <mat-form-field>
-                      <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required="required">
+                      <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required type='text' minLength='12' maxLength='20' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" (keypress)='isNumber($event)'> 
                     </mat-form-field>
                     <div fxLayout="row" fxLayoutWrap="wrap">
                       <div fxFlex.gt-sm="70%" fxFlex="70">
@@ -74,7 +74,7 @@
                       </mat-select>
                     </mat-form-field>
                     <mat-form-field>
-                      <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required">
+                      <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required" (keypress)='isChar($event)'>
                     </mat-form-field>
                     <mat-form-field>
                       <mat-select placeholder="Bank Document" name="bankdoctype" formControlName="bankdoctype">
@@ -89,7 +89,7 @@
                   </mat-card-content>
                   <mat-card-content *ngIf="hasdetails && !isEdit[i] && !data.bankdetails[i]" @card>
                       <mat-form-field>
-                        <input matInput="matInput" placeholder="Number" formControlName="acnumber" required="required">
+                        <input matInput="matInput" placeholder="Account Number" formControlName="acnumber" required="required" minLength='12' maxLength='20' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" (keypress)='isNumber($event)'>
                       </mat-form-field>
                       <div fxLayout="row" fxLayoutWrap="wrap">
                         <div fxFlex.gt-sm="70%" fxFlex="70">
@@ -107,7 +107,7 @@
                         </mat-select>
                       </mat-form-field>
                       <mat-form-field>
-                        <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required">
+                        <input matInput="matInput" placeholder="Your Name" formControlName="name" required="required" (keypress)='isChar($event)'>
                       </mat-form-field>
                       <mat-form-field>
                         <mat-select placeholder="Bank Document" name="bankdoctype" formControlName="bankdoctype">
@@ -195,10 +195,10 @@
                         <mat-card-content *ngIf="hasccdetails && !isccinfo[i] && data.ccinfo[i]" style="text-align:center;">
                             <form class="example-form">
                                   <mat-form-field>
-                                      <input matInput="matInput" placeholder="Name on Credit Card" disabled value="{{data.ccinfo[i].ccname}}" required="required">
+                                      <input matInput="matInput" placeholder="Name on Credit Card" disabled value="{{data.ccinfo[i].ccname}}" required="required" (keypress)='isChar($event)'>
                                   </mat-form-field>
                                   <mat-form-field>
-                                      <input matInput="matInput" placeholder="Credit Card Number" disabled value="{{data.ccinfo[i].ccnumber}}" required="required">
+                                      <input matInput="matInput" placeholder="Credit Card Number" disabled value="{{data.ccinfo[i].ccnumber}}" required="required" type='text' minLength='16' maxLength='16' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
                                   </mat-form-field>
                                   <mat-form-field style="max-width: 15%;">
                                       <mat-select placeholder="Month" name="expmonth" disabled value="{{data.ccinfo[i].expmonth}}">
@@ -210,17 +210,17 @@
                                           <mat-option *ngFor="let xy of expyear" [value]="xy">{{xy}}</mat-option>
                                       </mat-select>
                                   </mat-form-field>
-                                  <mat-form-field style="max-width: 60%;">
-                                      <input matInput="matInput" placeholder="Enter CVV" disabled value="{{data.ccinfo[i].cvvnumber}}" required="required">
-                                  </mat-form-field>
+                                  <!-- <mat-form-field style="max-width: 60%;">
+                                      <input matInput="matInput" placeholder="Enter CVV" disabled value="{{data.ccinfo[i].cvvnumber }}" maxLength='3' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                  </mat-form-field> -->
                             </form>
                           </mat-card-content>
                           <mat-card-content *ngIf="hasccdetails && isccinfo[i] && data.ccinfo[i]" @card>
                               <mat-form-field>
-                                  <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required">
+                                  <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required" (keypress)='isChar($event)'>
                               </mat-form-field>
                               <mat-form-field>
-                                  <input matInput="matInput" placeholder="Creadit Card Number" formControlName="ccnumber" required="required">
+                                  <input matInput="matInput" placeholder="Creadit Card Number" formControlName="ccnumber" required="required" type='text' minLength='16' maxLength='16' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
                               </mat-form-field>
                               <mat-form-field style="max-width: 15%;">
                                   <mat-select placeholder="Month" name="expmonth" formControlName="expmonth">
@@ -233,7 +233,7 @@
                                   </mat-select>
                               </mat-form-field>
                               <mat-form-field style="max-width: 60%;">
-                                  <input matInput="matInput" placeholder="Enter CVV" formControlName="cvvnumber" required="required">
+                                  <input matInput="matInput" placeholder="Enter CVV" formControlName="cvvnumber"  maxLength='3' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
                               </mat-form-field>
                               <div style="text-align: center;margin-top:5%;">
                                   <button mat-raised-button="mat-raised-button" [disabled]="!mainform.controls['ccinfo'].valid" (click)="save('ccinfo', 'Saved Card Details')" color="accent">Save</button>
@@ -241,10 +241,10 @@
                           </mat-card-content>
                           <mat-card-content *ngIf="hasccdetails && !isccinfo[i] && !data.ccinfo[i]" @card>
                               <mat-form-field>
-                                  <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required">
+                                  <input matInput="matInput" placeholder="Name on Credit Card" formControlName="ccname" required="required" (keypress)='isChar($event)'>
                               </mat-form-field>
                               <mat-form-field>
-                                  <input matInput="matInput" placeholder="Creadit Card Number" formControlName="ccnumber" required="required">
+                                  <input matInput="matInput" placeholder="Creadit Card Number" formControlName="ccnumber" required="required" type='number' minLength='16' maxLength='16' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  >
                               </mat-form-field>
                               <mat-form-field style="max-width: 15%;">
                                   <mat-select placeholder="Month" name="expmonth" formControlName="expmonth">
@@ -257,7 +257,7 @@
                                   </mat-select>
                               </mat-form-field>
                               <mat-form-field style="max-width: 60%;">
-                                  <input matInput="matInput" placeholder="Enter CVV" formControlName="cvvnumber" required="required">
+                                  <input matInput="matInput" placeholder="Enter CVV" formControlName="cvvnumber" maxLength='3' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                               </mat-form-field>
                               <div style="text-align: center;margin-top:5%;">
                                   <button mat-raised-button="mat-raised-button" [disabled]="!mainform.controls['ccinfo'].valid" (click)="save('ccinfo', 'Saved Card Details')" color="accent">Save</button>
@@ -281,7 +281,7 @@
                     <mat-card-content>
                       <div fxLayout="row" fxLayoutWrap="wrap">
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. In dapibus augue non sapien. Etiam neque. Fusce consectetuer risus a nunc. Nunc dapibus tortor vel mi dapibus sollicitudin. In enim a arcu imperdiet malesuada. Donec quis nibh at felis congue commodo. Phasellus faucibus molestie nisl. Pellentesque arcu. Duis risus. Maecenas lorem. Fusce tellus. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat.</p>                        
+                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. In dapibus augue non sapien. Etiam neque. Fusce consectetuer risus a nunc. Nunc dapibus tortor vel mi dapibus sollicitudin. In enim a arcu imperdiet malesuada. Donec quis nibh at felis congue commodo. Phasellus faucibus molestie nisl. Pellentesque arcu. Duis risus. Maecenas lorem. Fusce tellus. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat.</p>
                         </div>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <button
@@ -295,7 +295,7 @@
                       </div>
                     </mat-card-content>
                 </mat-card>
-            </div>      
+            </div>
           </div>
           <div class="marubutton1" *ngIf="hasccdetails && isCCDescription">
             <button mat-fab color="warn" (click)="addNewForm('ccinfo')" style="background-color: #555682;">
@@ -401,7 +401,7 @@
                     <mat-card-content>
                       <div fxLayout="row" fxLayoutWrap="wrap" >
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. In dapibus augue non sapien. Etiam neque. Fusce consectetuer risus a nunc. Nunc dapibus tortor vel mi dapibus sollicitudin. In enim a arcu imperdiet malesuada. Donec quis nibh at felis congue commodo. Phasellus faucibus molestie nisl. Pellentesque arcu. Duis risus. Maecenas lorem. Fusce tellus. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat.</p>                        
+                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. In dapibus augue non sapien. Etiam neque. Fusce consectetuer risus a nunc. Nunc dapibus tortor vel mi dapibus sollicitudin. In enim a arcu imperdiet malesuada. Donec quis nibh at felis congue commodo. Phasellus faucibus molestie nisl. Pellentesque arcu. Duis risus. Maecenas lorem. Fusce tellus. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat.</p>
                         </div>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <button
@@ -415,7 +415,7 @@
                       </div>
                     </mat-card-content>
                 </mat-card>
-            </div>      
+            </div>
           </div>
           <div class="marubutton2" *ngIf="hasppdetails && isPPDescription">
             <button mat-fab color="warn" (click)="addNewForm('ppdetails')" style="background-color: #555682;">

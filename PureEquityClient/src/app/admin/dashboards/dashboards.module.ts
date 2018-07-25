@@ -56,7 +56,9 @@ import { BalanceManagementComponent } from './balance-management/balance-managem
 import { UsersService } from "../shared/services/users.service";
 import { KycdetailsComponent } from './kycdetails/kycdetails.component';
 import { NewUserComponent } from '../pages/users/new-user/new-user.component';
+import { TextMaskModule } from 'angular2-text-mask';
 
+import { CreditCardMaskPipe } from "../shared/pipes/creditCardMask.pipe";
 @NgModule({
   imports: [
     CommonModule,
@@ -71,7 +73,8 @@ import { NewUserComponent } from '../pages/users/new-user/new-user.component';
     FileUploadModule,
     CKEditorModule,
     NgxPayPalModule,
-    MatDialogModule
+    MatDialogModule,
+    TextMaskModule
   ],
   declarations: [
     Dashboard1Component,
@@ -104,7 +107,8 @@ import { NewUserComponent } from '../pages/users/new-user/new-user.component';
     ProfileComponent,
     BalanceManagementComponent,
     KycdetailsComponent,
-    NewUserComponent
+    NewUserComponent,
+    CreditCardMaskPipe
   ],
   providers: [DashboardService, LoginService, UsersService],
   entryComponents:[EditUserComponent,ProfileComponent, KycdetailsComponent, NewUserComponent]

@@ -1,7 +1,7 @@
 <div [formGroup]="personal" fxLayout="row" fxLayoutWrap="wrap">
       <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <input matInput placeholder="Middle Name" formControlName="middleName" required>
-        <mat-icon matSuffix>account_circle</mat-icon>        
+        <mat-icon matSuffix>account_circle</mat-icon>
         <small *ngIf="personal.controls['middleName'].hasError('required') && personal.controls['middleName'].touched"
         class="text-danger support-text">You must include middle name.</small>
       </mat-form-field>
@@ -29,19 +29,20 @@
       </mat-form-field>
       <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <input matInput placeholder="Country Code" formControlName="countryCode" required>
-        <mat-icon matSuffix>flag</mat-icon>  
+        <mat-icon matSuffix>flag</mat-icon>
         <small *ngIf="personal.controls['countryCode'].hasError('required') && personal.controls['countryCode'].touched"
-        class="text-danger support-text">You must include country code.</small>      
+        class="text-danger support-text">You must include country code.</small>
       </mat-form-field>
       <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
         <input matInput placeholder="Contact No" formControlName="contactNumber" required>
-        <mat-icon matSuffix>contact_phone</mat-icon> 
+        <mat-icon matSuffix>contact_phone</mat-icon>
         <small *ngIf="personal.controls['contactNumber'].hasError('required') && personal.controls['contactNumber'].touched"
-        class="text-danger support-text">You must include contact number.</small>               
+        class="text-danger support-text">You must include contact number.</small>
       </mat-form-field>
       <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
-        <input matInput placeholder="Social Link" formControlName="socialLink" required>
-        <mat-icon matSuffix>group</mat-icon>                
+        <input type='url' matInput placeholder="Social Link" formControlName="socialLink" required>
+        <mat-icon matSuffix>group</mat-icon>
+        <mat-hint>Example : http://www.example.com</mat-hint>
         <small *ngIf="personal.controls['socialLink'].hasError('required') && personal.controls['socialLink'].touched"
         class="text-danger support-text">You must include social link.</small>
       </mat-form-field>

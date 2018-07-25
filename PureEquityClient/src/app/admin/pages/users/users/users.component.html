@@ -23,7 +23,7 @@
         <mat-menu #hamburger="matMenu" class="mymegamenu">
           <button mat-menu-item (click)="addUser();">
             <mat-icon>add</mat-icon> New User </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)='exportToCSV()'>
             <mat-icon>vertical_align_bottom</mat-icon> Export to CSV </button>
         </mat-menu>
         <!-- <mat-form-field style="width: 30%;margin: -15px;">  -->
