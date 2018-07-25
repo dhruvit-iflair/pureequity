@@ -23,8 +23,8 @@ md-calendar {
 .crosssymbol {
     color: red;
     position: relative;
-    font-size: 35px;
-    top: -130px;
+    font-size: 30px;
+    top: -135px;
     left: -20px;
     cursor: pointer;
 }
@@ -104,4 +104,15 @@ div.scrollmenu {
 img:hover {
   opacity: 0.7;
   cursor: pointer;
+}
+.customKycCard .upload {
+    height: 100px !important;
+}
+.customKycCard .upload h4 {
+    padding-top: 14px !important;
+}
+.mat-card.customKycCard .mat-card-content {
+    font-size: 1rem;
+    line-height: 23px;
+    padding: 4px 24px;
 }

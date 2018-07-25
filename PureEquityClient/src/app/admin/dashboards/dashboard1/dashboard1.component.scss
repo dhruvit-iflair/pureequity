@@ -44,3 +44,18 @@ g.highcharts-scrollbar {
 .bg2-info{
     background: rgb(85, 86, 130) !important;
 }
+.barchrt-scroll {
+    width: 100%;
+    overflow-x: scroll;
+    height: 100%;
+}
+.chart-container {
+    display: block;
+    position: relative;
+}
+.w100{
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    display: block;
+}

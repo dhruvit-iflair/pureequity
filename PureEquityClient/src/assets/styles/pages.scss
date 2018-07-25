@@ -87,7 +87,7 @@ File: scss
 //     background-color: #555682 !important;
 // }
 html .page-wrapper{
-    height:calc(100vh - 110px);//64px
+    height:calc(100vh - 150px);//64px
     .page-content{
         padding: 15px;
     }
@@ -157,9 +157,16 @@ html .page-wrapper{
     background: lightyellow;
     text-align: center;
     color: black;
+    height: 40px;
 }
 .warning > span{
     font-weight: bold;
+    vertical-align: -webkit-baseline-middle;
+}
+.warning > em{
+    color:black;
+    font-style: normal;
+    vertical-align: -webkit-baseline-middle;
 }
 /*******************
  Mail page

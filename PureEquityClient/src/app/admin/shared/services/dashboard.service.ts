@@ -81,6 +81,9 @@ export class DashboardService {
   tradeValue(): Observable<Trades> {
     return this.tra.asObservable();
   };
+  lineGraph(liner){
+    return this.http.get(environment.tradingApi+'/getgraphdata/'+liner);
+  }
   graph() {
     this.http.get(environment.api + '/graph').subscribe((res: any) => {
       // const source = from(res);

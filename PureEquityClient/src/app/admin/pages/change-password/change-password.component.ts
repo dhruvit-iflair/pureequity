@@ -51,7 +51,8 @@ export class ChangePasswordComponent implements OnInit {
           this.snakebar.open(response['message'],'',{duration: 5000});
           //this.toster.success(response['message'], 'Success');
           localStorage.clear();
-          window.location.href = '/login';
+          this.router.navigate(['/login']);
+          // window.location.href = '/login';
         }, (error) => {
           console.log(error);
           this.snakebar.open((error.error['message']) ? error.error.message : error.error,'',{duration: 5000});          
