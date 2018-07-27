@@ -150,9 +150,9 @@ public chartHovered(e: any): void {
                 showArea: true,
                 fullWidth: true
             }
-            for(var x=0;x<this.lineChart1.data.labels.length;x++){
-                this.lineChartData[0].data.push(this.lineChart1.data.series[0][x]);
-                this.lineChartLabels.push(this.lineChart1.data.labels[x]);
+            for(var x=0;x<ed['btcusd'].labels.length;x++){
+                this.lineChartData[0].data.push(ed['btcusd'].series[0][x]);
+                this.lineChartLabels.push(ed['btcusd'].labels[x]);
                 // this.dateData.series.push({name:this.lineChart1.data.labels[x],value:this.lineChart1.data.series[0][x]});
             }
         });
@@ -178,6 +178,7 @@ public chartHovered(e: any): void {
             this.my_channel = pusherz.subscribe('live_trades_' + those.selectedValue);
         }
         this.my_channel.bind('trade', function (data) {
+            console.log(data);
             console.log(data.price + '----' + data.timestamp);
             those.lineChart1.data.series[0].push(data.price_str);
             var FDt=new Date(data.timestamp * 1000);
