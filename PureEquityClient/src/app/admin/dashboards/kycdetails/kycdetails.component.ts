@@ -9,6 +9,7 @@ import { environment } from "../../../../environments/environment"
 import { ToastrService } from 'ngx-toastr';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { DeleteComponent } from '../../shared/dialogs/delete/delete.component';
+import { ImageModalComponent } from '../../shared/dialogs/image-modal/image-modal.component';
 
 declare var require: any;
 @Component({
@@ -21,7 +22,7 @@ export class KycdetailsComponent implements OnInit {
   public firstFormGroup: FormGroup;
   public secondFormGroup: FormGroup;
   public isLinear = true;
-  public uploadedimgs :Array<any> = []; 
+  public uploadedimgs :Array<any> = [];
   public istrn = [];
   public user; isEligible = false;
   public isApproved = true; uid;
@@ -116,7 +117,7 @@ export class KycdetailsComponent implements OnInit {
       this.uploadDoc({target: { files: event.dataTransfer.files}});
     }
   }
-  
+
   onDragOver(evt) {
     evt.preventDefault();
     evt.stopPropagation();
@@ -129,7 +130,7 @@ export class KycdetailsComponent implements OnInit {
   uploadDoc(event) {
     let file = event.target.files;
     var that = this;
-    (this.uploadedimgs) ? null : this.uploadedimgs =[];  
+    (this.uploadedimgs) ? null : this.uploadedimgs =[];
     for (var i = 0; i < file.length; i++) {
       var FR= new FileReader();
       FR.addEventListener("load", function(e) {
@@ -138,5 +139,17 @@ export class KycdetailsComponent implements OnInit {
       });
       FR.readAsDataURL( file[i] );
     }
+  }
+  fancyImage(img){
+    let dialogRef = this.dialog.open(ImageModalComponent, {
+      // data: { title: 'Want to Save ?', content: '', class:'primary' },
+      data:{
+        image:img
+      },
+      height:'70%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    });
   }
 }

@@ -10,14 +10,15 @@
               <div fxLayout="row" fxLayoutWrap="wrap">
                 <mat-form-field>
                   <input matInput type="number" placeholder="Amount To Buy" [formControl]="limitOrderBuyForm.controls['amount']">
+                  <small *ngIf="limitOrderBuyForm.controls['amount'].hasError('required') && limitOrderBuyForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                 </mat-form-field>
-                <small *ngIf="limitOrderBuyForm.controls['amount'].hasError('required') && limitOrderBuyForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                 <mat-form-field>
                   <input matInput type="number" placeholder="Buy Price" [formControl]="limitOrderBuyForm.controls['buyprice']">
+                  <small *ngIf="limitOrderBuyForm.controls['buyprice'].hasError('required') && limitOrderBuyForm.controls['buyprice'].touched" class="text-danger support-text">Price is required.</small>
                 </mat-form-field>
                 <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                     <h3 style="width: 50%;float: left;"> Total </h3>
-                    <h3 style="width: 50%;float: right;"> 0.00 {{tradeCoin.slice(5, 9)}} </h3> 
+                    <h3 style="width: 50%;float: right;"> {{total.buy}} {{tradeCoin.slice(5, 9)}} </h3> 
                 </div>
 
                 <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
@@ -52,14 +53,15 @@
                 <div fxLayout="row" fxLayoutWrap="wrap">
                   <mat-form-field>
                     <input matInput type="number" placeholder="Amount To Sell" [formControl]="limitOrderSellForm.controls['amount']">
+                    <small *ngIf="limitOrderSellForm.controls['amount'].hasError('required') && limitOrderSellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                   </mat-form-field>
-                  <small *ngIf="limitOrderSellForm.controls['amount'].hasError('required') && limitOrderSellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                   <mat-form-field>
                     <input matInput type="number" placeholder="Sell Price" [formControl]="limitOrderSellForm.controls['sellprice']">
+                    <small *ngIf="limitOrderSellForm.controls['sellprice'].hasError('required') && limitOrderSellForm.controls['sellprice'].touched" class="text-danger support-text">Price is required.</small>
                   </mat-form-field>
                   <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                       <h3 style="width: 50%;float: left;"> Total </h3>
-                      <h3 style="width: 50%;float: right;"> 0.00 {{tradeCoin.slice(5, 9)}}  </h3> 
+                      <h3 style="width: 50%;float: right;"> {{total.sell}} {{tradeCoin.slice(5, 9)}}  </h3> 
                     </div>
   
                   <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">

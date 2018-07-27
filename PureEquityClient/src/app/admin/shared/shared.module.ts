@@ -24,7 +24,7 @@ import { CsvService } from './services/csv.service';
     AccordionLinkDirective,
     AccordionDirective,
    ],
-  providers: [ 
+  providers: [
     MenuItems,
     RoleService,
     UsersService,

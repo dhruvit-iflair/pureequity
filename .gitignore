@@ -11,3 +11,6 @@
 
 #Ignore Documents
 /PureEquityServer/uploads/users/documents/
+
+# Editor
+/.vscode
