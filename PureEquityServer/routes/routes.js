@@ -7,7 +7,7 @@ var config = require('../config/config');
 var verify = require('../config/jwt');
 
 router.get('/', function (req, res) {
-    res.send("Hey Got Get Req //")
+    res.send("")
 });
 
 router.post('/register', UserCtrl.register);

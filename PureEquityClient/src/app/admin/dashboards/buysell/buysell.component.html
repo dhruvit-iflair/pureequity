@@ -29,7 +29,7 @@
                             <div fxFlex.gt-sm="45%" fxFlex="45">
                                 <mat-card>
                                     <mat-card-header class="bg-primary text-white">
-                                        <mat-card-title>Buy {{tradeCoin}}</mat-card-title>
+                                        <mat-card-title>Buy {{tradeCoin.slice(0,3)}}</mat-card-title>
                                     </mat-card-header>
                                     <mat-card-content>
                                         <div style="text-align:center;">
@@ -41,14 +41,13 @@
                                                         <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Subtotal:" [formControl]="buysellForm.controls['subtotal']" [readonly]="true">
+                                                        <input matInput type="text" placeholder="Subtotal:" [(ngModel)]="buydata.subtotal" [readonly]="true" [ngModelOptions]="{standalone: true}">
                                                     </mat-form-field>
                                                     <mat-form-field>
                                                         <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(0, 3)}} to Receive:" [formControl]="buysellForm.controls['estimation']"
-                                                            [readonly]="true">
+                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(0, 3)}} to Receive:" [(ngModel)]="buydata.estimation" [ngModelOptions]="{standalone: true}" [readonly]="true">
                                                     </mat-form-field>
 
                                                     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
@@ -74,7 +73,7 @@
                             <div fxFlex.gt-sm="45%" fxFlex="45">
                                 <mat-card>
                                     <mat-card-header class="bg-primary text-white">
-                                        <mat-card-title>Sell {{tradeCoin}}</mat-card-title>
+                                        <mat-card-title>Sell {{tradeCoin.slice(0, 3)}}</mat-card-title>
                                     </mat-card-header>
                                     <mat-card-content>
                                         <div style="text-align:center;">
@@ -86,14 +85,13 @@
                                                         <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Subtotal:" [formControl]="sellForm.controls['subtotal']" [readonly]="true">
+                                                        <input matInput type="text" placeholder="Subtotal:" [(ngModel)]="selldata.subtotal" [ngModelOptions]="{standalone: true}" [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
                                                         <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellForm.controls['fee']" [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(5, 9)}} to Receive:" [formControl]="sellForm.controls['estimation']"
-                                                            [readonly]="true">
+                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(5, 9)}} to Receive:" [(ngModel)]="selldata.estimation" [ngModelOptions]="{standalone: true}" [readonly]="true">
                                                     </mat-form-field>
 
                                                     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
