@@ -13,6 +13,7 @@ import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-payp
 export class DepositComponent implements OnInit {
   public tokendata;
   public transactions;
+  public payamount=0.00;
   constructor(private http: Http, private router: Router, private toastr: ToastrService) { }
   public payPalConfig: PayPalConfig;
   ngOnInit() {
@@ -64,7 +65,7 @@ export class DepositComponent implements OnInit {
       transactions: [{
         amount: {
           currency: 'GBP',
-          total: 1100.55
+          total: this.payamount
         }
       }]
     });

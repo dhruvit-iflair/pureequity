@@ -360,6 +360,7 @@ export class BuysellComponent implements OnInit {
                 },
                 onCancel: (data, actions) => {
                     console.log("OnCancel");
+                    this.toastr.warning("Cancelled!", "Cancelled!");
                 },
                 onError: err => {
                     console.log("OnError" + err);

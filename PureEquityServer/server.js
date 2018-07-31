@@ -15,7 +15,7 @@ var fileUpload = require('express-fileupload');
 
 var app = express();
 
-var db = mongoose.connect(config.connection + config.dbName);   
+var db = mongoose.connect(config.connection + config.dbName,{useMongoClient: true});   
 
 app.use(cores.permission);
 app.use(logger('combined'));
@@ -36,5 +36,5 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.listen(6008, function () {
-    console.log('%s listening at :: 6008');
+    console.log('listening at :: 6008');
 });

@@ -11,12 +11,16 @@ img {
 /* The Close Button */
 .close {
   position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
+  top: 0;
+  right: 0px;
+  color: #ffffff;
+  font-size: 33px;
+  font-weight: 300;
   transition: 0.3s;
+  z-index: 1000000;
+  background-color: #555682;
+  line-height: 30px;
+  padding: 3px 10px;
 }
 
 .close:hover,
@@ -24,4 +28,8 @@ img {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
+}
+.mat-dialog-container app-image-modal.ng-star-inserted {
+  display: block;
+  position: relative;
 }

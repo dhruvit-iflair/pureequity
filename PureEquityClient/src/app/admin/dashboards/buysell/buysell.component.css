@@ -5,7 +5,7 @@
     background: #555682;
     color:#ffffff;
     border-radius: 50%; */
-    height: 100px;
+    height: 80px;
     /* position: absolute; */
     left: 46%;
     /* top: 10px; */
@@ -15,7 +15,7 @@
     border-radius: 50%;
     z-index: 3;
     flex: unset !important;
-    width: 100px;
+    width: 80px;
 }
 .enabledcard{
     background: #555682;

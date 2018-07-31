@@ -1,104 +1,80 @@
 <!-- ============================================================== -->
 <!-- Simple four boxes Row -->
 <!-- ============================================================== -->
-<div fxLayout="row" fxLayoutWrap="wrap">
-    <!-- column -->
+<!-- <div fxLayout="row" fxLayoutWrap="wrap">
     <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
         <mat-card>
             <mat-card-content>
-                <!-- Row -->
                 <div class="d-flex no-block">
-                    <!-- column -->
                     <div class="m-r-10 no-shrink">
                         <button mat-fab mat-card-icon class="shadow-none bg-inverse  bg-success">
                             <mat-icon>account_circle</mat-icon>
                         </button>
                     </div>
-                    <!-- column -->
                     <div>
                         <h3 class="m-0">Users</h3>
                         <h3 class="m-0">{{timer.hours}}</h3>
-                        <!-- <h6 class="text-muted m-0">Hours</h6> -->
                     </div>
-
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->
-    <!-- column -->
     <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
         <mat-card>
             <mat-card-content>
-                <!-- Row -->
                 <div class="d-flex no-block">
-                    <!-- column -->
                     <div class="m-r-10 no-shrink">
                         <button mat-fab color="warn" mat-card-icon class="shadow-none  bg-warning">
                             <mat-icon>local_mall</mat-icon>
                         </button>
                     </div>
-                    <!-- column -->
                     <div>
                         <h3 class="m-0">Transactions</h3>
                         <h3 class="m-0">{{timer.minutes}}</h3>
-                        <!-- <h6 class="text-muted m-0">Minutes</h6> -->
                     </div>
 
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->
-    <!-- column -->
     <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
         <mat-card>
             <mat-card-content>
-                <!-- Row -->
                 <div class="d-flex no-block">
-                    <!-- column -->
                     <div class="m-r-10 no-shrink">
                         <button mat-fab color="accent" mat-card-icon class="shadow-none">
                             <mat-icon>stars</mat-icon>
                         </button>
                     </div>
-                    <!-- column -->
                     <div>
                         <h3 class="m-0">Withdrawls</h3>
                         <h3 class="m-0">{{timer.seconds}}</h3>
-                        <!-- <h6 class="text-muted m-0">Seconds</h6> -->
                     </div>
 
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->
-    <!-- column -->
+
     <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
         <mat-card>
             <mat-card-content>
-                <!-- Row -->
                 <div class="d-flex no-block">
-                    <!-- column -->
                     <div class="m-r-10 no-shrink">
                         <button mat-fab color="warn" mat-card-icon class="shadow-none bg-danger">
                             <mat-icon>content_paste</mat-icon>
                         </button>
                     </div>
-                    <!-- column -->
                     <div>
                         <h3 class="m-0">Deposits</h3>
                         <h3 class="m-0">{{timer.micros}}</h3>
-                        <!-- <h6 class="text-muted m-0">Milliseconds</h6> -->
                     </div>
 
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->
-</div>
+</div> -->
 
 <!-- <div fxLayout="row" fxLayoutWrap="wrap" *ngIf="hasPermission">
     <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
@@ -263,18 +239,28 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="barchrt-scroll">
+                <div fxLayout="row" fxLayoutWrap="wrap">
+                    <div fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-card>
+                            <mat-card-content>
+                                    <canvas baseChart height="130" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                                        </canvas>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <!-- <div class="barchrt-scroll">
                     <div class="barchrt" style="height:490px;">
                         <div class="linearea" style="height:480px;">
                             <x-chartist [data]="lineChart1.data" [type]="lineChart1.type" [options]="lineChart1.options" [responsiveOptions]="lineChartOptions.responsive"> </x-chartist>
-                        </div>
+                        </div> -->
                         <!-- <div id="container" style="height: 370px; min-width: 310px"></div> -->
                         <!-- <ngx-charts-line-chart [view]="view" [scheme]="colorScheme"
                         [results]="multi" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
                         [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale"
                         (select)="onSelect($event)"> </ngx-charts-line-chart> -->
-                    </div>
-                </div>
+                    <!-- </div>
+                </div> -->
                 <!-- <ul class="list-inline text-center"> <li> <h6 class="text-muted
                 text-success m-0"> <i class="fa fa-circle font-10 m-r-10 "></i>Ample</h6> </li>
                 <li> <h6 class="text-muted text-info m-0"> <i class="fa fa-circle font-10
@@ -311,24 +297,35 @@
         </mat-card>
     </div> -->
 </div>
-
 <div fxLayout="row" fxLayoutWrap="wrap">
-    <div fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
-        <mat-card>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-card>
             <mat-card-content>
-                <!-- <div class="w100"> -->
-                    <!-- <mat-card-title>Canvas chart</mat-card-title> -->
-                    <!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div> -->
-                    <!-- <ngx-charts-area-chart-normalized class="chart-container" [scheme]="colorScheme" [schemeType]="schemeType" [results]="dateData"
-                        [legend]="showLegend" [gradient]="gradient" [xAxis]="showXAxis" (legendLabelClick)="onLegendLabelClick($event)"
-                        [yAxis]="showYAxis" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
-                        [yAxisLabel]="yAxisLabel" [timeline]="timeline" [showGridLines]="showGridLines" [roundDomains]="roundDomains"
-                        [tooltipDisabled]="tooltipDisabled" [curve]="curve" (select)="select($event)">
-                    </ngx-charts-area-chart-normalized> -->
-                    <canvas baseChart height="130" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                        </canvas>
-                <!-- </div> -->
+              <div class="table-rasponsive">
+                <mat-table [dataSource]="dataSource" matSort>
+                  <!-- # Column -->
+                  <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.amount}} </mat-cell>
+                  </ng-container>
+      
+                  <ng-container matColumnDef="price">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.price}} </mat-cell>
+                  </ng-container>
+      
+                  <ng-container matColumnDef="timestamp">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.timestamp}} </mat-cell>
+                  </ng-container>
+        
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+      
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event);"></mat-paginator>
+              </div>
             </mat-card-content>
-        </mat-card>
-    </div>
-</div>
+          </mat-card>
+        </div>
+      </div>

@@ -135,9 +135,9 @@
         </mat-sidenav>
 
         <!-- ============================================================== -->
-        <!-- Page container - style you can find in pages.scss -->
+        <!-- Page container - style you can find in pages.scss class="page-wrapper"-->
         <!-- ============================================================== -->
-        <mat-sidenav-content class="page-wrapper">
+        <mat-sidenav-content [ngClass]="(isAdmin==true)?'page-wrapper':'page-wrapper2'">
             <perfect-scrollbar [config]="config">
                 <div class="page-content">
 
