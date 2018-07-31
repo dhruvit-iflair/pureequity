@@ -1,46 +1,46 @@
 <div class="setup">
-  <mat-card>
-      <mat-card-header class="bg-primary text-white">
-          <mat-card-title-group>
-              <mat-card-title fxLayout="row">
-                  Edit User
-              </mat-card-title>
-          </mat-card-title-group>
-          <div fxFlex="fxFlex"></div>
-          <div style="position: relative;width: 225px;">
-              <button mat-button style="background-color: #808080" (click)='gotoKYC()'>
-                  KYC
-              </button>
-              <button mat-icon-button class="srh-btn2 iconsetter" (click)="cancel()">
-                  <mat-icon>clear</mat-icon>
-              </button>
-          </div>
-      </mat-card-header>
-    <mat-card-content style="height:fit-content;">
-      <!-- <mat-card-title>Edit User</mat-card-title> -->
-      <form [formGroup]="detailsFormGroup">
-        <mat-tab-group>
-          <mat-tab label="Basic">
-            <div style="margin-top: 4%;">
-              <app-user-details [detailsFormGroup]="detailsFormGroup"></app-user-details>
+    <mat-card>
+        <mat-card-header class="bg-primary text-white">
+            <mat-card-title-group>
+                <mat-card-title fxLayout="row">
+                    Edit User
+                </mat-card-title>
+            </mat-card-title-group>
+            <div fxFlex="fxFlex"></div>
+            <div style="position: relative;width: 225px;">
+                <button mat-button style="background-color: #808080" (click)='gotoKYC()'>
+                    KYC
+                </button>
+                <button mat-icon-button class="srh-btn2 iconsetter" (click)="cancel()">
+                    <mat-icon>clear</mat-icon>
+                </button>
             </div>
-          </mat-tab>
-          <mat-tab label="Personal" style="width: 250px;">
-            <div style="margin-top: 4%;">
-                <app-personal-details [personal]="detailsFormGroup.controls.user_profile.get('personal')"></app-personal-details>
-            </div>
-          </mat-tab>
-          <mat-tab label="Address">
-            <div style="margin-top: 4%;">
-              <app-user-personal-details [personalDetailsFormGroup]="detailsFormGroup.controls.user_profile"></app-user-personal-details>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
-      </form>
-    </mat-card-content>
-  </mat-card>
+        </mat-card-header>
+        <mat-card-content style="height:fit-content;">
+            <!-- <mat-card-title>Edit User</mat-card-title> -->
+            <form [formGroup]="detailsFormGroup">
+                <mat-tab-group>
+                    <mat-tab label="Basic">
+                        <div style="margin-top: 4%;">
+                            <app-user-details [detailsFormGroup]="detailsFormGroup"></app-user-details>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Personal" style="width: 250px;">
+                        <div style="margin-top: 4%;">
+                            <app-personal-details [personal]="detailsFormGroup.controls.user_profile.get('personal')"></app-personal-details>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Address">
+                        <div style="margin-top: 4%;">
+                            <app-user-personal-details [personalDetailsFormGroup]="detailsFormGroup.controls.user_profile"></app-user-personal-details>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </form>
+        </mat-card-content>
+    </mat-card>
 </div>
 <div class="row text-center" style="text-align:right;padding:1%;">
-  <button mat-raised-button color="red" (click)="cancel()">Back</button>
-  <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="save();">Save</button>
+    <button mat-raised-button color="red" (click)="cancel()">Back</button>
+    <button mat-raised-button color="primary" [disabled]="!detailsFormGroup.valid" (click)="save();">Save</button>
 </div>

@@ -1,51 +1,51 @@
-<div [formGroup]="address"  fxLayout="row" fxLayoutWrap="wrap">
-      <mat-form-field  fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
-        <input matInput placeholder="Address 1" formControlName="apartment" required>
+<div [formGroup]="address" fxLayout="row" fxLayoutWrap="wrap">
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
+        <input matInput placeholder="Apartment / Building" formControlName="apartment" maxlength='250'>
         <mat-icon matSuffix>home</mat-icon>
-        <small *ngIf="address.controls['apartment'].hasError('required') && address.controls['apartment'].touched"
-        class="text-danger support-text">You must include Apartment.</small>
-      </mat-form-field>
-      <mat-form-field  fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
-        <input matInput placeholder="Address 2" formControlName="streetAddress" required>
+        <small *ngIf="address.controls['apartment'].hasError('required') && address.controls['apartment'].touched" class="text-danger support-text">You must include Apartment / Building.</small>
+        <small *ngIf="address.controls['apartment'].hasError('pattern') && address.controls['apartment'].touched || address.controls['apartment'].hasError('minlength') && address.controls['apartment'].touched" class="text-danger support-text">Invalid  Apartment / Building.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
+        <input matInput placeholder="Street, Lane / Area" formControlName="streetAddress" maxlength='250' minlength='2'>
         <mat-icon matSuffix>place</mat-icon>
-        <small *ngIf="address.controls['streetAddress'].hasError('required') && address.controls['streetAddress'].touched"
-        class="text-danger support-text">You must include Street.</small>
-      </mat-form-field>
-      <mat-form-field  fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
-        <input matInput placeholder="City" formControlName="city" required>
-        <mat-icon matSuffix>location_city</mat-icon>        
-        <small *ngIf="address.controls['city'].hasError('required') && address.controls['city'].touched"
-        class="text-danger support-text">You must include your City.</small>
-      </mat-form-field>
-      <mat-form-field  fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
-          <mat-select placeholder="Select Country" name="country" formControlName="country">
-              <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
-          </mat-select>
+        <small *ngIf="address.controls['streetAddress'].hasError('required') && address.controls['streetAddress'].touched" class="text-danger support-text">You must include Street, Lane / Area.</small>
+        <small *ngIf="address.controls['streetAddress'].hasError('pattern') && address.controls['streetAddress'].touched || address.controls['streetAddress'].hasError('minlength') && address.controls['streetAddress'].touched" class="text-danger support-text">Invalid Street, Lane / Area.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33" minlength='2' maxlength='20'>
+        <input matInput placeholder="City" formControlName="city">
+        <mat-icon matSuffix>location_city</mat-icon>
+        <small *ngIf="address.controls['city'].hasError('required') && address.controls['city'].touched" class="text-danger support-text">You must include your City.</small>
+        <small *ngIf="address.controls['city'].hasError('minlength') && address.controls['city'].touched || address.controls['city'].hasError('pattern') && address.controls['city'].touched || address.controls['city'].hasError('maxlength') && address.controls['city'].touched" class="text-danger support-text">You must include your City.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
+        <mat-select placeholder="Select Country" name="country" formControlName="country">
+            <mat-option *ngFor="let x of countries.results" [value]="x.value">{{x.value}}</mat-option>
+        </mat-select>
         <!-- <input matInput placeholder="Country" formControlName="country" required>
         <mat-icon matSuffix>flag</mat-icon>                 -->
-        <small *ngIf="address.controls['country'].hasError('required') && address.controls['country'].touched"
-        class="text-danger support-text">You must include your Country.</small>
-      </mat-form-field>
-      <mat-form-field  fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
+        <small *ngIf="address.controls['country'].hasError('required') && address.controls['country'].touched" class="text-danger support-text">You
+            must include your Country.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
         <input matInput placeholder="Zip Code" formControlName="zipcode" required>
-        <mat-icon matSuffix>markunread_mailbox</mat-icon>                        
-        <small *ngIf="address.controls['zipcode'].hasError('required') && address.controls['zipcode'].touched"
-        class="text-danger support-text">You must include Zip Code.</small>
-      </mat-form-field>
+        <mat-icon matSuffix>markunread_mailbox</mat-icon>
+        <small *ngIf="address.controls['zipcode'].hasError('required') && address.controls['zipcode'].touched" class="text-danger support-text">You must include Zip Code.</small>
+        <small *ngIf="address.controls['zipcode'].hasError('minlength') && address.controls['zipcode'].touched || address.controls['zipcode'].hasError('maxlength') && address.controls['zipcode'].touched" class="text-danger support-text">In valid zip code.</small>
+    </mat-form-field>
 
-      <div [formGroup]="personalDetailsFormGroup" fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
+    <div [formGroup]="personalDetailsFormGroup" fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
         <mat-form-field>
-          <input matInput [matDatepicker]="pcreatedat" [formControl]="personalDetailsFormGroup.controls['created_at']" placeholder="Registered At">
-          <mat-datepicker-toggle matSuffix [for]="pcreatedat"></mat-datepicker-toggle>
-          <mat-datepicker #pcreatedat></mat-datepicker>
+            <input matInput [matDatepicker]="pcreatedat" [formControl]="personalDetailsFormGroup.controls['created_at']" placeholder="Registered At">
+            <mat-datepicker-toggle matSuffix [for]="pcreatedat"></mat-datepicker-toggle>
+            <mat-datepicker #pcreatedat></mat-datepicker>
         </mat-form-field>
-      </div>
-      <div [formGroup]="personalDetailsFormGroup" fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
-          <mat-form-field>
+    </div>
+    <div [formGroup]="personalDetailsFormGroup" fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" fxFlex.gt-xs="33.33" fxFlex="33.33">
+        <mat-form-field>
             <input matInput [matDatepicker]="pupdated" [formControl]="personalDetailsFormGroup.controls['updated_at']" placeholder="Last Updated At">
             <mat-datepicker-toggle matSuffix [for]="pupdated"></mat-datepicker-toggle>
             <mat-datepicker #pupdated></mat-datepicker>
-          </mat-form-field>
-        </div>
-     
+        </mat-form-field>
     </div>
+
+</div>

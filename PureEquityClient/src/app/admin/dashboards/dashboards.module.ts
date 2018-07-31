@@ -59,6 +59,7 @@ import { NewUserComponent } from '../pages/users/new-user/new-user.component';
 import { TextMaskModule } from 'angular2-text-mask';
 
 import { CreditCardMaskPipe } from "../shared/pipes/creditCardMask.pipe";
+import { SharedModule } from "../shared/shared.module";
 @NgModule({
   imports: [
     CommonModule,
@@ -74,7 +75,8 @@ import { CreditCardMaskPipe } from "../shared/pipes/creditCardMask.pipe";
     CKEditorModule,
     NgxPayPalModule,
     MatDialogModule,
-    TextMaskModule
+    TextMaskModule,
+    SharedModule
   ],
   declarations: [
     Dashboard1Component,

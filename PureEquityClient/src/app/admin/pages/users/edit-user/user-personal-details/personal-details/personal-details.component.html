@@ -1,49 +1,50 @@
 <div [formGroup]="personal" fxLayout="row" fxLayoutWrap="wrap">
-      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
-        <input matInput placeholder="Middle Name" formControlName="middleName" required>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33">
+        <input matInput placeholder="Middle Name" formControlName="middleName" minlength="2" maxlength='15' pattern='^[a-zA-Z]+(\s[a-zA-Z]+)?$'>
         <mat-icon matSuffix>account_circle</mat-icon>
-        <small *ngIf="personal.controls['middleName'].hasError('required') && personal.controls['middleName'].touched"
-        class="text-danger support-text">You must include middle name.</small>
-      </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
-        <input matInput placeholder="Place of Birth" formControlName="placeOfBirth" required>
+        <small *ngIf="personal.controls['middleName'].hasError('required') && personal.controls['middleName'].touched" class="text-danger support-text">You
+            must include middle name.</small>
+        <small *ngIf="personal.controls['middleName'].hasError('minlength') && personal.controls['middleName'].touched || personal.controls['middleName'].hasError('pattern') && personal.controls['middleName'].touched" class="text-danger support-text">Invalid middle name.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33">
+        <input matInput placeholder="Place of Birth" formControlName="placeOfBirth"  minlength="2" maxlength='15' pattern='^[a-zA-Z]+(\s[a-zA-Z]+)?$'>
         <mat-icon matSuffix>place</mat-icon>
-        <small *ngIf="personal.controls['placeOfBirth'].hasError('required') && personal.controls['placeOfBirth'].touched"
-        class="text-danger support-text">You must include place of birth.</small>
-      </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
+        <small *ngIf="personal.controls['placeOfBirth'].hasError('required') && personal.controls['placeOfBirth'].touched" class="text-danger support-text">You must include place of birth.</small>
+        <small *ngIf="personal.controls['placeOfBirth'].hasError('pattern') && personal.controls['placeOfBirth'].touched || personal.controls['placeOfBirth'].hasError('minlength') && personal.controls['placeOfBirth'].touched" class="text-danger support-text">Invalid place of birth.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33">
         <mat-select placeholder="Gender" name="gender" formControlName="gender">
-          <mat-option value="male">
-            {{ 'Male' }}
-          </mat-option>
-          <mat-option value="female">
-            {{ 'Female' }}
-          </mat-option>
-          <mat-option value="other">
-            {{ 'Other' }}
-          </mat-option>
+            <mat-option value="male">
+                {{ 'Male' }}
+            </mat-option>
+            <mat-option value="female">
+                {{ 'Female' }}
+            </mat-option>
+            <mat-option value="other">
+                {{ 'Other' }}
+            </mat-option>
         </mat-select>
         <mat-icon matSuffix>insert_emoticon</mat-icon>
-        <small *ngIf="personal.controls['gender'].hasError('required') && personal.controls['gender'].touched"
-        class="text-danger support-text">You must include your gender.</small>
-      </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
-        <input matInput placeholder="Country Code" formControlName="countryCode" required>
+        <small *ngIf="personal.controls['gender'].hasError('required') && personal.controls['gender'].touched" class="text-danger support-text">You
+            must include your gender.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33">
+        <input matInput placeholder="Country Code" formControlName="countryCode" maxlength='4' type="number"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         <mat-icon matSuffix>flag</mat-icon>
-        <small *ngIf="personal.controls['countryCode'].hasError('required') && personal.controls['countryCode'].touched"
-        class="text-danger support-text">You must include country code.</small>
-      </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
-        <input matInput placeholder="Contact No" formControlName="contactNumber" required>
+        <small *ngIf="personal.controls['countryCode'].hasError('required') && personal.controls['countryCode'].touched" class="text-danger support-text">You must include country code.</small>
+        <small *ngIf="personal.controls['countryCode'].hasError('minlength') && personal.controls['countryCode'].touched || personal.controls['countryCode'].hasError('maxlength') && personal.controls['countryCode'].touched" class="text-danger support-text">Invalid country code.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33">
+        <input matInput placeholder="Contact No" formControlName="contactNumber" minlength="8" maxlength='15' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type='number'>
         <mat-icon matSuffix>contact_phone</mat-icon>
-        <small *ngIf="personal.controls['contactNumber'].hasError('required') && personal.controls['contactNumber'].touched"
-        class="text-danger support-text">You must include contact number.</small>
-      </mat-form-field>
-      <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33" >
-        <input type='url' matInput placeholder="Social Link" formControlName="socialLink" required>
+        <small *ngIf="personal.controls['contactNumber'].hasError('required') && personal.controls['contactNumber'].touched" class="text-danger support-text">You must include contact number.</small>
+        <small *ngIf="personal.controls['contactNumber'].hasError('minlength') && personal.controls['contactNumber'].touched" class="text-danger support-text">Invalid contact number.</small>
+    </mat-form-field>
+    <mat-form-field fxFlex.gt-lg="33.33" fxFlex.gt-md="33.33">
+        <input type='url' matInput placeholder="Social Link" formControlName="socialLink">
         <mat-icon matSuffix>group</mat-icon>
         <mat-hint>Example : http://www.example.com</mat-hint>
-        <small *ngIf="personal.controls['socialLink'].hasError('required') && personal.controls['socialLink'].touched"
-        class="text-danger support-text">You must include social link.</small>
-      </mat-form-field>
-    </div>
+        <small *ngIf="personal.controls['socialLink'].hasError('required') && personal.controls['socialLink'].touched" class="text-danger support-text">You must include social link.</small>
+        <small *ngIf="personal.controls['socialLink'].hasError('pattern') && personal.controls['socialLink'].touched" class="text-danger support-text">Invalid social link.</small>
+    </mat-form-field>
+</div>
