@@ -1,10 +1,12 @@
-<!-- <div fxLayout="row" fxLayoutWrap="wrap">
+<div fxLayout="row" fxLayoutWrap="wrap">
     <div fxFlex.gt-sm="100%" fxFlex="100">
-      <div fxFlex.gt-sm="45%" fxFlex="45"></div>
+      <div fxFlex.gt-sm="45%" fxFlex="45">
+        <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()">
+      </div>
       <ngx-paypal [config]="payPalConfig"></ngx-paypal>
       <div fxFlex.gt-sm="45%" fxFlex="45"></div>
     </div>
-</div> -->
+</div>
 
 <div fxLayout="row" fxLayoutWrap="wrap">
     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
