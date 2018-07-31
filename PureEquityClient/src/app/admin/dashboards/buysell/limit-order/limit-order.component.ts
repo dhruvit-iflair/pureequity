@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-limit-order',
@@ -18,7 +19,8 @@ export class LimitOrderComponent implements OnInit {
         buy: Number,
         sell: Number
     }
-    constructor(public fb: FormBuilder, private http: HttpClient) { }
+    public current_payload : any;
+    constructor(public fb: FormBuilder, private http: HttpClient, private snakebar: MatSnackBar,) { }
 
     ngOnInit() {
         this.limitOrderBuyForm = this.fb.group({
@@ -44,8 +46,9 @@ export class LimitOrderComponent implements OnInit {
     setInitialValue() {
         this.http.get(environment.tradingApi + "/coins/" + this.tradeCoin.slice(0, 3).toLowerCase() + this.tradeCoin.slice(6, 9).toLowerCase()).subscribe((data: any) => {
             let payload = data
+            this.current_payload = data;
             this.limitOrderBuyForm.patchValue({ buyprice: payload.payload.data.ask });
-            this.limitOrderSellForm.patchValue({ sellprice: payload.payload.data.ask });
+            this.limitOrderSellForm.patchValue({ sellprice: payload.payload.data.bid });
         });
     }
     calcBuy() {
@@ -61,6 +64,36 @@ export class LimitOrderComponent implements OnInit {
         if (changes && changes.tradeCoin && (changes.tradeCoin.firstChange == false)) {
             this.setInitialValue();
         }
+    }
+    buy(){
+        let obj = {
+            amount: this.limitOrderBuyForm.value.amount,
+            price: this.current_payload.payload.data.ask,
+            limitPrice: this.limitOrderBuyForm.value.buyprice,
+        };
+        this.http.post(environment.tradingApi + '/buyLimit/'+this.tradeCoin.slice(0, 3).toLowerCase() + this.tradeCoin.slice(6, 9).toLowerCase() , obj).subscribe((resp) => {
+            console.log(resp);
+            this.snakebar.open("Transactions Success", "", { duration: 5000 });
+        }, (er) => {
+            var err = er
+            console.log(err);
+            this.snakebar.open(err.error.message, "", { duration: 5000 });
+        });
+    }
+    sell(){
+        let obj = {
+            amount: this.limitOrderSellForm.value.amount,
+            price: this.current_payload.payload.data.bid,
+            limitPrice: this.limitOrderSellForm.value.sellprice,
+        };
+        this.http.post(environment.tradingApi + '/sellLimit/'+this.tradeCoin.slice(0, 3).toLowerCase() + this.tradeCoin.slice(6, 9).toLowerCase() , obj).subscribe((resp) => {
+            console.log(resp);
+            this.snakebar.open("Transactions Success", "", { duration: 5000 });
+        }, (er) => {
+            var err = er
+            console.log(err);
+            this.snakebar.open(err.error.message, "", { duration: 5000 });
+        });
     }
 }
 

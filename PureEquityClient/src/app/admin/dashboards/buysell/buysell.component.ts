@@ -70,6 +70,17 @@ export class BuysellComponent implements OnInit {
         { name: "Stop Order (Advanced)", isActive: false }
     ];
     tokendata;
+    public buydata: any = {
+        subtotal: 0,
+        estimation: 0
+    }
+    public selldata: any = {
+        subtotal: 0,
+        estimation: 0
+    }
+    public calcBuyS: any;
+    public calcSellS: any;
+    public current_payload:any;
     ngOnInit() {
         this.buysellForm = this.fb.group({
             amount: [null, Validators.compose([Validators.required])],
@@ -112,10 +123,10 @@ export class BuysellComponent implements OnInit {
                 console.log(err);
             }
         );
-        this.buysellForm.controls['amount'].valueChanges.subscribe((data) => {
+        this.buysellForm.valueChanges.subscribe((data) => {
             this.calcBuy();
         })
-        this.sellForm.controls['amount'].valueChanges.subscribe((data) => {
+        this.sellForm.valueChanges.subscribe((data) => {
             this.calcSell();
         })        // setInterval(() => {
         //   this.orders();
@@ -162,6 +173,8 @@ export class BuysellComponent implements OnInit {
             this.tradeCoin = this.tradeList[i].name;
             this.chipsValue = this.tradeList[i].value;
             this.setBalance(this.chipsValue);
+            this.calcBuy();
+            this.calcSell();
         }
     }
     toggleSideMenu(i) {
@@ -175,48 +188,48 @@ export class BuysellComponent implements OnInit {
     buybtc() {
         if (this.history && this.history.transactions) {
             this.history.transactions.push({
-                transaction_type: "buy",
+                transaction_type: "IOB",
                 time: Date.now(),
                 account: "Main Account",
                 amount: {
                     amount: this.buysellForm.value.amount,
-                    currency: "USD"
+                    currency: this.tradeCoin.slice(6,9)
                 },
                 value: {
-                    amount: parseFloat(this.buysellForm.value.estimation).toFixed(6),
-                    currency: "BTC"
+                    amount: this.buydata.subtotal,
+                    currency: this.tradeCoin.slice(0,3)
                 },
                 rate: {
-                    amount: this.bidprice,
-                    currency: "USD"
+                    amount: this.current_payload.payload.data.ask,
+                    currency: this.tradeCoin.slice(6,9)
                 },
                 fees: {
-                    amount: this.fees,
-                    currency: "USD"
+                    amount: this.buysellForm.value.amount - this.buydata.subtotal ,
+                    currency: this.tradeCoin.slice(6,9)
                 }
             });
         } else {
             var token = JSON.parse(localStorage.getItem("token"));
             var transactions = [];
             transactions.push({
-                transaction_type: "buy",
+                transaction_type: "IOB",
                 time: Date.now(),
                 account: "Main Account",
                 amount: {
-                    amount: this.buysellForm.value.amount,
-                    currency: "USD"
+                  amount: this.buysellForm.value.amount,
+                  currency: this.tradeCoin.slice(6,9)
                 },
                 value: {
-                    amount: parseFloat(this.buysellForm.value.estimation).toFixed(6),
-                    currency: "BTC"
+                    amount: this.buydata.subtotal,
+                    currency: this.tradeCoin.slice(0,3)
                 },
                 rate: {
-                    amount: this.bidprice,
-                    currency: "USD"
+                    amount: this.current_payload.payload.data.ask,
+                    currency: this.tradeCoin.slice(6,9)
                 },
                 fees: {
-                    amount: this.fees,
-                    currency: "USD"
+                    amount: this.buysellForm.value.amount - this.buydata.subtotal ,
+                    currency: this.tradeCoin.slice(6,9)
                 }
             });
             this.history = {
@@ -225,9 +238,21 @@ export class BuysellComponent implements OnInit {
             };
         }
         if (this.tokendata.user.is2FAEnabled) {
-            this.saveHistory(this.history);
-            var amountval = parseFloat(this.buysellForm.value.estimation).toFixed(6);
-            var obj = { amount: parseFloat(amountval), price: this.bidprice };
+            // this.saveHistory(this.history);
+            var amountval = parseFloat(this.buysellForm.value.amount).toFixed(6);
+            var obj = { amount: parseFloat(amountval), price: this.current_payload.payload.data.ask };
+            console.log(obj);
+            this.http.post(environment.tradingApi + '/buyInstant/'+this.chipsValue , obj)
+                .subscribe((resp) => {
+                    console.log(resp);
+                    // this.toastr.success('Transactions Success');
+                    this.snakebar.open("Transactions Success", "", { duration: 5000 });
+                }, (er) => {
+                    var err = er.json();
+                    console.log(err);
+                    this.snakebar.open(err.message, "", { duration: 5000 });
+                    // this.toastr.error(err.message, 'Error');
+                });
         } else {
             this.snakebar.open(
                 "You are requested to enable 2FA from security to keep using Pure Equity platform.",
@@ -239,48 +264,48 @@ export class BuysellComponent implements OnInit {
     sellbtc() {
         if (this.history && this.history.transactions) {
             this.history.transactions.push({
-                transaction_type: "sell",
+                transaction_type: "IOS",
                 time: Date.now(),
                 account: "Main Account",
                 amount: {
                     amount: this.sellForm.value.amount,
-                    currency: "USD"
+                    currency: this.tradeCoin.slice(6,9)
                 },
                 value: {
-                    amount: parseFloat(this.sellForm.value.estimation).toFixed(6),
-                    currency: "BTC"
+                    amount: this.selldata.subtotal,
+                    currency:  this.tradeCoin.slice(0,3)
                 },
                 rate: {
-                    amount: this.bidprice,
-                    currency: "USD"
+                    amount:  this.current_payload.payload.data.bid,
+                    currency: this.tradeCoin.slice(6,9)
                 },
                 fees: {
-                    amount: this.fees,
-                    currency: "USD"
+                    amount: this.selldata.subtotal - this.selldata.estimation,
+                    currency: this.tradeCoin.slice(6,9)
                 }
             });
         } else {
             var token = JSON.parse(localStorage.getItem("token"));
             var transactions = [];
             transactions.push({
-                transaction_type: "buy",
+                transaction_type: "IOS",
                 time: Date.now(),
                 account: "Main Account",
                 amount: {
                     amount: this.sellForm.value.amount,
-                    currency: "USD"
+                    currency: this.tradeCoin.slice(6,9)
                 },
                 value: {
-                    amount: parseFloat(this.sellForm.value.estimation).toFixed(6),
-                    currency: "BTC"
+                    amount: this.selldata.subtotal,
+                    currency:  this.tradeCoin.slice(0,3)
                 },
                 rate: {
-                    amount: this.bidprice,
-                    currency: "USD"
+                    amount:  this.current_payload.payload.data.bid,
+                    currency: this.tradeCoin.slice(6,9)
                 },
                 fees: {
-                    amount: this.fees,
-                    currency: "USD"
+                    amount: this.sellForm.value.amount - this.selldata.subtotal,
+                    currency: this.tradeCoin.slice(6,9)
                 }
             });
             this.history = {
@@ -289,9 +314,21 @@ export class BuysellComponent implements OnInit {
             };
         }
         if (this.tokendata.user.is2FAEnabled) {
-            this.saveHistory(this.history);
-            var amountval = parseFloat(this.sellForm.value.amount).toFixed(6);
-            var obj = { amount: parseFloat(amountval), price: this.bidprice };
+            // this.saveHistory(this.history);
+            let amountval = parseFloat(this.sellForm.value.amount).toFixed(6);
+            let obj = { amount: parseFloat(amountval), price: this.current_payload.payload.data.bid };
+            console.log(obj);
+            // let obj = {amount:this.buysellForm.value.amount,price:this.bidprice};
+            this.http.post(environment.tradingApi + '/sellInstant/'+ this.chipsValue, obj)
+                .subscribe((resp) => {
+                    console.log(resp);
+                    this.snakebar.open("Transactions Success", "", { duration: 5000 });
+                }, (er) => {
+                    var err = er.json();
+                    console.log(err);
+                    this.snakebar.open(err.message, "", { duration: 5000 });
+                    // this.toastr.error(err.message, 'Error');
+                });
         } else {
             this.snakebar.open(
                 "You are requested to enable 2FA from security to keep using Pure Equity platform.",
@@ -377,9 +414,12 @@ export class BuysellComponent implements OnInit {
     calcBuy() {
         let allVal = this.buysellForm.value;
         if (allVal.amount > 0) {
-            this.http
+            (this.calcBuyS) ? this.calcBuyS.unsubscribe() : null;
+            this.calcBuyS = this.http
                 .get(environment.tradingApi + "/coins/" + this.chipsValue)
                 .subscribe(data => {
+                    this.current_payload = data.json();
+
                     let payload = data.json();
                     let subtotal =
                         allVal.amount -
@@ -389,24 +429,28 @@ export class BuysellComponent implements OnInit {
                         subtotal: subtotal.toFixed(8),
                         estimation: approx.toFixed(8)
                     };
-                    this.buysellForm.patchValue(newCac);
+                    // this.buysellForm.patchValue(newCac);
+                    this.buydata = newCac;
                 });
         }
     }
     calcSell() {
         let allVal = this.sellForm.value;
         if (allVal.amount > 0) {
-            this.http
+            (this.calcSellS) ? this.calcSellS.unsubscribe() : null;
+            this.calcSellS = this.http
                 .get(environment.tradingApi + "/coins/" + this.chipsValue)
                 .subscribe(data => {
+                    this.current_payload = data.json();
                     let payload = data.json();
-                    let subtotal = allVal.amount * payload.payload.data.ask;
+                    let subtotal = allVal.amount * payload.payload.data.bid;
                     let approx = subtotal - ((subtotal * parseFloat(this.pureequityfee)) / 100);
                     var newCac = {
                         subtotal: subtotal.toFixed(8),
                         estimation: approx.toFixed(8)
                     };
-                    this.sellForm.patchValue(newCac);
+                    // this.sellForm.patchValue(newCac);
+                    this.selldata = newCac;
                 });
 
         }
