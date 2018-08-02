@@ -124,4 +124,48 @@
             </mat-card>
         </div>
     </div>
+
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-header class="bg-primary text-white">
+                <mat-card-title-group>
+                    <mat-card-title fxLayout="row">
+                        Latest Transactions
+                    </mat-card-title>
+                </mat-card-title-group>
+                <div fxFlex="fxFlex"></div>
+            </mat-card-header>
+            <mat-card-content style="float: left; width: 100%; background:#fff; ">
+                <div *ngIf='transactions'>
+                    <table style="width: 100%; text-align: center; padding: 0 0 0 0; margin-bottom: 0;">
+                        <thead>
+                            <tr>
+                                <th>Buy/Sell</th>
+                                <th>Account</th>
+                                <th>Amount</th>
+                                <th>Fees</th>
+                                <th>Rate</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf='transactions'>
+                            <tr *ngFor="let list of transactions; let i = index" class="{{(list.transaction_type =='buy')? 'buy' : 'sell'}}">
+                                <td> {{list.transaction_type | uppercase}}</td>
+                                <td> {{list.account}}</td>
+                                <td> {{list.amount.amount}} {{list.amount.currency}}</td>
+                                <td> {{list.fees.amount}} {{list.fees.currency}}</td>
+                                <td> {{list.rate.amount}} {{list.rate.currency}}</td>
+                                <td> {{list.time | date :'short'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf='!transactions'>
+                    <h3>No Transactions found</h3>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+
 </div>

@@ -104,3 +104,10 @@ mat-nav-list.list.mat-nav-list {
 .mat-list-item-content {
     background-color: #555681 !important;
 } */
+tr.sell > td:first-child {
+    color: red;
+}
+
+tr.buy > td:first-child {
+    color: green;
+}
