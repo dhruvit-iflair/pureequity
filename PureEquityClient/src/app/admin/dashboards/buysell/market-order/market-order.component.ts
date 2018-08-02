@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../../../environments/environment";
+import { CoinBalance } from "../buysell.component";
 
 @Component({
     selector: "app-market-order",
@@ -12,6 +13,7 @@ export class MarketOrderComponent implements OnInit {
     @Input() availableBalanceBuy: any;
     @Input() availableBalanceSell: any;
     @Input() tradeCoin: any;
+    @Input() coinBalance: CoinBalance;
 
     public marketOrderBuyForm: FormGroup;
     public marketOrderSellForm: FormGroup;

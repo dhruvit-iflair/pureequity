@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { MatSnackBar } from '@angular/material';
+import { CoinBalance } from '../buysell.component';
 
 @Component({
     selector: 'app-limit-order',
@@ -15,6 +16,7 @@ export class LimitOrderComponent implements OnInit {
     @Input() availableBalanceBuy: any;
     @Input() availableBalanceSell: any;
     @Input() tradeCoin: any;
+    @Input() coinBalance: CoinBalance;
     public total: {
         buy: Number,
         sell: Number
