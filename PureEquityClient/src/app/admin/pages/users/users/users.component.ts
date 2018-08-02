@@ -23,21 +23,21 @@ export class UsersComponent {
     public page: { pageIndex: Number, pageSize: Number, length: Number } = { pageIndex: 0, pageSize: 0, length: 0 }
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
-
+    public sub :any;
     constructor(
         private userService: UsersService,
         public dialog: MatDialog,
         public router: Router,
         public csvservice: CsvService,
-    ) {
-        this.userService.getUsers().subscribe((res: User[]) => {
-            this.dataSource = new MatTableDataSource(res);
+    ) {}
+    ngOnInit() {
+        this.sub = this.userService.getUsers().subscribe((res: User[]) => {
+            let sortedUsers = this.sortData(res);
+            this.dataSource = new MatTableDataSource(sortedUsers);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.exportData = res;
         })
-    }
-    ngOnInit() {
         this.userService.getAllUsers();
         (<any>$(".srh-btn2, .cl-srh-btn2")).on('click', function () {
             (<any>$(".app-search2")).toggle(200);
@@ -61,7 +61,14 @@ export class UsersComponent {
             document.getElementById('searchfilter').setAttribute('style', 'width: 0%;');
         }
     }
-
+    sortData(data:any){
+        return data.sort((a, b) => {
+            let aDate: Date = new Date(a.created_at);
+            let bDate: Date = new Date(b.created_at);
+            // console.log(aDate.getTime());
+            return bDate.getTime() - aDate.getTime();
+        });
+    }
     transactions(user: User) {
         localStorage.setItem('trnId', user._id.toString());
         let dialogRef = this.dialog.open(ReviewTransactionsComponent, {
@@ -82,7 +89,7 @@ export class UsersComponent {
         let options = {
             doc_title: 'User Management',
             doc_table_header: `No,Email,First Name,Last Name,Role,Middle Name, Place of Birth,Gender, Country Code, Contact Number, Social Link, Country, ZipCode,City,StreetAddress,Apartment,Mobile Verified, Email Verified, 2FA Enable, Created At`,
-          doc_data: this.exportData,
+            doc_data: this.exportData,
             doc_key: [
                 'username', 'firstName', 'lastName',
                 {
@@ -130,6 +137,7 @@ export class UsersComponent {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 console.log(result);
+                this.userService.getAllUsers();
             }
         });
 
@@ -163,6 +171,9 @@ export class UsersComponent {
                 console.log(result);
             }
         });
+    }
+    ngOnDestroy(): void{
+        this.sub.unsubscribe();
     }
 }
 

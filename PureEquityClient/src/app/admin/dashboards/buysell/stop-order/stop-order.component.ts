@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CoinBalance } from '../buysell.component';
 
 @Component({
     selector: 'app-stop-order',
@@ -10,6 +11,7 @@ export class StopOrderComponent implements OnInit {
     @Input() availableBalanceBuy: any;
     @Input() availableBalanceSell: any;
     @Input() tradeCoin: any;
+    @Input() coinBalance: CoinBalance;
 
     public stopOrderBuyForm: FormGroup;
     public stopOrderSellForm: FormGroup;

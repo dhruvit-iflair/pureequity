@@ -33,7 +33,7 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <input formControlName="issuedate" matInput [matDatepicker]="issuedate" placeholder="ID Issue Date" disabled>
+                        <input formControlName="issuedate" matInput [matDatepicker]="issuedate" placeholder="ID Issue Date" disabled (click)="issuedate.open()" (keydown)="false">
                         <mat-datepicker-toggle matSuffix [for]="issuedate"></mat-datepicker-toggle>
                         <mat-datepicker #issuedate disabled="false"></mat-datepicker>
                     </mat-form-field>

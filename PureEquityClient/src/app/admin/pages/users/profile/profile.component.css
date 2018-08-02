@@ -1,0 +1,4 @@
+.overlay mat-icon.mat-icon.material-icons {
+    position: relative;
+    top: calc(50% - 10px);
+}

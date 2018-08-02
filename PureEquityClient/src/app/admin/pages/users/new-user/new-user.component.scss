@@ -45,10 +45,10 @@ img,
   margin: .5%;
   padding: 15px;
   img {
-    border-radius: 50%;
+    // border-radius: 50%;
     width: 150px;
     margin-bottom: -4px;
-    height: auto;
+    height: 150px;
   }
   .overlay {
     position: absolute;
@@ -126,4 +126,10 @@ mat-card-content.mat-card-content {
 }
 .mat-tab-group{
   padding: 15px !important;
+}
+
+.mat-select-content, .mat-select-panel-done-animating {
+    background: white;
+    /* padding-left: 10px; */
+    margin-left: 15px;
 }

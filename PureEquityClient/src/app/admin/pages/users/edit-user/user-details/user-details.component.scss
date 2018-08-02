@@ -84,7 +84,9 @@ img,
   }
 }
 .overlay mat-icon.mat-icon.material-icons {
-    margin-top: 45% !important;
+    // margin-top: 45% !important;
+    position: relative;
+    top: calc(50% - 10px);
 }
 #FileInput {
     display:none;

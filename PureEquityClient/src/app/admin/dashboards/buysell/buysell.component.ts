@@ -16,6 +16,8 @@ import {
     PayPalIntegrationType
 } from "ngx-paypal";
 import { MatSnackBar } from "@angular/material";
+import { CoinBalanceService } from "../../shared/services/coinBalance.service";
+import { find } from "rxjs/operator/find";
 
 @Component({
     selector: "app-buysell",
@@ -25,12 +27,14 @@ import { MatSnackBar } from "@angular/material";
 export class BuysellComponent implements OnInit {
     public buysellForm: FormGroup;
     public sellForm: FormGroup;
+    public coinBalance: CoinBalance;
     constructor(
         private fb: FormBuilder,
         private http: Http,
         private router: Router,
         private snakebar: MatSnackBar,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        public coinBalanceService: CoinBalanceService
     ) { }
     availableBalanceBuy;
     availableBalanceSell;
@@ -80,7 +84,7 @@ export class BuysellComponent implements OnInit {
     }
     public calcBuyS: any;
     public calcSellS: any;
-    public current_payload:any;
+    public current_payload: any;
     ngOnInit() {
         this.buysellForm = this.fb.group({
             amount: [null, Validators.compose([Validators.required])],
@@ -110,19 +114,20 @@ export class BuysellComponent implements OnInit {
                     console.log(error);
                 }
             );
-        this.http.get(environment.tradingApi + "/balance/btcusd").subscribe(
-            resp => {
-                this.availBalance = resp.json();
-                this.availableBalanceBuy =
-                    this.availBalance.payload.data.usd_available + " USD";
-                this.availableBalanceSell =
-                    this.availBalance.payload.data.btc_available + " BTC";
-            },
-            er => {
-                var err = er.json();
-                console.log(err);
-            }
-        );
+        // this.http.get(environment.tradingApi + "/balance/btcusd").subscribe(
+        //     resp => {
+        //         this.availBalance = resp.json();
+        //         console.log(this.availBalance);
+        //         this.availableBalanceBuy =
+        //             this.availBalance.payload.data.usd_available + " USD";
+        //         this.availableBalanceSell =
+        //             this.availBalance.payload.data.btc_available + " BTC";
+        //     },
+        //     er => {
+        //         var err = er.json();
+        //         console.log(err);
+        //     }
+        // );
         this.buysellForm.valueChanges.subscribe((data) => {
             this.calcBuy();
         })
@@ -131,6 +136,13 @@ export class BuysellComponent implements OnInit {
         })        // setInterval(() => {
         //   this.orders();
         // }, 10000);
+
+        this.coinBalanceService.coinBalance.subscribe(data => {
+            this.coinBalance = data
+            console.log(this.coinBalance);
+            this.setBalance(this.chipsValue);
+        });
+        this.coinBalanceService.refreshCoinBalance();
     }
 
     orders() {
@@ -145,23 +157,36 @@ export class BuysellComponent implements OnInit {
         );
     }
     setBalance(coinval) {
-        this.http.get(environment.tradingApi + "/balance/" + coinval).subscribe(
-            resp => {
-                this.availBalance = resp.json();
-                var key1 = Object.keys(this.availBalance.payload.data)[0];
-                var key2 = Object.keys(this.availBalance.payload.data)[4];
-                var lbl1 = key1.split("_");
-                var lbl2 = key2.split("_");
-                this.availableBalanceBuy =
-                    this.availBalance.payload.data[key1] + " " + lbl1[0].toUpperCase();
-                this.availableBalanceSell =
-                    this.availBalance.payload.data[key2] + " " + lbl2[0].toUpperCase();
-            },
-            er => {
-                var err = er.json();
-                console.log(err);
-            }
-        );
+        console.log(coinval.slice(0, 3), coinval.slice(3, 6));
+        // this.coinBalanceService.refreshCoinBalance();
+        let balanceBuy = this.coinBalance.balance.find(bal => bal.coin.toLowerCase() === coinval.slice(3, 6).toLowerCase());
+        let balanceSell = this.coinBalance.balance.find(bal => bal.coin.toLowerCase() === coinval.slice(0, 3).toLowerCase());
+        console.log(balanceBuy, balanceSell);
+        this.availableBalanceBuy = (balanceBuy) ? balanceBuy.balance + ' ' + coinval.slice(3, 6).toUpperCase() : "0 " + coinval.slice(3, 6).toUpperCase();
+        this.availableBalanceSell = (balanceSell) ? balanceSell.balance + ' ' + coinval.slice(0, 3).toUpperCase() : "0 " + coinval.slice(0, 3).toUpperCase();
+        // this.availableBalanceBuy = (balanceBuy)? balanceBuy +  coinval.slice(0,3).toUpperCase();
+        // this.availableBalanceSell = this.coinBalance.balance.find(bal =>{
+        //     return bal.coin == coinval.slice(3,6);
+        // }) +  coinval.slice(3,6).toUpperCase();
+
+        // this.http.get(environment.tradingApi + "/balance/" + coinval).subscribe(
+        //     resp => {
+        //         this.availBalance = resp.json();
+        //         var key1 = Object.keys(this.availBalance.payload.data)[0];
+        //         var key2 = Object.keys(this.availBalance.payload.data)[4];
+        //         var lbl1 = key1.split("_");
+        //         var lbl2 = key2.split("_");
+        //         console.log(key1,key2);
+        //         this.availableBalanceBuy =
+        //             this.availBalance.payload.data[key1] + " " + lbl1[0].toUpperCase();
+        //         this.availableBalanceSell =
+        //             this.availBalance.payload.data[key2] + " " + lbl2[0].toUpperCase();
+        //     },
+        //     er => {
+        //         var err = er.json();
+        //         console.log(err);
+        //     }
+        // );
     }
 
     toggleValue(i) {
@@ -186,157 +211,123 @@ export class BuysellComponent implements OnInit {
         }
     }
     buybtc() {
-        if (this.history && this.history.transactions) {
-            this.history.transactions.push({
-                transaction_type: "IOB",
-                time: Date.now(),
-                account: "Main Account",
-                amount: {
-                    amount: this.buysellForm.value.amount,
-                    currency: this.tradeCoin.slice(6,9)
-                },
-                value: {
-                    amount: this.buydata.subtotal,
-                    currency: this.tradeCoin.slice(0,3)
-                },
-                rate: {
-                    amount: this.current_payload.payload.data.ask,
-                    currency: this.tradeCoin.slice(6,9)
-                },
-                fees: {
-                    amount: this.buysellForm.value.amount - this.buydata.subtotal ,
-                    currency: this.tradeCoin.slice(6,9)
-                }
-            });
-        } else {
-            var token = JSON.parse(localStorage.getItem("token"));
-            var transactions = [];
-            transactions.push({
-                transaction_type: "IOB",
-                time: Date.now(),
-                account: "Main Account",
-                amount: {
-                  amount: this.buysellForm.value.amount,
-                  currency: this.tradeCoin.slice(6,9)
-                },
-                value: {
-                    amount: this.buydata.subtotal,
-                    currency: this.tradeCoin.slice(0,3)
-                },
-                rate: {
-                    amount: this.current_payload.payload.data.ask,
-                    currency: this.tradeCoin.slice(6,9)
-                },
-                fees: {
-                    amount: this.buysellForm.value.amount - this.buydata.subtotal ,
-                    currency: this.tradeCoin.slice(6,9)
-                }
-            });
-            this.history = {
-                transactions: transactions,
-                user: token.user._id
-            };
+        let trans = {
+            transaction_type: "IOB",
+            time: Date.now(),
+            account: "Main Account",
+            amount: {
+                amount: this.buysellForm.value.amount,
+                currency: this.tradeCoin.slice(6, 9)
+            },
+            subtotal: {
+                amount: this.buydata.subtotal,
+                currency: this.tradeCoin.slice(0, 3)
+            },
+            value: {
+                amount: this.buydata.estimation,
+                currency: this.tradeCoin.slice(0, 3)
+            },
+            rate: {
+                amount: this.current_payload.payload.data.ask,
+                currency: this.tradeCoin.slice(6, 9)
+            },
+            fees: {
+                amount: this.buysellForm.value.amount - this.buydata.subtotal,
+                currency: this.tradeCoin.slice(6, 9)
+            }
         }
-        if (this.tokendata.user.is2FAEnabled) {
-            // this.saveHistory(this.history);
-            var amountval = parseFloat(this.buysellForm.value.amount).toFixed(6);
-            var obj = { amount: parseFloat(amountval), price: this.current_payload.payload.data.ask };
-            console.log(obj);
-            this.http.post(environment.tradingApi + '/buyInstant/'+this.chipsValue , obj)
-                .subscribe((resp) => {
-                    console.log(resp);
-                    // this.toastr.success('Transactions Success');
-                    this.snakebar.open("Transactions Success", "", { duration: 5000 });
-                }, (er) => {
-                    var err = er.json();
-                    console.log(err);
-                    this.snakebar.open(err.message, "", { duration: 5000 });
-                    // this.toastr.error(err.message, 'Error');
-                });
-        } else {
-            this.snakebar.open(
-                "You are requested to enable 2FA from security to keep using Pure Equity platform.",
-                "",
-                { duration: 5000 }
-            );
-        }
+        this.coinBalanceService.saveTransaction(trans).subscribe(
+            success => {
+                console.log(trans);
+                let checkAvailableBalance = this.coinBalance.balance.find(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase());
+                let balance:any = this.coinBalance
+                console.log(checkAvailableBalance);
+                if (checkAvailableBalance && checkAvailableBalance.balance > this.buysellForm.value.amount) {
+                    let buyBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase())
+                    balance.balance[buyBalIndex].balance = parseFloat(balance.balance[buyBalIndex].balance) - parseFloat(this.buysellForm.value.amount);
+
+                    let sellBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(0, 3).toLowerCase())
+                    if (sellBalIndex > -1) {
+                        balance.balance[sellBalIndex].balance = parseFloat(balance.balance[sellBalIndex].balance) + parseFloat(this.buydata.estimation);
+                    }
+                    else {
+                        let b:any = {
+                            coin:this.tradeCoin.slice(0, 3).toLowerCase(),
+                            balance : this.buydata.estimation
+                        }
+                        balance.balance.push(b);
+                    }
+                    this.coinBalanceService.updateCoinBalance(balance);
+                }
+                else {
+                    this.snakebar.open(`You account does not contail sufficent ${this.tradeCoin.slice(6, 9).toUpperCase()} to buy ${this.tradeCoin.slice(0, 3).toUpperCase()}`, "", { duration: 5000 });
+                }
+            },
+            error => {
+                this.snakebar.open("Error Something went wrong please try again later", "", { duration: 5000 });
+            }
+        )
     }
     sellbtc() {
-        if (this.history && this.history.transactions) {
-            this.history.transactions.push({
-                transaction_type: "IOS",
-                time: Date.now(),
-                account: "Main Account",
-                amount: {
-                    amount: this.sellForm.value.amount,
-                    currency: this.tradeCoin.slice(6,9)
-                },
-                value: {
-                    amount: this.selldata.subtotal,
-                    currency:  this.tradeCoin.slice(0,3)
-                },
-                rate: {
-                    amount:  this.current_payload.payload.data.bid,
-                    currency: this.tradeCoin.slice(6,9)
-                },
-                fees: {
-                    amount: this.selldata.subtotal - this.selldata.estimation,
-                    currency: this.tradeCoin.slice(6,9)
-                }
-            });
-        } else {
-            var token = JSON.parse(localStorage.getItem("token"));
-            var transactions = [];
-            transactions.push({
-                transaction_type: "IOS",
-                time: Date.now(),
-                account: "Main Account",
-                amount: {
-                    amount: this.sellForm.value.amount,
-                    currency: this.tradeCoin.slice(6,9)
-                },
-                value: {
-                    amount: this.selldata.subtotal,
-                    currency:  this.tradeCoin.slice(0,3)
-                },
-                rate: {
-                    amount:  this.current_payload.payload.data.bid,
-                    currency: this.tradeCoin.slice(6,9)
-                },
-                fees: {
-                    amount: this.sellForm.value.amount - this.selldata.subtotal,
-                    currency: this.tradeCoin.slice(6,9)
-                }
-            });
-            this.history = {
-                transactions: transactions,
-                user: token.user._id
-            };
+        let trans = {
+            transaction_type: "IOS",
+            time: Date.now(),
+            account: "Main Account",
+            amount: {
+                amount: this.sellForm.value.amount,
+                currency: this.tradeCoin.slice(0,3)
+            },
+            subtotal: {
+                amount: this.selldata.subtotal,
+                currency:  this.tradeCoin.slice(6,9)
+            },
+            value: {
+                amount: this.selldata.estimation,
+                currency:  this.tradeCoin.slice(6,9)
+            },
+            rate: {
+                amount:  this.current_payload.payload.data.bid,
+                currency: this.tradeCoin.slice(6,9)
+            },
+            fees: {
+                amount: this.selldata.subtotal - this.selldata.estimation,
+                currency: this.tradeCoin.slice(6,9)
+            }
         }
-        if (this.tokendata.user.is2FAEnabled) {
-            // this.saveHistory(this.history);
-            let amountval = parseFloat(this.sellForm.value.amount).toFixed(6);
-            let obj = { amount: parseFloat(amountval), price: this.current_payload.payload.data.bid };
-            console.log(obj);
-            // let obj = {amount:this.buysellForm.value.amount,price:this.bidprice};
-            this.http.post(environment.tradingApi + '/sellInstant/'+ this.chipsValue, obj)
-                .subscribe((resp) => {
-                    console.log(resp);
-                    this.snakebar.open("Transactions Success", "", { duration: 5000 });
-                }, (er) => {
-                    var err = er.json();
-                    console.log(err);
-                    this.snakebar.open(err.message, "", { duration: 5000 });
-                    // this.toastr.error(err.message, 'Error');
-                });
-        } else {
-            this.snakebar.open(
-                "You are requested to enable 2FA from security to keep using Pure Equity platform.",
-                "",
-                { duration: 5000 }
-            );
-        }
+        console.log(trans);
+        // this.coinBalanceService.saveTransaction(trans).subscribe(
+        //     success => {
+        //         console.log(trans);
+        //         let checkAvailableBalance = this.coinBalance.balance.find(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase());
+        //         let balance:any = this.coinBalance
+        //         console.log(checkAvailableBalance);
+        //         if (checkAvailableBalance && checkAvailableBalance.balance > this.buysellForm.value.amount) {
+        //             let buyBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase())
+        //             balance.balance[buyBalIndex].balance = parseFloat(balance.balance[buyBalIndex].balance) - parseFloat(this.buysellForm.value.amount);
+
+        //             let sellBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(0, 3).toLowerCase())
+        //             if (sellBalIndex > -1) {
+        //                 balance.balance[sellBalIndex].balance = parseFloat(balance.balance[sellBalIndex].balance) + parseFloat(this.buydata.estimation);
+        //             }
+        //             else {
+        //                 let b:any = {
+        //                     coin:this.tradeCoin.slice(0, 3).toLowerCase(),
+        //                     balance : this.buydata.estimation
+        //                 }
+        //                 balance.balance.push(b);
+        //             }
+        //             this.coinBalanceService.updateCoinBalance(balance);
+        //         }
+        //         else {
+        //             this.snakebar.open(`You account does not contail sufficent ${this.tradeCoin.slice(6, 9).toUpperCase()} to buy ${this.tradeCoin.slice(0, 3).toUpperCase()}`, "", { duration: 5000 });
+        //         }
+        //     },
+        //     error => {
+        //         this.snakebar.open("Error Something went wrong please try again later", "", { duration: 5000 });
+        //     }
+        // )
     }
+
     public initConfig(): void {
         this.payPalConfig = new PayPalConfig(
             PayPalIntegrationType.ClientSideREST,
@@ -457,7 +448,158 @@ export class BuysellComponent implements OnInit {
         }
     }
 }
-
+// buybtc() {
+//     if (this.history && this.history.transactions) {
+//         this.history.transactions.push({
+//             transaction_type: "IOB",
+//             time: Date.now(),
+//             account: "Main Account",
+//             amount: {
+//                 amount: this.buysellForm.value.amount,
+//                 currency: this.tradeCoin.slice(6,9)
+//             },
+//             value: {
+//                 amount: this.buydata.subtotal,
+//                 currency: this.tradeCoin.slice(0,3)
+//             },
+//             rate: {
+//                 amount: this.current_payload.payload.data.ask,
+//                 currency: this.tradeCoin.slice(6,9)
+//             },
+//             fees: {
+//                 amount: this.buysellForm.value.amount - this.buydata.subtotal ,
+//                 currency: this.tradeCoin.slice(6,9)
+//             }
+//         });
+//     } else {
+//         var token = JSON.parse(localStorage.getItem("token"));
+//         var transactions = [];
+//         transactions.push({
+//             transaction_type: "IOB",
+//             time: Date.now(),
+//             account: "Main Account",
+//             amount: {
+//               amount: this.buysellForm.value.amount,
+//               currency: this.tradeCoin.slice(6,9)
+//             },
+//             value: {
+//                 amount: this.buydata.subtotal,
+//                 currency: this.tradeCoin.slice(0,3)
+//             },
+//             rate: {
+//                 amount: this.current_payload.payload.data.ask,
+//                 currency: this.tradeCoin.slice(6,9)
+//             },
+//             fees: {
+//                 amount: this.buysellForm.value.amount - this.buydata.subtotal ,
+//                 currency: this.tradeCoin.slice(6,9)
+//             }
+//         });
+//         this.history = {
+//             transactions: transactions,
+//             user: token.user._id
+//         };
+//     }
+//     if (this.tokendata.user.is2FAEnabled) {
+//         // this.saveHistory(this.history);
+//         var amountval = parseFloat(this.buysellForm.value.amount).toFixed(6);
+//         var obj = { amount: parseFloat(amountval), price: this.current_payload.payload.data.ask };
+//         console.log(obj);
+//         this.http.post(environment.tradingApi + '/buyInstant/'+this.chipsValue , obj)
+//             .subscribe((resp) => {
+//                 console.log(resp);
+//                 // this.toastr.success('Transactions Success');
+//                 this.snakebar.open("Transactions Success", "", { duration: 5000 });
+//             }, (er) => {
+//                 var err = er.json();
+//                 console.log(err);
+//                 this.snakebar.open(err.message, "", { duration: 5000 });
+//                 // this.toastr.error(err.message, 'Error');
+//             });
+//     } else {
+//         this.snakebar.open(
+//             "You are requested to enable 2FA from security to keep using Pure Equity platform.",
+//             "",
+//             { duration: 5000 }
+//         );
+//     }
+// }
+// sellbtc() {
+//     if (this.history && this.history.transactions) {
+//         this.history.transactions.push({
+//             transaction_type: "IOS",
+//             time: Date.now(),
+//             account: "Main Account",
+//             amount: {
+//                 amount: this.sellForm.value.amount,
+//                 currency: this.tradeCoin.slice(6,9)
+//             },
+//             value: {
+//                 amount: this.selldata.subtotal,
+//                 currency:  this.tradeCoin.slice(0,3)
+//             },
+//             rate: {
+//                 amount:  this.current_payload.payload.data.bid,
+//                 currency: this.tradeCoin.slice(6,9)
+//             },
+//             fees: {
+//                 amount: this.selldata.subtotal - this.selldata.estimation,
+//                 currency: this.tradeCoin.slice(6,9)
+//             }
+//         });
+//     } else {
+//         var token = JSON.parse(localStorage.getItem("token"));
+//         var transactions = [];
+//         transactions.push({
+//             transaction_type: "IOS",
+//             time: Date.now(),
+//             account: "Main Account",
+//             amount: {
+//                 amount: this.sellForm.value.amount,
+//                 currency: this.tradeCoin.slice(6,9)
+//             },
+//             value: {
+//                 amount: this.selldata.subtotal,
+//                 currency:  this.tradeCoin.slice(0,3)
+//             },
+//             rate: {
+//                 amount:  this.current_payload.payload.data.bid,
+//                 currency: this.tradeCoin.slice(6,9)
+//             },
+//             fees: {
+//                 amount: this.sellForm.value.amount - this.selldata.subtotal,
+//                 currency: this.tradeCoin.slice(6,9)
+//             }
+//         });
+//         this.history = {
+//             transactions: transactions,
+//             user: token.user._id
+//         };
+//     }
+//     if (this.tokendata.user.is2FAEnabled) {
+//         // this.saveHistory(this.history);
+//         let amountval = parseFloat(this.sellForm.value.amount).toFixed(6);
+//         let obj = { amount: parseFloat(amountval), price: this.current_payload.payload.data.bid };
+//         console.log(obj);
+//         // let obj = {amount:this.buysellForm.value.amount,price:this.bidprice};
+//         this.http.post(environment.tradingApi + '/sellInstant/'+ this.chipsValue, obj)
+//             .subscribe((resp) => {
+//                 console.log(resp);
+//                 this.snakebar.open("Transactions Success", "", { duration: 5000 });
+//             }, (er) => {
+//                 var err = er.json();
+//                 console.log(err);
+//                 this.snakebar.open(err.message, "", { duration: 5000 });
+//                 // this.toastr.error(err.message, 'Error');
+//             });
+//     } else {
+//         this.snakebar.open(
+//             "You are requested to enable 2FA from security to keep using Pure Equity platform.",
+//             "",
+//             { duration: 5000 }
+//         );
+//     }
+// }
 // estimation(enablebuycontainer) {
 //   this.http
 //       .get(environment.tradingApi + "/coins/" + this.chipsValue)
@@ -484,3 +626,17 @@ export class BuysellComponent implements OnInit {
 //           }
 //       });
 // }
+
+export interface CoinBalance {
+    user: String,
+    balance: Array<Balance>,
+    created_at: Date,
+    updated_at: Date,
+    createdBy: String,
+    updatedBy: String
+}
+export interface Balance {
+    coin: String,
+    balance: number,
+    _id: false,
+}

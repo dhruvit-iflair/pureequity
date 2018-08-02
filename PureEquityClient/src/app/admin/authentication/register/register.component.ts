@@ -8,9 +8,6 @@ import { Role } from '../../shared/interfaces/role.interface';
 import { ToastrService } from 'ngx-toastr';
 import { MatSnackBar } from '@angular/material';
 
-const password = new FormControl('', Validators.required);
-const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -25,17 +22,21 @@ export class RegisterComponent implements OnInit {
   }
   data = {}; imgurl;
   ngOnInit() {
+    const password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(15)]));
+    const confirmPassword = new FormControl('', Validators.compose([CustomValidators.equalTo(password), Validators.minLength(6), Validators.maxLength(15)]));
+
     this.form = this.fb.group({
       email: [null, Validators.compose([Validators.required, CustomValidators.email])],
       username: [null, Validators.compose([Validators.required, CustomValidators.email])],
-      firstName: ['', Validators.compose([Validators.required])],
-      lastName: ['', Validators.compose([Validators.required])],
+      firstName: ['', Validators.compose([Validators.required,Validators.minLength(2), Validators.maxLength(15)])],
+      lastName: ['', Validators.compose([Validators.required,Validators.minLength(2), Validators.maxLength(15)])],
       isVerifyMobile: [false],
       role: ['', Validators.compose([Validators.required])],
       isVerifyEmail: [false],
       password: password,
       confirmPassword: confirmPassword,
-      isAgreed: [false]
+      isAgreed: ['', Validators.required],
+      isvalidcapcha: ['',Validators.required]
     });
     this.roleService.getRoles().subscribe((role: Role[]) => {
       this.roles = role;
@@ -50,12 +51,16 @@ export class RegisterComponent implements OnInit {
   }
   resolved(captchaResponse: string) {
     this.isvalidcapcha = captchaResponse;
+    console.log(captchaResponse);
+    if(this.isvalidcapcha){
+      this.form.patchValue({isvalidcapcha:captchaResponse});
+    }
   }
   onSubmit() {
     if (this.isvalidcapcha) {
       this.loginService.register(this.form.value).subscribe((response) => {
         //this.toster.success(response['message'], 'Success');
-        this.snakebar.open(response['message'],'',{duration: 5000});        
+        this.snakebar.open(response['message'],'',{duration: 5000});
         this.router.navigate(['/login']);
       }, (error) => {
         console.log(error);

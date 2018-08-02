@@ -12,16 +12,18 @@
                         <!-- col full-->
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-form-field style="width: 100%">
-                                <input matInput type="text" placeholder="First Name" [formControl]="form.controls['firstName']">
+                                <input matInput type="text" placeholder="First Name" [formControl]="form.controls['firstName']" minlength="2" maxlength='15' pattern='^[a-zA-Z]+(\s[a-zA-Z]+)?$'>
                             </mat-form-field>
                             <small *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched" class="text-danger support-text">You must include first name.</small>
+                            <small *ngIf="form.controls['firstName'].hasError('minlength') && form.controls['firstName'].touched || form.controls['firstName'].hasError('pattern') && form.controls['firstName'].touched" class="text-danger support-text">Invalid first name.</small>
                         </div>
                         <!-- col full-->
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-form-field style="width: 100%">
-                                <input matInput type="text" placeholder="Last Name" [formControl]="form.controls['lastName']">
+                                <input matInput type="text" placeholder="Last Name" [formControl]="form.controls['lastName']" minlength="2" maxlength='15' pattern='^[a-zA-Z]+(\s[a-zA-Z]+)?$'>
                             </mat-form-field>
-                            <small *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched" class="text-danger support-text">You must include first name.</small>
+                            <small *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched" class="text-danger support-text">You must include last name.</small>
+                            <small *ngIf="form.controls['lastName'].hasError('minlength') && form.controls['lastName'].touched || form.controls['lastName'].hasError('pattern') && form.controls['firstName'].touched" class="text-danger support-text">Invalid last name.</small>
                         </div>
                         <!-- col full-->
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
@@ -29,27 +31,31 @@
                                 <input matInput placeholder="Email address" type="email" [formControl]="form.controls['email']">
                             </mat-form-field>
                             <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="text-danger support-text">You must include an email address.</small>
-                            <small *ngIf="form.controls['email'].errors?.email && form.controls['email'].touched" class="text-danger support-text">You must include a valid email address.</small>
+                            <small *ngIf="form.controls['email'].errors?.email && form.controls['email'].touched" class="text-danger support-text">Invalid Email.</small>
                         </div>
                         <!-- col full-->
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-form-field style="width: 100%">
-                                <input matInput type="password" placeholder="Password" [formControl]="form.controls['password']">
+                                <input matInput type="password" placeholder="Password" [formControl]="form.controls['password']" maxlength='15'>
                             </mat-form-field>
                             <small *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="text-danger support-text">You must include password.</small>
+                            <small *ngIf="form.controls['password'].hasError('minlength') && form.controls['password'].touched " class="text-danger support-text">Password must be of 8 charcter long.</small>
+                            <small *ngIf="form.controls['password'].hasError('maxlength') && form.controls['password'].touched " class="text-danger support-text">Password not be more than 15 charcter long.</small>
                         </div>
                         <!-- col full-->
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-form-field style="width: 100%">
-                                <input matInput placeholder="Confirm Password" [formControl]="form.controls['confirmPassword']" type="password">
+                                <input matInput placeholder="Confirm Password" [formControl]="form.controls['confirmPassword']" type="password" maxlength='15'>
                             </mat-form-field>
                             <small *ngIf="form.controls['confirmPassword'].hasError('required') && form.controls['confirmPassword'].touched" class="text-danger support-text">You must include confirm password.</small>
-                            <small *ngIf="form.controls['confirmPassword'].errors?.equalTo" class="text-danger support-text">Passwords do not math.</small>
+                            <small *ngIf="form.controls['confirmPassword'].errors?.equalTo" class="text-danger support-text">Password does not match.</small>
+                            <small *ngIf="form.controls['confirmPassword'].hasError('minlength') && form.controls['confirmPassword'].touched " class="text-danger support-text">Confirm Password must be of 8 charcter long.</small>
+                            <small *ngIf="form.controls['confirmPassword'].hasError('maxlength') && form.controls['confirmPassword'].touched " class="text-danger support-text">Confirm Password not be more than 15 charcter long.</small>
                         </div>
                         <!-- col full-->
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-checkbox matInput [formControl]="form.controls['isAgreed']" class="font-14"> I agree to the all
-                                <a class="link text-info">Terms & Conditions</a>.</mat-checkbox>
+                                <a class="link text-info" href='/tnc' target='_blank'>Terms & Conditions</a>.</mat-checkbox>
                             <!-- <mat-checkbox formControlName="isAgreed">Hide required marker</mat-checkbox> -->
                             <small *ngIf="form.controls['isAgreed'].hasError('required') && form.controls['isAgreed'].touched" class="text-danger support-text">You must Agree.</small>
                         </div>

@@ -31,6 +31,8 @@ require('./reset_password')(router);
 require('./bankdetails')(router);
 require('./history')(router);
 require('./bitstamp_graph')(router);
+require('./coin_balance')(router);
+require('./transaction')(router);
 
 //All of the Schema Collected here
 require('../models/models');

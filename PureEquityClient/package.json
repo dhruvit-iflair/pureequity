@@ -31,6 +31,7 @@
     "@swimlane/ngx-datatable": "^11.2.0",
     "angular-calendar": "^0.22.3",
     "angular2-text-mask": "^9.0.0",
+    "bitgo": "^4.32.0",
     "chartist": "^0.11.0",
     "core-js": "^2.5.4",
     "countrynames": "^0.1.1",
@@ -50,6 +51,8 @@
     "ngx-perfect-scrollbar": "^5.3.5",
     "ngx-quill": "^2.2.0",
     "ngx-toastr": "^8.3.2",
+    "pac-resolver": "^3.0.0",
+    "pace-js": "^1.0.2",
     "pusher-js": "^4.2.2",
     "rxjs": "^5.5.8",
     "zone.js": "^0.8.23"

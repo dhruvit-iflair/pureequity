@@ -11,6 +11,9 @@ import { TopnavbService } from './topnavb/topnavb.service';
 import { FileDropDirective } from "./directives/filedrops.directive";
 import { BankdetailsService } from './services/bankdetails.service';
 import { CsvService } from './services/csv.service';
+import { BitGoService } from "./services/bitgo.service";
+import { CoinBalanceService } from './services/coinBalance.service';
+
 @NgModule({
   declarations: [
     AccordionAnchorDirective,
@@ -32,7 +35,9 @@ import { CsvService } from './services/csv.service';
     GlobalService,
     TopnavbService,
     BankdetailsService,
-    CsvService
+    CsvService,
+    BitGoService,
+    CoinBalanceService
   ],
 
 })
