@@ -83,6 +83,10 @@ File: scss
 }
 @media(max-width: 1200px) {
 	.login-register {
-	display: block;
+	// display: block;
 }
+}
+
+.mat-option-text{
+	padding: 0 16px;
 }

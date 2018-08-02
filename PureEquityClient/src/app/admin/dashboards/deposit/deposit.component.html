@@ -44,7 +44,7 @@
                 <div fxflex></div>
                 <div>
                     <mat-form-field>
-                        <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()"  maxLength="8">
+                        <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()" maxLength="8">
                         <select matSuffix [(ngModel)]="amounttype" (ngModelChange)='initConfig()'>
                             <option *ngFor="let item of ['USD','EUR']" [value]="item">{{item}}</option>
                         </select>
