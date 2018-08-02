@@ -5,7 +5,8 @@
                 <mat-card-content style="padding: 0;">
                     <mat-nav-list class="list" style="padding: 29px 10px 29px;">
                         <mat-list-item *ngFor="let list of sideNave; let i = index;" (click)='toggleSideMenu(i) '>
-                            <a mat-list-item class="{{(list.isActive)? 'mat-list-item active' : 'mat-list-item'}}">{{ list.name }}</a>
+                            <a mat-list-item class="{{(list.isActive)? 'mat-list-item active' : 'mat-list-item'}}">{{ list.name
+                                }}</a>
                         </mat-list-item>
                     </mat-nav-list>
                 </mat-card-content>
@@ -37,8 +38,10 @@
                                             <form [formGroup]="buysellForm">
                                                 <div fxLayout="row" fxLayoutWrap="wrap">
                                                     <mat-form-field>
-                                                        <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" maxLength='12' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = Math.abs(this.value);" >
-                                                        <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                                                        <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" maxLength='12'
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = Math.abs(this.value);">
+                                                        <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount
+                                                            is required.</small>
                                                     </mat-form-field>
                                                     <mat-form-field>
                                                         <input matInput type="text" placeholder="Subtotal:" [(ngModel)]="buydata.subtotal" [readonly]="true" [ngModelOptions]="{standalone: true}">
@@ -47,7 +50,8 @@
                                                         <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(0, 3)}} to Receive:" [(ngModel)]="buydata.estimation" [ngModelOptions]="{standalone: true}" [readonly]="true">
+                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(0, 3)}} to Receive:" [(ngModel)]="buydata.estimation"
+                                                            [ngModelOptions]="{standalone: true}" [readonly]="true">
                                                     </mat-form-field>
 
                                                     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
@@ -81,17 +85,21 @@
                                             <form [formGroup]="sellForm">
                                                 <div fxLayout="row" fxLayoutWrap="wrap">
                                                     <mat-form-field>
-                                                        <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']" maxLength='12' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = Math.abs(this.value);"> <!-- (ngModelChange)="estimation(false)" -->
-                                                        <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
+                                                        <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']" maxLength='12' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = Math.abs(this.value);">
+                                                        <!-- (ngModelChange)="estimation(false)" -->
+                                                        <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount
+                                                            is required.</small>
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Subtotal:" [(ngModel)]="selldata.subtotal" [ngModelOptions]="{standalone: true}" [readonly]="true">
+                                                        <input matInput type="text" placeholder="Subtotal:" [(ngModel)]="selldata.subtotal" [ngModelOptions]="{standalone: true}"
+                                                            [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
                                                         <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellForm.controls['fee']" [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(5, 9)}} to Receive:" [(ngModel)]="selldata.estimation" [ngModelOptions]="{standalone: true}" [readonly]="true">
+                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(5, 9)}} to Receive:" [(ngModel)]="selldata.estimation"
+                                                            [ngModelOptions]="{standalone: true}" [readonly]="true">
                                                     </mat-form-field>
 
                                                     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
@@ -137,24 +145,29 @@
             </mat-card-header>
             <mat-card-content style="float: left; width: 100%; background:#fff; ">
                 <div *ngIf='transactions'>
-                    <table style="width: 100%; text-align: center; padding: 0 0 0 0; margin-bottom: 0;">
+                    <table style="width: 100%; text-align: justify; padding: 0 0 0 0; margin-bottom: 0;">
                         <thead>
                             <tr>
-                                <th>Buy/Sell</th>
-                                <th>Account</th>
+                                <th>Source</th>
+                                <th>Order ID</th>
                                 <th>Amount</th>
-                                <th>Fees</th>
+                                <th>Subtotal</th>
                                 <th>Rate</th>
+                                <th>Value</th>
+                                <th>Fees</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
                         <tbody *ngIf='transactions'>
-                            <tr *ngFor="let list of transactions; let i = index" class="{{(list.transaction_type =='buy')? 'buy' : 'sell'}}">
+                            <tr *ngFor="let list of transactions; let i = index" class="{{(list.transaction_type =='IOB')? 'buy' : 'sell'}}">
                                 <td> {{list.transaction_type | uppercase}}</td>
-                                <td> {{list.account}}</td>
-                                <td> {{list.amount.amount}} {{list.amount.currency}}</td>
-                                <td> {{list.fees.amount}} {{list.fees.currency}}</td>
-                                <td> {{list.rate.amount}} {{list.rate.currency}}</td>
+                                <td> {{list._id.slice(5,16)}}</td>
+                                <td> {{list.amount.amount.toFixed(4)}} {{list.amount.currency}}</td>
+                                <td> {{list.subtotal.amount.toFixed(4)}} {{list.subtotal.currency}}</td>
+                                <td> {{list.rate.amount.toFixed(4)}} {{list.rate.currency}}</td>
+                                <td> {{list.value.amount.toFixed(4)}} {{list.value.currency}}</td>
+                                <td> {{list.fees.amount.toFixed(4)}} {{list.fees.currency}}</td>
+
                                 <td> {{list.time | date :'short'}}</td>
                             </tr>
                         </tbody>
@@ -163,7 +176,6 @@
                 <div *ngIf='!transactions'>
                     <h3>No Transactions found</h3>
                 </div>
-
             </mat-card-content>
         </mat-card>
     </div>

@@ -85,6 +85,8 @@ export class BuysellComponent implements OnInit {
     public calcBuyS: any;
     public calcSellS: any;
     public current_payload: any;
+    public cb:any; public gt :any;
+    public transactions;
     ngOnInit() {
         this.buysellForm = this.fb.group({
             amount: [null, Validators.compose([Validators.required])],
@@ -137,13 +139,21 @@ export class BuysellComponent implements OnInit {
         //   this.orders();
         // }, 10000);
 
-        this.coinBalanceService.coinBalance.subscribe(data => {
+        this.cb = this.coinBalanceService.coinBalance.subscribe(data => {
             this.coinBalance = data
             this.setBalance(this.chipsValue);
         });
         this.coinBalanceService.refreshCoinBalance();
+        this.gt = this.coinBalanceService.getTransactions().subscribe((data:any[])=>{
+            let ppTrans = data.filter(x=> x.transaction_type === 'IOB' || x.transaction_type === 'IOS');
+            this.transactions = this.sortData(ppTrans)
+        });
+        this.coinBalanceService.refreshTransactions();
     }
-
+    ngOnDestroy() {
+        this.cb.unsubscribe();
+        this.gt.unsubscribe();
+    }
     orders() {
         this.http.get(environment.tradingApi + "/orderBook/btcusd").subscribe(
             resp => {
@@ -154,6 +164,14 @@ export class BuysellComponent implements OnInit {
                 console.log(err);
             }
         );
+    }
+    sortData(data:any){
+        return data.sort((a, b) => {
+            let aDate: Date = new Date(a.created_at);
+            let bDate: Date = new Date(b.created_at);
+            // console.log(aDate.getTime());
+            return bDate.getTime() - aDate.getTime();
+        });
     }
     setBalance(coinval) {
         // this.coinBalanceService.refreshCoinBalance();

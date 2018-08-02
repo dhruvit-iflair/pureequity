@@ -30,7 +30,7 @@
                 <div fxFlex.gt-sm="20" fxFlex.gt-xs="20" fxFlex="20">
                     <img src="{{tokendata.user.image}}" style="height: 150px;">
                 </div>
-                <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="40">
+                <div fxFlex.gt-sm="60" fxFlex.gt-xs="60" fxFlex="60">
                     <h3>
                         {{ tokendata.user.firstName | uppercase }} {{ tokendata.user.lastName | uppercase}}
                     </h3>
@@ -42,19 +42,36 @@
                     </h4>
                 </div>
                 <div fxflex></div>
-                <div>
-                    <mat-form-field>
-                        <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()" maxLength="8">
-                        <select matSuffix [(ngModel)]="amounttype" (ngModelChange)='initConfig()'>
+                <!-- <div>
+
+                </div> -->
+                <mat-card style="padding:0 !important;margin:0 !important;">
+                    <!-- <mat-card-header>
+                        <mat-card-title>Deposit </mat-card-title>
+                        <mat-card-subtitle>Deposit</mat-card-subtitle>
+                    </mat-card-header> -->
+                    <mat-card-content>
+                        <mat-form-field>
+                            <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()" maxLength="8">
+                            <select matSuffix [(ngModel)]="amounttype" (ngModelChange)='initConfig()'>
+                                <option *ngFor="let item of ['USD','EUR']" [value]="item">{{item}}</option>
+                            </select>
+                            <mat-error *ngIf="payamount == 0 || payamount <= 0">Invalid amount</mat-error>
+                        </mat-form-field>
+                        <!-- <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()"> -->
+                        <!-- <select [(ngModel)]="amounttype" (ngModelChange)='initConfig()'>
                             <option *ngFor="let item of ['USD','EUR']" [value]="item">{{item}}</option>
-                        </select>
-                    </mat-form-field>
-                    <!-- <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()"> -->
-                    <!-- <select [(ngModel)]="amounttype" (ngModelChange)='initConfig()'>
-                        <option *ngFor="let item of ['USD','EUR']" [value]="item">{{item}}</option>
-                    </select> -->
-                    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-                </div>
+                        </select> -->
+                        <ngx-paypal [config]="payPalConfig" style="text-align: center;"></ngx-paypal>
+                    </mat-card-content>
+                    <!-- <mat-card-actions align="start">
+                        <button mat-button (click)="onAction1">Action1</button>
+
+                    </mat-card-actions>
+                    <mat-card-footer>
+                        Footer
+                    </mat-card-footer> -->
+                </mat-card>
             </mat-card-content>
         </mat-card>
     </div>
