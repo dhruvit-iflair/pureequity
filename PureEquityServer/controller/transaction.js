@@ -61,7 +61,7 @@ TransactionCtrl.prototype.getByUserId = function (req, res, next) {
                 res.status(500).send({ message: err.message });
             }
             else if (doc.length && doc[0]._id) {
-                res.status(200).send(doc[0]).end();
+                res.status(200).send(doc).end();
             }
             else if (!doc.length) {
                 res.status(404).send({ message: "No transaction Found !!" }).end();

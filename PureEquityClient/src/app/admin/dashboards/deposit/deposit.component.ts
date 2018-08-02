@@ -18,6 +18,7 @@ export class DepositComponent implements OnInit {
     public transactions;
     public payamount:number = 0.00;
     public amounttype:string = 'USD';
+    public cb:any; public gt :any;
     constructor(
         private http: Http,
         private router: Router,
@@ -29,15 +30,32 @@ export class DepositComponent implements OnInit {
     public coinBalance :CoinBalance;
     ngOnInit() {
         this.tokendata = JSON.parse(localStorage.getItem('token'));
-        this.transaction();
+        // this.transaction();
         this.initConfig();
-        this.coinBalanceService.coinBalance.subscribe(data=>{
+        this.cb = this.coinBalanceService.coinBalance.subscribe(data=>{
             this.coinBalance = data
         });
         this.coinBalanceService.refreshCoinBalance();
+        this.gt = this.coinBalanceService.getTransactions().subscribe((data:any[])=>{
+            let ppTrans = data.filter(x=> x.transaction_type == 'paypal');
+            this.transactions = this.sortData(ppTrans)
+        });
+        this.coinBalanceService.refreshTransactions();
     }
     papal(){
         this.initConfig();
+    }
+    ngOnDestroy() {
+        this.cb.unsubscribe();
+        this.gt.unsubscribe();
+    }
+    sortData(data:any){
+        return data.sort((a, b) => {
+            let aDate: Date = new Date(a.created_at);
+            let bDate: Date = new Date(b.created_at);
+            // console.log(aDate.getTime());
+            return bDate.getTime() - aDate.getTime();
+        });
     }
     public initConfig(): void {
         this.payPalConfig = new PayPalConfig(PayPalIntegrationType.ClientSideREST, PayPalEnvironment.Sandbox, {
@@ -78,7 +96,10 @@ export class DepositComponent implements OnInit {
                 transaction.status = "success";
                 transaction.transaction_type = "paypal";
                 this.coinBalanceService.saveTransaction(transaction).subscribe(
-                    success => this.coinBalanceService.updateCoinBalance(coinData),
+                    success => {
+                        this.coinBalanceService.updateCoinBalance(coinData);
+                        this.coinBalanceService.refreshTransactions();
+                    },
                     error => {
                         this.snakebar.open("Error Something went wrong", "", { duration: 5000 });
                     }
@@ -114,7 +135,10 @@ export class DepositComponent implements OnInit {
                 transaction.status = "cancel";
                 transaction.transaction_type = "paypal";
                 this.coinBalanceService.saveTransaction(transaction).subscribe(
-                    success => console.log(success),
+                    success => {
+                        console.log(success)
+                        this.coinBalanceService.refreshTransactions();
+                    },
                     error => {
                         this.snakebar.open("Error Something went wrong", "", { duration: 5000 });
                     }
@@ -134,7 +158,10 @@ export class DepositComponent implements OnInit {
                 transaction.error = err;
                 transaction.transaction_type = "paypal";
                 this.coinBalanceService.saveTransaction(transaction).subscribe(
-                    success => console.log(success),
+                    success => {
+                        console.log(success);
+                        this.coinBalanceService.refreshTransactions();
+                    },
                     error => {
                         this.snakebar.open("Error Something went wrong", "", { duration: 5000 });
                     }
@@ -149,10 +176,18 @@ export class DepositComponent implements OnInit {
         });
     }
     transaction() {
-        this.http.get(environment.api + '/history/user/' + this.tokendata.user._id).subscribe((res: any) => {
-            var tran = res.json();
-            this.transactions = tran.transactions;
-            console.log(this.transactions);
+        // this.http.get(environment.api + '/history/user/' + this.tokendata.user._id).subscribe((res: any) => {
+        //     var tran = res.json();
+        //     this.transactions = tran.transactions;
+        //     console.log(this.transactions);
+        // }, (err: any) => {
+        //     console.log(err);
+        // })
+        this.http.get(environment.api + '/transaction/user/' + this.tokendata.user._id).subscribe((res: any) => {
+            // var tran = res.json();
+            // this.transactions = tran.transactions;
+            // console.log(this.transactions);
+            console.log(res);
         }, (err: any) => {
             console.log(err);
         })

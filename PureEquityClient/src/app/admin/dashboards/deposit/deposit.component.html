@@ -116,7 +116,7 @@
                 </button> -->
             </mat-card-header>
             <mat-card-content style="float: left; width: 100%; background:#fff; ">
-                <div *ngIf='transactions'>
+                <!-- <div *ngIf='transactions'>
                     <table style="width: 100%; text-align: center; padding: 0 0 0 0; margin-bottom: 0;">
                         <thead>
                             <tr>
@@ -135,6 +135,28 @@
                                 <td> {{list.amount.amount}} {{list.amount.currency}}</td>
                                 <td> {{list.fees.amount}} {{list.fees.currency}}</td>
                                 <td> {{list.rate.amount}} {{list.rate.currency}}</td>
+                                <td> {{list.time | date :'short'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+                <div *ngIf='transactions'>
+                    <table style="width: 100%; text-align: justify; padding: 0 0 0 0; margin-bottom: 0;">
+                        <thead>
+                            <tr>
+                                <th>Source</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf='transactions'>
+                            <tr *ngFor="let list of transactions; let i = index" class="{{(list.status =='success')? 'buy' : 'sell'}}">
+                                <td> {{list.transaction_type | uppercase}}</td>
+                                <td> {{list.status | uppercase}}</td>
+                                <td> {{list.amount.amount}} {{list.amount.currency}}</td>
+                                <td> {{(list.orderID)? list.orderID : list.billingID}}</td>
                                 <td> {{list.time | date :'short'}}</td>
                             </tr>
                         </tbody>

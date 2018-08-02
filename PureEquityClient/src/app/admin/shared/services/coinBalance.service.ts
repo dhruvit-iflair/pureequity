@@ -10,13 +10,25 @@ import { MatSnackBar } from '@angular/material';
 @Injectable()
 export class CoinBalanceService {
     public coinBalance = new Subject<any>();
-
+    public transactions = new Subject<any>();
     constructor(public http: HttpClient, public snakebar:MatSnackBar) { }
 
     getCoinBalance(): Observable<any> {
         return this.coinBalance.asObservable();
     }
+    getTransactions(): Observable<any> {
+        return this.transactions.asObservable();
+    }
 
+    refreshTransactions() {
+        let token = JSON.parse(localStorage.getItem('token'));
+        this.http.get(environment.api + '/transaction/user/' + token.user._id)
+            .subscribe(
+                transactions => this.transactions.next(transactions),
+                error => {
+                    console.log(error)
+                });
+    }
     refreshCoinBalance() {
         let token = JSON.parse(localStorage.getItem('token'));
         this.http.get(environment.api + '/coin_balance/user/' + token.user._id)

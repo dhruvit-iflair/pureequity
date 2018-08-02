@@ -139,7 +139,6 @@ export class BuysellComponent implements OnInit {
 
         this.coinBalanceService.coinBalance.subscribe(data => {
             this.coinBalance = data
-            console.log(this.coinBalance);
             this.setBalance(this.chipsValue);
         });
         this.coinBalanceService.refreshCoinBalance();
@@ -157,13 +156,11 @@ export class BuysellComponent implements OnInit {
         );
     }
     setBalance(coinval) {
-        console.log(coinval.slice(0, 3), coinval.slice(3, 6));
         // this.coinBalanceService.refreshCoinBalance();
         let balanceBuy = this.coinBalance.balance.find(bal => bal.coin.toLowerCase() === coinval.slice(3, 6).toLowerCase());
         let balanceSell = this.coinBalance.balance.find(bal => bal.coin.toLowerCase() === coinval.slice(0, 3).toLowerCase());
-        console.log(balanceBuy, balanceSell);
-        this.availableBalanceBuy = (balanceBuy) ? balanceBuy.balance + ' ' + coinval.slice(3, 6).toUpperCase() : "0 " + coinval.slice(3, 6).toUpperCase();
-        this.availableBalanceSell = (balanceSell) ? balanceSell.balance + ' ' + coinval.slice(0, 3).toUpperCase() : "0 " + coinval.slice(0, 3).toUpperCase();
+        this.availableBalanceBuy = (balanceBuy) ? (balanceBuy.balance).toFixed(6) + ' ' + coinval.slice(3, 6).toUpperCase() : "0 " + coinval.slice(3, 6).toUpperCase();
+        this.availableBalanceSell = (balanceSell) ? (balanceSell.balance).toFixed(6) + ' ' + coinval.slice(0, 3).toUpperCase() : "0 " + coinval.slice(0, 3).toUpperCase();
         // this.availableBalanceBuy = (balanceBuy)? balanceBuy +  coinval.slice(0,3).toUpperCase();
         // this.availableBalanceSell = this.coinBalance.balance.find(bal =>{
         //     return bal.coin == coinval.slice(3,6);
@@ -211,7 +208,9 @@ export class BuysellComponent implements OnInit {
         }
     }
     buybtc() {
+        let token = JSON.parse(localStorage.getItem('token'));
         let trans = {
+            user : token.user._id,
             transaction_type: "IOB",
             time: Date.now(),
             account: "Main Account",
@@ -238,26 +237,25 @@ export class BuysellComponent implements OnInit {
         }
         this.coinBalanceService.saveTransaction(trans).subscribe(
             success => {
-                console.log(trans);
                 let checkAvailableBalance = this.coinBalance.balance.find(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase());
                 let balance:any = this.coinBalance
-                console.log(checkAvailableBalance);
-                if (checkAvailableBalance && checkAvailableBalance.balance > this.buysellForm.value.amount) {
+                if (checkAvailableBalance && checkAvailableBalance.balance >= this.buysellForm.value.amount) {
                     let buyBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase())
-                    balance.balance[buyBalIndex].balance = parseFloat(balance.balance[buyBalIndex].balance) - parseFloat(this.buysellForm.value.amount);
+                    balance.balance[buyBalIndex].balance = (parseFloat(balance.balance[buyBalIndex].balance) - parseFloat(this.buysellForm.value.amount)).toFixed(6);
 
                     let sellBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(0, 3).toLowerCase())
                     if (sellBalIndex > -1) {
-                        balance.balance[sellBalIndex].balance = parseFloat(balance.balance[sellBalIndex].balance) + parseFloat(this.buydata.estimation);
+                        balance.balance[sellBalIndex].balance = (parseFloat(balance.balance[sellBalIndex].balance) + parseFloat(this.buydata.estimation)).toFixed(6);
                     }
                     else {
                         let b:any = {
                             coin:this.tradeCoin.slice(0, 3).toLowerCase(),
-                            balance : this.buydata.estimation
+                            balance : (this.buydata.estimation).toFixed(6)
                         }
                         balance.balance.push(b);
                     }
                     this.coinBalanceService.updateCoinBalance(balance);
+                    this.coinBalanceService.refreshTransactions();
                 }
                 else {
                     this.snakebar.open(`You account does not contail sufficent ${this.tradeCoin.slice(6, 9).toUpperCase()} to buy ${this.tradeCoin.slice(0, 3).toUpperCase()}`, "", { duration: 5000 });
@@ -269,7 +267,9 @@ export class BuysellComponent implements OnInit {
         )
     }
     sellbtc() {
+        let token = JSON.parse(localStorage.getItem('token'));
         let trans = {
+            user : token.user._id,
             transaction_type: "IOS",
             time: Date.now(),
             account: "Main Account",
@@ -279,11 +279,11 @@ export class BuysellComponent implements OnInit {
             },
             subtotal: {
                 amount: this.selldata.subtotal,
-                currency:  this.tradeCoin.slice(6,
+                currency:  this.tradeCoin.slice(6,9)
             },
             value: {
                 amount: this.selldata.estimation,
-                currency:  this.tradeCoin.slice(6,
+                currency:  this.tradeCoin.slice(6,9)
             },
             rate: {
                 amount:  this.current_payload.payload.data.bid,
@@ -294,38 +294,40 @@ export class BuysellComponent implements OnInit {
                 currency: this.tradeCoin.slice(6,9)
             }
         }
-        console.log(trans);
-        // this.coinBalanceService.saveTransaction(trans).subscribe(
-        //     success => {
-        //         console.log(trans);
-        //         let checkAvailableBalance = this.coinBalance.balance.find(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase());
-        //         let balance:any = this.coinBalance
-        //         console.log(checkAvailableBalance);
-        //         if (checkAvailableBalance && checkAvailableBalance.balance > this.buysellForm.value.amount) {
-        //             let buyBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase())
-        //             balance.balance[buyBalIndex].balance = parseFloat(balance.balance[buyBalIndex].balance) - parseFloat(this.buysellForm.value.amount);
+        this.coinBalanceService.saveTransaction(trans).subscribe(
+            success => {
+                let checkAvailableBalance = this.coinBalance.balance.find(c=>c.coin.toLowerCase() === this.tradeCoin.slice(0,3).toLowerCase());
+                let balance:any = this.coinBalance
+                console.log(checkAvailableBalance, checkAvailableBalance.balance > this.sellForm.value.amount, this.sellForm.value.amount);
+                if (checkAvailableBalance && checkAvailableBalance.balance >= this.sellForm.value.amount) {
+                    let sellBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(0,3).toLowerCase())
+                    balance.balance[sellBalIndex].balance = (parseFloat(balance.balance[sellBalIndex].balance) - parseFloat(this.sellForm.value.amount)).toFixed(6);
+                    console.log(sellBalIndex, this.tradeCoin.slice(0,3).toLowerCase());
+                    let buyBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(6, 9).toLowerCase())
+                    console.log(buyBalIndex);
+                    if (buyBalIndex > -1) {
+                        balance.balance[buyBalIndex].balance = (parseFloat(balance.balance[buyBalIndex].balance) + parseFloat(this.selldata.estimation)).toFixed(6);
 
-        //             let sellBalIndex = balance.balance.findIndex(c=>c.coin.toLowerCase() === this.tradeCoin.slice(0, 3).toLowerCase())
-        //             if (sellBalIndex > -1) {
-        //                 balance.balance[sellBalIndex].balance = parseFloat(balance.balance[sellBalIndex].balance) + parseFloat(this.buydata.estimation);
-        //             }
-        //             else {
-        //                 let b:any = {
-        //                     coin:this.tradeCoin.slice(0, 3).toLowerCase(),
-        //                     balance : this.buydata.estimation
-        //                 }
-        //                 balance.balance.push(b);
-        //             }
-        //             this.coinBalanceService.updateCoinBalance(balance);
-        //         }
-        //         else {
-        //             this.snakebar.open(`You account does not contail sufficent ${this.tradeCoin.slice(6, 9).toUpperCase()} to buy ${this.tradeCoin.slice(0, 3).toUpperCase()}`, "", { duration: 5000 });
-        //         }
-        //     },
-        //     error => {
-        //         this.snakebar.open("Error Something went wrong please try again later", "", { duration: 5000 });
-        //     }
-        // )
+                    }
+                    else {
+                        let b:any = {
+                            coin:this.tradeCoin.slice(6, 9).toLowerCase(),
+                            balance : (this.buydata.estimation).toFixed(6)
+                        }
+                        balance.balance.push(b);
+                    }
+                    console.log(balance);
+                    this.coinBalanceService.updateCoinBalance(balance);
+                    this.coinBalanceService.refreshTransactions();
+                }
+                else {
+                    this.snakebar.open(`You account does not contail sufficent ${this.tradeCoin.slice(0,3).toUpperCase()} to sell`, "", { duration: 5000 });
+                }
+            },
+            error => {
+                this.snakebar.open("Error Something went wrong please try again later", "", { duration: 5000 });
+            }
+        )
     }
 
     public initConfig(): void {
