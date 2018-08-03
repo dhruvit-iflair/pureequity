@@ -12,7 +12,7 @@
 </div> -->
 
 <div fxLayout="row" fxLayoutWrap="wrap">
-    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+    <div fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="50">
         <mat-card>
             <mat-card-header class="bg-primary text-white">
                 <mat-card-title-group>
@@ -21,17 +21,14 @@
                     </mat-card-title>
                 </mat-card-title-group>
                 <div fxFlex="fxFlex"></div>
-                <!-- <button mat-fab color="primary" @card class="half-header" bottom (click)="toggle_edit();">
-                    <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
-                </button> -->
             </mat-card-header>
-            <mat-card-content style="font-size: smaller; float: left; width: 100%; background:#fff; ">
+            <mat-card-content style="font-size: smaller; background:#fff; ">
                 <!-- {{ tokendata.user | json }} -->
-                <div fxFlex.gt-sm="20" fxFlex.gt-xs="20" fxFlex="20">
-                    <img src="{{tokendata.user.image}}" style="height: 150px;">
+                <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="40" style='text-align: center;'>
+                    <img src="{{tokendata.user.image}}" style="height: 150px;width: 200px;">
                 </div>
                 <div fxFlex.gt-sm="60" fxFlex.gt-xs="60" fxFlex="60">
-                    <h3>
+                    <h3 style='line-height: 20px;'>
                         {{ tokendata.user.firstName | uppercase }} {{ tokendata.user.lastName | uppercase}}
                     </h3>
                     <h4>
@@ -41,37 +38,35 @@
                         {{ tokendata.user.role.name | uppercase}}
                     </h4>
                 </div>
-                <div fxflex></div>
-                <!-- <div>
-
-                </div> -->
-                <mat-card style="padding:0 !important;margin:0 !important;">
-                    <!-- <mat-card-header>
-                        <mat-card-title>Deposit </mat-card-title>
-                        <mat-card-subtitle>Deposit</mat-card-subtitle>
-                    </mat-card-header> -->
-                    <mat-card-content>
-                        <mat-form-field>
-                            <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()" maxLength="8">
-                            <select matSuffix [(ngModel)]="amounttype" (ngModelChange)='initConfig()'>
-                                <option *ngFor="let item of ['USD','EUR']" [value]="item">{{item}}</option>
-                            </select>
-                            <mat-error *ngIf="payamount == 0 || payamount <= 0">Invalid amount</mat-error>
-                        </mat-form-field>
-                        <!-- <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()"> -->
-                        <!-- <select [(ngModel)]="amounttype" (ngModelChange)='initConfig()'>
-                            <option *ngFor="let item of ['USD','EUR']" [value]="item">{{item}}</option>
-                        </select> -->
-                        <ngx-paypal [config]="payPalConfig" style="text-align: center;"></ngx-paypal>
-                    </mat-card-content>
-                    <!-- <mat-card-actions align="start">
-                        <button mat-button (click)="onAction1">Action1</button>
-
-                    </mat-card-actions>
-                    <mat-card-footer>
-                        Footer
-                    </mat-card-footer> -->
-                </mat-card>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="50">
+        <mat-card>
+            <mat-card-header class="bg-primary text-white">
+                <mat-card-title-group>
+                    <mat-card-title fxLayout="row">
+                        Deposit
+                    </mat-card-title>
+                </mat-card-title-group>
+                <div fxFlex="fxFlex"></div>
+            </mat-card-header>
+            <mat-card-content style="font-size: smaller; float: left; width: 100%; background:#fff; ">
+                <mat-form-field style="width:70%">
+                    <input matInput type="number" placeholder="Amount" [(ngModel)]="payamount" (ngModelChange)="initConfig()" maxLength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.toFixed(6)" >
+                    <!-- <select matSuffix [(ngModel)]="amounttype" (ngModelChange)='initConfig()'>
+                        <option *ngFor="let item of ['USD','EUR']" [value]="item">{{item}}</option>
+                    </select>
+                    <mat-error *ngIf="payamount == 0 || payamount <= 0">Invalid amount</mat-error> -->
+                </mat-form-field>
+                <mat-form-field style="width:29%">
+                    <mat-select [(ngModel)]="amounttype" (ngModelChange)='initConfig()' placeholder="Currency">
+                        <mat-option *ngFor="let item of ['USD','EUR']" [value]="item">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <ngx-paypal [config]="payPalConfig" style="text-align: center;" *ngIf='payamount > 0'></ngx-paypal>
             </mat-card-content>
         </mat-card>
     </div>
