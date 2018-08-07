@@ -1,15 +1,15 @@
 <div fxFlex.gt-sm="50%" fxFlex="50">
     <mat-card>
         <mat-card-header class="bg-primary text-white">
-            <mat-card-title>Stop Buy {{tradeCoin.slice(0, 3)}} </mat-card-title>
+            <mat-card-title>Stop Buy {{activeTrade.name.slice(0,3)}} </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div style="text-align:center;">
-                <span>Available : {{availableBalanceBuy}}</span>
+                <span>Available : {{activeMoneyBalance.balance}} {{activeMoneyBalance.coin | uppercase}}</span>
                 <form [formGroup]="stopOrderBuyForm">
                     <div fxLayout="row" fxLayoutWrap="wrap">
                         <mat-form-field>
-                            <input matInput type="number" placeholder="Available To Buy In {{tradeCoin.slice(5, 9)}}" [formControl]="stopOrderBuyForm.controls['amount']">
+                            <input matInput type="number" placeholder="Available To Buy In {{activeTrade.name.slice(6,9)}}" [formControl]="stopOrderBuyForm.controls['amount']">
                         </mat-form-field>
                         <small *ngIf="stopOrderBuyForm.controls['amount'].hasError('required') && stopOrderBuyForm.controls['amount'].touched" class="text-danger support-text">Amount is required.</small>
 
@@ -23,7 +23,7 @@
 
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
-                                BUY {{tradeCoin.slice(0, 3)}}
+                                BUY {{activeTrade.name.slice(0,3)}}
                             </button>
                         </div>
 
@@ -44,15 +44,15 @@
 <div fxFlex.gt-sm="50%" fxFlex="50">
     <mat-card>
         <mat-card-header class="bg-primary text-white">
-            <mat-card-title>Stop Sell {{tradeCoin.slice(0, 3)}} </mat-card-title>
+            <mat-card-title>Stop Sell {{activeTrade.name.slice(0,3)}} </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div style="text-align:center;">
-                <span>Available : {{availableBalanceSell}} </span>
+                <span>Available : {{activeCoinBalance.balance}} {{activeCoinBalance.coin | uppercase}} </span>
                 <form [formGroup]="stopOrderSellForm">
                     <div fxLayout="row" fxLayoutWrap="wrap">
                         <mat-form-field>
-                            <input matInput type="number" placeholder="Available To Sell In {{tradeCoin.slice(5, 9)}}" [formControl]="stopOrderSellForm.controls['amount']">
+                            <input matInput type="number" placeholder="Available To Sell In {{activeTrade.name.slice(6,9)}}" [formControl]="stopOrderSellForm.controls['amount']">
                         </mat-form-field>
                         <small *ngIf="stopOrderSellForm.controls['amount'].hasError('required') && stopOrderSellForm.controls['amount'].touched"
                             class="text-danger support-text">Amount is required.</small>
@@ -67,7 +67,7 @@
 
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
-                                SELL {{tradeCoin.slice(0, 3)}}
+                                SELL {{activeTrade.name.slice(0,3)}}
                             </button>
                         </div>
 

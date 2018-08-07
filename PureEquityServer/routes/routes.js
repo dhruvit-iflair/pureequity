@@ -32,7 +32,10 @@ require('./bankdetails')(router);
 require('./history')(router);
 require('./bitstamp_graph')(router);
 require('./coin_balance')(router);
+require('./coin_transaction')(router);
 require('./transaction')(router);
+require('./money_balance')(router);
+require('./money_transaction')(router);
 
 //All of the Schema Collected here
 require('../models/models');

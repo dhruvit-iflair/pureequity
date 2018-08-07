@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CoinBalance } from '../buysell.component';
+import { CoinBalance, Balance } from '../buysell.component';
+import { TradeRecord } from '../../../shared/services/trade.service';
 
 @Component({
     selector: 'app-stop-order',
@@ -8,10 +9,15 @@ import { CoinBalance } from '../buysell.component';
     styleUrls: ['./stop-order.component.css']
 })
 export class StopOrderComponent implements OnInit {
-    @Input() availableBalanceBuy: any;
-    @Input() availableBalanceSell: any;
-    @Input() tradeCoin: any;
-    @Input() coinBalance: CoinBalance;
+    // @Input() availableBalanceBuy: any;
+    // @Input() availableBalanceSell: any;
+    // @Input() tradeCoin: any;
+    // @Input() coinBalance: CoinBalance;
+    @Input() activeTrade : TradeRecord;
+    @Input() coinBalance:CoinBalance;
+    @Input() moneyBalance:CoinBalance;
+    @Input() activeCoinBalance:Balance;
+    @Input() activeMoneyBalance:Balance;
 
     public stopOrderBuyForm: FormGroup;
     public stopOrderSellForm: FormGroup;

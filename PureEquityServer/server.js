@@ -18,7 +18,7 @@ var app = express();
 var db = mongoose.connect(config.connection + config.dbName,{useMongoClient: true});   
 
 app.use(cores.permission);
-app.use(logger('combined'));
+app.use(logger('tiny'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false, parameterLimit:50000 }));
 

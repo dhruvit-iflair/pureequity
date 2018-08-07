@@ -16,7 +16,7 @@
             <mat-card style="margin-bottom:2%;float: right;">
                 <mat-card-content style="font-size: smaller;float: inherit;">
                     <div class="row">
-                        <div *ngFor="let list of tradeList; let i = index" class="padding-10 {{(list.isActive)? 'active' : 'non-active'}}" (click)="toggleValue(i);">
+                        <div *ngFor="let list of tradeList; let i = index" class="padding-10 {{(list.isActive)? 'active' : 'non-active'}}" (click)="tradeService.toggleTradeChip(i);">
                             <label>
                                 {{list.name}}</label>
                         </div>
@@ -30,33 +30,35 @@
                             <div fxFlex.gt-sm="45%" fxFlex="45">
                                 <mat-card>
                                     <mat-card-header class="bg-primary text-white">
-                                        <mat-card-title>Buy {{tradeCoin.slice(0,3)}}</mat-card-title>
+                                        <mat-card-title>Buy {{activeTrade.name.slice(0,3)}}</mat-card-title>
                                     </mat-card-header>
                                     <mat-card-content>
                                         <div style="text-align:center;">
-                                            <span>Available : {{availableBalanceBuy}}</span>
-                                            <form [formGroup]="buysellForm">
+                                            <span *ngIf='activeMoneyBalance'>Available : {{activeMoneyBalance.balance}} {{activeMoneyBalance.coin | uppercase}} </span>
+                                            <form>
                                                 <div fxLayout="row" fxLayoutWrap="wrap">
                                                     <mat-form-field>
-                                                        <input matInput type="number" placeholder="I Want To Spend:" [formControl]="buysellForm.controls['amount']" maxLength='12'
-                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.toFixed(6);">
-                                                        <small *ngIf="buysellForm.controls['amount'].hasError('required') && buysellForm.controls['amount'].touched" class="text-danger support-text">Amount
-                                                            is required.</small>
+                                                        <input matInput
+                                                            type="number"
+                                                            placeholder="I Want To Spend:"
+                                                            [formControl]="buyAmount" maxLength='12'
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                                        <small *ngIf="buyAmount.hasError('required') && buyAmount.touched" class="text-danger support-text">You need to spend something.</small>
+                                                        <small *ngIf="buyAmount.hasError('minBuyValue') && buyAmount.dirty && !buyAmount.hasError('required')" class="text-danger support-text">You need to spend more than {{activeTrade.minBuy}} {{activeMoneyBalance.coin | uppercase}}.</small>
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Subtotal:" [(ngModel)]="buydata.subtotal" [readonly]="true" [ngModelOptions]="{standalone: true}">
+                                                        <input matInput type="text" placeholder="Subtotal:" [formControl]="buySubtotal" [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buysellForm.controls['fee']" [readonly]="true">
+                                                        <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="buyFees" [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(0, 3)}} to Receive:" [(ngModel)]="buydata.estimation"
-                                                            [ngModelOptions]="{standalone: true}" [readonly]="true">
+                                                        <input matInput type="text" placeholder="Approx. {{activeTrade.name.slice(0, 3)}} to Receive:" [formControl]="buyReceive" [readonly]="true">
                                                     </mat-form-field>
 
                                                     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                                                        <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="buybtc()">
-                                                            BUY {{tradeCoin.slice(0, 3)}}
+                                                        <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" [disabled]='!buyAmount.valid || buyAmount.value <= 0' (click)='buy()'>
+                                                            BUY {{activeTrade.name.slice(0, 3)}}
                                                         </button>
                                                     </div>
 
@@ -77,7 +79,54 @@
                             <div fxFlex.gt-sm="45%" fxFlex="45">
                                 <mat-card>
                                     <mat-card-header class="bg-primary text-white">
-                                        <mat-card-title>Sell {{tradeCoin.slice(0, 3)}}</mat-card-title>
+                                        <mat-card-title>Sell {{activeTrade.name.slice(6,9)}}</mat-card-title>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <div style="text-align:center;">
+                                            <span *ngIf='activeCoinBalance'>Available :{{activeCoinBalance.balance}} {{activeCoinBalance.coin | uppercase}}</span>
+                                            <form>
+                                                <div fxLayout="row" fxLayoutWrap="wrap">
+                                                    <mat-form-field>
+                                                        <input matInput
+                                                            type="number"
+                                                            placeholder="I Want To Spend:"
+                                                            [formControl]="sellAmount" maxLength='12'
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                                        <small *ngIf="sellAmount.hasError('required') && sellAmount.touched" class="text-danger support-text">You need to spend something.</small>
+                                                        <small *ngIf="sellAmount.hasError('minBuyValue') && sellAmount.dirty && !sellAmount.hasError('required')" class="text-danger support-text">You need to spend more than {{activeTrade.minSell}} {{activeCoinBalance.coin | uppercase}}.</small>
+                                                    </mat-form-field>
+                                                    <mat-form-field>
+                                                        <input matInput type="text" placeholder="Subtotal:" [formControl]="sellSubtotal" [readonly]="true">
+                                                    </mat-form-field>
+                                                    <mat-form-field>
+                                                        <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellFees" [readonly]="true">
+                                                    </mat-form-field>
+                                                    <mat-form-field>
+                                                        <input matInput type="text" placeholder="Approx. {{activeTrade.name.slice(6,9)}} to Receive:" [formControl]="sellReceive" [readonly]="true">
+                                                    </mat-form-field>
+
+                                                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                                                        <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" [disabled]='!sellAmount.valid || sellAmount.value <= 0' (click)='sell()' >
+                                                            Sell {{activeTrade.name.slice(6,9)}}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                            <!-- <div fxFlex.gt-sm="11%" fxFlex="11" class="customizedCss">
+                                <mat-card>
+                                    <mat-card-content style="background-color: #555581; text-align: center; color: #fff;padding: 0px; font-size: 18px; line-height: 50px;">
+                                        OR
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                            <div fxFlex.gt-sm="45%" fxFlex="45">
+                                <mat-card>
+                                    <mat-card-header class="bg-primary text-white">
+                                        <mat-card-title>Sell {{activeTrade.name.slice(0, 3)}}</mat-card-title>
                                     </mat-card-header>
                                     <mat-card-content>
                                         <div style="text-align:center;">
@@ -86,7 +135,6 @@
                                                 <div fxLayout="row" fxLayoutWrap="wrap">
                                                     <mat-form-field>
                                                         <input matInput type="number" placeholder="I Want To Sell:" [formControl]="sellForm.controls['amount']" maxLength='12' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.toFixed(6);">
-                                                        <!-- (ngModelChange)="estimation(false)" -->
                                                         <small *ngIf="sellForm.controls['amount'].hasError('required') && sellForm.controls['amount'].touched" class="text-danger support-text">Amount
                                                             is required.</small>
                                                     </mat-form-field>
@@ -98,13 +146,13 @@
                                                         <input matInput type="text" placeholder="PureEquity Fee:" [formControl]="sellForm.controls['fee']" [readonly]="true">
                                                     </mat-form-field>
                                                     <mat-form-field>
-                                                        <input matInput type="text" placeholder="Approx. {{tradeCoin.slice(5, 9)}} to Receive:" [(ngModel)]="selldata.estimation"
+                                                        <input matInput type="text" placeholder="Approx. {{activeTrade.name.slice(5, 9)}} to Receive:" [(ngModel)]="selldata.estimation"
                                                             [ngModelOptions]="{standalone: true}" [readonly]="true">
                                                     </mat-form-field>
 
                                                     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                                                         <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="sellbtc()">
-                                                            SELL {{tradeCoin.slice(0, 3)}}
+                                                            SELL {{activeTrade.name.slice(0, 3)}}
                                                         </button>
                                                     </div>
 
@@ -113,19 +161,16 @@
                                         </div>
                                     </mat-card-content>
                                 </mat-card>
-                            </div>
+                            </div> -->
                         </div>
                         <div *ngIf="sideNave[1].isActive">
-                            <app-limit-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy'
-                                [availableBalanceSell]='availableBalanceSell' [tradeCoin]='tradeCoin' [coinBalance]='coinBalance'></app-limit-order>
+                            <app-limit-order style="justify-content: center;align-items: center;min-width: 100%;" [coinBalance]='coinBalance' [activeTrade]='activeTrade' [coinBalance]='coinBalance' [moneyBalance]='moneyBalance' [activeCoinBalance]='activeCoinBalance' [activeMoneyBalance]='activeMoneyBalance' ></app-limit-order>
                         </div>
                         <div *ngIf="sideNave[2].isActive">
-                            <app-market-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy'
-                                [availableBalanceSell]='availableBalanceSell' [tradeCoin]='tradeCoin' [coinBalance]='coinBalance'></app-market-order>
+                            <app-market-order style="justify-content: center;align-items: center;min-width: 100%;" [coinBalance]='coinBalance' [activeTrade]='activeTrade' [coinBalance]='coinBalance' [moneyBalance]='moneyBalance' [activeCoinBalance]='activeCoinBalance' [activeMoneyBalance]='activeMoneyBalance' ></app-market-order>
                         </div>
                         <div *ngIf="sideNave[3].isActive">
-                            <app-stop-order style="justify-content: center;align-items: center;min-width: 100%;" [availableBalanceBuy]='availableBalanceBuy'
-                                [availableBalanceSell]='availableBalanceSell' [tradeCoin]='tradeCoin' [coinBalance]='coinBalance'></app-stop-order>
+                            <app-stop-order style="justify-content: center;align-items: center;min-width: 100%;" [coinBalance]='coinBalance' [activeTrade]='activeTrade' [coinBalance]='coinBalance' [moneyBalance]='moneyBalance' [activeCoinBalance]='activeCoinBalance' [activeMoneyBalance]='activeMoneyBalance' ></app-stop-order>
                         </div>
                     </div>
                 </mat-card-content>
@@ -133,7 +178,7 @@
         </div>
     </div>
 
-    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+    <!-- <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-header class="bg-primary text-white">
                 <mat-card-title-group>
@@ -178,6 +223,6 @@
                 </div>
             </mat-card-content>
         </mat-card>
-    </div>
+    </div> -->
 
 </div>

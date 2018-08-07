@@ -13,6 +13,13 @@ import { BankdetailsService } from './services/bankdetails.service';
 import { CsvService } from './services/csv.service';
 import { BitGoService } from "./services/bitgo.service";
 import { CoinBalanceService } from './services/coinBalance.service';
+import { CoinsService } from './services/coins.service';
+import { MoneyService } from './services/money.service';
+import { TradeService } from './services/trade.service';
+import { InstantOrderBuyService } from './services/instant-order-buy.service';
+import { InstantOrderSellService } from './services/instant-order-sell.service';
+import { LimitOrderService } from './services/limit-order.service';
+import { StopOrderService } from './services/stop-order.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +44,14 @@ import { CoinBalanceService } from './services/coinBalance.service';
     BankdetailsService,
     CsvService,
     BitGoService,
-    CoinBalanceService
+    CoinBalanceService,
+    CoinsService,
+    MoneyService,
+    TradeService,
+    InstantOrderBuyService,
+    InstantOrderSellService,
+    LimitOrderService,
+    StopOrderService
   ],
 
 })

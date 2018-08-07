@@ -7,6 +7,8 @@ import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-payp
 import { CoinBalanceService } from '../../shared/services/coinBalance.service';
 import { CoinBalance, Balance } from '../buysell/buysell.component';
 import { MatSnackBar } from '@angular/material';
+import { CoinsService } from '../../shared/services/coins.service';
+import { MoneyService } from '../../shared/services/money.service';
 
 @Component({
     selector: 'app-deposit',
@@ -16,31 +18,31 @@ import { MatSnackBar } from '@angular/material';
 export class DepositComponent implements OnInit {
     public tokendata;
     public transactions;
-    public payamount:number = 0.00;
+    public payamount:number = 1;
     public amounttype:string = 'USD';
     public cb:any; public gt :any;
     constructor(
         private http: Http,
         private router: Router,
         private toastr: ToastrService,
-        public coinBalanceService: CoinBalanceService,
+        // public coinBalanceService: CoinBalanceService,
+        public moneyService:MoneyService,
         public snakebar :MatSnackBar
     ) { }
     public payPalConfig: PayPalConfig;
     public coinBalance :CoinBalance;
     ngOnInit() {
         this.tokendata = JSON.parse(localStorage.getItem('token'));
-        // this.transaction();
         this.initConfig();
-        this.cb = this.coinBalanceService.coinBalance.subscribe(data=>{
+        this.cb = this.moneyService.getMoneyBalance().subscribe(data=>{
             this.coinBalance = data
         });
-        this.coinBalanceService.refreshCoinBalance();
-        this.gt = this.coinBalanceService.getTransactions().subscribe((data:any[])=>{
+        this.moneyService.refreshMoneyBalance();
+        this.gt = this.moneyService.getMoneyTransactions().subscribe((data:any[])=>{
             let ppTrans = data.filter(x=> x.transaction_type == 'paypal');
             this.transactions = this.sortData(ppTrans)
         });
-        this.coinBalanceService.refreshTransactions();
+        this.moneyService.refreshMoneyTransaction();
     }
     papal(){
         this.initConfig();
@@ -70,22 +72,20 @@ export class DepositComponent implements OnInit {
             },
             onPaymentComplete: (data, actions) => {
                 console.log(data);
-                var userd = this.tokendata.user.username;
-                var pamount = this.payPalConfig.transactions[0].amount.total + ' ' + this.payPalConfig.transactions[0].amount.currency;
-                let coinData = this.coinBalance;
+                let moneyBalance = this.coinBalance;
                 let checkBalance = this.coinBalance.balance.find(c=>c.coin.toLowerCase() === this.amounttype.toLowerCase());
                 if (checkBalance) {
-                    let index = coinData.balance.findIndex(c=>c.coin.toLowerCase() === this.amounttype.toLowerCase())
-                    coinData.balance[index].balance = coinData.balance[index].balance + this.payamount;
+                    let index = moneyBalance.balance.findIndex(c=>c.coin.toLowerCase() === this.amounttype.toLowerCase())
+                    moneyBalance.balance[index].balance = moneyBalance.balance[index].balance + this.payamount;
                 }
                 else {
                     let b:any = {
                         coin:this.amounttype.toLowerCase(),
                         balance:this.payamount
                     }
-                    coinData.balance.push(b);
+                    moneyBalance.balance.push(b);
                 }
-                console.log(coinData);
+                console.log(moneyBalance);
                 let transaction:any = data;
                 let token = JSON.parse(localStorage.getItem('token'));
                 transaction.user = token.user._id;
@@ -95,32 +95,24 @@ export class DepositComponent implements OnInit {
                 };
                 transaction.status = "success";
                 transaction.transaction_type = "paypal";
-                this.coinBalanceService.saveTransaction(transaction).subscribe(
-                    success => {
-                        this.coinBalanceService.updateCoinBalance(coinData);
-                        this.coinBalanceService.refreshTransactions();
+
+                this.moneyService.addMoneyTransaction(transaction).subscribe(
+                    tranSuccess =>{
+                        this.moneyService.updateMoneyBalance(moneyBalance).subscribe(
+                            success => {
+                                this.moneyService.refreshMoneyTransaction();
+                                this.snakebar.open("Transaction Successfull", "", { duration: 3000 });
+                            },
+                            error => {
+                                this.snakebar.open("Error Something went wrong", "", { duration: 3000 });
+                            }
+                        )
                     },
-                    error => {
+                    error =>{
                         this.snakebar.open("Error Something went wrong", "", { duration: 5000 });
+                        console.log(error)
                     }
                 )
-                // var dataz = {
-                //   title: 'PaypalDepositSuccess',
-                //   search: ['[(paypal.user)]', '[(paypal.paymentID)]', '[(paypal.amount)]'],
-                //   replace: [userd, data.paymentID, pamount],
-                //   from: 'no_replay@pureequity.com',
-                //   to: this.tokendata.user.username,
-                //   respmessage: 'Please Check your mailbox for details about this payment!!'
-                // };
-                // this.http.post(environment.api + '/mails/send', dataz).subscribe((response: any) => {
-                //   if (response) {
-                //     this.toastr.success(response.message, 'Success');
-                //   }
-                // }, (error) => {
-                //   this.toastr.error((error.error['message']) ? error.error.message : error.error, 'Error');
-                //   console.log(error);
-                // });
-                // this.toastr.success('Payment Success!', 'Success');
             },
             onCancel: (data, actions) => {
                 console.log('OnCancel');
@@ -134,19 +126,20 @@ export class DepositComponent implements OnInit {
                 };
                 transaction.status = "cancel";
                 transaction.transaction_type = "paypal";
-                this.coinBalanceService.saveTransaction(transaction).subscribe(
-                    success => {
-                        console.log(success)
-                        this.coinBalanceService.refreshTransactions();
+
+                this.moneyService.addMoneyTransaction(transaction).subscribe(
+                    tranSuccess =>{
+                               this.moneyService.refreshMoneyTransaction();
+                                this.snakebar.open("Transaction Cancel", "", { duration: 3000 });
                     },
-                    error => {
+                    error =>{
                         this.snakebar.open("Error Something went wrong", "", { duration: 5000 });
+                        console.log(error)
                     }
                 )
             },
             onError: (err) => {
                 console.log('OnError' + err);
-                this.snakebar.open("Error Something went wrong", "", { duration: 5000 });
                 let transaction:any;
                 let token = JSON.parse(localStorage.getItem('token'));
                 transaction.user = token.user._id;
@@ -157,13 +150,14 @@ export class DepositComponent implements OnInit {
                 transaction.status = "error";
                 transaction.error = err;
                 transaction.transaction_type = "paypal";
-                this.coinBalanceService.saveTransaction(transaction).subscribe(
+                this.moneyService.addMoneyTransaction(transaction).subscribe(
                     success => {
                         console.log(success);
-                        this.coinBalanceService.refreshTransactions();
+                        this.snakebar.open("Error Something went wrong", "", { duration: 3000 });
+                        this.moneyService.refreshMoneyTransaction();
                     },
                     error => {
-                        this.snakebar.open("Error Something went wrong", "", { duration: 5000 });
+                        this.snakebar.open("Error Something went wrong", "", { duration: 3000 });
                     }
                 )
             },
@@ -174,22 +168,5 @@ export class DepositComponent implements OnInit {
                 }
             }]
         });
-    }
-    transaction() {
-        // this.http.get(environment.api + '/history/user/' + this.tokendata.user._id).subscribe((res: any) => {
-        //     var tran = res.json();
-        //     this.transactions = tran.transactions;
-        //     console.log(this.transactions);
-        // }, (err: any) => {
-        //     console.log(err);
-        // })
-        this.http.get(environment.api + '/transaction/user/' + this.tokendata.user._id).subscribe((res: any) => {
-            // var tran = res.json();
-            // this.transactions = tran.transactions;
-            // console.log(this.transactions);
-            console.log(res);
-        }, (err: any) => {
-            console.log(err);
-        })
     }
 }

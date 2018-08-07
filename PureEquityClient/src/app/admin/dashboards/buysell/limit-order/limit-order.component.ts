@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { MatSnackBar } from '@angular/material';
-import { CoinBalance } from '../buysell.component';
+import { CoinBalance, Balance } from '../buysell.component';
+import { TradeRecord } from '../../../shared/services/trade.service';
 
 @Component({
     selector: 'app-limit-order',
@@ -13,10 +14,15 @@ import { CoinBalance } from '../buysell.component';
 export class LimitOrderComponent implements OnInit {
     public limitOrderBuyForm: FormGroup;
     public limitOrderSellForm: FormGroup;
-    @Input() availableBalanceBuy: any;
-    @Input() availableBalanceSell: any;
-    @Input() tradeCoin: any;
-    @Input() coinBalance: CoinBalance;
+    // @Input() availableBalanceBuy: any;
+    // @Input() availableBalanceSell: any;
+    // @Input() tradeCoin: any;
+    @Input() activeTrade : TradeRecord;
+    @Input() coinBalance:CoinBalance;
+    @Input() moneyBalance:CoinBalance;
+    @Input() activeCoinBalance:Balance;
+    @Input() activeMoneyBalance:Balance;
+
     public total: {
         buy: Number,
         sell: Number
@@ -46,7 +52,7 @@ export class LimitOrderComponent implements OnInit {
         })
     }
     setInitialValue() {
-        this.http.get(environment.tradingApi + "/coins/" + this.tradeCoin.slice(0, 3).toLowerCase() + this.tradeCoin.slice(6, 9).toLowerCase()).subscribe((data: any) => {
+        this.http.get(environment.tradingApi + "/coins/" + this.activeTrade.value.toLowerCase()).subscribe((data: any) => {
             let payload = data
             this.current_payload = data;
             this.limitOrderBuyForm.patchValue({ buyprice: payload.payload.data.ask });
@@ -73,14 +79,14 @@ export class LimitOrderComponent implements OnInit {
             price: this.current_payload.payload.data.ask,
             limitPrice: this.limitOrderBuyForm.value.buyprice,
         };
-        this.http.post(environment.tradingApi + '/buyLimit/'+this.tradeCoin.slice(0, 3).toLowerCase() + this.tradeCoin.slice(6, 9).toLowerCase() , obj).subscribe((resp) => {
-            console.log(resp);
-            this.snakebar.open("Transactions Success", "", { duration: 5000 });
-        }, (er) => {
-            var err = er
-            console.log(err);
-            this.snakebar.open(err.error.message, "", { duration: 5000 });
-        });
+        // this.http.post(environment.tradingApi + '/buyLimit/'+this.activeTrade.value.toLowerCase(), obj).subscribe((resp) => {
+        //     console.log(resp);
+        //     this.snakebar.open("Transactions Success", "", { duration: 5000 });
+        // }, (er) => {
+        //     var err = er
+        //     console.log(err);
+        //     this.snakebar.open(err.error.message, "", { duration: 5000 });
+        // });
     }
     sell(){
         let obj = {
@@ -88,14 +94,14 @@ export class LimitOrderComponent implements OnInit {
             price: this.current_payload.payload.data.bid,
             limitPrice: this.limitOrderSellForm.value.sellprice,
         };
-        this.http.post(environment.tradingApi + '/sellLimit/'+this.tradeCoin.slice(0, 3).toLowerCase() + this.tradeCoin.slice(6, 9).toLowerCase() , obj).subscribe((resp) => {
-            console.log(resp);
-            this.snakebar.open("Transactions Success", "", { duration: 5000 });
-        }, (er) => {
-            var err = er
-            console.log(err);
-            this.snakebar.open(err.error.message, "", { duration: 5000 });
-        });
+        // this.http.post(environment.tradingApi + '/sellLimit/'+this.activeTrade.value.toLowerCase(), obj).subscribe((resp) => {
+        //     console.log(resp);
+        //     this.snakebar.open("Transactions Success", "", { duration: 5000 });
+        // }, (er) => {
+        //     var err = er
+        //     console.log(err);
+        //     this.snakebar.open(err.error.message, "", { duration: 5000 });
+        // });
     }
 }
 

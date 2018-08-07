@@ -1,11 +1,11 @@
 <div fxFlex.gt-sm="50%" fxFlex="50">
     <mat-card>
         <mat-card-header class="bg-primary text-white">
-            <mat-card-title>Buy {{tradeCoin.slice(0, 3)}} </mat-card-title>
+            <mat-card-title>Buy {{activeTrade.name.slice(0,3)}} </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div style="text-align:center;">
-                <span>Available : {{availableBalanceBuy}}</span>
+                <span>Available : {{activeMoneyBalance.balance}} {{activeMoneyBalance.coin | uppercase}}</span>
                 <form [formGroup]="marketOrderBuyForm">
                     <div fxLayout="row" fxLayoutWrap="wrap">
                         <mat-form-field>
@@ -15,16 +15,16 @@
                         </mat-form-field>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h4 style="width: 50%;float: left;"> Sub-Total </h4>
-                            <h4 style="width: 50%;float: right;"> {{(subtotal.buy)?subtotal.buy : 0 }} {{tradeCoin.slice(5, 9)}} </h4>
+                            <h4 style="width: 50%;float: right;"> {{(subtotal.buy)?subtotal.buy : 0 }} {{activeTrade.name.slice(6,9)}} </h4>
                         </div>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h4 style="width: 50%;float: left;"> Fees </h4>
-                            <h4 style="width: 50%;float: right;"> {{(fees.buy)? fees.buy : 0}} {{tradeCoin.slice(5, 9)}} </h4>
+                            <h4 style="width: 50%;float: right;"> {{(fees.buy)? fees.buy : 0}} {{activeTrade.name.slice(6,9)}} </h4>
                         </div>
 
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
-                                BUY {{tradeCoin.slice(0, 3)}}
+                                BUY {{activeTrade.name.slice(0,3)}}
                             </button>
                         </div>
 
@@ -45,11 +45,11 @@
 <div fxFlex.gt-sm="50%" fxFlex="50">
     <mat-card>
         <mat-card-header class="bg-primary text-white">
-            <mat-card-title>Sell {{tradeCoin.slice(0, 3)}} </mat-card-title>
+            <mat-card-title>Sell {{activeTrade.name.slice(0,3)}} </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div style="text-align:center;">
-                <span>Available : {{availableBalanceSell}} </span>
+                <span>Available : {{activeCoinBalance.balance}} {{activeCoinBalance.coin | uppercase}} </span>
                 <form [formGroup]="marketOrderSellForm">
                     <div fxLayout="row" fxLayoutWrap="wrap">
                         <mat-form-field>
@@ -59,16 +59,16 @@
                         </mat-form-field>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h4 style="width: 50%;float: left;"> Sub-Total </h4>
-                            <h4 style="width: 50%;float: right;"> {{(subtotal.sell)?subtotal.sell : 0 }} {{tradeCoin.slice(5, 9)}} </h4>
+                            <h4 style="width: 50%;float: right;"> {{(subtotal.sell)?subtotal.sell : 0 }} {{activeTrade.name.slice(6,9)}} </h4>
                         </div>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h4 style="width: 50%;float: left;"> Fees </h4>
-                            <h4 style="width: 50%;float: right;"> {{(fees.sell)? fees.sell : 0}} {{tradeCoin.slice(5, 9)}} </h4>
+                            <h4 style="width: 50%;float: right;"> {{(fees.sell)? fees.sell : 0}} {{activeTrade.name.slice(6,9)}} </h4>
                         </div>
 
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
-                                SELL {{tradeCoin.slice(0, 3)}}
+                                SELL {{activeTrade.name.slice(0,3)}}
                             </button>
                         </div>
 
