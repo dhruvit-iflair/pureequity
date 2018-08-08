@@ -26,6 +26,8 @@ export class LimitOrderService {
     public activeCoinBalance: Balance;
     public activeMoneyBalance: Balance;
 
+    public formReset = new Subject<any>();
+
     public calcBuyS: any;
     public activeTradeSub: any;
     public coinBSub: any;
@@ -53,20 +55,21 @@ export class LimitOrderService {
                 .getActiveTrade()
                 .subscribe(activeTrade => {
                     this.activeTrade = activeTrade;
-                    console.log(activeTrade);
+                    this.setCoinBalance();
+                    this.setMoneyBalance();
                 });
         }
         this.coinBSub = this.coinService.getCoinBalance().subscribe(bal => {
             this.coinBalance = bal;
             this.setCoinBalance();
         });
-        // this.coinService.refreshCoinBalance();
+        this.coinService.refreshCoinBalance();
 
         this.moneyBSub = this.moneyService.getMoneyBalance().subscribe(bal => {
             this.moneyBalance = bal;
             this.setMoneyBalance();
         });
-        // this.moneyService.refreshMoneyBalance();
+        this.moneyService.refreshMoneyBalance();
     }
 
     ngOnDestroy() {
@@ -82,48 +85,57 @@ export class LimitOrderService {
     }
 
     buyLimitOrder(amount:any, buyPrice:any, total:any){
-        // type = sellLimit
-        // amount: "Amount to Buy",
-		// price: "ASK price from ticker",
-		// limitPrice:"Entered by User",
+        // {
+        //     "price": "1.00", // 1.00 USD for each
+        //     "amount": "5.00000000", // 5.00000000 BTC
+        //     "type": "0",
+        //     "id": "1960738241",
+        //     "datetime": "2018-08-07 14:08:13.975749"
+        // }
         // TODO Later.
-        let payload = {};
-
-        this.callHttp(payload,'sellLimit').subscribe((limitOrderResponse: any) => {
-            this.buyCoinTransaction(amount,limitOrderResponse,'LIB','success').subscribe((cTSuccess: any) => {
-                console.log("cTSuccess",cTSuccess);
-                this.coinService.refreshCoinTransaction();
-            },(er:any)=>{
-                console.log(er);
-            });
-            this.buyMoneyTransaction(amount,limitOrderResponse,'LIB','success').subscribe((mTSuccess: any) => {
+        let payload = {
+            price: buyPrice,
+            amount: amount
+        };
+        this.callHttp(payload,'buyLimit').subscribe((limitOrderResponse: any) => {
+            // this.buyCoinTransaction(amount,limitOrderResponse.payload.data,'LIB','success').subscribe((cTSuccess: any) => {
+            //     console.log("cTSuccess",cTSuccess);
+            //     this.coinService.refreshCoinTransaction();
+            // },(er:any)=>{
+            //     console.log(er);
+            // });
+            this.buyMoneyTransaction(amount,limitOrderResponse.payload.data,buyPrice,'LIB','success').subscribe((mTSuccess: any) => {
                 console.log("mTSuccess",mTSuccess);
                 this.moneyService.refreshMoneyTransaction();
             },(er:any)=>{
                 console.log(er);
             });
-            this.buyUpdateMoneyBalance(amount).subscribe((mBSuccess:any)=>{
+            this.buyUpdateMoneyBalance(amount,limitOrderResponse.payload.data,buyPrice).subscribe((mBSuccess:any)=>{
                 console.log("mBSuccess",mBSuccess);
-                this.coinService.refreshCoinBalance();
-            },(er:any)=>{
-                console.log(er);
-            });
-            this.buyUpdateCoinBalance(amount,limitOrderResponse).subscribe((cb:any)=>{
-                console.log("cb",cb);
                 this.moneyService.refreshMoneyBalance();
+                this.snakbar.open("Transaction Successfull","",{duration: 3000});
+                this.formReset.next('buy');
             },(er:any)=>{
                 console.log(er);
             });
+            // this.buyUpdateCoinBalance(amount,limitOrderResponse.payload.data).subscribe((cb:any)=>{
+            //     console.log("cb",cb);
+            //     this.moneyService.refreshMoneyBalance();
+            // },(er:any)=>{
+            //     console.log(er);
+            // });
         },
         (er:any)=>{
             console.log(er.error.message);
-            this.buyCoinTransaction(amount,false,'LIB','error').subscribe((cTSuccess: any) => {
-                this.coinService.refreshCoinTransaction();
-                this.coinService.refreshCoinBalance();
-            },(er:any)=>{
-                console.log(er);
-            });
-            this.buyMoneyTransaction(amount,false,'LIB','error').subscribe((mTSuccess: any) => {
+            this.snakbar.open(er.error.message,"",{duration: 3000});
+
+            // this.buyCoinTransaction(amount,false,'LIB','error').subscribe((cTSuccess: any) => {
+            //     this.coinService.refreshCoinTransaction();
+            //     this.coinService.refreshCoinBalance();
+            // },(er:any)=>{
+            //     console.log(er);
+            // });
+            this.buyMoneyTransaction(amount,false,buyPrice,'LIB','error').subscribe((mTSuccess: any) => {
                 this.moneyService.refreshMoneyBalance();
                 this.moneyService.refreshMoneyTransaction();
             },(er:any)=>{
@@ -133,56 +145,7 @@ export class LimitOrderService {
 
 
     }
-    sellLimitOrder(amount:any, buyPrice:any, total:any){
-        // type = buyInstant
-        // TODO Later.
-        // amount: "Amount to Buy",
-		// price: "ASK price from ticker",
-		// limitPrice:"Entered by User",
-        let payload = {};
 
-        this.callHttp(payload,'buyInstant').subscribe((limitOrderResponse: any) => {
-            this.sellCoinTransaction(amount,limitOrderResponse,'LIS','success').subscribe((cTSuccess: any) => {
-                console.log("cTSuccess",cTSuccess);
-                this.coinService.refreshCoinTransaction();
-            },(er:any)=>{
-                console.log(er);
-            });
-            this.sellMoneyTransaction(amount,limitOrderResponse,'LIS','success').subscribe((mTSuccess: any) => {
-                console.log("mTSuccess",mTSuccess);
-                this.moneyService.refreshMoneyTransaction();
-            },(er:any)=>{
-                console.log(er);
-            });
-            this.sellUpdateMoneyBalance(amount).subscribe((mBSuccess:any)=>{
-                console.log("mBSuccess",mBSuccess);
-                this.coinService.refreshCoinBalance();
-            },(er:any)=>{
-                console.log(er);
-            });
-            this.sellUpdateCoinBalance(amount,limitOrderResponse).subscribe((cb:any)=>{
-                console.log("cb",cb);
-                this.moneyService.refreshMoneyBalance();
-            },(er:any)=>{
-                console.log(er);
-            });
-        },
-        (er:any)=>{
-            console.log(er.error.message);
-            this.sellCoinTransaction(amount,false,'LIS','error').subscribe((cTSuccess: any) => {
-                this.coinService.refreshCoinTransaction();
-                this.coinService.refreshCoinBalance();
-            },(er:any)=>{
-                console.log(er);
-            });
-            this.sellMoneyTransaction(amount,false,'LIS','error').subscribe((mTSuccess: any) => {
-                this.moneyService.refreshMoneyBalance();
-                this.moneyService.refreshMoneyTransaction();
-            },(er:any)=>{
-                console.log(er);
-            });
-        });
-    }
     callHttp(payload: any, type: any){
         return this.http.post(environment.tradingApi +`/${type}/` +this.activeTrade.value,payload)
     }
@@ -224,91 +187,86 @@ export class LimitOrderService {
             this.activeCoinBalance = mb_2;
         }
     }
-    buyCoinTransaction(amount: any, limitOrderResponse: any, transaction_type: any,status: any){
-        let token = JSON.parse(localStorage.getItem("token"));
-        let coin_tran: any ={};
-        if (limitOrderResponse) {
-            coin_tran = {
-                user: token.user._id,
-                amount: {
-                    amount: amount,
-                    currency: this.activeCoinBalance
-                        .coin
-                },
-                price: {
-                    price: limitOrderResponse.price,
-                    currency: this.activeMoneyBalance
-                        .coin
-                },
-                value: {
-                    amount: limitOrderResponse.amount * amount,
-                    currency: this.activeMoneyBalance
-                        .coin
-                },
-                type: limitOrderResponse.type,
-                id: limitOrderResponse.id,
-                datetime: limitOrderResponse.datetime,
-                transaction_type: transaction_type,
-                status: status
-            };
-        } else {
-            coin_tran = {
-                user: token.user._id,
-                amount: {
-                    amount: amount,
-                    currency: this.activeMoneyBalance
-                        .coin
-                },
-                datetime: Date.now(),
-                transaction_type: transaction_type,
-                status: status
-            };
-        }
+    // buyCoinTransaction(amount: any, limitOrderResponse: any, transaction_type: any,status: any){
+    //     let token = JSON.parse(localStorage.getItem("token"));
+    //     let coin_tran: any ={};
+    //     if (limitOrderResponse) {
+    //         coin_tran = {
+    //             user: token.user._id,
+    //             amount: {
+    //                 amount: amount,
+    //                 currency: this.activeCoinBalance
+    //                     .coin
+    //             },
+    //             price: {
+    //                 price: limitOrderResponse.price,
+    //                 currency: this.activeMoneyBalance
+    //                     .coin
+    //             },
+    //             value: {
+    //                 amount: limitOrderResponse.amount * amount,
+    //                 currency: this.activeMoneyBalance
+    //                     .coin
+    //             },
+    //             type: limitOrderResponse.type,
+    //             id: limitOrderResponse.id,
+    //             datetime: limitOrderResponse.datetime,
+    //             transaction_type: transaction_type,
+    //             status: status
+    //         };
+    //     } else {
+    //         coin_tran = {
+    //             user: token.user._id,
+    //             amount: {
+    //                 amount: amount,
+    //                 currency: this.activeMoneyBalance
+    //                     .coin
+    //             },
+    //             datetime: Date.now(),
+    //             transaction_type: transaction_type,
+    //             status: status
+    //         };
+    //     }
 
-        console.log("Coin Transaction");
-        console.log(coin_tran);
+    //     console.log("Coin Transaction");
+    //     console.log(coin_tran);
 
-        return this.coinService.saveCoinTransaction(coin_tran);
-    }
+    //     return this.coinService.saveCoinTransaction(coin_tran);
+    // }
     findIndexToUpdate(newItem) {
         return newItem.coin.toLowerCase() === this;
     }
-    buyUpdateCoinBalance(amount: any, limitOrderResponse: any){
-        let updateCoinBalance:any = this.coinBalance.balance.find(this.findIndexToUpdate, this.activeCoinBalance.coin.toLowerCase());
-        let index = this.coinBalance.balance.indexOf(updateCoinBalance);
-        if (index > -1) {
-            updateCoinBalance.balance = updateCoinBalance.balance + limitOrderResponse.amount;
-            this.coinBalance.balance[index] = updateCoinBalance;
-        } else {
-            let b: any = {
-                coin: this.activeCoinBalance.coin.toLowerCase(),
-                balance: limitOrderResponse.amount.toFixed(6)
-            };
-            this.coinBalance.balance.push(b);
-        }
-        console.log("CoinBalance");
-        console.log(this.coinBalance);
+    // buyUpdateCoinBalance(amount: any, limitOrderResponse: any){
+    //     let updateCoinBalance:any = this.coinBalance.balance.find(this.findIndexToUpdate, this.activeCoinBalance.coin.toLowerCase());
+    //     let index = this.coinBalance.balance.indexOf(updateCoinBalance);
+    //     updateCoinBalance.balance = updateCoinBalance.balance - limitOrderResponse.amount;
+    //     this.coinBalance.balance[index] = updateCoinBalance;
+    //     console.log("CoinBalance");
+    //     console.log(this.coinBalance);
+    //     return this.coinService.saveCoinBalance(this.coinBalance);
+    // }
 
-        return this.coinService.saveCoinBalance(this.coinBalance);
-    }
-
-    buyMoneyTransaction(amount: any, limitOrderResponse: any, transaction_type: any,status: any){
+    buyMoneyTransaction(amount: any, limitOrderResponse: any,buyPrice: any, transaction_type: any,status: any){
         let token = JSON.parse(localStorage.getItem("token"));
         let money_transaction: any ={
             user : token.user._id,
             amount : {
                 amount: amount,
+                currency: this.activeCoinBalance.coin
+            },
+            status : status,
+            transaction_type : transaction_type,
+            price : {
+                price: buyPrice,
                 currency: this.activeMoneyBalance.coin
             },
-            status : "success",
-            transaction_type : "IOB",
-            price : {
-                price: limitOrderResponse.price,
+            rate : {
+                amount: limitOrderResponse.price,
                 currency: this.activeMoneyBalance.coin
             },
             value : {
-                amount: limitOrderResponse.amount,
-                currency: this.activeCoinBalance.coin
+                amount: limitOrderResponse.amount * amount,
+                currency: this.activeMoneyBalance.coin
             },
             type : limitOrderResponse.type,
             id : limitOrderResponse.id,
@@ -326,23 +284,15 @@ export class LimitOrderService {
             // );
     }
 
-    buyUpdateMoneyBalance(amount: any){
-        let money_balance: any = this.moneyBalance;
-        let buyBalIndex: any = money_balance.balance.findIndex(
+    buyUpdateMoneyBalance(amount: any, limitOrderResponse: any, buyPrice: any){
+        // let money_balance: any = this.moneyBalance;
+        let buyBalIndex: any =this.moneyBalance.balance.findIndex(
             c =>
                 c.coin.toLowerCase() ===
                 this.activeMoneyBalance.coin.toLowerCase()
         );
-        money_balance.balance[
-            buyBalIndex
-        ].balance = (
-            parseFloat(
-                money_balance.balance[buyBalIndex]
-                    .balance
-            ) - parseFloat(amount)
-        ).toFixed(8);
-
-        return this.moneyService.updateMoneyBalance(money_balance)
+        this.moneyBalance.balance[buyBalIndex].balance = this.moneyBalance.balance[buyBalIndex].balance - (limitOrderResponse.price * limitOrderResponse.amount);
+        return this.moneyService.updateMoneyBalance(this.moneyBalance);
         // .subscribe(
         //     success => {
         //         this.moneyService.refreshMoneyTransaction();
@@ -353,6 +303,64 @@ export class LimitOrderService {
         //     }
         // );
     }
+    sellLimitOrder(amount:any, buyPrice:any, total:any){
+        // {
+        //     "price": "8000.00", // value in usd
+        //     "amount": "0.00433583", // value in BTC
+        //     "type": "1",
+        //     "id": "1960771822",
+        //     "datetime": "2018-08-07 14:20:04.688103"
+        // }
+        let payload = {
+            price: buyPrice,
+            amount: amount
+        };
+
+        this.callHttp(payload,'sellLimit').subscribe((limitOrderResponse: any) => {
+            this.sellCoinTransaction(amount,limitOrderResponse.payload.data,'LIS','success').subscribe((cTSuccess: any) => {
+                console.log("cTSuccess",cTSuccess);
+                this.coinService.refreshCoinTransaction();
+            },(er:any)=>{
+                console.log(er);
+            });
+            // this.sellMoneyTransaction(amount,limitOrderResponse.payload.data,'LIS','success').subscribe((mTSuccess: any) => {
+            //     console.log("mTSuccess",mTSuccess);
+            //     this.moneyService.refreshMoneyTransaction();
+            // },(er:any)=>{
+            //     console.log(er);
+            // });
+            // this.sellUpdateMoneyBalance(amount,limitOrderResponse.payload.data).subscribe((mBSuccess:any)=>{
+            //     console.log("mBSuccess",mBSuccess);
+            //     this.coinService.refreshCoinBalance();
+            // },(er:any)=>{
+            //     console.log(er);
+            // });
+            this.sellUpdateCoinBalance(amount,limitOrderResponse.payload.data).subscribe((cb:any)=>{
+                console.log("cb",cb);
+                this.coinService.refreshCoinBalance();
+                this.snakbar.open("Transaction Successfull","",{duration: 3000});
+                this.formReset.next();
+            },(er:any)=>{
+                console.log(er);
+            });
+        },
+        (er:any)=>{
+            console.log(er.error.message);
+            this.snakbar.open(er.error.message,"",{duration: 3000});
+            this.sellCoinTransaction(amount,false,'LIS','error').subscribe((cTSuccess: any) => {
+                this.coinService.refreshCoinTransaction();
+                this.coinService.refreshCoinBalance();
+            },(er:any)=>{
+                console.log(er);
+            });
+            // this.sellMoneyTransaction(amount,false,'LIS','error').subscribe((mTSuccess: any) => {
+            //     this.moneyService.refreshMoneyBalance();
+            //     this.moneyService.refreshMoneyTransaction();
+            // },(er:any)=>{
+            //     console.log(er);
+            // });
+        });
+    }
     sellCoinTransaction(amount: any, limitOrderResponse: any, transaction_type: any,status: any){
         let token = JSON.parse(localStorage.getItem("token"));
         let coin_tran: any ={};
@@ -361,7 +369,7 @@ export class LimitOrderService {
                 user: token.user._id,
                 amount: {
                     amount: amount,
-                    currency: this.activeMoneyBalance
+                    currency: this.activeCoinBalance
                         .coin
                 },
                 price: {
@@ -371,12 +379,12 @@ export class LimitOrderService {
                 },
                 rate: {
                     amount: limitOrderResponse.price,
-                    currency: this.activeCoinBalance
+                    currency: this.activeMoneyBalance
                         .coin
                 },
                 value: {
-                    amount: limitOrderResponse.amount,
-                    currency: this.activeCoinBalance
+                    amount: limitOrderResponse.price * amount,
+                    currency: this.activeMoneyBalance
                         .coin
                 },
                 type: limitOrderResponse.type,
@@ -390,7 +398,7 @@ export class LimitOrderService {
                 user: token.user._id,
                 amount: {
                     amount: amount,
-                    currency: this.activeMoneyBalance
+                    currency: this.activeCoinBalance
                         .coin
                 },
                 datetime: Date.now(),
@@ -406,72 +414,45 @@ export class LimitOrderService {
     }
 
     sellUpdateCoinBalance(amount: any, limitOrderResponse: any){
-        let coin_balance: any = this.coinBalance;
-        let sellBalIndex: any = coin_balance.balance.findIndex(
+        // let coin_balance: any = this.coinBalance;
+        let sellBalIndex: any = this.coinBalance.balance.findIndex(
             c =>
                 c.coin.toLowerCase() ===
                 this.activeCoinBalance.coin.toLowerCase()
         );
-        if (sellBalIndex > -1) {
-            coin_balance.balance[
-                sellBalIndex
-            ].balance = (
-                parseFloat(
-                    coin_balance.balance[
-                        sellBalIndex
-                    ].balance
-                ) + parseFloat(limitOrderResponse.amount)
-            ).toFixed(8);
-        } else {
-            let b: any = {
-                coin: this.activeCoinBalance.coin.toLowerCase(),
-                balance: limitOrderResponse.amount.toFixed(6)
-            };
-            coin_balance.balance.push(b);
-        }
+        this.coinBalance.balance[sellBalIndex].balance = this.coinBalance.balance[sellBalIndex].balance - limitOrderResponse.amount;
+
         console.log("CoinBalance");
         console.log(this.coinBalance);
-        console.log(coin_balance);
+        console.log(this.coinBalance);
 
-        return this.coinService.saveCoinBalance(coin_balance);
+        return this.coinService.saveCoinBalance(this.coinBalance);
     }
 
     sellMoneyTransaction(amount: any, limitOrderResponse: any, transaction_type: any,status: any){
         let token = JSON.parse(localStorage.getItem("token"));
 
-        let money_transaction: any;
-        if (limitOrderResponse) {
-            money_transaction = limitOrderResponse;
-            money_transaction.user = token.user._id;
-            money_transaction.amount = {
+        let money_transaction: any ={
+            user : token.user._id,
+            amount : {
                 amount: amount,
                 currency: this.activeMoneyBalance.coin
-            };
-            money_transaction.status = "success";
-            money_transaction.transaction_type = "IOB";
-            money_transaction.price = {
+            },
+            status : "success",
+            transaction_type : "IOB",
+            price : {
                 price: limitOrderResponse.price,
                 currency: this.activeMoneyBalance.coin
-            };
-            money_transaction.value = {
-                amount: limitOrderResponse.amount,
+            },
+            value : {
+                amount: limitOrderResponse.amount * limitOrderResponse.price,
                 currency: this.activeCoinBalance.coin
-            };
-            money_transaction.type = limitOrderResponse.type;
-            money_transaction.id = limitOrderResponse.id;
-            money_transaction.datetime = limitOrderResponse.datetime;
+            },
+            type : limitOrderResponse.type,
+            id : limitOrderResponse.id,
+            datetime : limitOrderResponse.datetime
 
-        } else {
-            money_transaction.user = token.user._id;
-            money_transaction.amount = {
-                amount: amount,
-                currency: this.activeMoneyBalance.coin
-            };
-            money_transaction.status = status;
-            money_transaction.transaction_type = transaction_type;
-            money_transaction.datetime = Date.now();
-        }
-
+        };
         return this.moneyService.addMoneyTransaction(money_transaction);
             // .subscribe(
             //     tranSuccess => {
@@ -483,7 +464,7 @@ export class LimitOrderService {
             // );
     }
 
-    sellUpdateMoneyBalance(amount: any){
+    sellUpdateMoneyBalance(amount: any, limitOrderResponse: any){
         let money_balance: any = this.moneyBalance;
         let buyBalIndex: any = money_balance.balance.findIndex(
             c =>

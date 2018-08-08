@@ -34,7 +34,7 @@
                                     </mat-card-header>
                                     <mat-card-content>
                                         <div style="text-align:center;">
-                                            <span *ngIf='activeMoneyBalance'>Available : {{activeMoneyBalance.balance}} {{activeMoneyBalance.coin | uppercase}} </span>
+                                            <span *ngIf='activeMoneyBalance'>Available : {{activeMoneyBalance.balance.toFixed(6)}} {{activeMoneyBalance.coin | uppercase}} </span>
                                             <form>
                                                 <div fxLayout="row" fxLayoutWrap="wrap">
                                                     <mat-form-field>
@@ -83,7 +83,7 @@
                                     </mat-card-header>
                                     <mat-card-content>
                                         <div style="text-align:center;">
-                                            <span *ngIf='activeCoinBalance'>Available :{{activeCoinBalance.balance}} {{activeCoinBalance.coin | uppercase}}</span>
+                                            <span *ngIf='activeCoinBalance'>Available :{{activeCoinBalance.balance.toFixed(6)}} {{activeCoinBalance.coin | uppercase}}</span>
                                             <form>
                                                 <div fxLayout="row" fxLayoutWrap="wrap">
                                                     <mat-form-field>

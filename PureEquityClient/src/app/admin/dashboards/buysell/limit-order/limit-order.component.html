@@ -5,26 +5,28 @@
         </mat-card-header>
         <mat-card-content>
             <div style="text-align:center;">
-                <span>Available : {{activeMoneyBalance.balance}} {{activeMoneyBalance.coin | uppercase}} </span>
-                <form [formGroup]="limitOrderBuyForm">
+                <span>Available : {{activeMoneyBalance.balance.toFixed(8)}} {{activeMoneyBalance.coin | uppercase}} </span>
+                <form>
                     <div fxLayout="row" fxLayoutWrap="wrap">
                         <mat-form-field>
-                            <input matInput type="number" placeholder="Amount To Buy" [formControl]="limitOrderBuyForm.controls['amount']">
-                            <small *ngIf="limitOrderBuyForm.controls['amount'].hasError('required') && limitOrderBuyForm.controls['amount'].touched"
+                            <input matInput type="number" placeholder="Amount To Buy" [formControl]="buyAmount">
+                            <small *ngIf="buyAmount.hasError('required') && buyAmount.touched"
                                 class="text-danger support-text">Amount is required.</small>
+                            <small *ngIf="buyAmount.hasError('minBuyValue') && buyAmount.dirty && !buyAmount.hasError('required')" class="text-danger support-text">You need to spend more than {{activeTrade.minSell}} {{activeCoinBalance.coin | uppercase}}.</small>
+
                         </mat-form-field>
                         <mat-form-field>
-                            <input matInput type="number" placeholder="Buy Price" [formControl]="limitOrderBuyForm.controls['buyprice']">
-                            <small *ngIf="limitOrderBuyForm.controls['buyprice'].hasError('required') && limitOrderBuyForm.controls['buyprice'].touched"
+                            <input matInput type="number" placeholder="Buy Price" [formControl]="buyPrice">
+                            <small *ngIf="buyPrice.hasError('required') && buyPrice.touched"
                                 class="text-danger support-text">Price is required.</small>
                         </mat-form-field>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h3 style="width: 50%;float: left;"> Total </h3>
-                            <h3 style="width: 50%;float: right;"> {{total.buy}} {{activeTrade.name.slice(6,9)}} </h3>
+                            <h3 style="width: 50%;float: right;"> {{total.buy.toFixed(8)}} {{activeTrade.name.slice(6,9)}} </h3>
                         </div>
 
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="buy()" >
+                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="buy()" [disabled]='buyAmount.invalid || buyPrice.invalid' >
                                 BUY {{activeTrade.name.slice(0,3)}}
                             </button>
                         </div>
@@ -50,26 +52,27 @@
         </mat-card-header>
         <mat-card-content>
             <div style="text-align:center;">
-                <span>Available : {{activeCoinBalance.balance}} {{activeCoinBalance.coin | uppercase}}</span>
-                <form [formGroup]="limitOrderSellForm">
+                <span>Available : {{activeCoinBalance.balance.toFixed(8)}} {{activeCoinBalance.coin | uppercase}}</span>
+                <form>
                     <div fxLayout="row" fxLayoutWrap="wrap">
                         <mat-form-field>
-                            <input matInput type="number" placeholder="Amount To Sell" [formControl]="limitOrderSellForm.controls['amount']">
-                            <small *ngIf="limitOrderSellForm.controls['amount'].hasError('required') && limitOrderSellForm.controls['amount'].touched"
+                            <input matInput type="number" placeholder="Amount To Sell" [formControl]="sellAmount">
+                            <small *ngIf="sellAmount.hasError('required') && sellAmount.touched"
                                 class="text-danger support-text">Amount is required.</small>
+                            <small *ngIf="sellAmount.hasError('minSellValue') && sellAmount.dirty && !sellAmount.hasError('required')" class="text-danger support-text">You need to spend more than {{activeTrade.minSell}} {{activeCoinBalance.coin | uppercase}}.</small>
                         </mat-form-field>
                         <mat-form-field>
-                            <input matInput type="number" placeholder="Sell Price" [formControl]="limitOrderSellForm.controls['sellprice']">
-                            <small *ngIf="limitOrderSellForm.controls['sellprice'].hasError('required') && limitOrderSellForm.controls['sellprice'].touched"
+                            <input matInput type="number" placeholder="Sell Price" [formControl]="sellPrice">
+                            <small *ngIf="sellPrice.hasError('required') && sellPrice.touched"
                                 class="text-danger support-text">Price is required.</small>
                         </mat-form-field>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h3 style="width: 50%;float: left;"> Total </h3>
-                            <h3 style="width: 50%;float: right;"> {{total.sell}} {{activeTrade.name.slice(6,9)}} </h3>
+                            <h3 style="width: 50%;float: right;"> {{total.sell.toFixed(8)}} {{activeTrade.name.slice(6,9)}} </h3>
                         </div>
 
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="sell()">
+                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" (click)="sell()" [disabled]='sellAmount.invalid || sellPrice.invalid'>
                                 SELL {{activeTrade.name.slice(0,3)}}
                             </button>
                         </div>
