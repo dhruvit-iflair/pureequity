@@ -6,21 +6,21 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 @Injectable()
 export class TradeService {
     public tradeList: Array<TradeRecord> = [
-        { name: "BTC / USD", isActive: true,  value: "btcusd", data: [], minBuy:5,minSell:5 },
-        { name: "BTC / EUR", isActive: false, value: "btceur", data: [], minBuy:5,minSell:5 },
-        // { name: "EUR / USD", isActive: false, value: "eurusd", data: [], minBuy:5,minSell:5 },
-        { name: "XRP / USD", isActive: false, value: "xrpusd", data: [], minBuy:5,minSell:5 },
-        { name: "XRP / EUR", isActive: false, value: "xrpeur", data: [], minBuy:5,minSell:5 },
-        { name: "XRP / BTC", isActive: false, value: "xrpbtc", data: [], minBuy:5,minSell:5 },
-        { name: "LTC / USD", isActive: false, value: "ltcusd", data: [], minBuy:5,minSell:5 },
-        { name: "LTC / EUR", isActive: false, value: "ltceur", data: [], minBuy:5,minSell:5 },
-        { name: "LTC / BTC", isActive: false, value: "ltcbtc", data: [], minBuy:5,minSell:5 },
-        { name: "ETH / USD", isActive: false, value: "ethusd", data: [], minBuy:5,minSell:5 },
-        { name: "ETH / EUR", isActive: false, value: "etheur", data: [], minBuy:5,minSell:5 },
-        { name: "ETH / BTC", isActive: false, value: "ethbtc", data: [], minBuy:5,minSell:5 },
-        { name: "BCH / USD", isActive: false, value: "bchusd", data: [], minBuy:5,minSell:5 },
-        { name: "BCH / EUR", isActive: false, value: "bcheur", data: [], minBuy:5,minSell:5 },
-        { name: "BCH / BTC", isActive: false, value: "bchbtc", data: [], minBuy:5,minSell:5 }
+        { name: "BTC / USD", isActive: true,  value: "btcusd", data: [], minBuy:6,minSell:0.001 },
+        { name: "BTC / EUR", isActive: false, value: "btceur", data: [], minBuy:6,minSell:0.001 },
+        // { name: "EUR / USD", isActive: false, value: "eurusd", data: [], minBuy:6,minSell:5 },
+        { name: "XRP / USD", isActive: false, value: "xrpusd", data: [], minBuy:6,minSell:13 },
+        { name: "XRP / EUR", isActive: false, value: "xrpeur", data: [], minBuy:6,minSell:13 },
+        { name: "XRP / BTC", isActive: false, value: "xrpbtc", data: [], minBuy:0.001,minSell:13 },
+        { name: "LTC / USD", isActive: false, value: "ltcusd", data: [], minBuy:6,minSell:0.07 },
+        { name: "LTC / EUR", isActive: false, value: "ltceur", data: [], minBuy:6,minSell:0.07 },
+        { name: "LTC / BTC", isActive: false, value: "ltcbtc", data: [], minBuy:0.001,minSell:0.07 },
+        { name: "ETH / USD", isActive: false, value: "ethusd", data: [], minBuy:6,minSell: 0.02 },
+        { name: "ETH / EUR", isActive: false, value: "etheur", data: [], minBuy:6,minSell: 0.02 },
+        { name: "ETH / BTC", isActive: false, value: "ethbtc", data: [], minBuy:0.001,minSell: 0.02 },
+        { name: "BCH / USD", isActive: false, value: "bchusd", data: [], minBuy:6,minSell:0.008 },
+        { name: "BCH / EUR", isActive: false, value: "bcheur", data: [], minBuy:6,minSell:0.008 },
+        { name: "BCH / BTC", isActive: false, value: "bchbtc", data: [], minBuy:0.001,minSell:0.008 }
     ];
     public tradeListSubject = new Subject<Array<TradeRecord>>();
     public activeTradeSubject = new Subject<TradeRecord>();
@@ -35,7 +35,7 @@ export class TradeService {
     ) {
         // initialize first all trade to BTC USD
         this.tradeListSubject.next(this.tradeList);
-        this.activeTrade = { name: "BTC / USD", isActive: true, value: "btcusd", data: [], minBuy:5,minSell:5 };
+        this.activeTrade = { name: "BTC / USD", isActive: true, value: "btcusd", data: [],minBuy:6,minSell:0.001 };
         this.activeTradeSubject.next(this.activeTrade);
     }
 

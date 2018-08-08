@@ -34,7 +34,7 @@ export class BuysellComponent implements OnInit {
         { name: "Market Order (Advanced)", isActive: false },
         { name: "Stop Order (Advanced)", isActive: false }
     ];
-    public activeTrade : TradeRecord = { name: "BTC / USD", isActive: true, value: "btcusd", data: [], minBuy:6,minSell:5 };
+    public activeTrade : TradeRecord = { name: "BTC / USD", isActive: true, value: "btcusd", data: [], minBuy:6,minSell:0.001 };
     public coinBalance:CoinBalance;
     public moneyBalance:CoinBalance;
     public activeCoinBalance:Balance;
@@ -73,23 +73,45 @@ export class BuysellComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.buyAmount = new FormControl('' ,[Validators.required]); // ,MinBuyValidation(this.activeTrade.minBuy)
+        this.buyAmount = new FormControl('' ,[Validators.required,this.MinBuyValidation()]);
         this.buySubtotal = new FormControl('');
         this.buyFees = new FormControl('0.25%');
         this.buyReceive = new FormControl('');
 
-        this.sellAmount = new FormControl('' ,[Validators.required]); // ,MinSellValidation(this.activeTrade.minSell)
+        this.sellAmount = new FormControl('' ,[Validators.required,this.MinSellValidation()]);
         this.sellSubtotal = new FormControl('');
         this.sellFees = new FormControl('0.25%');
         this.sellReceive = new FormControl('');
 
         this.activeTradeSubscribtion = this.tradeService.getActiveTrade().subscribe(activeTrade=>{
             this.activeTrade = activeTrade;
-            (this.buyAmount.value > 0)? this.instOBuyService.calcBuy(this.buyAmount.value):null;
-            (this.sellAmount.value > 0)? this.instOSellService.calcSell(this.sellAmount.value):null;
+            // if (this.buyAmount.valid){
+            //     this.instOBuyService.calcBuy(this.buyAmount.value);
+            // }
+            // else {
+            //     this.buySubtotal.reset();
+            //     this.buyReceive.reset();
+            // };
+            // if(this.sellAmount.valid) {
+            //     this.instOSellService.calcSell(this.sellAmount.value)
+            // }
+            // else {
+            //     this.sellSubtotal.reset();
+            //     this.sellReceive.reset();
+            // }
             (this.coinBalance)? this.setCoinBalance(): null;
             (this.moneyBalance)? this.setMoneyBalance() : null;
             // console.log(activeTrade);
+            this.buyAmount.patchValue(this.buyAmount.value);
+            this.sellAmount.patchValue(this.sellAmount.value);
+            // if (this.buyAmount.invalid) {
+            //     this.buySubtotal.reset();
+            //     this.buyReceive.reset();
+            // }
+            // if (this.sellAmount.invalid) {
+            //     this.sellSubtotal.reset();
+            //     this.sellReceive.reset();
+            // }
         });
         this.tradeSubscribtion = this.tradeService.getTradeList().subscribe(trade=>{
             this.tradeList = trade
@@ -107,7 +129,7 @@ export class BuysellComponent implements OnInit {
         });
         this.sellAmount.valueChanges.subscribe(data=>{
             console.log(data);
-            if(data > 0 || !data == null) {
+            if(data > 0 && data != null && this.sellAmount.valid) {
                 this.instOSellService.calcSell(data);
              }
              else {
@@ -152,6 +174,28 @@ export class BuysellComponent implements OnInit {
         });
         this.moneyService.refreshMoneyBalance();
     }
+    MinBuyValidation(): ValidatorFn {
+        return (control: AbstractControl): {[key: string]: any} | null => {
+            if (control.value >= this.activeTrade.minBuy) {
+                return null;
+            } else {
+                return {minBuyValue:true};
+            }
+        //   return minValue ? {'minValue': {value: control.value}} : null;
+        };
+    }
+
+    MinSellValidation(): ValidatorFn {
+        return (control: AbstractControl): {[key: string]: any} | null => {
+            if (control.value >= this.activeTrade.minSell) {
+                return null;
+            } else {
+                return {minBuyValue:true};
+            }
+        //   return minValue ? {'minValue': {value: control.value}} : null;
+        };
+    }
+
     ngOnDestroy(){
         this.activeTradeSubscribtion.unsubscribe();
         this.tradeSubscribtion.unsubscribe();
@@ -249,27 +293,3 @@ export interface Balance {
             //     // }
             // }
             // console.log(trans);
-
-
-// export function MinBuyValidation(minValue:number): ValidatorFn {
-//     return (control: AbstractControl): {[key: string]: any} | null => {
-//         if (control.value >= minValue) {
-//             return null;
-//         } else {
-//             return {minBuyValue:true};
-//         }
-//     //   return minValue ? {'minValue': {value: control.value}} : null;
-//     };
-// }
-
-// export function MinSellValidation(minValue:number): ValidatorFn {
-//     return (control: AbstractControl): {[key: string]: any} | null => {
-//         minValue =
-//         if (control.value >= minValue) {
-//             return null;
-//         } else {
-//             return {minBuyValue:true};
-//         }
-//     //   return minValue ? {'minValue': {value: control.value}} : null;
-//     };
-// }
