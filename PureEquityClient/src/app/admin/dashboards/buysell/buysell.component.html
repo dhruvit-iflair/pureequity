@@ -107,7 +107,7 @@
 
                                                     <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                                                         <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" [disabled]='!sellAmount.valid || sellAmount.value <= 0' (click)='sell()' >
-                                                            Sell {{activeTrade.name.slice(6,9)}}
+                                                            Sell {{activeTrade.name.slice(0,3)}}
                                                         </button>
                                                     </div>
                                                 </div>

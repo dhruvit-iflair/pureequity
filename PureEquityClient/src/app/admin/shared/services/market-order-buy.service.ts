@@ -15,7 +15,7 @@ import {
 import { MatSnackBar } from "@angular/material";
 
 @Injectable()
-export class InstantOrderBuyService implements OnInit, OnDestroy {
+export class MarketOrderBuyService {
     public coinTradeData: any;
     public buyCalcRequest: any;
     public sellCalcRequest: any;
@@ -98,8 +98,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                 .subscribe((data: any) => {
                     let payload = data;
                     let subtotal = amount - (amount * this.fees) / 100;
-                    let approx = subtotal / payload.payload.data.ask;
-                    let actual = amount / payload.payload.data.ask;
+                    let approx = subtotal * payload.payload.data.ask;
+                    let actual = amount * payload.payload.data.ask;
                     var newCac = {
                         buySubtotal: subtotal.toFixed(8),
                         buyReceive: approx.toFixed(8),
@@ -154,8 +154,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                         user: token.user._id,
                                         amount: {
                                             amount: amount,
-                                            currency: this.activeMoneyBalance
-                                                .coin
+                                            currency: this.activeCoinBalance
+                                            .coin
                                         },
                                         price: {
                                             price: instant.price,
@@ -168,8 +168,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                                 .coin
                                         },
                                         value: {
-                                            amount: instant.amount,
-                                            currency: this.activeCoinBalance
+                                            amount: instant.amount * instant.price,
+                                            currency: this.activeMoneyBalance
                                                 .coin
                                         },
                                         type: instant.type,
@@ -212,7 +212,7 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                         user : token.user._id,
                                         amount : {
                                             amount: amount,
-                                            currency: this.activeMoneyBalance.coin
+                                            currency: this.activeCoinBalance.coin
                                         },
                                         status : "success",
                                         transaction_type : tr_type,
@@ -221,8 +221,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                             currency: this.activeMoneyBalance.coin
                                         },
                                         value : {
-                                            amount: instant.amount,
-                                            currency: this.activeCoinBalance.coin
+                                            amount: instant.amount * instant.price,
+                                            currency: this.activeMoneyBalance.coin
                                         },
                                         type : instant.type,
                                         id : instant.id,

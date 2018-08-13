@@ -21,6 +21,8 @@ import { InstantOrderSellService } from './services/instant-order-sell.service';
 import { LimitOrderService } from './services/limit-order.service';
 import { StopOrderService } from './services/stop-order.service';
 
+import { MarketOrderSellService } from './services/market-order-sell.service';
+import { MarketOrderBuyService } from './services/market-order-buy.service';
 @NgModule({
   declarations: [
     AccordionAnchorDirective,
@@ -51,7 +53,9 @@ import { StopOrderService } from './services/stop-order.service';
     InstantOrderBuyService,
     InstantOrderSellService,
     LimitOrderService,
-    StopOrderService
+    StopOrderService,
+    MarketOrderSellService,
+    MarketOrderBuyService
   ],
 
 })

@@ -12,8 +12,7 @@ import { CoinsService } from './coins.service';
 import { MoneyService } from './money.service';
 
 @Injectable()
-export class InstantOrderSellService {
-
+export class MarketOrderSellService {
 
     public sellCalcRequest: any;
     public fees: any = 0.25;
@@ -194,8 +193,8 @@ export class InstantOrderSellService {
                         .coin
                 },
                 value: {
-                    amount: sellInstant.amount,
-                    currency: this.activeCoinBalance
+                    amount: sellInstant.amount *  sellInstant.price,
+                    currency: this.activeMoneyBalance
                         .coin
                 },
                 type: sellInstant.type,
@@ -258,7 +257,7 @@ export class InstantOrderSellService {
                     currency: this.activeCoinBalance.coin
                 },
                 status : "success",
-                transaction_type : "IOS",
+                transaction_type : "MOS",
                 price : {
                     price: sellInstant.price,
                     currency: this.activeMoneyBalance.coin

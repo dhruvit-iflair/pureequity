@@ -6,24 +6,25 @@
         <mat-card-content>
             <div style="text-align:center;">
                 <span>Available : {{activeMoneyBalance.balance}} {{activeMoneyBalance.coin | uppercase}}</span>
-                <form [formGroup]="marketOrderBuyForm">
+                <form>
                     <div fxLayout="row" fxLayoutWrap="wrap">
                         <mat-form-field>
-                            <input matInput type="number" placeholder="I Want To Buy" [formControl]="marketOrderBuyForm.controls['amount']">
-                            <small *ngIf="marketOrderBuyForm.controls['amount'].hasError('required') && marketOrderBuyForm.controls['amount'].touched"
+                            <input matInput type="number" placeholder="I Want To Buy" [formControl]="buyAmount">
+                            <small *ngIf="buyAmount.hasError('required') && buyAmount.touched"
                                 class="text-danger support-text">Amount is required.</small>
+                                <small *ngIf="buyAmount.hasError('minBuyValue') && buyAmount.dirty && !buyAmount.hasError('required')" class="text-danger support-text">You need to spend more than {{activeTrade.minSell}} {{activeCoinBalance.coin | uppercase}}.</small>
                         </mat-form-field>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h4 style="width: 50%;float: left;"> Sub-Total </h4>
-                            <h4 style="width: 50%;float: right;"> {{(subtotal.buy)?subtotal.buy : 0 }} {{activeTrade.name.slice(6,9)}} </h4>
+                            <h4 style="width: 50%;float: right;"> {{(buyReceive.value)? buyReceive.value : 0 }} {{activeTrade.name.slice(6,9)}} </h4>
                         </div>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h4 style="width: 50%;float: left;"> Fees </h4>
-                            <h4 style="width: 50%;float: right;"> {{(fees.buy)? fees.buy : 0}} {{activeTrade.name.slice(6,9)}} </h4>
+                            <h4 style="width: 50%;float: right;"> {{(buyFees.value)? buyFees.value : 0}}</h4>
                         </div>
 
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
+                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button" [disabled]='!buyAmount.valid || buyAmount.value <= 0' (click)='buy()'>
                                 BUY {{activeTrade.name.slice(0,3)}}
                             </button>
                         </div>
@@ -50,24 +51,25 @@
         <mat-card-content>
             <div style="text-align:center;">
                 <span>Available : {{activeCoinBalance.balance}} {{activeCoinBalance.coin | uppercase}} </span>
-                <form [formGroup]="marketOrderSellForm">
+                <form>
                     <div fxLayout="row" fxLayoutWrap="wrap">
                         <mat-form-field>
-                            <input matInput type="number" placeholder="I Want To Sell" [formControl]="marketOrderSellForm.controls['amount']">
-                            <small *ngIf="marketOrderSellForm.controls['amount'].hasError('required') && marketOrderSellForm.controls['amount'].touched"
+                            <input matInput type="number" placeholder="I Want To Sell" [formControl]="sellAmount">
+                            <small *ngIf="sellAmount.hasError('required') && sellAmount.touched"
                                 class="text-danger support-text">Amount is required.</small>
+                            <small *ngIf="sellAmount.hasError('minBuyValue') && sellAmount.dirty && !sellAmount.hasError('required')" class="text-danger support-text">You need to spend more than {{activeTrade.minSell}} {{activeCoinBalance.coin | uppercase}}.</small>
                         </mat-form-field>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h4 style="width: 50%;float: left;"> Sub-Total </h4>
-                            <h4 style="width: 50%;float: right;"> {{(subtotal.sell)?subtotal.sell : 0 }} {{activeTrade.name.slice(6,9)}} </h4>
+                            <h4 style="width: 50%;float: right;"> {{(sellReceive.value)? sellReceive.value : 0 }} {{activeTrade.name.slice(6,9)}} </h4>
                         </div>
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
                             <h4 style="width: 50%;float: left;"> Fees </h4>
-                            <h4 style="width: 50%;float: right;"> {{(fees.sell)? fees.sell : 0}} {{activeTrade.name.slice(6,9)}} </h4>
+                            <h4 style="width: 50%;float: right;"> {{(sellFees.value)? sellFees.value : 0}}</h4>
                         </div>
 
                         <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button">
+                            <button mat-raised-button color="warn" class="btn-block btn-lg m-t-20 m-b-20" type="button"  [disabled]='!sellAmount.valid || sellAmount.value <= 0' (click)='sell();'>
                                 SELL {{activeTrade.name.slice(0,3)}}
                             </button>
                         </div>

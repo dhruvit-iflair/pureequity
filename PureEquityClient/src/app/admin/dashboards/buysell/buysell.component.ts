@@ -85,37 +85,14 @@ export class BuysellComponent implements OnInit {
 
         this.activeTradeSubscribtion = this.tradeService.getActiveTrade().subscribe(activeTrade=>{
             this.activeTrade = activeTrade;
-            // if (this.buyAmount.valid){
-            //     this.instOBuyService.calcBuy(this.buyAmount.value);
-            // }
-            // else {
-            //     this.buySubtotal.reset();
-            //     this.buyReceive.reset();
-            // };
-            // if(this.sellAmount.valid) {
-            //     this.instOSellService.calcSell(this.sellAmount.value)
-            // }
-            // else {
-            //     this.sellSubtotal.reset();
-            //     this.sellReceive.reset();
-            // }
             (this.coinBalance)? this.setCoinBalance(): null;
             (this.moneyBalance)? this.setMoneyBalance() : null;
             // console.log(activeTrade);
             this.buyAmount.patchValue(this.buyAmount.value);
             this.sellAmount.patchValue(this.sellAmount.value);
-            // if (this.buyAmount.invalid) {
-            //     this.buySubtotal.reset();
-            //     this.buyReceive.reset();
-            // }
-            // if (this.sellAmount.invalid) {
-            //     this.sellSubtotal.reset();
-            //     this.sellReceive.reset();
-            // }
         });
         this.tradeSubscribtion = this.tradeService.getTradeList().subscribe(trade=>{
-            this.tradeList = trade
-            // console.log(trade);
+            this.tradeList = trade;
         });
         this.buyAmount.valueChanges.subscribe(data=>{
            console.log(data);
@@ -180,8 +157,7 @@ export class BuysellComponent implements OnInit {
                 return null;
             } else {
                 return {minBuyValue:true};
-            }
-        //   return minValue ? {'minValue': {value: control.value}} : null;
+            };
         };
     }
 
@@ -192,7 +168,6 @@ export class BuysellComponent implements OnInit {
             } else {
                 return {minBuyValue:true};
             }
-        //   return minValue ? {'minValue': {value: control.value}} : null;
         };
     }
 
@@ -227,12 +202,20 @@ export class BuysellComponent implements OnInit {
                 t.isActive = false;
             });
             this.sideNave[i].isActive = !this.sideNave[i].isActive;
+            this.buyAmount.reset();
+            this.buySubtotal.reset();
+            this.buyReceive.reset();
+            this.buyActual = 0;
+            this.sellAmount.reset();
+            this.sellSubtotal.reset();
+            this.sellReceive.reset();
+            this.sellActual = 0;
         }
     }
 
     buy(){
         if(this.activeMoneyBalance.balance >= this.buyAmount.value){
-            this.instOBuyService.buy(this.buyAmount.value, this.buyReceive.value,this.buyActual);
+            this.instOBuyService.buy(this.buyAmount.value,this.buyActual, 'IOB','buyInstant');
         }
         else {
             this.snakbar.open(`You account does not contail sufficent ${this.activeMoneyBalance.coin.toUpperCase()} to buy ${this.activeCoinBalance.coin.toUpperCase()}`, "", { duration: 4000 });
@@ -240,7 +223,7 @@ export class BuysellComponent implements OnInit {
     }
     sell(){
         if(this.activeCoinBalance.balance >= this.sellAmount.value){
-            this.instOSellService.sell(this.sellAmount.value, this.sellReceive.value,this.sellActual);
+            this.instOSellService.sell(this.sellAmount.value,this.sellActual,'IOS','sellInstant');
         }
         else {
             this.snakbar.open(`You account does not contail sufficent ${this.activeCoinBalance.coin.toUpperCase()} to sell`, "", { duration: 4000 });
@@ -263,33 +246,3 @@ export interface Balance {
     _id: false,
 }
 
-
-
-// let token = JSON.parse(localStorage.getItem('token'));
-            // let trans = {
-            //     user : token.user._id,
-            //     transaction_type: "IOB",
-            //     time: Date.now(),
-            //     account: "Main Account",
-            //     amount: {
-            //         amount: this.buyAmount.value,
-            //         currency: this.activeMoneyBalance.coin
-            //     },
-            //     // subtotal: {
-            //     //     amount: this.buySubtotal.value,
-            //     //     currency: this.activeMoneyBalance.coin
-            //     // },
-            //     // value: {
-            //     //     amount: this.buyReceive.value,
-            //     //     currency: this.activeCoinBalance.coin
-            //     // },
-            //     // rate: {
-            //     //     amount: this.current_payload.payload.data.ask,
-            //     //     currency: this.tradeCoin.slice(6, 9)
-            //     // },
-            //     // fees: {
-            //     //     amount: this.buysellForm.value.amount - this.buydata.subtotal,
-            //     //     currency: this.tradeCoin.slice(6, 9)
-            //     // }
-            // }
-            // console.log(trans);

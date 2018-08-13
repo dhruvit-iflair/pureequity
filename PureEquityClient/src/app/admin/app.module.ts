@@ -91,7 +91,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: HTTP_INTERCEPTORS,
       useClass: ResponseInterceptor,
       multi: true
-    },
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [DeleteComponent, FullComponent, ImageModalComponent]
