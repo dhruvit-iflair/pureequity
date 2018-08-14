@@ -40,12 +40,7 @@ export class LimitOrderService {
         public coinService: CoinsService,
         public moneyService: MoneyService
     ) {
-        this.activeTrade = {
-            name: "BTC / USD",
-            isActive: true,
-            value: "btcusd",
-            data: []
-        };
+        this.activeTrade = this.tradeService.getCurrentActiveTrade();
         this.ngOnInit();
     }
 
@@ -105,13 +100,13 @@ export class LimitOrderService {
             //     console.log(er);
             // });
             this.buyMoneyTransaction(amount,limitOrderResponse.payload.data,buyPrice,'LIB','success').subscribe((mTSuccess: any) => {
-                console.log("mTSuccess",mTSuccess);
+                // console.log("mTSuccess",mTSuccess);
                 this.moneyService.refreshMoneyTransaction();
             },(er:any)=>{
                 console.log(er);
             });
             this.buyUpdateMoneyBalance(amount,limitOrderResponse.payload.data,buyPrice).subscribe((mBSuccess:any)=>{
-                console.log("mBSuccess",mBSuccess);
+                // console.log("mBSuccess",mBSuccess);
                 this.moneyService.refreshMoneyBalance();
                 this.snakbar.open("Transaction Successfull","",{duration: 3000});
                 this.formReset.next('buy');
@@ -147,7 +142,7 @@ export class LimitOrderService {
     }
 
     callHttp(payload: any, type: any){
-        return this.http.post(environment.tradingApi +`/${type}/` +this.activeTrade.value,payload)
+        return this.http.post(environment.tradingApi +`/${type}/` +this.activeTrade.value, payload)
     }
 
     setCoinBalance() {
@@ -167,6 +162,8 @@ export class LimitOrderService {
             this.activeMoneyBalance = cb_2;
             this.activeCoinBalance = cb_1;
         }
+        console.log(cb_1,cb_2);
+        
     }
 
     setMoneyBalance() {
@@ -186,6 +183,8 @@ export class LimitOrderService {
             this.activeMoneyBalance = mb_1;
             this.activeCoinBalance = mb_2;
         }
+        console.log(mb_1,mb_2);
+
     }
     // buyCoinTransaction(amount: any, limitOrderResponse: any, transaction_type: any,status: any){
     //     let token = JSON.parse(localStorage.getItem("token"));
@@ -315,10 +314,11 @@ export class LimitOrderService {
             price: buyPrice,
             amount: amount
         };
-
+        console.log(payload);
+        
         this.callHttp(payload,'sellLimit').subscribe((limitOrderResponse: any) => {
             this.sellCoinTransaction(amount,limitOrderResponse.payload.data,'LIS','success').subscribe((cTSuccess: any) => {
-                console.log("cTSuccess",cTSuccess);
+                // console.log("cTSuccess",cTSuccess);
                 this.coinService.refreshCoinTransaction();
             },(er:any)=>{
                 console.log(er);
@@ -336,7 +336,7 @@ export class LimitOrderService {
             //     console.log(er);
             // });
             this.sellUpdateCoinBalance(amount,limitOrderResponse.payload.data).subscribe((cb:any)=>{
-                console.log("cb",cb);
+                // console.log("cb",cb);
                 this.coinService.refreshCoinBalance();
                 this.snakbar.open("Transaction Successfull","",{duration: 3000});
                 this.formReset.next();
@@ -407,8 +407,8 @@ export class LimitOrderService {
             };
         }
 
-        console.log("Coin Transaction");
-        console.log(coin_tran);
+        // console.log("Coin Transaction");
+        // console.log(coin_tran);
 
         return this.coinService.saveCoinTransaction(coin_tran);
     }
@@ -422,9 +422,9 @@ export class LimitOrderService {
         );
         this.coinBalance.balance[sellBalIndex].balance = this.coinBalance.balance[sellBalIndex].balance - limitOrderResponse.amount;
 
-        console.log("CoinBalance");
-        console.log(this.coinBalance);
-        console.log(this.coinBalance);
+        // console.log("CoinBalance");
+        // console.log(this.coinBalance);
+        // console.log(this.coinBalance);
 
         return this.coinService.saveCoinBalance(this.coinBalance);
     }

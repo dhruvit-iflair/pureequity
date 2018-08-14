@@ -118,9 +118,9 @@ export class LimitOrderComponent implements OnInit {
     }
     sell(){
         let obj = {
-            amount: this.sellAmount.value.amount,
+            amount: this.sellAmount.value,
             price: this.current_payload.payload.data.bid,
-            limitPrice: this.sellPrice.value.sellprice,
+            limitPrice: this.sellPrice.value,
         };
         this.limitOrderService.sellLimitOrder(obj.amount,obj.limitPrice,obj.amount*obj.limitPrice);
     }

@@ -40,12 +40,13 @@ export class MarketOrderBuyService {
         public coinService: CoinsService,
         public moneyService: MoneyService
     ) {
-        this.activeTrade = {
-            name: "BTC / USD",
-            isActive: true,
-            value: "btcusd",
-            data: []
-        };
+        // this.activeTrade = {
+        //     name: "BTC / USD",
+        //     isActive: true,
+        //     value: "btcusd",
+        //     data: []
+        // };
+        this.activeTrade = this.tradeService.getCurrentActiveTrade()
         this.ngOnInit();
     }
 

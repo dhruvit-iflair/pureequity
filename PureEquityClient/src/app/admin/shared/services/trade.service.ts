@@ -65,6 +65,9 @@ export class TradeService {
         // return this.tradeList.find(t=>t.isActive ===true);
         return this.activeTradeSubject.asObservable();
     }
+    getCurrentActiveTrade(){
+        return this.activeTrade;
+    }
 }
 
 export interface TradeRecord{

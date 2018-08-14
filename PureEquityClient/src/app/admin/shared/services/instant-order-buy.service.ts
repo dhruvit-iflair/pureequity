@@ -114,8 +114,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
         if (amount > 0) {
             let token = JSON.parse(localStorage.getItem("token"));
 
-            console.log(this.activeMoneyBalance);
-            console.log(this.activeCoinBalance);
+            // console.log(this.activeMoneyBalance);
+            // console.log(this.activeCoinBalance);
 
             this.http
                 .get(
@@ -127,8 +127,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                             amount: buyActual,
                             // price: data.payload.data.ask
                         };
-                        console.log("BitStampPayload");
-                        console.log(payload);
+                        // console.log("BitStampPayload");
+                        // console.log(payload);
 
                         this.http
                             .post(
@@ -139,7 +139,7 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                             )
                             .subscribe(
                                 (instantBuySuccess: any) => {
-                                    console.log("InstOerderBuyRes");
+                                    // console.log("InstOerderBuyRes");
                                     let instant = instantBuySuccess.payload.data;
                                     // let instant:any = {
                                     //     amount:0.00098624,
@@ -148,7 +148,7 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                     //     price:7042.29,
                                     //     type:"0"
                                     // }
-                                    console.log(instant);
+                                    // console.log(instant);
 
                                     let coin_tran: any = {
                                         user: token.user._id,
@@ -179,8 +179,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                         status: "success"
                                     };
 
-                                    console.log("Coin Transaction");
-                                    console.log(coin_tran);
+                                    // console.log("Coin Transaction");
+                                    // console.log(coin_tran);
 
                                     this.coinService.addCoinTransaction(
                                         coin_tran
@@ -197,7 +197,7 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                         };
                                         this.coinBalance.balance.push(b);
                                     }
-                                    console.log(this.coinBalance);
+                                    // console.log(this.coinBalance);
 
                                     this.coinService.updateCoinBalance(this.coinBalance);
 
@@ -205,8 +205,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                     let indexMB = this.moneyBalance.balance.indexOf(updateMoneyBalance);
                                         updateMoneyBalance.balance = updateMoneyBalance.balance - amount;
                                         this.moneyBalance.balance[indexMB] = updateMoneyBalance;
-                                    console.log(this.moneyBalance);
-
+                                    // console.log(this.moneyBalance);
+// 
 
                                     let money_transaction: any ={
                                         user : token.user._id,
@@ -229,10 +229,10 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
                                         datetime : instant.datetime
                                     };
 
-                                    console.log("Money Transaction");
-                                    console.log(money_transaction);
-                                    console.log("Money Balance");
-                                    console.log(this.moneyBalance);
+                                    // console.log("Money Transaction");
+                                    // console.log(money_transaction);
+                                    // console.log("Money Balance");
+                                    // console.log(this.moneyBalance);
 
                                     this.moneyService
                                         .addMoneyTransaction(money_transaction)
@@ -385,8 +385,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
             this.activeMoneyBalance = cb_2;
             this.activeCoinBalance = cb_1;
         }
-        console.log(this.activeCoinBalance,this.activeMoneyBalance);
-        console.log(cb_1,cb_2);
+        // console.log(this.activeCoinBalance,this.activeMoneyBalance);
+        // console.log(cb_1,cb_2);
     }
 
     setMoneyBalance() {
@@ -406,8 +406,8 @@ export class InstantOrderBuyService implements OnInit, OnDestroy {
             this.activeMoneyBalance = mb_1;
             this.activeCoinBalance = mb_2;
         }
-        console.log(this.activeCoinBalance,this.activeMoneyBalance);
-        console.log(mb_1,mb_2);
+        // console.log(this.activeCoinBalance,this.activeMoneyBalance);
+        // console.log(mb_1,mb_2);
     }
 }
 

@@ -95,7 +95,7 @@ export class BuysellComponent implements OnInit {
             this.tradeList = trade;
         });
         this.buyAmount.valueChanges.subscribe(data=>{
-           console.log(data);
+        //    console.log(data);
            if(data > 0 && data != null && this.buyAmount.valid) {
                this.instOBuyService.calcBuy(data);
             }
@@ -105,7 +105,7 @@ export class BuysellComponent implements OnInit {
             }
         });
         this.sellAmount.valueChanges.subscribe(data=>{
-            console.log(data);
+            // console.log(data);
             if(data > 0 && data != null && this.sellAmount.valid) {
                 this.instOSellService.calcSell(data);
              }

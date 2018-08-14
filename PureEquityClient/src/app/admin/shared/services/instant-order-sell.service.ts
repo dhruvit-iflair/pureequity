@@ -46,7 +46,7 @@ export class InstantOrderSellService {
         if (!this.activeTradeSub) {
             this.activeTradeSub = this.tradeService.getActiveTrade().subscribe(activeTrade => {
                 this.activeTrade = activeTrade;
-                console.log(activeTrade);
+                // console.log(activeTrade);
                 this.setCoinBalance();
                 this.setMoneyBalance();
             });
@@ -128,21 +128,21 @@ export class InstantOrderSellService {
         if (amount > 0) {
             let token = JSON.parse(localStorage.getItem("token"));
 
-            console.log(this.activeMoneyBalance);
-            console.log(this.activeCoinBalance);
+            // console.log(this.activeMoneyBalance);
+            // console.log(this.activeCoinBalance);
 
             let payload = {
                 amount: sellActual
             };
             this.callHttp(payload,ht_type).subscribe((sellInstant: any) => {
                 this.coinTransaction(amount,sellInstant.payload.data,tr_type,'success').subscribe((cTSuccess: any) => {
-                    console.log("cTSuccess",cTSuccess);
+                    // console.log("cTSuccess",cTSuccess);
                     this.coinService.refreshCoinTransaction();
                 },(er:any)=>{
                     console.log(er);
                 });
                 this.moneyTransaction(amount,sellInstant.payload.data,tr_type,'success').subscribe((mTSuccess: any) => {
-                    console.log("mTSuccess",mTSuccess);
+                    // console.log("mTSuccess",mTSuccess);
                     this.moneyService.refreshMoneyTransaction();
                     this.snakbar.open("Transaction Successfull","",{duration: 3000});
                     this.sellCalcSubject.next();
@@ -150,13 +150,13 @@ export class InstantOrderSellService {
                     console.log(er);
                 });
                 this.updateMoneyBalance(amount,sellInstant.payload.data).subscribe((mBSuccess:any)=>{
-                    console.log("mBSuccess",mBSuccess);
+                    // console.log("mBSuccess",mBSuccess);
                     this.coinService.refreshCoinBalance();
                 },(er:any)=>{
                     console.log(er);
                 });
                 this.updateCoinBalance(amount,sellInstant.payload.data).subscribe((cb:any)=>{
-                    console.log("cb",cb);
+                    // console.log("cb",cb);
                     this.moneyService.refreshMoneyBalance();
                 },(er:any)=>{
                     console.log(er);
@@ -217,8 +217,8 @@ export class InstantOrderSellService {
             };
         }
 
-        console.log("Coin Transaction");
-        console.log(coin_tran);
+        // console.log("Coin Transaction");
+        // console.log(coin_tran);
 
         return this.coinService.saveCoinTransaction(coin_tran);
     }
@@ -239,9 +239,9 @@ export class InstantOrderSellService {
                     ].balance
                 ) - parseFloat(sellInstant.amount)
             ).toFixed(8);
-        console.log("CoinBalance");
-        console.log(this.coinBalance);
-        console.log(coin_balance);
+        // console.log("CoinBalance");
+        // console.log(this.coinBalance);
+        // console.log(coin_balance);
 
         return this.coinService.saveCoinBalance(coin_balance);
     }
@@ -305,7 +305,7 @@ export class InstantOrderSellService {
         let indexMB = this.moneyBalance.balance.indexOf(updateMoneyBalance);
         updateMoneyBalance.balance = updateMoneyBalance.balance + (sellInstant.amount * sellInstant.price);
         this.moneyBalance.balance[indexMB] = updateMoneyBalance;
-        console.log(this.moneyBalance);
+        // console.log(this.moneyBalance);
         return this.moneyService.updateMoneyBalance(this.moneyBalance)
     }
 }
